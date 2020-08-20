@@ -15,7 +15,7 @@ List the input variables to the library.  The below table is a suggested templat
 | `N_s`             | double | N-Units | 250 <= `N_s` <= 400 | Surface refractivity |
 | `d__km`           | double | km    | 0 < `d__km`  | Path distance |
 | `epsilon`         | double |       | 1 <= `epsilon` | Relative permittivity |
-| `sigma`           | double |       | 0 < `sigma` | Conductivity |
+| `sigma`           | double | S/m   | 0 < `sigma` | Conductivity |
 | `pol`             | int    |       |              | Polarization <ul><li>0 = Horizontal</li><li>1 = Vertical</li></ul> |
 
 ## Outputs ##
@@ -48,7 +48,7 @@ Possible return codes, including the corresponding defined constant name as defi
 
 ## Example Values ##
 
-TBD
+A set of example inputs and outputs are provided for testing purposes.  This is not a comprehensive validation test set.  The test set can be found in [LFMF_Examples.csv](LFMF_Examples.csv).
 
 ## Notes on Code Style ##
 
