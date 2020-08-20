@@ -18,7 +18,7 @@
  |                q             - Intermediate value -j*nu*delta
  |                h_1__km       - Height of the higher antenna, in km
  |                h_2__km       - Height of the lower antenna, in km
- |                d             - Path distance, in km
+ |                d__km         - Path distance, in km
  |                k             - Wavenumber, in rad/km
  |
  |      Returns:  E_gw          - Normalized field strength in mV/m
