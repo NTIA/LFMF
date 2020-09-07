@@ -1,10 +1,8 @@
 # Low Frequency / Medium Frequency (LF/MF) Propagation Model
 
-This code repository contains a software library to compute the propagation of radiowaves over a smooth Earth for low (LF) and medium (MF) frequencies.  Core fundementals of this electromagnetic problem date back to foundational work published by Sommerfeld and Bremmer.
+This code repository contains an the NTIA/ITS implementation of the Low Frequency / Medium Frequency (LF/MF) Propagation Model. LF/MF predicts basic transmission loss in the frequency range 0.01 - 30 MHz for propagation paths over a smooth Earth and antenna heights less than 50 meters.
 
 ## Inputs ##
-
-List the input variables to the library.  The below table is a suggested template.  Use judgement regarding the information provided - if an additional column is beneficial, add it.  Likewise, feel free to omit a column if it does not apply.  Regardless, use the text styling as shown below.
 
 | Variable          | Type   | Units | Limits       | Description  |
 |-------------------|--------|-------|--------------|--------------|
@@ -68,8 +66,10 @@ The .NET support of LFMF consists of a simple pass-through wrapper around the na
 
 ## References ##
 
+* Bremmer, H. "Terrestrial Radio Waves" _Elsevier_, 1949. 
 * DeMinco, N. "Medium Frequency Propagation Prediction Techniques and Antenna Modeling for Intelligent Transportation Systems (ITS) Broadcast Applications", [_NTIA Report 99-368_](https://www.its.bldrdoc.gov/publications/2399.aspx), August 1999
 * DeMinco, N. "Ground-wave Analysis Model For MF Broadcast System", [_NTIA Report 86-203_](https://www.its.bldrdoc.gov/publications/2226.aspx), September 1986
+* Sommerfeld, A. "The propagation of waves in wireless telegraphy", _Ann. Phys._, 1909, 28, p.665
 * Wait, J. "Radiation From a Vertical Antenna Over a Curved Stratified Ground", _Journal of Research of the National Bureau of Standards_.  Vol 56, No. 4, April 1956. Research Paper 2671
 
 ## Contact ##
