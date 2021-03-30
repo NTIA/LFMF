@@ -20,6 +20,7 @@
  |                h_2__km       - Height of the lower antenna, in km
  |                d__km         - Path distance, in km
  |                k             - Wavenumber, in rad/km
+ |                a_e__km       - Effective earth radius, in km
  |
  |      Returns:  E_gw          - Normalized field strength in mV/m
  |

@@ -1,3 +1,5 @@
+#include "..\include\LFMF.h"
+
 complex<double> wofz(complex<double> z) 
 {
  

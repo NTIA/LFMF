@@ -62,7 +62,7 @@ int LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__wat
     double E_gw;
     if (d__km < d_test__km)
     {
-        E_gw = FlatEarthCurveCorrection(delta, q, h_1__km, h_2__km, d__km, k);
+        E_gw = FlatEarthCurveCorrection(delta, q, h_1__km, h_2__km, d__km, k, a_e__km);
         result->method = METHOD__FLAT_EARTH_CURVE;
     }
     else
