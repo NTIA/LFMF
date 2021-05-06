@@ -29,7 +29,7 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
 {
     complex<double> j = complex<double>(0.0, 1.0);
 
-    // In order for the werf() function to be used both here and in gwfe()
+    // In order for the wofz() function to be used both here and in gwfe()
     // the argument, qi, has to be defined correctly. The following is how
     // it is done in the original GWFEC.FOR 
     complex<double> qi = (-0.5 + j * 0.5)*sqrt(k*d__km)*Delta;
@@ -44,7 +44,6 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
  
     if(abs(q) > 0.1){
         // Find F(p) Eqn (32) NTIA Report 99-368
-        // complex<double> Fofp = 1.0 + sqrt(PI)*j*qi*werf(qi);
         complex<double> Fofp = 1.0 + sqrt(PI)*j*qi*wofz(qi);
 
         // Calculate f(x) which is the normalized electric field, E_ratio; Eqn (31) NTIA Report 99-368
@@ -54,6 +53,7 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
      
         complex<double> A[10];
  
+        // [Deminco, Eq 30]
         A[0] = 1.0;
         A[1] = -j * sqrt(PI);
         A[2] = -2.0;
@@ -69,6 +69,7 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
          
         fofx = 0.0 + j*0.0;
  
+        // [Deminco, Eq 28]
         for (int ii = 0; ii<10; ii++) {
             fofx = fofx + A[ii] * pow( exp(j * PI/4.0) * q * pow(x,1.0/2.0), ii);
         }

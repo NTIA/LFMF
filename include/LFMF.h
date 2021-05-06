@@ -27,8 +27,6 @@ using std::complex;
 #define METHOD__FLAT_EARTH_CURVE    0
 #define METHOD__RESIUDE_SERIES      1
 
-#define WERF_TERMS                  30  // Number of terms for the complex error function
-
 #define YES                         1   // Find the derivative i.e., Ai'() or Bi'()
 #define NO                          0   // Find Ai() or Bi()
 // kind
@@ -82,7 +80,6 @@ DLLEXPORT int LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double
 
 double FlatEarthCurveCorrection(complex<double> delta, complex<double> q, double h_1__km, double h_2__km, double d, double k, double a_e__km);
 double ResidueSeries(double d, double k, double h_1__km, double h_2__km, double nu, double theta, complex<double> q);
-complex<double> werf(complex<double> qi);
 complex<double> wofz(complex<double> qi);
 complex<double> Airy(complex<double> Z, int kind, int scaling);
 complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi, int kind, int scaling);

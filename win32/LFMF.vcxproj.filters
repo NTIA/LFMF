@@ -7,9 +7,6 @@
     <ClCompile Include="..\src\WiRoot.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\werf.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\ValidateInputs.cpp">
       <Filter>Source</Filter>
     </ClCompile>
