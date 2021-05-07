@@ -25,7 +25,7 @@ using std::complex;
 #define POLARIZATION__VERTICAL      1
 
 #define METHOD__FLAT_EARTH_CURVE    0
-#define METHOD__RESIUDE_SERIES      1
+#define METHOD__RESIDUE_SERIES      1
 
 #define YES                         1   // Find the derivative i.e., Ai'() or Bi'()
 #define NO                          0   // Find Ai() or Bi()

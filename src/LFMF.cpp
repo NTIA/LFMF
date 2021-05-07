@@ -68,7 +68,7 @@ int LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__wat
     else
     {
         E_gw = ResidueSeries(d__km, k, h_1__km, h_2__km, nu, theta__rad, q);
-        result->method = METHOD__RESIUDE_SERIES;
+        result->method = METHOD__RESIDUE_SERIES;
     }
 
     // Antenna gains
