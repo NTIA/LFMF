@@ -7,8 +7,8 @@
  |
  |        Input:  d__km         - Path distance, in km
  |                k             - Wavenumber, in rad/km
- |                h_1__km       - Height of the higher antenna, in km
- |                h_2__km       - Height of the lower antenna, in km
+ |                h_1__km       - Height of the lower antenna, in km
+ |                h_2__km       - Height of the higher antenna, in km
  |                nu            - Intermediate value, 
  |                                pow(a_e__km * k / 2.0, THIRD);
  |                theta__rad    - Angular distance of path, in radians

@@ -28,8 +28,8 @@
     <ClCompile Include="..\src\LFMF.cpp" />
     <ClCompile Include="..\src\ResidueSeries.cpp" />
     <ClCompile Include="..\src\ValidateInputs.cpp" />
-    <ClCompile Include="..\src\werf.cpp" />
     <ClCompile Include="..\src\WiRoot.cpp" />
+    <ClCompile Include="..\src\wofz.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LFMF.def" />
