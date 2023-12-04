@@ -58,7 +58,7 @@ A set of example inputs and outputs are provided for testing purposes.  This is 
 
 ### C++ Software
 
-The software is designed to be built into a DLL (or corresponding library for non-Windows systems). The source code can be built for any OS that supports the standard C++ libraries. A Visual Studio 2019 project file is provided for Windows users to support the build process and configuration.
+The software is designed to be built into a DLL (or corresponding library for non-Windows systems). The source code can be built for any OS that supports the standard C++ libraries. A Visual Studio 2022 project file is provided for Windows users to support the build process and configuration.
 
 ### C#/.NET Wrapper Software
 
