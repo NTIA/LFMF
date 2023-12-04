@@ -23,7 +23,6 @@ win32/packages/
 *.tlog
 *.obj
 *.log
-*.filters
 *.lastbuildstate
 *.manifest
 *.cache
