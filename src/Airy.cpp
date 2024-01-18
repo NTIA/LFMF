@@ -1,4 +1,9 @@
-#include "..\include\LFMF.h"
+#include "../include/LFMF.h"
+
+#ifndef WIN32
+#define _copysign copysign
+#define abs fabs
+#endif
 
 /*=============================================================================
  |

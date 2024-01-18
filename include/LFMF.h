@@ -2,7 +2,15 @@
 #include <complex>
 
 // Export the DLL functions as "C" and not C++
+#if defined(WIN32) && !defined(_STATIC_LFMF)
+#ifdef lfmf_EXPORTS
 #define DLLEXPORT extern "C" __declspec(dllexport)
+#else
+#define DLLEXPORT extern "C" __declspec(dllimport)
+#endif
+#else
+#define DLLEXPORT extern "C"
+#endif
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 #define DIM(x, y) (((x) > (y)) ? (x - y) : (0))
