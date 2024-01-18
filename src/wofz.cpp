@@ -1,4 +1,8 @@
-#include "..\include\LFMF.h"
+#include "../include/LFMF.h"
+
+#ifndef WIN32
+#define abs fabs
+#endif
 
 complex<double> wofz(complex<double> z) 
 {
