@@ -74,4 +74,4 @@ The .NET support of LFMF consists of a simple pass-through wrapper around the na
 
 ## Contact ##
 
-For questions, contact Nick DeMinco, (303) 497-3660, NDeminco@ntia.gov
+For questions, contact Nick DeMinco, NDeminco@ntia.gov
