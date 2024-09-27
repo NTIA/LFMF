@@ -5,6 +5,27 @@ Sketching a PropLib template repository
 **TODO**: Add high-level text on how to use this repository and document. Mention
 searchable `TODO-TEMPLATE` text throughout repository.
 
+## Merging Template Updates into Downstream Repositories
+
+When changes are made at the template level, it is possible to merge them into
+downstream repositories created from the template using the following steps. This
+appears to be only possible from the CLI, and not from GitHub Desktop.
+
+```cmd
+# In the downstream repository where you wish to merge the changes:
+
+# Add the template repository as a remote
+git remote add proplib-template https://github.com/NTIA/proplib-template
+
+# Update the changes
+git fetch --all
+
+# Merge the updated template branch into the current branch
+git merge proplib-template/[branch to merge] --allow-unrelated-histories
+
+# Then resolve any merge conflicts and finish the merge commit!
+```
+
 ## Top-Level `CMakeLists.txt`
 
 Fill in project metadata, including the namespace and name of the library. Here
