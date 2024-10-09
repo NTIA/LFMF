@@ -243,7 +243,7 @@ texts. This can also be used to include nicely-formatted equations in your funct
 documentation.
 
 ```cpp
-#define a_0__meter 6370e3  /**< The actual earth radius, documented inline */
+constexpr double a_0__meter = 6370e3;  /**< The actual earth radius, documented inline */
 
 /*******************************************************************************
  * @f$ Z_0 @f$, the speed of light in vacuum multiplied by the vacuum
@@ -252,7 +252,7 @@ documentation.
  * This block comment includes a brief definition of the constant as well as
  * this longer description. You can use LaTeX and Markdown formatting in both!
  ******************************************************************************/
-#define Z_0__ohm 376.730313667
+constexpr double Z_0__ohm = 376.730313667;
 
 /** Valid RF polarizations for use of this model */
 enum class Polarization {
