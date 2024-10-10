@@ -190,7 +190,7 @@ and the GitHub action successfully generates the documentation site. Below is an
 example showing the expected documentation formats.
 
 ```cpp
-#define PI 3.1415 /**< Inline doxygen format, e.g. for macros or struct members */
+constexpr double = PI 3.1415; /**< Inline format, e.g. for constants or struct members */
 
 /*******************************************************************************
  * This is a brief description of the function.
