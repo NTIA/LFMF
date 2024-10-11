@@ -25,7 +25,8 @@
             "description": "Base 'Release' configuration preset for ITS PropLib libraries",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
-                "BUILD_DOCS": "ON"
+                "BUILD_DOCS": "ON",
+                "BUILD_DRIVER": "ON"
             }
         },
         {
@@ -35,7 +36,8 @@
             "description": "Base 'Debug' configuration preset for ITS PropLib libraries",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
-                "BUILD_DOCS": "OFF"
+                "BUILD_DOCS": "OFF",
+                "BUILD_DRIVER": "OFF"
             }
         },
         {
