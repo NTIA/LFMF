@@ -22,6 +22,7 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
 include(GoogleTest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+set(GOOGLETEST_INITIALIZED ON)
 set_target_properties(
     ${TEST_NAME} PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
