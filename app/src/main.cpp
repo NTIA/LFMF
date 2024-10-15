@@ -96,24 +96,24 @@ int ParseArguments(int argc, char **argv, DrvrParams &params) {
 
 /*******************************************************************************
  * Print help instructions to the terminal
+ * 
+ * @param[in] os  Output stream for writing; defaults to `std::cout`
  ******************************************************************************/
-void Help() {
+void Help(std::ostream &os) {
     // TODO-TEMPLATE: Update driver help message
-    std::cout << std::endl
-              << "Usage: .\\<Driver Executable> [Options]" << std::endl;
-    std::cout << "Options (not case sensitive)" << std::endl;
-    std::cout << "\t-i    :: Input file name" << std::endl;
-    std::cout << "\t-t    :: Terrain file name" << std::endl;
-    std::cout << "\t-o    :: Output file name" << std::endl;
-    std::cout << "\t-dbg  :: Dump intermediate values to output file [optional]"
-              << std::endl;
-    std::cout << std::endl << "Examples:" << std::endl;
-    std::cout << "\t[WINDOWS] " << DRIVER_NAME
-              << ".exe -i inputs.txt -t terrain.txt -o results.txt"
-              << std::endl;
-    std::cout << "\t[LINUX]   .\\" << DRIVER_NAME
-              << " -i inputs.txt -t terrain.txt -o results.txt" << std::endl;
-    std::cout << std::endl;
+    os << std::endl << "Usage: .\\<Driver Executable> [Options]" << std::endl;
+    os << "Options (not case sensitive)" << std::endl;
+    os << "\t-i    :: Input file name" << std::endl;
+    os << "\t-t    :: Terrain file name" << std::endl;
+    os << "\t-o    :: Output file name" << std::endl;
+    os << "\t-dbg  :: Dump intermediate values to output file [optional]"
+       << std::endl;
+    os << std::endl << "Examples:" << std::endl;
+    os << "\t[WINDOWS] " << DRIVER_NAME
+       << ".exe -i inputs.txt -t terrain.txt -o results.txt" << std::endl;
+    os << "\t[LINUX]   .\\" << DRIVER_NAME
+       << " -i inputs.txt -t terrain.txt -o results.txt" << std::endl;
+    os << std::endl;
 };
 
 /*******************************************************************************

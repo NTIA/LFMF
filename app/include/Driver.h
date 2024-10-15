@@ -32,7 +32,7 @@
 // Functions
 
 int ParseArguments(int argc, char **argv, DrvrParams &params);
-void Help();
+void Help(std::ostream &os = std::cout);
 int ValidateInputs(const DrvrParams &params);
 
 
