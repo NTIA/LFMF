@@ -36,7 +36,7 @@ void Help();
 int ValidateInputs(const DrvrParams &params);
 
 
-// Utils
+// Driver Utils
 void Version(std::ostream &os = std::cout);
 int Validate_RequiredErrMsgHelper(const std::string &opt, const int err);
 int ParseInteger(const std::string &str, int &value);

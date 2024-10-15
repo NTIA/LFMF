@@ -7,6 +7,7 @@ set(DRIVER_TEST_NAME "Test${LIB_NAME}Driver")
 add_executable(
     ${DRIVER_TEST_NAME}
     "TestDriverUtils.cpp"
+    "TestDriver.h"
 )
 
 ###########################################
