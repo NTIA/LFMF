@@ -48,3 +48,7 @@ else ()
     )
 endif ()
 
+# Build and run driver tests
+if (RUN_DRIVER_TESTS)
+    add_subdirectory(tests)
+endif()

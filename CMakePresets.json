@@ -26,7 +26,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release",
                 "BUILD_DOCS": "ON",
-                "BUILD_DRIVER": "ON"
+                "BUILD_DRIVER": "ON",
+                "RUN_DRIVER_TESTS": "ON"
             }
         },
         {
@@ -37,7 +38,8 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Debug",
                 "BUILD_DOCS": "OFF",
-                "BUILD_DRIVER": "OFF"
+                "BUILD_DRIVER": "OFF",
+                "RUN_DRIVER_TESTS": "OFF"
             }
         },
         {
