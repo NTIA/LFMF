@@ -15,7 +15,7 @@
 #include <ctime>     // for localtime_s, localtime_r, time, time_t, tm, strftime
 #include <fstream>   // for ifstream, ofstream
 #include <iomanip>   // for setw
-#include <iostream>  // for cerr, cout
+#include <iostream>  // for cerr, cout, ostream
 #include <string>    // for string, stoi, stod
 
 /////////////////////////////
@@ -37,9 +37,9 @@ int ValidateInputs(const DrvrParams &params);
 
 
 // Utils
-void Version();
-int Validate_RequiredErrMsgHelper(const char *opt, int err);
-int ParseInteger(const char *str, int &value);
-int ParseDouble(const char *str, double &value);
-int ParsingErrorHelper(int err, const char *msg);
+void Version(std::ostream &os = std::cout);
+int Validate_RequiredErrMsgHelper(const std::string &opt, int err);
+int ParseInteger(const std::string &str, int &value);
+int ParseDouble(const std::string &str, double &value);
+int ParsingErrorHelper(int err, const std::string &msg);
 std::string GetDatetimeString();
