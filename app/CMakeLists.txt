@@ -9,9 +9,9 @@ add_executable(
     ${DRIVER_NAME}
     "main.cpp"
     "Driver.h"
+    "DriverUtils.cpp"
     "Errors.h"
     "Structs.h"
-    "Utils.cpp"
 )
 
 # Link the library to the executable

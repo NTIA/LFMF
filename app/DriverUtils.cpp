@@ -1,4 +1,4 @@
-/** @file Utils.cpp
+/** @file DriverUtils.cpp
  * Implements various model-agnostic utility functions for the driver
  */
 #include "Driver.h"
