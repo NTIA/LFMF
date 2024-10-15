@@ -12,11 +12,11 @@
 #include <algorithm>  // for transform
 #include <cctype>     // for tolower
 #include <cstring>    // for strlen
-#include <ctime>      // for localtime, time, time_t, strftime
-#include <fstream>    // for ifstream, ofstream
-#include <iomanip>    // for setw
-#include <iostream>   // for cerr, cout
-#include <string>     // for string, stoi, stod
+#include <ctime>     // for localtime_s, localtime_r, time, time_t, tm, strftime
+#include <fstream>   // for ifstream, ofstream
+#include <iomanip>   // for setw
+#include <iostream>  // for cerr, cout
+#include <string>    // for string, stoi, stod
 
 /////////////////////////////
 // Macros

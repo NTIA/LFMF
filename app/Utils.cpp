@@ -65,9 +65,18 @@ int ParsingErrorHelper(int err, const char *msg) {
  ******************************************************************************/
 std::string GetDatetimeString() {
     std::time_t now = std::time(nullptr);
+    struct std::tm localTime;
+
+#ifdef _WIN32
+    localtime_s(&localTime, &now);
+#else
+    if (localtime_r(&now, &localTime) == nullptr) {
+        return "Date and time unknown";
+    }
+#endif
     char mbstr[100];
-    // Warning: std::localtime may or may not be thread-safe
-    std::strftime(mbstr, sizeof(mbstr), "%c", std::localtime(&now));
-    std::string dtString = mbstr;
-    return dtString;
+    if (std::strftime(mbstr, sizeof(mbstr), "%c", &localTime) == 0) {
+        return "Could not format datetime string";
+    }
+    return std::string(mbstr);
 }
