@@ -25,7 +25,7 @@ void Version(std::ostream &os = std::cout) {
  * @param[in] err  Error code
  * @return         Return code
  ******************************************************************************/
-int Validate_RequiredErrMsgHelper(const std::string &opt, int err) {
+int Validate_RequiredErrMsgHelper(const std::string &opt, const int err) {
     std::cerr << "Driver Error " << err << ": Option \"" << opt
               << "\" is required but was not provided" << std::endl;
     return err;
@@ -80,7 +80,7 @@ int ParseDouble(const std::string &str, double &value) {
  * @param[in] msg  Error message
  * @return         Error code from input param
  ******************************************************************************/
-int ParsingErrorHelper(int err, const std::string &msg) {
+int ParsingErrorHelper(const int err, const std::string &msg) {
     std::cerr << "Driver Error " << err << ": Unable to parse '" << msg
               << "' value." << std::endl;
     return err;

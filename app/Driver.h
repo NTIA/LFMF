@@ -38,8 +38,8 @@ int ValidateInputs(const DrvrParams &params);
 
 // Utils
 void Version(std::ostream &os = std::cout);
-int Validate_RequiredErrMsgHelper(const std::string &opt, int err);
+int Validate_RequiredErrMsgHelper(const std::string &opt, const int err);
 int ParseInteger(const std::string &str, int &value);
 int ParseDouble(const std::string &str, double &value);
-int ParsingErrorHelper(int err, const std::string &msg);
+int ParsingErrorHelper(const int err, const std::string &msg);
 std::string GetDatetimeString();
