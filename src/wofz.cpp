@@ -1,4 +1,4 @@
-#include "..\include\LFMF.h"
+#include "LFMF.h"
 
 complex<double> wofz(complex<double> z) 
 {
