@@ -8,7 +8,7 @@
  * 
  * @param[in] os  Output stream for writing; defaults to `std::cout`
  ******************************************************************************/
-void Version(std::ostream &os = std::cout) {
+void Version(std::ostream &os) {
     os << std::setfill('*') << std::setw(55) << "" << std::endl;
     os << "Institute for Telecommunication Sciences - Boulder, CO" << std::endl;
     os << "\tDriver Version: " << DRIVER_VERSION << std::endl;
