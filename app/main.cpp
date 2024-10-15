@@ -117,20 +117,6 @@ void Help() {
 };
 
 /*******************************************************************************
- * Print version information to the terminal
- ******************************************************************************/
-void Version() {
-    std::cout << std::setfill('*') << std::setw(55) << "" << std::endl;
-    std::cout << "Institute for Telecommunications Sciences - Boulder, CO"
-              << std::endl;
-    std::cout << "\tDriver Version: " << DRIVER_VERSION << std::endl;
-    std::cout << "\t" << LIBRARY_NAME << " Version: " << LIBRARY_VERSION
-              << std::endl;
-    std::cout << "Time: " << GetDatetimeString() << std::endl;
-    std::cout << std::setfill('*') << std::setw(55) << "" << std::endl;
-}
-
-/*******************************************************************************
  * Validate that required inputs are present for the mode specified by the user.
  * 
  * This function DOES NOT check the validity of the parameter values, only that
@@ -151,18 +137,4 @@ int ValidateInputs(const DrvrParams &params) {
         );
 
     return SUCCESS;
-}
-
-/*******************************************************************************
- * Helper function to format and print error messages encountered during
- * validation of input parameters
- * 
- * @param[in] opt  Command flag in error
- * @param[in] err  Error code
- * @return         Return code
- ******************************************************************************/
-int Validate_RequiredErrMsgHelper(const char *opt, int err) {
-    std::cerr << "Driver Error " << err << ": Option " << opt
-              << " is required but was not provided" << std::endl;
-    return err;
 }

@@ -33,11 +33,12 @@
 
 int ParseArguments(int argc, char **argv, DrvrParams &params);
 void Help();
-void Version();
 int ValidateInputs(const DrvrParams &params);
-int Validate_RequiredErrMsgHelper(const char *opt, int err);
+
 
 // Utils
+void Version();
+int Validate_RequiredErrMsgHelper(const char *opt, int err);
 int ParseInteger(const char *str, int &value);
 int ParseDouble(const char *str, double &value);
 int ParsingErrorHelper(int err, const char *msg);
