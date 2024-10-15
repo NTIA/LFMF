@@ -10,6 +10,9 @@ add_executable(
     "TestDriver.h"
 )
 
+# Add the include directory
+target_include_directories(${DRIVER_TEST_NAME} PUBLIC "${DRIVER_HEADERS}")
+
 ###########################################
 ## SET UP AND DISCOVER TESTS
 ###########################################
