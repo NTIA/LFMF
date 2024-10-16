@@ -24,7 +24,7 @@
 This code repository is a template repository for software in the NTIA/ITS
 Propagation Library (PropLib). This template is intended for developers wishing
 to develop a cross-platform C++ library as part of PropLib. Instructions on how
-to use this repository are found in [CREATING-REPOSITORIES.md](./CREATING-REPOSITORIES.md).
+to use this repository are found in its [GitHub Wiki](https://github.com/NTIA/proplib-template/wiki).
 
 ## Getting Started ##
 
