@@ -134,7 +134,7 @@ wrap/
   matlab/                    # MATLAB wrapper submodule. Should contain CMakeLists.txt
   python/                    # Python wrapper submodule. Should contain CMakeLists.txt
 CMakeLists.txt               # Top-level CMakeLists.txt: project metadata and options
-CMakePresets.json            # Presets for CMake, e.g. "release64", "debug64", etc.
+CMakePresets.json            # Presets for CMake, e.g. "release", "debug", etc.
 ...
 ```
 

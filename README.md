@@ -50,12 +50,12 @@ provided for cross-platform builds, which can be carried out, for example, by:
 # From this repository's root directory, try one of the following command pairs:
 
 # "Release" configurations compile the library, build docs, and configure tests:
-cmake --preset release64
-cmake --build --preset release64
+cmake --preset release
+cmake --build --preset release
 
 # "Debug" configurations skip building the docs:
-cmake --preset debug64
-cmake --build --preset debug64
+cmake --preset debug
+cmake --build --preset debug
 
 # "DocsOnly" configurations only build the docs:
 cmake --preset docsOnly
@@ -82,7 +82,7 @@ If you've configured tests when building the project, for example by using one o
 the "Release" or "Debug" CMake presets, you can run the included unit tests as follows:
 
 ```cmd
-ctest --preset release64
+ctest --preset release
 ```
 
 ## References ##
