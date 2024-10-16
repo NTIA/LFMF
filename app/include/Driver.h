@@ -10,7 +10,6 @@
 // TODO-TEMPLATE: Include your library's main interface header
 // #include "ITS.<YOUR_NAMESPACE>/<YOUR_LIBRARY>.h"
 
-#include <ctime>     // for localtime_s, localtime_r, time, time_t, tm, strftime
 #include <fstream>   // for std::ofstream
 #include <iomanip>   // for std::setw
 #include <iostream>  // for std::cerr, std::cout, std::ostream

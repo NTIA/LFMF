@@ -3,6 +3,8 @@
  */
 #include "Driver.h"
 
+#include <ctime>  // for localtime_{s,r}, std::{time, time_t, tm, strftime}
+
 /*******************************************************************************
  * Print version information to the specified output stream 
  * 
