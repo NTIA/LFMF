@@ -37,18 +37,3 @@ set_target_properties(
     ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
 )
-
-# Architecture-dependent configuration
-if (BUILD_32BIT)
-    set_target_properties(
-        ${DRIVER_NAME} PROPERTIES
-        DEBUG_POSTFIX "x86"
-        RELEASE_POSTFIX "x86"
-    )
-else ()
-    set_target_properties(
-        ${DRIVER_NAME} PROPERTIES
-        DEBUG_POSTFIX "x64"
-        RELEASE_POSTFIX "x64"
-    )
-endif ()

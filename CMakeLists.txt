@@ -36,7 +36,6 @@ option(RUN_DRIVER_TESTS "Test the driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating documentation" OFF)
 option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
 option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
-option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
 
 ###########################################
 ## SETUP

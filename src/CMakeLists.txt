@@ -31,21 +31,6 @@ set_target_properties(
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
 )
 
-# Architecture-dependent configuration
-if (BUILD_32BIT)
-    set_target_properties(
-        ${LIB_NAME} PROPERTIES
-        DEBUG_POSTFIX "x86"
-        RELEASE_POSTFIX "x86"
-    )
-else ()
-    set_target_properties(
-        ${LIB_NAME} PROPERTIES
-        DEBUG_POSTFIX "x64"
-        RELEASE_POSTFIX "x64"
-    )
-endif ()
-
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
