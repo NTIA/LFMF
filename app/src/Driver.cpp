@@ -33,9 +33,8 @@ int main(int argc, char **argv) {
         return rtn;
 
     // Print results to file
-    std::ofstream fp;
-    fp.open(params.out_file.c_str());
-    if (!fp.is_open()) {
+    std::ofstream fp(params.out_file);
+    if (!fp) {
         std::cerr << "Error opening output file. Exiting." << std::endl;
         return DRVRERR__OPENING_OUTPUT_FILE;
     }
