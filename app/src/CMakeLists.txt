@@ -9,6 +9,7 @@ set(DRIVER_HEADERS "${PROJECT_SOURCE_DIR}/app/include")
 add_executable(
     ${DRIVER_NAME}
     "main.cpp"
+    "CommaSeparatedIterator.cpp"
     "DriverUtils.cpp"
     "${DRIVER_HEADERS}/Driver.h"
     "${DRIVER_HEADERS}/Errors.h"
