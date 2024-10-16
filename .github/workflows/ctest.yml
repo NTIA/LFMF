@@ -16,8 +16,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # Windows-2019 is used as a dedicated 32-bit build/test platform
-        os: [ubuntu-latest, macos-latest, windows-latest, windows-2019]
+        os: [ubuntu-latest, macos-latest, windows-latest]
         # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
         cmakeVersion: ["3.21", latest]
 
@@ -41,18 +40,9 @@ jobs:
       with:
         version: "1.11.0"
 
-    - name: "CMake: Build and Test (32-bit)"
-      if: matrix.os == 'windows-2019'
+    - name: "CMake: Build and Test"
       uses: lukka/run-cmake@v10
       with:
-        configurePreset: release32
-        buildPreset: release32
-        testPreset: release32
-
-    - name: "CMake: Build and Test (64-bit)"
-      if: matrix.os != 'windows-2019'
-      uses: lukka/run-cmake@v10
-      with:
-        configurePreset: release64
-        buildPreset: release64
-        testPreset: release64
+        configurePreset: release
+        buildPreset: release
+        testPreset: release
