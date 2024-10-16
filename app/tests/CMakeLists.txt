@@ -1,7 +1,7 @@
 ############################################
 ## CONFIGURE COMMAND LINE DRIVER TESTS
 ############################################
-set(DRIVER_TEST_NAME "Test${LIB_NAME}Driver")
+set(DRIVER_TEST_NAME "Test${DRIVER_NAME}")
 
 ## TODO-TEMPLATE: Include source AND header files for tests here.
 add_executable(
