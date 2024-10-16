@@ -1,9 +1,6 @@
 ###########################################
 ## BUILD THE DRIVER
 ###########################################
-set(DRIVER_NAME "${LIB_NAME}Driver")
-set(DRIVER_VERSION ${PROJECT_VERSION}) # May be set manually instead
-set(DRIVER_HEADERS "${PROJECT_SOURCE_DIR}/app/include")
 ## TODO-TEMPLATE: Include source AND header files here. Do not include
 ## source/header files already included in `add_library()` in `src/CMakeLists.txt`
 add_executable(
