@@ -1,4 +1,4 @@
-/** @file main.cpp
+/** @file Driver.cpp
  * Implements the main function of the executable, and other high-level functions
  */
 #include "Driver.h"

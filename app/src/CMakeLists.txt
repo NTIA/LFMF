@@ -8,8 +8,8 @@ set(DRIVER_HEADERS "${PROJECT_SOURCE_DIR}/app/include")
 ## source/header files already included in `add_library()` in `src/CMakeLists.txt`
 add_executable(
     ${DRIVER_NAME}
-    "main.cpp"
     "CommaSeparatedIterator.cpp"
+    "Driver.cpp"
     "DriverUtils.cpp"
     "${DRIVER_HEADERS}/Driver.h"
     "${DRIVER_HEADERS}/Errors.h"
