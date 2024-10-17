@@ -12,7 +12,7 @@ add_executable(
     "${DRIVER_HEADERS}/Driver.h"
 )
 
-# Add the include directory
+# Add the include directories
 target_include_directories(
     ${DRIVER_TEST_NAME} PUBLIC
     "${DRIVER_HEADERS}"
