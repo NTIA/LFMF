@@ -1,8 +1,25 @@
+/** @file LFMF.h
+ * Interface header for this library
+ */
+#ifndef __ITS_PROPAGATION_LFMF_LFMF_H__
+#define __ITS_PROPAGATION_LFMF_LFMF_H__
 
 #include <complex>
 
+namespace ITS {
+namespace PROPAGATION {
+namespace LFMF {
+
+// Define cross-platform DLLEXPORT
 // Export the DLL functions as "C" and not C++
-#define DLLEXPORT extern "C" __declspec(dllexport)
+#ifndef DOXYGEN_SHOULD_SKIP
+    #ifdef _WIN32
+        #define DLLEXPORT extern "C" __declspec(dllexport)
+    #else
+        #define DLLEXPORT extern "C"
+    #endif
+#endif
+
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
 #define DIM(x, y) (((x) > (y)) ? (x - y) : (0))
@@ -85,3 +102,9 @@ complex<double> Airy(complex<double> Z, int kind, int scaling);
 complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi, int kind, int scaling);
 int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol);
+
+}  // namespace LFMF
+}  // namespace PROPAGATION
+}  // namespace ITS
+
+#endif

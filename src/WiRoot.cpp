@@ -1,4 +1,12 @@
-#include "LFMF.h"
+/** @file WiRoot.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
+
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace PROPAGATION {
+namespace LFMF {
 
 /*=============================================================================
  |
@@ -239,3 +247,7 @@ complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<d
 
     return tw;
 };
+
+}  // namespace LFMF
+}  // namespace PROPAGATION
+}  // namespace ITS

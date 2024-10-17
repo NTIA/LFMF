@@ -1,4 +1,12 @@
-#include "LFMF.h"
+/** @file ResidueSeries.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
+
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace PROPAGATION {
+namespace LFMF {
 
 /*=============================================================================
  |
@@ -81,3 +89,7 @@ double ResidueSeries(double d__km, double k, double h_1__km, double h_2__km, dou
     return E_gw;
 
 };
+
+}  // namespace LFMF
+}  // namespace PROPAGATION
+}  // namespace ITS

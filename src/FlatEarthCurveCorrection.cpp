@@ -1,4 +1,12 @@
-#include "LFMF.h"
+/** @file FlatEarthCurveCorrection.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
+
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace PROPAGATION {
+namespace LFMF {
 
 /*=============================================================================
  |
@@ -89,3 +97,7 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
 
     return E_gw__mVm;
 };
+
+}  // namespace LFMF
+}  // namespace PROPAGATION
+}  // namespace ITS
