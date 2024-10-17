@@ -1,46 +1,45 @@
+/** @file TestDriverUtils.cpp
+ * Utility functions for the TestDriver executable
+ */
+
 #include "TestDriver.h"
 
-TEST(ParseIntegerTest, TestParseIntegerSuccess) {
+std::string joinArguments(const std::vector<std::string> &args) {
+    std::ostringstream oss;
+    for (std::string arg : args) {
+        oss << arg + " ";
+    }
+    return oss.str();
+}
+
+void appendDirectorySep(std::string &str) {
+#ifdef _WIN32
+    str += "\\";
+#else
+    str += "/";
+#endif
+}
+
+/*******************************************************************************
+ * Parse an integer value from the input string
+ * 
+ * @param[in]  str    Input value as string
+ * @return            Parsed integer value
+ ******************************************************************************/
+int ParseInteger(const std::string &str) {
     int value;
-    std::string toParse = "42";
-    int rtn = ParseInteger(toParse, value);
-    EXPECT_EQ(rtn, SUCCESS);
-    EXPECT_EQ(value, 42);
-}
+    try {
+        size_t pos;
+        value = std::stoi(str, &pos, 10);
 
-TEST(ParseIntegerTest, TestParseIntegerFailure1) {
-    int value;
-    std::string toParse = "42.0";
-    int rtn = ParseInteger(toParse, value);
-    EXPECT_EQ(rtn, DRVRERR__PARSE);
-}
+        // Verify the entire string was parsed
+        if (pos != str.size()) {
+            throw std::invalid_argument("Input string contains non-numeric characters");
+        }
+    } catch (...) {
+        // error parsing the input string value
+        throw std::runtime_error("Could not parse integer value");
+    };
 
-TEST(ParseIntegerTest, TestParseIntegerFailure2) {
-    int value;
-    std::string toParse = "notAnInteger";
-    int rtn = ParseInteger(toParse, value);
-    EXPECT_EQ(rtn, DRVRERR__PARSE);
-}
-
-TEST(ParseDoubleTest, TestParseDoubleSuccess1) {
-    double value;
-    std::string toParse = "42.0";
-    int rtn = ParseDouble(toParse, value);
-    EXPECT_EQ(rtn, SUCCESS);
-    EXPECT_DOUBLE_EQ(value, 42.0);
-}
-
-TEST(ParseDoubleTest, TestParseDoubleSuccess2) {
-    double value;
-    std::string toParse = "42";
-    int rtn = ParseDouble(toParse, value);
-    EXPECT_EQ(rtn, SUCCESS);
-    EXPECT_DOUBLE_EQ(value, 42.0);
-}
-
-TEST(ParseDoubleTest, TestParseDoubleFailure) {
-    double value;
-    std::string toParse = "notADouble";
-    int rtn = ParseDouble(toParse, value);
-    EXPECT_EQ(rtn, DRVRERR__PARSE);
+    return SUCCESS;
 }

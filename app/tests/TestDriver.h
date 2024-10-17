@@ -5,4 +5,14 @@
 
 #include "Driver.h"
 
-#include <gtest/gtest.h>
+#include <cstdlib>  // for std::system
+#include <sstream>  // for std::ostringstream
+#include <string>   // for std::string
+#include <vector>
+
+//////////////////////
+// FUNCTIONS
+
+std::string joinArguments(const std::vector<std::string> &args);
+void appendDirectorySep(std::string &str);
+int ParseInteger(const std::string &str);
