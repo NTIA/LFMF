@@ -1,7 +1,7 @@
 #include "CommaSeparatedIterator.h"
 
 #include <cstddef>   // for std::ptrdiff_t
-#include <iterator>  // for std::input_iterator_tag,
+#include <iterator>  // for std::input_iterator_tag
 
 CommaSeparatedIterator::CommaSeparatedIterator(std::istream &stream):
     stream_(stream) {
@@ -19,6 +19,12 @@ CommaSeparatedIterator::CommaSeparatedIterator(std::istream &stream):
  **********************************************************************/
 CommaSeparatedIterator &CommaSeparatedIterator::operator++() {
     if (std::getline(stream_, line_)) {
+        // Skip line if empty
+        if (line_.empty()) {
+            return ++(*this);
+        }
+
+        // Parse line by comma delimiter
         size_t pos = line_.find(',');
         if (pos != std::string::npos) {
             first_ = line_.substr(0, pos);
@@ -27,22 +33,24 @@ CommaSeparatedIterator &CommaSeparatedIterator::operator++() {
             first_ = line_;
             second_ = "";
         }
+
         // Convert both substrings to lowercase
-        std::transform(
-            first_.begin(),
-            first_.end(),
-            first_.begin(),
-            [](const char c) { return static_cast<char>(std::tolower(c)); }
-        );
-        std::transform(
-            second_.begin(),
-            second_.end(),
-            second_.begin(),
-            [](const char c) { return static_cast<char>(std::tolower(c)); }
-        );
+        auto toLower = [](std::string &s) {
+            std::transform(s.begin(), s.end(), s.begin(), [](const char c) {
+                return static_cast<char>(std::tolower(c));
+            });
+        };
+        toLower(first_);
+        toLower(second_);
+
     } else {
-        first_ = second_ = "";  // End of stream
+        if (stream_.bad()) {
+            throw std::runtime_error("Error reading stream.");
+        }
+        // End of stream reached
+        first_ = second_ = "";
     }
+
     return *this;
 }
 
@@ -65,5 +73,5 @@ CommaSeparatedIterator::value_type CommaSeparatedIterator::operator*() const {
  * @return True if there are still lines to read, otherwise false.
  **********************************************************************/
 CommaSeparatedIterator::operator bool() const {
-    return !line_.empty();
+    return stream_.good() || !first_.empty() || !second_.empty();
 }
