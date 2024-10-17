@@ -12,6 +12,7 @@ on:
 # Define the matrix for different operating systems
 jobs:
   build-and-test:
+    if: github.repository != 'NTIA/proplib-template'
     name: ${{ matrix.os }} / CMake ${{ matrix.cmakeVersion }}
     runs-on: ${{ matrix.os }}
     strategy:

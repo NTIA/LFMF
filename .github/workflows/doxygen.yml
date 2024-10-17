@@ -18,6 +18,7 @@ concurrency:
 
 jobs:
   build:
+    if: github.repository != 'NTIA/proplib-template'
     runs-on: ubuntu-latest
     steps:
         - name: Checkout repository
@@ -54,7 +55,7 @@ jobs:
             path: ./docs/html/
 
   deploy:
-    if: ${{ github.event_name == 'release'}}
+    if: ${{ github.event_name == 'release'}} && github.repository != 'NTIA/proplib-template'
     needs: build
     permissions:
       contents: read
