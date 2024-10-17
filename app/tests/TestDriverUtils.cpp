@@ -45,5 +45,5 @@ int ParseInteger(const std::string &str) {
         throw std::runtime_error("Could not parse integer value");
     };
 
-    return SUCCESS;
+    return value;
 }
