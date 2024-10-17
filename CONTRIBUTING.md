@@ -121,7 +121,7 @@ include/
   <PackageNamespace>/        # Include namespace folder, e.g. "ITS.Propagation.LFMF"
     <HeaderFiles>.h          # Library header files go here, e.g. "LFMF.h" and "ErrorCodes.h"
 src/
-  <SourceFiles>.cpp          # Source files go here, e.g. "LongleyRice.cpp" and "FreeSpaceLoss.cpp"
+  <SourceFiles>.cpp          # Source files go here, e.g. "ResidueSeries.cpp" and "WiRoot.cpp"
   CMakeLists.txt             # Configures cross-platform build
 tests/
   data/

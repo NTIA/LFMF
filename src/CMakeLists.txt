@@ -1,12 +1,17 @@
 ###########################################
 ## BUILD THE LIBRARY
 ###########################################
-## TODO-TEMPLATE: Include source AND header files here.
-## TODO-TEMPLATE: See CREATING-REPOSITORIES.md for examples.
+# Include source AND header files here so IDEs can find them
 set(PROJECT_HEADERS "${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}")
 add_library(
     ${LIB_NAME} SHARED
-    "TODO-TEMPLATE"
+    Airy.cpp
+    FlatEarthCurveCorrection.cpp
+    LFMF.cpp
+    ResidueSeries.cpp
+    ValidateInput.cpp
+    WiRoot.cpp
+    wofz.cpp
     "${PROJECT_HEADERS}/${LIB_NAME}.h"
 )
 

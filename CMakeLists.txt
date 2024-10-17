@@ -8,14 +8,13 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 ###########################################
 ## PROJECT METADATA
 ###########################################
-# TODO-TEMPLATE: Add project metadata here. See CREATING-REPOSITORIES.md for an example.
-set(LIB_NAME "TODO-TEMPLATE: YOUR-LIBRARY")             # Name of library/target
-set(LIB_NAMESPACE "TODO-TEMPLATE: ITS.YOUR-NAMESPACE")  # Namespace for the named library
+set(LIB_NAME "LFMF")                        # Name of library/target
+set(LIB_NAMESPACE "ITS.Propagation")   # Namespace for the named library
 project(
     "${LIB_NAMESPACE}.${LIB_NAME}"
     VERSION 1.0.0
-    DESCRIPTION "TODO-TEMPLATE: BRIEF DESCRIPTION OF YOUR SOFTWARE"
-    HOMEPAGE_URL "TODO-TEMPLATE: HOMEPAGE LINK, E.G. TO RELEVANT PAGE ON PROPLIB WIKI"
+    DESCRIPTION "Low Frequency / Medium Frequency (LF/MF) Propagation Model"
+    HOMEPAGE_URL "https://ntia.github.io/propagation-library-wiki/models/LFMF"
     LANGUAGES "CXX"
 )
 
