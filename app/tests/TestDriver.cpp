@@ -32,6 +32,13 @@ int main() {
         args.pop_back();
         command = executable + " " + joinArguments(args);
         std::cout << "Running command: " << command << std::endl;
+        // Suppress stdout when executable is called:
+#ifdef _WIN32
+        command += " > nul";
+#else
+        command += " > /dev/null";
+#endif
+        command += " 2>&1";  // Also suppress stderr
         rtn = std::system(command.c_str());
         if (rtn != expected_rtn) {
             std::cout << "[FAILURE] Returned " << rtn << ", expected "
