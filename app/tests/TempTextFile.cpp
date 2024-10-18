@@ -14,6 +14,7 @@
     #include <cstdio>  // for L_tmpnam_s, tmpnam_s
 #endif
 
+#include <algorithm>  // for std::remove
 #include <fstream>    // for std::ofstream
 #include <iostream>   // for std::cerr, std::cout, std::ios::trunc
 #include <ostream>    // for std::endl
