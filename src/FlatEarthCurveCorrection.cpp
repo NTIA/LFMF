@@ -5,7 +5,7 @@
 #include "ITS.Propagation.LFMF/LFMF.h"
 
 namespace ITS {
-namespace PROPAGATION {
+namespace Propagation {
 namespace LFMF {
 
 /*=============================================================================
@@ -99,5 +99,5 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
 };
 
 }  // namespace LFMF
-}  // namespace PROPAGATION
+}  // namespace Propagation
 }  // namespace ITS

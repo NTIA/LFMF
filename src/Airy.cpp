@@ -5,7 +5,7 @@
 #include "ITS.Propagation.LFMF/LFMF.h"
 
 namespace ITS {
-namespace PROPAGATION {
+namespace Propagation {
 namespace LFMF {
 
 /*=============================================================================
@@ -826,5 +826,5 @@ complex<double> Airy(complex<double> Z, int kind, int scaling)
 };
 
 }  // namespace LFMF
-}  // namespace PROPAGATION
+}  // namespace Propagation
 }  // namespace ITS

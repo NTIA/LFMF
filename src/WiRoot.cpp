@@ -5,7 +5,7 @@
 #include "ITS.Propagation.LFMF/LFMF.h"
 
 namespace ITS {
-namespace PROPAGATION {
+namespace Propagation {
 namespace LFMF {
 
 /*=============================================================================
@@ -249,5 +249,5 @@ complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<d
 };
 
 }  // namespace LFMF
-}  // namespace PROPAGATION
+}  // namespace Propagation
 }  // namespace ITS

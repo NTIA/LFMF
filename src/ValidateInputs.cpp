@@ -1,11 +1,11 @@
-/** @file ValidateInput.cpp
+/** @file ValidateInputs.cpp
  * Implements the model from ITS.Propagation.LFMF.
  */
 
 #include "ITS.Propagation.LFMF/LFMF.h"
 
 namespace ITS {
-namespace PROPAGATION {
+namespace Propagation {
 namespace LFMF {
 
 /*=============================================================================
@@ -64,5 +64,5 @@ int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double 
 }
 
 }  // namespace LFMF
-}  // namespace PROPAGATION
+}  // namespace Propagation
 }  // namespace ITS

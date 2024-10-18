@@ -5,7 +5,7 @@
 #include "ITS.Propagation.LFMF/LFMF.h"
 
 namespace ITS {
-namespace PROPAGATION {
+namespace Propagation {
 namespace LFMF {
 
 complex<double> wofz(complex<double> z) 
@@ -237,5 +237,5 @@ return w;
 }
 
 }  // namespace LFMF
-}  // namespace PROPAGATION
+}  // namespace Propagation
 }  // namespace ITS

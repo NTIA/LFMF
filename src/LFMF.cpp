@@ -5,7 +5,7 @@
 #include "ITS.Propagation.LFMF/LFMF.h"
 
 namespace ITS {
-namespace PROPAGATION {
+namespace Propagation {
 namespace LFMF {
 
 /*=============================================================================
@@ -113,5 +113,5 @@ int LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__wat
 }
 
 }  // namespace LFMF
-}  // namespace PROPAGATION
+}  // namespace Propagation
 }  // namespace ITS

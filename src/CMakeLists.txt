@@ -9,7 +9,7 @@ add_library(
     FlatEarthCurveCorrection.cpp
     LFMF.cpp
     ResidueSeries.cpp
-    ValidateInput.cpp
+    ValidateInputs.cpp
     WiRoot.cpp
     wofz.cpp
     "${PROJECT_HEADERS}/${LIB_NAME}.h"
