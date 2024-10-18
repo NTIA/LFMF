@@ -3,6 +3,16 @@
  */
 #include "Driver.h"
 
+#ifdef _WIN32
+    // Ensure localtime_s is available on Windows
+    #ifndef __STDC_LIB_EXT1__
+        #define __STDC_LIB_EXT1__
+    #endif
+    #ifndef __STDC_WANT_LIB_EXT1__
+        #define __STDC_WANT_LIB_EXT1__ 1
+    #endif
+#endif
+
 #include <ctime>  // for localtime_{s,r}, std::{time, time_t, tm, strftime}
 
 /*******************************************************************************
