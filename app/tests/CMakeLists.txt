@@ -6,8 +6,10 @@ set(DRIVER_TEST_NAME "Test${DRIVER_NAME}")
 ## TODO-TEMPLATE: Include source AND header files for tests here.
 add_executable(
     ${DRIVER_TEST_NAME}
+    "TempTextFile.cpp"
     "TestDriver.cpp"
     "TestDriverUtils.cpp"
+    "TempTextFile.h"
     "TestDriver.h"
     "${DRIVER_HEADERS}/Driver.h"
 )

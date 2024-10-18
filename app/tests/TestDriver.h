@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Driver.h"
+#include "TempTextFile.h"
 
 #include <cstdlib>  // for std::system
 #include <sstream>  // for std::ostringstream
