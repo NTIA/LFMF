@@ -13,11 +13,15 @@
 using namespace ITS::Propagation::LFMF;
 
 struct LFMFInputsAndResult {
-    double f__ghz;
-    double h_1__km;
-    double h_2__km;
-    double beta_1__rad;
-    int atmosphere;
+    double h_tx__meter;
+    double h_rx__meter;
+    double f__mhz;
+    double P_tx__watt;
+    double N_s;
+    double d__km;
+    double epsilon;
+    double sigma;
+    int pol;
     int expectedReturn;
     Result expectedResult;
 };

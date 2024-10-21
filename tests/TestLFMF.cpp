@@ -4,7 +4,7 @@
 /*=============================================================================
  |
  |  Description:  The purpose of this is to ensure that CMAKE compiles
- |                the P.676 model DLL correctly.
+ |                the LFMF model DLL correctly.
  |                Test Data is stored in CSV format.
  |
  *===========================================================================*/
@@ -12,36 +12,45 @@ class TestLFMF : public ::testing::Test {
 protected:
     void SetUp() override {
         // Load test data from CSV
-        testData = ReadP676SlantPathInputsAndResult(fileName);
+        testData = ReadLFMFInputsAndResult(fileName);
     }
 
     // Vector to hold test data
-    std::vector<SlantPathInputsAndResult> testData;
+    std::vector<LFMFInputsAndResult> testData;
 
-    double TOLERANCE = 1.0e-10;
-    string fileName = "P676SlantPathAttenuationTest_001.csv";
+    double TOLERANCE = 1.0e-1;
+    std::string fileName = "LFMF_Examples.csv";
 };
 
 /*=============================================================================
  |
- |  Description:  Test case to verify P676 Slant Path Attenuation results are correct
+ |  Description:  Test case to verify LFMF results are correct
  |
  *===========================================================================*/
 TEST_F(TestLFMF, TestLFMFSuccess) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
-    std::cout << "TestP676 from '" << fileName << "': " << testData.size() << " Test instances." << std::endl;
+    std::cout << "TestLFMF from '" << fileName << "': " << testData.size() << " Test instances." << std::endl;
     for (const auto& data : testData) {
-        SlantPathAttenuationResult result;
+        Result result;
 
-        int rtn = SlantPathAttenuation(data.f__ghz, data.h_1__km, data.h_2__km, data.beta_1__rad,
-            data.atmosphere, &result);
+        int rtn = LFMF(
+            data.h_tx__meter,
+            data.h_rx__meter,
+            data.f__mhz,
+            data.P_tx__watt,
+            data.N_s,
+            data.d__km,
+            data.epsilon,
+            data.sigma,
+            data.pol,
+            &result
+        );
 
         EXPECT_EQ(rtn, data.expectedReturn);
-        EXPECT_NEAR(result.A_gas__db, data.expectedResult.A_gas__db, TOLERANCE);
-        EXPECT_NEAR(result.bending__rad, data.expectedResult.bending__rad, TOLERANCE);
-        EXPECT_NEAR(result.a__km, data.expectedResult.a__km, TOLERANCE);
-        EXPECT_NEAR(result.incident__rad, data.expectedResult.incident__rad, TOLERANCE);
-        EXPECT_NEAR(result.delta_L__km, data.expectedResult.delta_L__km, TOLERANCE);
+        EXPECT_NEAR(result.A_btl__db, data.expectedResult.A_btl__db, TOLERANCE);
+        EXPECT_NEAR(result.E_dBuVm, data.expectedResult.E_dBuVm, TOLERANCE);
+        EXPECT_NEAR(result.P_rx__dbm, data.expectedResult.P_rx__dbm, TOLERANCE);
+        EXPECT_EQ(result.method, data.expectedResult.method);
     }
 }

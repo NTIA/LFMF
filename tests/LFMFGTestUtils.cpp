@@ -30,110 +30,49 @@ std::vector<LFMFInputsAndResult>
     typedef std::vector<std::string>::size_type cell_vec_size_t;
         
     for (row_vec_size_t r = 1; r < csvRows.size(); r++) {
-        for (cell_vec_size_t i = 1; i < csvRows[0].size(); i++) {
-            if (csvRows[0][i] == "mode") {
-                if (csvRows[r][i] != "slant") {
-                
-                }
+        for (cell_vec_size_t i = 0; i < csvRows[0].size(); i++) {
+            if (csvRows[0][i] == "h_tx__meter") {
+                d.h_tx__meter = std::stod(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "f__ghz") {
-                d.f__ghz = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "h_rx__meter") {
+                d.h_rx__meter = std::stod(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "h_1__km") {
-                d.h_1__km = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "f__mhz") {
+                d.f__mhz = std::stod(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "h_2__km") {
-                d.h_2__km = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "P_tx__watt") {
+                d.P_tx__watt = std::stod(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "beta_1__rad") {
-                d.beta_1__rad = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "N_s") {
+                d.N_s = std::stod(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "atmosphere") {
-                d.atmosphere = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "d__km") {
+                d.d__km = std::stod(csvRows[r][i]);
             }
-            
-            if (csvRows[0][i] == "rtn") {
-                d.expectedReturn = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "epsilon") {
+                d.epsilon = std::stod(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "A_gas__db") {
-                d.expectedResult.A_gas__db = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "sigma") {
+                d.sigma = std::stod(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "bending__rad") {
-                d.expectedResult.bending__rad = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "a__km") {
-                d.expectedResult.a__km = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "incident__rad") {
-                d.expectedResult.incident__rad = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "delta_L__km") {
-                d.expectedResult.delta_L__km = std::stod(csvRows[r][i]);
-            }
-        }
-        testData.push_back(d);
-    }
-
-    return testData;
-}
-
-/*=============================================================================
- |
- |  Description:  This function loads test data from a CSV file
- |
- |      Input:      &filename       - Test Data CSV file name
- |
- |    Returns:      testData        - a vector includes one or more test cases
- |                                    in TerrestrialPathInputsAndResult Structure
- |
- *===========================================================================*/
-std::vector<TerrestrialPathInputsAndResult> ReadP676TerrestrialPathInputsAndResult(const std::string& filename) {
-    std::vector<TerrestrialPathInputsAndResult> testData;
-    std::string dataDir = GetDirectory("data");
-    std::ifstream file(dataDir + filename);
-    TerrestrialPathInputsAndResult d{};  // struct to store data from a single line of CSV
-    
-    std::vector<std::vector<std::string>> csvRows = readCSV(file);
-    if (csvRows.size() <= 1) {
-        return testData;
-    }
-
-    typedef std::vector<std::vector<std::string> >::size_type row_vec_size_t;
-    typedef std::vector<std::string>::size_type cell_vec_size_t;
-
-    for (row_vec_size_t r = 1; r < csvRows.size(); r++) {
-        for (cell_vec_size_t i = 1; i < csvRows[0].size(); i++) {
-            if (csvRows[0][i] == "mode") {
-                if (csvRows[r][i] != "ter") {
-
-                } if (csvRows[r][i] != "terex") {
-
-                }
-            }
-            if (csvRows[0][i] == "f__ghz") {
-                d.f__ghz = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "T__kelvin") {
-                d.T__kelvin = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "e__hPa") {
-                d.e__hPa = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "p__hPa") {
-                d.p__hPa = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "atmosphere") {
-                d.atmosphere = std::stod(csvRows[r][i]);
-            }
-            if (csvRows[0][i] == "r_0__km") {
-                d.r_0__km = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "pol") {
+                d.pol = std::stoi(csvRows[r][i]);
             }
 
             if (csvRows[0][i] == "rtn") {
-                d.expectedReturn = std::stod(csvRows[r][i]);
+                d.expectedReturn = std::stoi(csvRows[r][i]);
             }
-            if (csvRows[0][i] == "A_gas__db") {
-                d.expectedA_gas__db = std::stod(csvRows[r][i]);
+            if (csvRows[0][i] == "A_btl__db") {
+                d.expectedResult.A_btl__db = std::stod(csvRows[r][i]);
+            }
+            if (csvRows[0][i] == "E_dBuVm") {
+                d.expectedResult.E_dBuVm = std::stod(csvRows[r][i]);
+            }
+            if (csvRows[0][i] == "P_rx__dbm") {
+                d.expectedResult.P_rx__dbm = std::stod(csvRows[r][i]);
+            }
+            if (csvRows[0][i] == "method") {
+                d.expectedResult.method = std::stoi(csvRows[r][i]);
             }
         }
         testData.push_back(d);
@@ -174,7 +113,7 @@ static void AppendDirectorySep(std::string& str) {
 static std::string GetDirectory(std::string name) {
     std::string dataDir(__FILE__);
     dataDir.resize(dataDir.find_last_of("/\\"));
-    dataDir.resize(dataDir.find_last_of("/\\"));
+    //dataDir.resize(dataDir.find_last_of("/\\"));
     AppendDirectorySep(dataDir);
     dataDir += name;
     AppendDirectorySep(dataDir);
