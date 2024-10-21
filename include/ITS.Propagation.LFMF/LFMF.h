@@ -1,15 +1,48 @@
+/** @file LFMF.h
+ * Interface header for this library
+ */
+#pragma once
+#ifndef __ITS_PROPAGATION_LFMF_LFMF_H__
+#define __ITS_PROPAGATION_LFMF_LFMF_H__
 
 #include <complex>
 
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
+
+// Define cross-platform DLLEXPORT
 // Export the DLL functions as "C" and not C++
-#define DLLEXPORT extern "C" __declspec(dllexport)
+#ifndef DOXYGEN_SHOULD_SKIP
+    #ifdef _WIN32
+        #define DLLEXPORT extern "C" __declspec(dllexport)
+    #else
+        #define DLLEXPORT extern "C"
+    #endif
+#endif
+
+/*! \def MAX(a,b)
+    \brief A macro that returns the maximum of \a a and \a b.
+   
+    Details.
+*/
 #define MAX(x, y) (((x) > (y)) ? (x) : (y))
+/*! \def MIN(a,b)
+    \brief A macro that returns the minimum of \a a and \a b.
+   
+    Details.
+*/
 #define MIN(x, y) (((x) < (y)) ? (x) : (y))
+/*! \def DIM(a,b)
+    \brief A macro that returns the difference of \a a and \a b.
+   
+    Details.
+*/
 #define DIM(x, y) (((x) > (y)) ? (x - y) : (0))
 
 using std::complex;
 
-#define PI                          3.1415926535897932384
+#define PI                          3.1415926535897932384   /**< Approximate value of @f$ \pi @f$ */
 #define epsilon_0                   8.854187817e-12         // Vacuum permittivity (F/m) 
 #define a_0__km                     6370                    // Earth radius, in km
 #define C                           299792458.0             // Speed of light (m/s)
@@ -59,7 +92,9 @@ using std::complex;
 
 //////////////////////////////////////
 // Data Structures
-
+/** @struct Result
+ * struct Result for outputs
+ */
 struct Result
 {
     double A_btl__db;
@@ -85,3 +120,9 @@ complex<double> Airy(complex<double> Z, int kind, int scaling);
 complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi, int kind, int scaling);
 int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol);
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS
+
+#endif

@@ -1,4 +1,12 @@
-#include "..\include\LFMF.h"
+/** @file Airy.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
+
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
 
 /*=============================================================================
  |
@@ -816,3 +824,7 @@ complex<double> Airy(complex<double> Z, int kind, int scaling)
     return Ai;
 
 };
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS

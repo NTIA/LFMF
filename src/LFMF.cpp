@@ -1,4 +1,12 @@
-#include "..\include\LFMF.h"
+/** @file LFMF.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
+
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
 
 /*=============================================================================
  |
@@ -103,3 +111,7 @@ int LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__wat
 
     return SUCCESS;
 }
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS
