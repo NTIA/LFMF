@@ -1,10 +1,12 @@
 ###########################################
 ## BUILD THE LIBRARY
 ###########################################
+
+message(STATUS "STATUS: Start building the libaray: " ${LIB_NAME})
+
 # Include source AND header files here so IDEs can find them
-set(PROJECT_HEADERS "${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}")
-add_library(
-    ${LIB_NAME} SHARED
+set(PROJECT_HEADERS "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}")
+set(LIB_FILES
     Airy.cpp
     FlatEarthCurveCorrection.cpp
     LFMF.cpp
@@ -12,11 +14,21 @@ add_library(
     ValidateInputs.cpp
     WiRoot.cpp
     wofz.cpp
-    "${PROJECT_HEADERS}/${LIB_NAME}.h"
+    "${PROJECT_HEADERS}/LFMF.h"
 )
 
+# Create shared library
+if(NOT DEFINED BUILD_SHARED_LIBS)
+    message(STATUS "STATUS: BUILD_SHARED_LIBS is not defined to build the library: " ${LIB_NAME} ".")
+    add_library(${LIB_NAME} SHARED ${LIB_FILES})
+else()
+    message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build the library: " ${LIB_NAME} ".")
+    add_library(${LIB_NAME} ${LIB_FILES})
+endif()
+
+
 # Add the include directory
-target_include_directories(${LIB_NAME} PUBLIC "${PROJECT_SOURCE_DIR}/include")
+target_include_directories(${LIB_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/include")
 
 # Set minimum C++ version to C++11
 target_compile_features(${LIB_NAME} PUBLIC cxx_std_11)
@@ -31,9 +43,6 @@ set_target_properties(
     ${LIB_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR} # Include version in .so output filenames
-    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
-    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
 )
 
 # Architecture-dependent configuration
@@ -51,8 +60,24 @@ else ()
     )
 endif ()
 
-# Enable Hot Reload for MSVC compilers if supported.
-if (POLICY CMP0141)
-  cmake_policy(SET CMP0141 NEW)
-  set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
+    # Create a variable called installable_libs that is a list of all
+    # libraries we want to install (e.g. MathFunctions and tutorial_compiler_flags)
+    # Then install the installable libraries to the lib folder.
+    set(installable_libs ${LIB_NAME})
+
+    install(TARGETS ${installable_libs}
+            DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+    install(TARGETS ${installable_libs}
+            DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+    # Install the library headers to the include folder.
+    # Hint: Use the FILES and DESTINATION parameters
+
+    install(FILES 
+            "${PROJECT_HEADERS}/LFMF.h" 
+            DESTINATION 
+            ${CMAKE_INSTALL_INCLUDEDIR}
+    )
 endif()
