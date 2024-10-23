@@ -18,7 +18,7 @@ set(LIB_NAME "LFMF")                        # Name of library/target
 set(LIB_NAMESPACE "ITS.Propagation")        # Namespace for the named library
 project(
     "${LIB_NAMESPACE}.${LIB_NAME}"
-    VERSION 1.0.0
+    VERSION 1.1.0.0
     DESCRIPTION "Low Frequency / Medium Frequency (LF/MF) Propagation Model"
     HOMEPAGE_URL "https://ntia.github.io/propagation-library-wiki/models/LFMF"
     LANGUAGES "CXX"
@@ -51,7 +51,6 @@ option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
 option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
 
 # By Default, build shared libaray
-#set(BUILD_SHARED_LIBS ON CACHE BOOL "Build using shared libraries" FORCE)
 #set(ENABLE_INSTALL ON CACHE BOOL "Enable installation of (${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" FORCE)
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(ENABLE_INSTALL "Enable installation of (${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" ON)
