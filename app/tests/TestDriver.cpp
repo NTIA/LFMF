@@ -28,7 +28,9 @@ TEST_F(DriverTest, InvalidOptionError) {
 
 TEST_F(DriverTest, OpeningInputFileError) {
     // TODO-TEMPLATE: Update this call to RunDriver
-    int rtn = RunDriver("/invalid/path/input.xyz", true, "out.txt");
+    params.in_file = "/invalid/path/input.xyz";
+    params.DBG = false;
+    int rtn = RunDriver(params);
     EXPECT_EQ(rtn, DRVRERR__OPENING_INPUT_FILE);
 }
 
@@ -36,7 +38,9 @@ TEST_F(DriverTest, OpeningOutputFileError) {
     // TODO-TEMPLATE: Update this call to RunDriverWithInputFile
     // Provide valid inputs but invalid output file path
     std::string inputs = "template,0.0";
-    int rtn = RunDriverWithInputFile(inputs, true, "/invalid/path/output.xyz");
+    params.DBG = true;
+    params.out_file = "/invalid/path/output.xyz";
+    int rtn = RunDriverWithInputFile(inputs, params);
     EXPECT_EQ(rtn, DRVRERR__OPENING_OUTPUT_FILE);
 }
 

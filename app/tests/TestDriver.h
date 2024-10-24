@@ -25,11 +25,13 @@ class DriverTest: public ::testing::Test {
     protected:
         /***********************************************************************
          * Sets up the test environment.
-         * 
-         * Initializes the executable path based on the platform. On Windows,
-         * it adjusts the path separators and appends the ".exe" extension.
          **********************************************************************/
         void SetUp() override {
+            // TODO-TEMPLATE review and optionally adjust default params here
+            // Set the default driver params
+            params.DBG = false;
+            params.out_file = "tmp_out.txt";
+
             // Get the name of the executable to test
             executable = std::string(DRIVER_LOCATION);
             executable += "/" + std::string(DRIVER_NAME);
@@ -61,31 +63,27 @@ class DriverTest: public ::testing::Test {
         /***********************************************************************
          * Builds the command string to run the driver.
          * 
-         * Constructs a command string using the provided input file, model,
-         * and output file. Optionally suppresses outputs.
+         * Constructs a command string using the provided driver parameters
+         * struct. Optionally, the command can be written such that stdout and
+         * are suppressed.
          * 
-         * @param[in] inFile          The input file path
-         * @param[in] debug           The debug flag
-         * @param[in] outFile         The output file path
+         * @param[in] params          The driver parameters
          * @param[in] suppressOutputs Whether to suppress outputs (default: true)
          * @return                    The constructed command string
          **********************************************************************/
         std::string BuildCommand(
-            const std::string &inFile,
-            const bool debug,
-            const std::string &outFile,
-            const bool suppressOutputs = true
+            const DrvrParams &params, const bool suppressOutputs = true
         ) {
-            // TODO-TEMPLATE: Modify this function to accept all necessary
-            // parameters to construct a string to call the driver under test.
+            // TODO-TEMPLATE: Modify this function to correctly
+            // unpack the DrvrParams struct and build the command
 
             // Construct command from parameters
             std::string command = executable;
-            command += " -i " + inFile;
-            if (debug) {
+            command += " -i " + params.in_file;
+            if (params.DBG) {
                 command += " -DBG";
             }
-            command += " -o " + outFile;
+            command += " -o " + params.out_file;
 
             // Suppress text output of the driver, to avoid cluttering
             // test outputs.
@@ -99,19 +97,11 @@ class DriverTest: public ::testing::Test {
         /***********************************************************************
          * Runs the driver executable.
          * 
-         * @param[in] inFile   The input file path
-         * @param[in] debug    The debug flag value
-         * @param[in] outFile  The output file path
-         * @return             The return code from the driver execution
+         * @param[in] params  Parameters to parse as command line arguments
+         * @return            Return code from the driver execution
          **********************************************************************/
-        int RunDriver(
-            const std::string &inFile,
-            const bool debug,
-            const std::string &outFile
-        ) {
-            // TODO update this to use DrvrParams
-            // TODO-TEMPLATE: Update this function based on required driver inputs
-            std::string cmd = BuildCommand(inFile, debug, outFile);
+        int RunDriver(const DrvrParams &params) {
+            std::string cmd = BuildCommand(params);
             int rtn = std::system(cmd.c_str());
             return rtn;
         }
@@ -119,25 +109,26 @@ class DriverTest: public ::testing::Test {
         /***********************************************************************
          * Runs the driver using the specified input file contents.
          * 
-         * Creates a temporary file with the given contents and executes the
-         * driver, then cleans up the output file.
+         * This method creates a temporary text file containing the contents
+         * of `inFileContents` and then runs the driver using the temporary
+         * file as the input file. The rest of the required driver parameters
+         * are provided in the `params` input; the `params.in_file` value is
+         * ignored and can be unset. If an output file was produced by the
+         * driver, it is deleted before this method returns.
          * 
          * @param[in] inFileContents  The contents to write to the input file
-         * @param[in] debug           The debug flag value
-         * @param[in] outFile         Output file path (default is "tmp_out.txt")
+         * @param[in] params          A populated driver parameters struct (see above)
          * @return                    Return code from the driver execution
          **********************************************************************/
         int RunDriverWithInputFile(
-            const std::string &inFileContents,
-            const bool debug,
-            const std::string &outFile = "tmp_out.txt"
+            const std::string &inFileContents, const DrvrParams &params
         ) {
-            // TODO update this to use drvrparams
+            DrvrParams updated_params = params;
             TempTextFile tempFile(inFileContents);
-            std::string inFile = tempFile.getFileName();
-            int rtn = RunDriver(inFile, debug, outFile);
+            updated_params.in_file = tempFile.getFileName();
+            int rtn = RunDriver(updated_params);
             // Cleanup: delete output file if it was created
-            DeleteOutputFile(outFile);
+            DeleteOutputFile(updated_params.out_file);
             return rtn;
         }
 
@@ -163,6 +154,9 @@ class DriverTest: public ::testing::Test {
             }
         }
 
-        // Holds the platform-dependent string to call the executable
+        // Platform-dependent string to call the executable
         std::string executable;
+
+        // Driver parameters struct which may be used by tests
+        DrvrParams params;
 };
