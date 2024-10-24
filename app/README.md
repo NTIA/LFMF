@@ -9,8 +9,7 @@ from the command-line using text files to provide inputs and store outputs.
 Inputs to the command-line driver are specified in an ASCII text file using
 the common `key,value` format. Each line holds a single `key,value` combination,
 with the `key` representing the model input variable name and the `value` representing
-its value. An example is included in this repository [here](./data/in.txt).
-(TODO-TEMPLATE update the above example data info/link)
+its value.
 
 ## Output Files ##
 
@@ -27,10 +26,9 @@ in the below table:
 (TODO-TEMPLATE review and update the flags below)
 | Flag   | Type   | Required | Description                                                           |
 |--------|--------|----------|-----------------------------------------------------------------------|
-| `-i`   | string | True     | File specifying model input parameters in `key,value` format          |
-| `-o`   | string | True     | Filename where output results should be written                       |
-| `-t`   | string | True     | File containing comma-delimited terrain elevation data along the path |
-| `-dbg` | N/A    | False    | If specified, intermediate values will be written to the output file  |
+| `-i`   | string | true     | File specifying model input parameters in `key,value` format          |
+| `-o`   | string | true     | Filename where output results should be written                       |
+| `-dbg` | N/A    | false    | If specified, intermediate values will be written to the output file  |
 
 Additional arguments are available to print help text and version information:
 
@@ -44,10 +42,14 @@ order. A generic example of calling the command-line driver on Windows is:
 
 (TODO-TEMPLATE: update example driver command below)
 ```cmd
-<Driver>.exe -i <input_file> -t <terrain_file> -o <output_file>
+<Driver>.exe -i <input_file> -dbg -o <output_file>
 ```
 
 ### Examples ###
+
+The following files are included as references for the functionality of this software.
+Using these input files and the commands specified should produce outputs identical
+to the provided corresponding output files.
 
 (TODO-TEMPLATE: Provide all included examples in the table below)
 | Input File                | Terrain File                                        | Output File                 | Arguments                                          |
