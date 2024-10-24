@@ -14,14 +14,14 @@ int main(int argc, char **argv) {
     rtn = ParseArguments(argc, argv, params);
     if (rtn == DRVR__RETURN_SUCCESS)
         return SUCCESS;
-    if (rtn) {
+    if (rtn != SUCCESS) {
         Help();
         return rtn;
     }
 
-    // validate command line inputs
+    // Ensure required options were provided
     rtn = ValidateInputs(params);
-    if (rtn) {
+    if (rtn != SUCCESS) {
         Help();
         return rtn;
     }
@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
     // TODO-TEMPLATE: Add driver logic, e.g. validating inputs and calling the model
 
     // Return driver error code if one was returned
-    if (rtn >= 1100)
+    if (rtn > DRVR__RETURN_SUCCESS)
         return rtn;
 
     // Print results to file
@@ -60,33 +60,50 @@ int main(int argc, char **argv) {
  * @return             Return code
  ******************************************************************************/
 int ParseArguments(int argc, char **argv, DrvrParams &params) {
-    for (int i = 1; i < argc; i++) {
-        std::string arg(argv[i]);
-        std::transform(arg.begin(), arg.end(), arg.begin(), [](const char c) {
-            return static_cast<char>(std::tolower(c));
-        });
+    // TODO-TEMPLATE: Populate vector with all valid arguments
+    const std::vector<std::string> validArgs
+        = {"-i", "-o", "-h", "--help", "-v", "--version"};
 
-        // TODO-TEMPLATE: Specify behavior based on command line arguments.
+    for (int i = 1; i < argc; i++) {
+        // Parse arg to lowercase string
+        std::string arg(argv[i]);
+        StringToLower(arg);
+
+        // Check if provided flag is valid
+        if (std::find(validArgs.begin(), validArgs.end(), arg)
+            == validArgs.end()) {
+            // Invalid argument provided
+            std::cerr << "Unknown option: " << argv[i] << std::endl;
+            return DRVRERR__INVALID_OPTION;
+        }
+
+        // Handle simple flags which don't have associated values (e.g., "-v", "-DBG")
+        if (arg == "-v" || arg == "--version") {
+            Version();
+            return DRVR__RETURN_SUCCESS;
+        } else if (arg == "-h" || arg == "--help") {
+            Help();
+            return DRVR__RETURN_SUCCESS;
+            // TODO-TEMPLATE handle any model input flags here
+        } else if (arg == "-dbg") {
+            params.DBG = true;
+        }
+
+        // Check if end of arguments reached or next argument is another flag
+        if (i + 1 >= argc || argv[i + 1][0] == '-') {
+            std::cerr << "Error: no value given for " << arg << std::endl;
+            return DRVRERR__MISSING_OPTION;
+        }
+
+        // TODO-TEMPLATE: Handle inputs which provide values (e.g. "-i in.txt").
         // Template code will set in_file and out_file in DrvrParams based on -i
         // and -o options. It will also set DrvrParams.DBG based on a -dbg flag
-        // and will call Version() or Help() respectively if -v or -h is given.
         if (arg == "-i") {
             params.in_file = argv[i + 1];
             i++;
         } else if (arg == "-o") {
             params.out_file = argv[i + 1];
             i++;
-        } else if (arg == "-dbg") {
-            params.DBG = true;
-        } else if (arg == "-v") {
-            Version();
-            return DRVR__RETURN_SUCCESS;
-        } else if (arg == "-h") {
-            Help();
-            return DRVR__RETURN_SUCCESS;
-        } else {
-            std::cerr << "Unknown option: " << argv[i] << std::endl;
-            return DRVRERR__INVALID_OPTION;
         }
     }
 
@@ -112,6 +129,9 @@ void Help(std::ostream &os) {
        << ".exe -i inputs.txt -t terrain.txt -o results.txt" << std::endl;
     os << "\t[LINUX]   .\\" << DRIVER_NAME
        << " -i inputs.txt -t terrain.txt -o results.txt" << std::endl;
+    os << "Other Options (which don't run the model)" << std::endl;
+    os << "\t-h    :: Display this help message" << std::endl;
+    os << "\t-v    :: Display program version information" << std::endl;
     os << std::endl;
 };
 
@@ -125,12 +145,13 @@ void Help(std::ostream &os) {
  * @return            Return code
  ******************************************************************************/
 int ValidateInputs(const DrvrParams &params) {
+    DrvrParams not_set;
     // TODO-TEMPLATE: Check that required inputs were provided.
     // This template code checks that input/output files were given with -i and -o
-    if (params.in_file.length() == 0)
+    if (params.in_file == not_set.in_file)
         return Validate_RequiredErrMsgHelper("-i", DRVRERR__VALIDATION_IN_FILE);
 
-    if (params.out_file.length() == 0)
+    if (params.out_file == not_set.out_file)
         return Validate_RequiredErrMsgHelper(
             "-o", DRVRERR__VALIDATION_OUT_FILE
         );

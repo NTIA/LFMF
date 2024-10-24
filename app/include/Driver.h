@@ -16,6 +16,7 @@
 #include <ostream>   // for std::endl
 #include <string>    // for std::string, std::stoi, std::stod
 #include <tuple>     // for std::tie
+#include <vector>    // for std::vector
 
 /////////////////////////////
 // Macros
@@ -24,16 +25,16 @@
 #define PRINT << std::endl << std::left << std::setw(25) <<
 #define SETW13 << std::setw(13) <<
 
+//////////////////////////////
+// Library Namespace
 // TODO-TEMPLATE: use the namespace of your library
 // using namespace ITS::YourLibraryNamespace::YourLibraryName;
 
 /////////////////////////////
 // Functions
-
 int ParseArguments(int argc, char **argv, DrvrParams &params);
 void Help(std::ostream &os = std::cout);
 int ValidateInputs(const DrvrParams &params);
-
 
 // Driver Utils
 void Version(std::ostream &os = std::cout);
@@ -42,3 +43,4 @@ int ParseInteger(const std::string &str, int &value);
 int ParseDouble(const std::string &str, double &value);
 int ParsingErrorHelper(const int err, const std::string &msg);
 std::string GetDatetimeString();
+void StringToLower(std::string &str);

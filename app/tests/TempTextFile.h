@@ -1,3 +1,6 @@
+/** @file TempTextFile.h
+ * Header for a class which manages temporary text files.
+ */
 #pragma once
 
 #include <string>  // for std::string

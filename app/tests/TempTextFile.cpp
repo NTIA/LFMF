@@ -1,5 +1,5 @@
 /** @file TempFile.cpp
- * Contains a class implementation to 
+ * Implements a class to create and write to temporary text files
  */
 #include "TempTextFile.h"
 

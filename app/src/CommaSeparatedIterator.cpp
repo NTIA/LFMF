@@ -1,3 +1,7 @@
+/** @file CommaSeparatedIterator.cpp
+ * Implementation of class to read comma-delimited input text streams.
+*/
+
 #include "CommaSeparatedIterator.h"
 
 #include <cstddef>   // for std::ptrdiff_t

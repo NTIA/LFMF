@@ -120,3 +120,14 @@ std::string GetDatetimeString() {
     }
     return std::string(mbstr);
 }
+
+/******************************************************************************
+ * Convert a string to lowercase.
+ * 
+ * @param[in, out] str  The string to convert
+ ******************************************************************************/
+void StringToLower(std::string &str) {
+    std::transform(str.begin(), str.end(), str.begin(), [](const char c) {
+        return static_cast<char>(std::tolower(c));
+    });
+}
