@@ -26,7 +26,7 @@
 // TODO-TEMPLATE: Add driver error codes and document them in app/README.md
 
 /** Validation Errors (1200-1299) */
-#define DRVRERR__VALIDATION_IN_FILE             1200  /**< Input file not specified */
-#define DRVRERR__VALIDATION_OUT_FILE            1201  /**< Output file not specified */
+#define DRVRERR__VALIDATION_IN_FILE         1200  /**< Input file not specified */
+#define DRVRERR__VALIDATION_OUT_FILE        1201  /**< Output file not specified */
 
 // clang-format on

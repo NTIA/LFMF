@@ -125,10 +125,10 @@ void Help(std::ostream &os) {
     os << "\t-dbg  :: Dump intermediate values to output file [optional]"
        << std::endl;
     os << std::endl << "Examples:" << std::endl;
-    os << "\t[WINDOWS] " << DRIVER_NAME
-       << ".exe -i inputs.txt -t terrain.txt -o results.txt" << std::endl;
-    os << "\t[LINUX]   .\\" << DRIVER_NAME
-       << " -i inputs.txt -t terrain.txt -o results.txt" << std::endl;
+    os << "\t[WINDOWS] " << DRIVER_NAME << ".exe -i in.txt -o out.txt"
+       << std::endl;
+    os << "\t[LINUX]   .\\" << DRIVER_NAME << " -i in.txt -o out.txt"
+       << std::endl;
     os << "Other Options (which don't run the model)" << std::endl;
     os << "\t-h    :: Display this help message" << std::endl;
     os << "\t-v    :: Display program version information" << std::endl;
