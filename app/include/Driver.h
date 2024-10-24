@@ -21,8 +21,9 @@
 /////////////////////////////
 // Macros
 
-// Make print-to-file statements more concise in driver
+/** Shortcut for concise print-to-file statements in driver */
 #define PRINT << std::endl << std::left << std::setw(25) <<
+/** Shortcut for setting fixed whitespace padding in driver file output */
 #define SETW13 << std::setw(13) <<
 
 //////////////////////////////

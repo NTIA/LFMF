@@ -1,8 +1,9 @@
 # Main Page
 
 This website is an information-oriented API reference document for the @libname
-C++ library, a part of the NTIA/ITS Propagation Library. This site is primarily
-useful for developers wishing to contribute to this library or take it as a dependency.
+C++ library and associated command-line driver, a part of the NTIA/ITS Propagation
+Library. This site is primarily useful for developers wishing to contribute to this
+library or take it as a dependency.
 
 **For most users, the best place to start is the**
 [**NTIA/ITS Propagation Library Wiki**](https://ntia.github.io/propagation-library-wiki).

@@ -154,9 +154,9 @@ class DriverTest: public ::testing::Test {
             }
         }
 
-        // Platform-dependent string to call the executable
+        /** Platform-dependent string to call the executable */
         std::string executable;
 
-        // Driver parameters struct which may be used by tests
+        /** Driver parameters struct which may be used by tests */
         DrvrParams params;
 };

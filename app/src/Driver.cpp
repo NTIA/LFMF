@@ -5,6 +5,10 @@
 
 /*******************************************************************************
  * Main function of the driver executable
+ * 
+ * @param[in] argc  Number of arguments entered on the command line
+ * @param[in] argv  Array containing the provided command-line arguments
+ * @return          Return code
  ******************************************************************************/
 int main(int argc, char **argv) {
     int rtn;
