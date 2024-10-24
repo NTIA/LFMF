@@ -1,8 +1,9 @@
 /** @file CommaSeparatedIterator.cpp
  * Implementation of class to read comma-delimited input text streams.
 */
-
 #include "CommaSeparatedIterator.h"
+
+#include "Driver.h"
 
 #include <cstddef>   // for std::ptrdiff_t
 #include <iterator>  // for std::input_iterator_tag
@@ -39,14 +40,8 @@ CommaSeparatedIterator &CommaSeparatedIterator::operator++() {
         }
 
         // Convert both substrings to lowercase
-        auto toLower = [](std::string &s) {
-            std::transform(s.begin(), s.end(), s.begin(), [](const char c) {
-                return static_cast<char>(std::tolower(c));
-            });
-        };
-        toLower(first_);
-        toLower(second_);
-
+        StringToLower(first_);
+        StringToLower(second_);
     } else {
         if (stream_.bad()) {
             throw std::runtime_error("Error reading stream.");
