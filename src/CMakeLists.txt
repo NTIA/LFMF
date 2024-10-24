@@ -5,7 +5,7 @@
 message(STATUS "STATUS: Start building the libaray: " ${LIB_NAME})
 
 # Include source AND header files here so IDEs can find them
-set(PROJECT_HEADERS "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME}")
+set(LIB_HEADERS "${PROJECT_SOURCE_DIR}/include")
 set(LIB_FILES
     Airy.cpp
     FlatEarthCurveCorrection.cpp
@@ -14,10 +14,10 @@ set(LIB_FILES
     ValidateInputs.cpp
     WiRoot.cpp
     wofz.cpp
-    "${PROJECT_HEADERS}/LFMF.h"
+    "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h"
 )
 
-# Create shared library
+# By default, create shared library
 if(NOT DEFINED BUILD_SHARED_LIBS)
     message(STATUS "STATUS: BUILD_SHARED_LIBS is not defined to build the library: " ${LIB_NAME} ".")
     add_library(${LIB_NAME} SHARED ${LIB_FILES})
@@ -26,9 +26,8 @@ else()
     add_library(${LIB_NAME} ${LIB_FILES})
 endif()
 
-
 # Add the include directory
-target_include_directories(${LIB_NAME} PUBLIC "${CMAKE_SOURCE_DIR}/include")
+target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")
 
 # Set minimum C++ version to C++11
 target_compile_features(${LIB_NAME} PUBLIC cxx_std_11)
@@ -76,8 +75,8 @@ if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
     # Hint: Use the FILES and DESTINATION parameters
 
     install(FILES 
-            "${PROJECT_HEADERS}/LFMF.h" 
+            "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h" 
             DESTINATION 
-            ${CMAKE_INSTALL_INCLUDEDIR}
+            ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
     )
 endif()

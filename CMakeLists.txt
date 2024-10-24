@@ -35,31 +35,27 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 ###########################################
 ## SPECIFY MULTI-LANGUAGE WRAPPERS
 ###########################################
-set(DOTNET_WRAPPER_DIR "${CMAKE_SOURCE_DIR}/wrap/dotnet")
-set(MATLAB_WRAPPER_DIR "${CMAKE_SOURCE_DIR}/wrap/matlab")
-set(PYTHON_WRAPPER_DIR "${CMAKE_SOURCE_DIR}/wrap/python")
+set(DOTNET_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/dotnet")
+set(MATLAB_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/matlab")
+set(PYTHON_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/python")
 
 ###########################################
 ## CMAKE OPTIONS AND DEFAULTS
 ###########################################
 # Define options. Defaults to: compile 64-bit library and driver, build docs, run tests
-option(BUILD_DOCS "Generate documentation with Doxygen" OFF)
+option(BUILD_DOCS "Generate documentation with Doxygen" ON)
 option(BUILD_DRIVER "Build driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating documentation" OFF)
 option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
 option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
 option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
-
-# By Default, build shared libaray
-#set(ENABLE_INSTALL ON CACHE BOOL "Enable installation of (${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" FORCE)
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
-option(ENABLE_INSTALL "Enable installation of (${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" ON)
+option(ENABLE_INSTALL "Enable installation of ${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" ON)
 
 # control where the static and shared libraries are built so that on windows
 # we don't need to tinker with the path to run the executable
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Archive Output Directory")
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Library Output Directory")
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Runtime Output Directory")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Archive Output Directory")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Library Output Directory")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Runtime Output Directory")
 
 include(CMakeDependentOption)
 include(GNUInstallDirs)
@@ -68,12 +64,14 @@ include(GNUInstallDirs)
 ## BUILD/RUN
 ##########################################
 if (NOT DOCS_ONLY)
-    add_subdirectory(src)  # Build the shared library
+    add_subdirectory(src)  # Build the library
+
     if (COPY_TO_WRAPPERS)  # Copy compiled library to wrappers
         add_subdirectory(wrap)
     endif ()
+
     if (RUN_TESTS)         # Build and run unit tests
-        if (EXISTS "${CMAKE_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
+        if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
             enable_testing()
             add_subdirectory(tests)
         else ()
@@ -84,8 +82,21 @@ if (NOT DOCS_ONLY)
             )
         endif()
     endif ()
+
     if (BUILD_DRIVER)
         add_subdirectory(app)
+    endif ()
+
+    message(STATUS "STATUS: ${PROJECT_NAME} VERSION_MAJOR is " ${PROJECT_VERSION_MAJOR} ", VERSION_MINOR is " ${PROJECT_VERSION_MINOR})
+
+    if (ENABLE_INSTALL)
+        # setup installer
+        include(InstallRequiredSystemLibraries)
+        set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
+        set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
+        set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
+        set(CPACK_SOURCE_GENERATOR "TGZ" CACHE STRING "Set the CPack Archive Generator")
+        include(CPack)
     endif ()
 endif ()
 
