@@ -32,5 +32,5 @@ gtest_discover_tests(${TEST_NAME})
 
 if (DEFINED BUILD_SHARED_LIBS_OLD)
     option(BUILD_SHARED_LIBS "Build using shared libraries" ${BUILD_SHARED_LIBS_OLD})
-    message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} ", old: " ${BUILD_SHARED_LIBS_OLD})
+    message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} ", was: " ${BUILD_SHARED_LIBS_OLD})
 endif()

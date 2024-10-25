@@ -8,6 +8,16 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
+
+/******************************************************************************
+ *
+ *  Description:  Compute the LFMF propagation prediction
+ *
+ *  @param[in]    z             - Input argument
+ *
+ *  @return       w             - The desired wofz function calculated at z
+ *
+ *****************************************************************************/
 complex<double> wofz(complex<double> z) 
 {
  

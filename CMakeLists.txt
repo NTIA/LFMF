@@ -25,14 +25,6 @@ project(
 )
 
 ###########################################
-## SETUP
-###########################################
-# GoogleTest v1.12.1 requires at least C++11
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
-###########################################
 ## SPECIFY MULTI-LANGUAGE WRAPPERS
 ###########################################
 set(DOTNET_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/dotnet")
@@ -50,6 +42,14 @@ option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
 option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
 option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
 option(ENABLE_INSTALL "Enable installation of ${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" ON)
+
+###########################################
+## SETUP
+###########################################
+# GoogleTest v1.12.1 requires at least C++11
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # control where the static and shared libraries are built so that on windows
 # we don't need to tinker with the path to run the executable

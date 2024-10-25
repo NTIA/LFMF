@@ -8,23 +8,22 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
-/*=============================================================================
- |
- |  Description:  Calculates the groundwave field strength using the
- |                Residue Series method
- |
- |        Input:  d__km         - Path distance, in km
- |                k             - Wavenumber, in rad/km
- |                h_1__km       - Height of the lower antenna, in km
- |                h_2__km       - Height of the higher antenna, in km
- |                nu            - Intermediate value, 
- |                                pow(a_e__km * k / 2.0, THIRD);
- |                theta__rad    - Angular distance of path, in radians
- |                q             - Intermediate value -j*nu*delta
- |
- |      Returns:  E_gw          - Normalized field strength in mV/m
- |
- *===========================================================================*/
+/******************************************************************************
+ *
+ *  Description:  Calculates the groundwave field strength using the
+ *                Residue Series method
+ *
+ *  @param[in]    d__km         - Path distance, in km
+ *  @param[in]    k             - Wavenumber, in rad/km
+ *  @param[in]    h_1__km       - Height of the lower antenna, in km
+ *  @param[in]    h_2__km       - Height of the higher antenna, in km
+ *  @param[in]    nu            - Intermediate value, pow(a_e__km * k / 2.0, THIRD);
+ *  @param[in]    theta__rad    - Angular distance of path, in radians
+ *  @param[in]    q             - Intermediate value -j*nu*delta
+ *
+ *  @return       E_gw          - Normalized field strength in mV/m
+ *
+ *****************************************************************************/
 double ResidueSeries(double d__km, double k, double h_1__km, double h_2__km, double nu, double theta__rad, complex<double> q)
 {
     complex<double> DW2[200], W2[200]; // dummy variables

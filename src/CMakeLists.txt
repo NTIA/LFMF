@@ -6,6 +6,7 @@ message(STATUS "STATUS: Start building the libaray: " ${LIB_NAME})
 
 # Include source AND header files here so IDEs can find them
 set(LIB_HEADERS "${PROJECT_SOURCE_DIR}/include")
+
 set(LIB_FILES
     Airy.cpp
     FlatEarthCurveCorrection.cpp

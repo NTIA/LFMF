@@ -8,27 +8,27 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
-/*=============================================================================
- |
- |  Description:  Compute the LFMF propagation prediction
- |
- |        Input:  h_tx__meter   - Height of the transmitter, in meter
- |                h_rx__meter   - Height of the receiver, in meter
- |                f__mhz        - Frequency, in MHz
- |                P_tx__watt    - Transmitter power, in Watts
- |                N_s           - Surface refractivity, in N-Units
- |                d__km         - Path distance, in km
- |                epsilon       - Relative permittivity
- |                sigma         - Conductivity
- |                pol           - Polarization
- |                                  + 0 : POLARIZATION__HORIZONTAL
- |                                  + 1 : POLARIZATION__VERTICAL
- |
- |      Outputs:  result        - Result structure
- |
- |      Returns:  error         - Error code
- |
- *===========================================================================*/
+/******************************************************************************
+ *
+ *  Description:  Compute the LFMF propagation prediction
+ *
+ *  @param[in]    h_tx__meter   - Height of the transmitter, in meter
+ *  @param[in]    h_rx__meter   - Height of the receiver, in meter
+ *  @param[in]    f__mhz        - Frequency, in MHz
+ *  @param[in]    P_tx__watt    - Transmitter power, in Watts
+ *  @param[in]    N_s           - Surface refractivity, in N-Units
+ *  @param[in]    d__km         - Path distance, in km
+ *  @param[in]    epsilon       - Relative permittivity
+ *  @param[in]    sigma         - Conductivity
+ *  @param[in]    pol           - Polarization
+ *                                  + 0 : POLARIZATION__HORIZONTAL
+ *                                  + 1 : POLARIZATION__VERTICAL
+ *
+ *  @param[out]   result        - Result structure
+ *
+ *  @return       error         - Error code
+ *
+ *****************************************************************************/
 int LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol, Result *result)
 {
