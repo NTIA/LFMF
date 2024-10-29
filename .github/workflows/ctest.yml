@@ -12,7 +12,7 @@ on:
 # Define the matrix for different operating systems
 jobs:
   build-and-test:
-    if: github.repository != 'NTIA/proplib-template'
+    if: ${{ github.repository != 'NTIA/proplib-template' }}
     name: ${{ matrix.os }} / CMake ${{ matrix.cmakeVersion }}
     runs-on: ${{ matrix.os }}
     strategy:
@@ -39,7 +39,7 @@ jobs:
     - name: Install Doxygen
       uses: ssciwr/doxygen-install@v1
       with:
-        version: "1.11.0"
+        version: "1.12.0"
 
     - name: "CMake: Build and Test"
       uses: lukka/run-cmake@v10
