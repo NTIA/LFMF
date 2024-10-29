@@ -8,7 +8,6 @@ add_executable(
     ${DRIVER_TEST_NAME}
     "TempTextFile.cpp"
     "TestDriver.cpp"
-    "TestDriverUtils.cpp"
     "TempTextFile.h"
     "TestDriver.h"
     "${DRIVER_HEADERS}/Driver.h"
@@ -24,8 +23,9 @@ target_include_directories(
 # Link the library to the executable
 target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME})
 
-# Make driver executable name available to source
+# Make driver executable name and location available to source
 add_definitions(-DDRIVER_NAME="${DRIVER_NAME}")
+add_definitions(-DDRIVER_LOCATION="${DRIVER_EXE_DIR}/${CMAKE_BUILD_TYPE}")
 
 set_target_properties(
     ${DRIVER_TEST_NAME} PROPERTIES
@@ -33,3 +33,17 @@ set_target_properties(
     ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
     RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
 )
+
+###########################################
+## SET UP AND DISCOVER TESTS
+###########################################
+if (NOT ${GOOGLETEST_ADDED})
+    set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+    add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
+    include(GoogleTest)
+    include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
+    set(GOOGLETEST_ADDED ON)
+endif ()
+
+target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME} GTest::gtest_main)
+gtest_discover_tests(${DRIVER_TEST_NAME})
