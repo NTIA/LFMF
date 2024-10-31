@@ -8,9 +8,10 @@ add_executable(
     "CommaSeparatedIterator.cpp"
     "Driver.cpp"
     "DriverUtils.cpp"
+    "ReturnCodes.cpp"
     "${DRIVER_HEADERS}/CommaSeparatedIterator.h"
     "${DRIVER_HEADERS}/Driver.h"
-    "${DRIVER_HEADERS}/Errors.h"
+    "${DRIVER_HEADERS}/ReturnCodes.h"
     "${DRIVER_HEADERS}/Structs.h"
 )
 
@@ -31,7 +32,7 @@ set_target_properties(
     ${DRIVER_NAME} PROPERTIES
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR} # Include version in .so output filenames
-    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
-    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
+    LIBRARY_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
+    ARCHIVE_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
+    RUNTIME_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
 )

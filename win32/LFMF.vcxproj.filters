@@ -30,7 +30,7 @@
     <ClInclude Include="..\include\ITS.Propagation.LFMF\LFMF.h">
       <Filter>Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\ITS.Propagation.LFMF\Errors.h">
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\ReturnCodes.h">
       <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,7 +4,7 @@
 #ifndef __DRIVER_STRUCTS_H__
 #define __DRIVER_STRUCTS_H__
 
-#include <string>  // For std::string
+#include <string>  // for std::string
 
 /////////////////////////////
 // Data Structures

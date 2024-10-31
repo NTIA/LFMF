@@ -58,34 +58,7 @@ to the provided corresponding output files.
 
 ## Command-line Driver Errors ##
 
-(TODO-TEMPLATE: Update the below tables with your driver errors. Align with app/Errors.h)
-
 In addition to the return codes defined by the library itself, the command-line
-driver implements the following return codes.
-
-### General Errors ###
-
-| Value | Const Name                     | Description                                |
-|-------|--------------------------------|--------------------------------------------|
-| 1000  | `DRVR__RETURN_SUCCESS`         | Internal driver success code               |
-| 1001  | `DRVRERR__MISSING_OPTION`      | No value provided for given argument       | 
-| 1002  | `DRVRERR__INVALID_OPTION`      | Unknown option specified                   |
-| 1003  | `DRVRERR__OPENING_INPUT_FILE`  | Failed to open the input file for reading  |
-| 1004  | `DRVRERR__OPENING_OUTPUT_FILE` | Failed to open the output file for writing |
-
-### Input File Parsing Errors ###
-
-| Value | Const Name                    | Description                           |
-|-------|-------------------------------|---------------------------------------|
-| 1100  | `DRVRERR__PARSE`              | General input file parsing error      |
-
-### Validation Errors ###
-
-Driver validation errors occur when required command line arguments are missing.
-These validation errors are distinct from any defined within the library itself,
-which may include, e.g., parameter out-of-range errors.
-
-| Value | Const Name                         | Description                      |
-|-------|------------------------------------|----------------------------------|
-| 1200  | `DRVRERR__VALIDATION_IN_FILE`      | Input file not specified         |
-| 1201  | `DRVRERR__VALIDATION_OUT_FILE`     | Output file  not specified       |
+driver implements its own set of return codes in [`app/include/ReturnCodes.h`](./include/ReturnCodes.h).
+A helper function to map human-readable status messages to these codes in
+[`app/src/ReturnCodes.cpp`](./src/ReturnCodes.cpp).

@@ -5,7 +5,7 @@
 #define __ITS_PROPAGATION_LFMF_LFMF_H__
 
 #include <complex>
-#include "Errors.h"
+#include "ReturnCodes.h"
 
 using std::complex;
 
@@ -23,9 +23,9 @@ namespace LFMF {
     #endif
 #endif
 
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))             ///< A macro that returns the maximum of \a a and \a b.
-#define MIN(x, y) (((x) < (y)) ? (x) : (y))             ///< A macro that returns the minimum of \a a and \a b.
-#define DIM(x, y) (((x) > (y)) ? (x - y) : (0))         ///< A macro that returns the difference of \a a and \a b.
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))                 ///< A macro that returns the maximum of \a a and \a b.
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))                 ///< A macro that returns the minimum of \a a and \a b.
+#define DIM(x, y) (((x) > (y)) ? (x - y) : (0))             ///< A macro that returns the difference of \a a and \a b.
 
 #define PI                          3.1415926535897932384   ///< Approximate value of @f$ \pi @f$
 #define epsilon_0                   8.854187817e-12         ///< Vacuum permittivity (F/m) 

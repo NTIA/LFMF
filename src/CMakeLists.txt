@@ -16,7 +16,7 @@ set(LIB_FILES
     WiRoot.cpp
     wofz.cpp
     "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h"
-    "${LIB_HEADERS}/${PROJECT_NAME}/Errors.h"
+    "${LIB_HEADERS}/${PROJECT_NAME}/ReturnCodes.h"
 )
 
 # By default, create shared library
@@ -61,7 +61,7 @@ if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
     # Install the library headers to the include folder.
     install(FILES 
             "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h" 
-            "${LIB_HEADERS}/${PROJECT_NAME}/Errors.h"
+            "${LIB_HEADERS}/${PROJECT_NAME}/ReturnCodes.h"
             DESTINATION 
             ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
     )

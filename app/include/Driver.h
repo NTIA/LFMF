@@ -5,18 +5,16 @@
 #define __DRIVER_H__
 
 #include "CommaSeparatedIterator.h"
-#include "Errors.h"
+#include "ReturnCodes.h"
 #include "Structs.h"
 #include "DriverConfig.h"
 #include "ITS.Propagation.LFMF/LFMF.h"
 
 #include <fstream>   // for std::ofstream
-#include <iomanip>   // for std::setw
-#include <iostream>  // for std::cerr, std::cout, std::ostream
-#include <ostream>   // for std::endl
-#include <string>    // for std::string, std::stoi, std::stod
-#include <tuple>     // for std::tie
-#include <vector>    // for std::vector
+#include <iomanip>   // for std::left, std::setw
+#include <iostream>  // for std::cout
+#include <ostream>   // for std::endl, std::ostream
+#include <string>    // for std::string
 
 /////////////////////////////
 // Macros
@@ -28,21 +26,20 @@
 
 //////////////////////////////
 // Library Namespace
-using namespace ITS::Propagation::LFMF;
 
 /////////////////////////////
 // Functions
-int ParseArguments(int argc, char **argv, DrvrParams &params);
 void Help(std::ostream &os = std::cout);
-int ValidateInputs(const DrvrParams &params);
+DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params);
+DrvrReturnCode ValidateInputs(const DrvrParams &params);
 
 // Driver Utils
-void Version(std::ostream &os = std::cout);
-int Validate_RequiredErrMsgHelper(const std::string &opt, const int err);
-int ParseInteger(const std::string &str, int &value);
-int ParseDouble(const std::string &str, double &value);
-int ParsingErrorHelper(const int err, const std::string &msg);
 std::string GetDatetimeString();
+DrvrReturnCode ParseDouble(const std::string &str, double &value);
+DrvrReturnCode ParseInteger(const std::string &str, int &value);
+void PrintLabel(std::ofstream &fp, const std::string &lbl);
 void StringToLower(std::string &str);
+
+void Version(std::ostream &os = std::cout);
 
 #endif
