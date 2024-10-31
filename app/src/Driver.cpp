@@ -30,7 +30,11 @@ int main(int argc, char **argv) {
         return rtn;
     }
 
-    // TODO-TEMPLATE: Add driver logic, e.g. validating inputs and calling the model
+    rtn = ParseASMInputFile(params.in_file, asm_params);
+    if (rtn != DRVR__SUCCESS) {
+        return rtn;
+    }
+    rtn = CallAeronauticalStatisticalModel(asm_params, loss__db);
 
     // Return driver error code if one was returned
     if (rtn > DRVR__RETURN_SUCCESS)
@@ -51,8 +55,21 @@ int main(int argc, char **argv) {
         fp << argv[i] << " ";
     }
     fp << std::endl << std::endl;
-    // TODO-TEMPLATE populate the rest of the output file
+    fp << "Inputs";
+    WriteTSMInputs(fp, tsm_params);
+
+    if (rtn != SUCCESS) {
+        fp PRINT LIBRARY_NAME << " Error" SETW13 rtn;
+        PrintLabel(fp, GetReturnStatus(rtn));
+    } else {
+        fp << std::endl << std::endl << "Results";
+        fp PRINT "Return Code" SETW13 rtn;
+        PrintLabel(fp, GetReturnStatus(rtn));
+        fp PRINT "Clutter loss" SETW13 std::fixed << std::setprecision(1)
+                                                  << loss__db.front() << "(dB)";
+    }
     fp.close();
+    return SUCCESS;
 }
 
 /*******************************************************************************

@@ -1,14 +1,14 @@
 /** @file Driver.h
  * Interface header for this driver executable
  */
-#pragma once
+#ifndef __DRIVER_H__
+#define __DRIVER_H__
 
 #include "CommaSeparatedIterator.h"
 #include "Errors.h"
 #include "Structs.h"
-
-// TODO-TEMPLATE: Include your library's main interface header
-// #include "ITS.<YOUR_NAMESPACE>/<YOUR_LIBRARY>.h"
+#include "DriverConfig.h"
+#include "ITS.Propagation.LFMF/LFMF.h"
 
 #include <fstream>   // for std::ofstream
 #include <iomanip>   // for std::setw
@@ -28,8 +28,7 @@
 
 //////////////////////////////
 // Library Namespace
-// TODO-TEMPLATE: use the namespace of your library
-// using namespace ITS::YourLibraryNamespace::YourLibraryName;
+using namespace ITS::Propagation::LFMF;
 
 /////////////////////////////
 // Functions
@@ -45,3 +44,5 @@ int ParseDouble(const std::string &str, double &value);
 int ParsingErrorHelper(const int err, const std::string &msg);
 std::string GetDatetimeString();
 void StringToLower(std::string &str);
+
+#endif

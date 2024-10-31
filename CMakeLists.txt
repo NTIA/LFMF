@@ -1,3 +1,8 @@
+############################################################
+## CMakeList.txt : Top-level CMake project file, do global
+## configuration and include sub-projects here.
+############################################################
+
 # >=3.21 required for Ninja Generators to use absolute paths.
 #    See https://stackoverflow.com/questions/69846931/
 #    This is relevant for specifying unit test data file paths
@@ -37,10 +42,10 @@ set(PYTHON_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/python")
 # Define options. Defaults to: compile 64-bit library and driver, build docs, run tests
 option(BUILD_DOCS "Generate documentation with Doxygen" ON)
 option(BUILD_DRIVER "Build driver executable" ON)
+option(RUN_DRIVER_TESTS "Test the driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating documentation" OFF)
 option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
 option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
-option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
 option(ENABLE_INSTALL "Enable installation of ${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" ON)
 
 ###########################################

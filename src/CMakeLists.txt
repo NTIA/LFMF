@@ -16,6 +16,7 @@ set(LIB_FILES
     WiRoot.cpp
     wofz.cpp
     "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h"
+    "${LIB_HEADERS}/${PROJECT_NAME}/Errors.h"
 )
 
 # By default, create shared library
@@ -45,24 +46,9 @@ set_target_properties(
     SOVERSION ${PROJECT_VERSION_MAJOR} # Include version in .so output filenames
 )
 
-# Architecture-dependent configuration
-if (BUILD_32BIT)
-    set_target_properties(
-        ${LIB_NAME} PROPERTIES
-        DEBUG_POSTFIX "x86"
-        RELEASE_POSTFIX "x86"
-    )
-else ()
-    set_target_properties(
-        ${LIB_NAME} PROPERTIES
-        DEBUG_POSTFIX "x64"
-        RELEASE_POSTFIX "x64"
-    )
-endif ()
-
 if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
-    # Create a variable called installable_libs that is a list of all
-    # libraries we want to install (e.g. MathFunctions and tutorial_compiler_flags)
+    # Create a variable called installable_libs that is a list of all libraries
+    # we want to install (e.g. LFMF and lfmf_compiler_flags)
     # Then install the installable libraries to the lib folder.
     set(installable_libs ${LIB_NAME})
 
@@ -73,10 +59,9 @@ if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
             DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
     # Install the library headers to the include folder.
-    # Hint: Use the FILES and DESTINATION parameters
-
     install(FILES 
             "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h" 
+            "${LIB_HEADERS}/${PROJECT_NAME}/Errors.h"
             DESTINATION 
             ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
     )

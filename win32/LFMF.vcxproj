@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\Errors.h" />
     <ClInclude Include="..\include\ITS.Propagation.LFMF\LFMF.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
