@@ -113,11 +113,11 @@ This section shows a typical project structure for a primary (i.e., non-wrapper)
 repository. For details about wrapper repositories, refer to their own README files.
 
 ```bash
-docs/                        
+docs/
   CMakeLists.txt             # Doxygen configuration
 extern/
   ...                        # External Git submodules/dependencies
-include/                     
+include/
   <PackageNamespace>/        # Include namespace folder, e.g. "ITS.Propagation.ITM"
     <HeaderFiles>.h          # Library header files go here, e.g. "ITM.h" and "ErrorCodes.h"
 src/
@@ -190,11 +190,11 @@ and the GitHub action successfully generates the documentation site. Below is an
 example showing the expected documentation formats.
 
 ```cpp
-constexpr double = PI 3.1415; /**< Inline format, e.g. for constants or struct members */
+constexpr double = PI 3.1415; /**< Inline format, e.g. for constants */
 
 /*******************************************************************************
  * This is a brief description of the function.
- * 
+ *
  * This is an optional, longer description of the function. It can include
  * LaTeX formatting, for example: this function doubles its input @f$ x @f$ and
  * returns a value @f$ y @f$ with @f$ y = 2x @f$.
