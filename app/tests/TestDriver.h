@@ -7,12 +7,16 @@
 #include "TempTextFile.h"
 
 #include <algorithm>      // for std::replace
-#include <cstdio>         // for std::remove
+#include <cstdio>         // for std::remove, std::perror
 #include <cstdlib>        // for std::system
 #include <gtest/gtest.h>  // GoogleTest
-#include <iostream>       // for std::cout, std::endl
+#include <iostream>       // for std::cout
+#include <ostream>        // for std::endl, std::flush
 #include <string>         // for std::string
 
+#ifndef _WIN32
+    #include <unistd.h>  // for WEXITSTATUS
+#endif
 
 /*******************************************************************************
  * @class DriverTest
@@ -34,13 +38,6 @@ class DriverTest: public ::testing::Test {
 
             // Get the name of the executable to test
             executable = std::string(DRIVER_LOCATION);
-            executable += "/" + std::string(DRIVER_NAME);
-#ifdef _WIN32
-            std::replace(executable.begin(), executable.end(), '/', '\\');
-            executable += ".exe";
-#else
-            executable = "./" + executable;
-#endif
         }
 
         /***********************************************************************

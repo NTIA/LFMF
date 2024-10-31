@@ -3,9 +3,7 @@
  */
 #pragma once
 
-#include <algorithm>  // for transform
-#include <cctype>     // for std::tolower
-#include <fstream>    // for std::istream
+#include <istream>    // for std::istream
 #include <string>     // For std::string
 #include <utility>    // for std::pair
 

@@ -5,8 +5,13 @@
 
 #include "Driver.h"
 
-#include <cstddef>   // for std::ptrdiff_t
-#include <iterator>  // for std::input_iterator_tag
+#include <algorithm>  // for transform
+#include <cctype>     // for std::tolower
+#include <cstddef>    // for std::ptrdiff_t, std::size_t
+#include <fstream>    // for std::istream
+#include <iterator>   // for std::input_iterator_tag
+#include <stdexcept>  // for std::runtime_error
+#include <string>     // for std::getline, std::string
 
 CommaSeparatedIterator::CommaSeparatedIterator(std::istream &stream):
     stream_(stream) {
@@ -30,7 +35,7 @@ CommaSeparatedIterator &CommaSeparatedIterator::operator++() {
         }
 
         // Parse line by comma delimiter
-        size_t pos = line_.find(',');
+        std::size_t pos = line_.find(',');
         if (pos != std::string::npos) {
             first_ = line_.substr(0, pos);
             second_ = line_.substr(pos + 1);

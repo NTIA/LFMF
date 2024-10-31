@@ -11,12 +11,10 @@
 // #include "ITS.<YOUR_NAMESPACE>/<YOUR_LIBRARY>.h"
 
 #include <fstream>   // for std::ofstream
-#include <iomanip>   // for std::setw
-#include <iostream>  // for std::cerr, std::cout, std::ostream
-#include <ostream>   // for std::endl
-#include <string>    // for std::string, std::stoi, std::stod
-#include <tuple>     // for std::tie
-#include <vector>    // for std::vector
+#include <iomanip>   // for std::left, std::setw
+#include <iostream>  // for std::cout
+#include <ostream>   // for std::endl, std::ostream
+#include <string>    // for std::string
 
 /////////////////////////////
 // Macros
@@ -41,5 +39,6 @@ DrvrReturnCode ValidateInputs(const DrvrParams &params);
 std::string GetDatetimeString();
 DrvrReturnCode ParseDouble(const std::string &str, double &value);
 DrvrReturnCode ParseInteger(const std::string &str, int &value);
+void PrintLabel(std::ofstream &fp, const std::string &lbl);
 void StringToLower(std::string &str);
 void Version(std::ostream &os = std::cout);

@@ -52,19 +52,24 @@ if (NOT DOCS_ONLY)
     if (COPY_TO_WRAPPERS)  # Copy compiled library to wrappers
         add_subdirectory(wrap)
     endif ()
-    if (RUN_TESTS)         # Build and run unit tests
+    if (RUN_TESTS OR RUN_DRIVER_TESTS)
         if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
             enable_testing()
-            add_subdirectory(tests)
+            set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+            add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
+            include(GoogleTest)
         else ()
             message(SEND_ERROR
                 "Unable to build tests. GoogleTest submodule is missing. "
                 "Run `git submodule init extern/googletest` then "
                 "`git submodule update` and try again."
             )
-        endif()
+        endif ()
     endif ()
-    if (BUILD_DRIVER)
+    if (RUN_TESTS)         # Build and run unit tests
+        add_subdirectory(tests)
+    endif ()
+    if (BUILD_DRIVER OR RUN_DRIVER_TESTS)
         add_subdirectory(app)
     endif ()
 endif ()

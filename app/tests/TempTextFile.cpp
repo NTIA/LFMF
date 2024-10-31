@@ -11,7 +11,10 @@
     #ifndef __STDC_WANT_LIB_EXT1__
         #define __STDC_WANT_LIB_EXT1__ 1
     #endif
-    #include <cstdio>  // for L_tmpnam_s, tmpnam_s
+    #include <cstdio>    // for L_tmpnam_s, tmpnam_s
+#else                    // macOS and Linux
+    #include <cstdlib>   // for mkstemp
+    #include <unistd.h>  // for close
 #endif
 
 #include <algorithm>  // for std::remove
@@ -19,6 +22,7 @@
 #include <iostream>   // for std::cerr, std::cout, std::ios::trunc
 #include <ostream>    // for std::endl
 #include <stdexcept>  // for std::runtime_error
+#include <string>     // for std::string
 
 TempTextFile::TempTextFile(const std::string &content) {
 #ifdef _WIN32

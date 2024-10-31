@@ -3,12 +3,13 @@
 */
 #pragma once
 
-#include <string>  // For std::string
+#include <string>  // for std::string
 
 /////////////////////////////
 // Data Structures
 
 // TODO-TEMPLATE: Basic struct provided to hold input/output file names and DBG flag
+/** Parameters provided to the command line driver */
 struct DrvrParams {
         std::string in_file = "";  /**< Input file */
         std::string out_file = ""; /**< Output file */

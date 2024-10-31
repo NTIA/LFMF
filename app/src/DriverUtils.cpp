@@ -13,34 +13,53 @@
     #endif
 #endif
 
-#include <ctime>  // for localtime_{s,r}, std::{time, time_t, tm, strftime}
+#include <algorithm> // for std::transform
+#include <cctype>    // for std::tolower
+#include <ctime>     // for localtime_{s,r}, std::{time, time_t, tm, strftime}
+#include <fstream>   // for std::ofstream
+#include <iomanip>   // for std::setfill, std::setw
+#include <iostream>  // for std::cerr, std::endl
+#include <string>    // for std::stod, std::stoi, std::string
 
-/*******************************************************************************
- * Print version information to the specified output stream 
+/******************************************************************************
+ * Get a string containing the current date and time information.
  * 
- * @param[in] os  Output stream for writing; defaults to `std::cout`
+ * @return  A localized standard date and time string (locale dependent)
  ******************************************************************************/
-void Version(std::ostream &os) {
-    os << std::setfill('*') << std::setw(55) << "" << std::endl;
-    os << "Institute for Telecommunication Sciences - Boulder, CO" << std::endl;
-    os << "\tDriver Version: " << DRIVER_VERSION << std::endl;
-    os << "\t" << LIBRARY_NAME << " Version: " << LIBRARY_VERSION << std::endl;
-    os << "Time: " << GetDatetimeString() << std::endl;
-    os << std::setfill('*') << std::setw(55) << "" << std::endl;
+std::string GetDatetimeString() {
+    std::time_t now = std::time(nullptr);
+    struct std::tm localTime;
+
+#ifdef _WIN32
+    localtime_s(&localTime, &now);
+#else
+    if (localtime_r(&now, &localTime) == nullptr) {
+        return "Date and time unknown";
+    }
+#endif
+    char mbstr[100];
+    if (std::strftime(mbstr, sizeof(mbstr), "%c", &localTime) == 0) {
+        return "Could not format datetime string";
+    }
+    return std::string(mbstr);
 }
 
 /*******************************************************************************
- * Helper function to format and print error messages encountered during
- * validation of input parameters
+ * Parse a double value read from the input parameter file
  * 
- * @param[in] opt  Command flag in error
- * @param[in] err  Error code
- * @return         Return code
+ * @param[in]  str    Input file value as string
+ * @param[out] value  Input file value converted to double
+ * @return            Return code
  ******************************************************************************/
-int Validate_RequiredErrMsgHelper(const std::string &opt, const int err) {
-    std::cerr << "Driver Error " << err << ": Option \"" << opt
-              << "\" is required but was not provided" << std::endl;
-    return err;
+int ParseDouble(const std::string &str, double &value) {
+    try {
+        value = std::stod(str);
+    } catch (...) {
+        // error parsing the input string value
+        return DRVRERR__PARSE;
+    }
+
+    return SUCCESS;
 }
 
 /*******************************************************************************
@@ -68,24 +87,6 @@ int ParseInteger(const std::string &str, int &value) {
 }
 
 /*******************************************************************************
- * Parse a double value read from the input parameter file
- * 
- * @param[in]  str    Input file value as string
- * @param[out] value  Input file value converted to double
- * @return            Return code
- ******************************************************************************/
-int ParseDouble(const std::string &str, double &value) {
-    try {
-        value = std::stod(str);
-    } catch (...) {
-        // error parsing the input string value
-        return DRVRERR__PARSE;
-    }
-
-    return SUCCESS;
-}
-
-/*******************************************************************************
  * Common error handling function
  * 
  * @param[in] err  Error parsing code
@@ -98,28 +99,16 @@ int ParsingErrorHelper(const int err, const std::string &msg) {
     return err;
 }
 
-/******************************************************************************
- * Get a string containing the current date and time information.
+/*******************************************************************************
+ * Helper function to standardize printing of text labels to file
  * 
- * @return  A localized standard date and time string (locale dependent)
+ * @param[in] fp   Output stream, a text file open for writing
+ * @param[in] lbl  Text message
  ******************************************************************************/
-std::string GetDatetimeString() {
-    std::time_t now = std::time(nullptr);
-    struct std::tm localTime;
-
-#ifdef _WIN32
-    localtime_s(&localTime, &now);
-#else
-    if (localtime_r(&now, &localTime) == nullptr) {
-        return "Date and time unknown";
-    }
-#endif
-    char mbstr[100];
-    if (std::strftime(mbstr, sizeof(mbstr), "%c", &localTime) == 0) {
-        return "Could not format datetime string";
-    }
-    return std::string(mbstr);
+void PrintLabel(std::ofstream &fp, const std::string &lbl) {
+    fp << "[" << lbl << "]";
 }
+
 
 /******************************************************************************
  * Convert a string to lowercase.
@@ -130,4 +119,32 @@ void StringToLower(std::string &str) {
     std::transform(str.begin(), str.end(), str.begin(), [](const char c) {
         return static_cast<char>(std::tolower(c));
     });
+}
+
+/*******************************************************************************
+ * Helper function to format and print error messages encountered during
+ * validation of input parameters
+ * 
+ * @param[in] opt  Command flag in error
+ * @param[in] err  Error code
+ * @return         Return code
+ ******************************************************************************/
+int Validate_RequiredErrMsgHelper(const std::string &opt, const int err) {
+    std::cerr << "Driver Error " << err << ": Option \"" << opt
+              << "\" is required but was not provided" << std::endl;
+    return err;
+}
+
+/*******************************************************************************
+ * Print version information to the specified output stream 
+ * 
+ * @param[in] os  Output stream for writing; defaults to `std::cout`
+ ******************************************************************************/
+void Version(std::ostream &os) {
+    os << std::setfill('*') << std::setw(55) << "" << std::endl;
+    os << "Institute for Telecommunication Sciences - Boulder, CO" << std::endl;
+    os << "\tDriver Version: " << DRIVER_VERSION << std::endl;
+    os << "\t" << LIBRARY_NAME << " Version: " << LIBRARY_VERSION << std::endl;
+    os << "Time: " << GetDatetimeString() << std::endl;
+    os << std::setfill('*') << std::setw(55) << "" << std::endl;
 }
