@@ -8,9 +8,10 @@ add_executable(
     "CommaSeparatedIterator.cpp"
     "Driver.cpp"
     "DriverUtils.cpp"
+    "ReturnCodes.cpp"
     "${DRIVER_HEADERS}/CommaSeparatedIterator.h"
     "${DRIVER_HEADERS}/Driver.h"
-    "${DRIVER_HEADERS}/Errors.h"
+    "${DRIVER_HEADERS}/ReturnCodes.h"
     "${DRIVER_HEADERS}/Structs.h"
 )
 

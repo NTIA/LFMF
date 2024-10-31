@@ -16,16 +16,16 @@ int main(int argc, char **argv) {
 
     // Parse command line arguments
     rtn = ParseArguments(argc, argv, params);
-    if (rtn == DRVR__RETURN_SUCCESS)
+    if (rtn == DRVR__RETURN_SUCCESS) {
         return SUCCESS;
-    if (rtn != SUCCESS) {
+    } else if (rtn != DRVR__SUCCESS) {
         Help();
         return rtn;
     }
 
     // Ensure required options were provided
     rtn = ValidateInputs(params);
-    if (rtn != SUCCESS) {
+    if (rtn != DRVR__SUCCESS) {
         Help();
         return rtn;
     }

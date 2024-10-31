@@ -4,7 +4,7 @@
 #pragma once
 
 #include "CommaSeparatedIterator.h"
-#include "Errors.h"
+#include "ReturnCodes.h"
 #include "Structs.h"
 
 // TODO-TEMPLATE: Include your library's main interface header
@@ -33,15 +33,13 @@
 
 /////////////////////////////
 // Functions
-int ParseArguments(int argc, char **argv, DrvrParams &params);
 void Help(std::ostream &os = std::cout);
-int ValidateInputs(const DrvrParams &params);
+DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params);
+DrvrReturnCode ValidateInputs(const DrvrParams &params);
 
 // Driver Utils
-void Version(std::ostream &os = std::cout);
-int Validate_RequiredErrMsgHelper(const std::string &opt, const int err);
-int ParseInteger(const std::string &str, int &value);
-int ParseDouble(const std::string &str, double &value);
-int ParsingErrorHelper(const int err, const std::string &msg);
 std::string GetDatetimeString();
+DrvrReturnCode ParseDouble(const std::string &str, double &value);
+DrvrReturnCode ParseInteger(const std::string &str, int &value);
 void StringToLower(std::string &str);
+void Version(std::ostream &os = std::cout);
