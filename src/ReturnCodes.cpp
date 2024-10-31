@@ -13,6 +13,7 @@
         #define __STDC_WANT_LIB_EXT1__ 1
     #endif
 #endif
+
 #include <cstring>        // for strcpy_s
 #include <string>         // for std::string
 #include <unordered_map>  // for std::unordered_map
