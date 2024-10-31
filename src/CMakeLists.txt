@@ -24,6 +24,10 @@ target_compile_features(${LIB_NAME} PUBLIC cxx_std_11)
 if (WIN32)
     set_target_properties(${LIB_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
 endif ()
+if (UNIX)
+    # avoid prefixing "lib" to the output file, for cross-platform consistency
+    set(CMAKE_SHARED_LIBRARY_PREFIX "")
+endif ()
 
 # Set some target metadata
 set_target_properties(
