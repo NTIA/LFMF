@@ -1,4 +1,4 @@
-/** @file Errors.h
+/** @file ReturnCodes.h
  * Defines return codes for the driver
  */
 #pragma once
