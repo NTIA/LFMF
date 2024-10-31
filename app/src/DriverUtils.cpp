@@ -51,7 +51,7 @@ std::string GetDatetimeString() {
  * @param[out] value  Input file value converted to double
  * @return            Return code
  ******************************************************************************/
-int ParseDouble(const std::string &str, double &value) {
+DrvrReturnCode ParseDouble(const std::string &str, double &value) {
     try {
         value = std::stod(str);
     } catch (...) {
@@ -59,7 +59,7 @@ int ParseDouble(const std::string &str, double &value) {
         return DRVRERR__PARSE;
     }
 
-    return SUCCESS;
+    return DRVR__SUCCESS;
 }
 
 /*******************************************************************************
@@ -69,7 +69,7 @@ int ParseDouble(const std::string &str, double &value) {
  * @param[out] value  Input file value converted to int
  * @return            Return code
  ******************************************************************************/
-int ParseInteger(const std::string &str, int &value) {
+DrvrReturnCode ParseInteger(const std::string &str, int &value) {
     try {
         size_t pos;
         value = std::stoi(str, &pos, 10);
@@ -83,7 +83,7 @@ int ParseInteger(const std::string &str, int &value) {
         return DRVRERR__PARSE;
     };
 
-    return SUCCESS;
+    return DRVR__SUCCESS;
 }
 
 /*******************************************************************************
