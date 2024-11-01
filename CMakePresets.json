@@ -56,12 +56,14 @@
         {
             "name": "docsOnly",
             "displayName": "Doxygen only",
-            "description": "Do not build the library; only build Doxygen docs.",
+            "description": "Do not build or test the library or driver; only build Doxygen docs.",
             "inherits": "proplib-config-base",
             "cacheVariables": {
                 "BUILD_DOCS": "ON",
                 "DOCS_ONLY": "ON",
-                "RUN_TESTS": "OFF"
+                "RUN_TESTS": "OFF",
+                "BUILD_DRIVER": "OFF",
+                "RUN_DRIVER_TESTS": "OFF"
             }
         }
     ],
