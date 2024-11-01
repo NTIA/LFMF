@@ -120,7 +120,7 @@ class DriverTest: public ::testing::Test {
             std::string cmd = BuildCommand(params);
             return RunCommand(cmd);
         }
-        
+
         /***********************************************************************
          * Runs the driver using the specified input file contents.
          * 

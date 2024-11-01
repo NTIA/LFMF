@@ -3,9 +3,9 @@
  */
 #pragma once
 
-#include <istream>    // for std::istream
-#include <string>     // For std::string
-#include <utility>    // for std::pair
+#include <istream>  // for std::istream
+#include <string>   // For std::string
+#include <utility>  // for std::pair
 
 /*******************************************************************************
  * @class CommaSeparatedIterator
