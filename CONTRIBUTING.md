@@ -17,6 +17,7 @@ If you are instead interested in usage documentation, please refer to the
 - [Notes on Code Style](#notes-on-code-style)
 - [Project Structure and CMake](#project-structure-and-cmake)
 - [Documenting Code](#documenting-code)
+- [Testing Code](#testing-code)
 
 ## Found a Bug?
 
@@ -40,10 +41,18 @@ resources to help you get started with open source contributions:
 - [Basic explanation of Git submodules](https://gist.github.com/gitaarik/8735255)
 by [**@gitaarik**](https://github.com/gitaarik)
 
+### Git Branches
+
+Our repositories use the following approach to organize and keep track of branches.
+The `main` branch typically represents the most recently released version of the software.
+The `dev` branch stages changes before they are merged into `main` and a new release is created.
+New features or bug fixes should be developed on individual "feature branches" with descriptive names.
+When complete, features branches should merge into `dev`.
+
 ### Git Submodules
 
-Software in the ITS Propagation Library is implemented primarily in C++. Each
-piece of software has a primary repository which contains the base C++ implementation,
+Software in the ITS Propagation Library is implemented primarily in C++. Each piece
+of software has a primary repository which contains the base C++ implementation,
 test data and resources, and common files used by the multi-language wrappers.
 Interfaces for additional programming languages are provided in separate repositories,
 which are linked to the primary repository as [Git submodules](https://gist.github.com/gitaarik/8735255).
@@ -69,17 +78,22 @@ or [using the command line](https://docs.github.com/en/github/getting-started-wi
 incrementally to your fork. See the sections below for details about unit tests,
 code style, and documentation.
 
-1. When you're done making changes, create a pull request, also known as a PR.
-In your PR, please include a meaningful description of the changes you've made.
-If your PR solves an issue,
+1. When you're done making changes, create a pull request (PR). In your PR, please include
+a meaningful description of the changes you've made. If your PR solves an issue,
 [link to it](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue)!
-Once you submit your PR, a maintainer will review your changes. We may ask questions
-or request additional changes which must be addressed before the PR can be merged.
 
-When your PR is approved and merged, your changes will be a part of the main
-branch of the repository. A new release may or may not be immediately created,
-depending on the changes made. If a new release is not immediately made, your
-changes will be packaged into the next release.
+Once you submit your PR, a maintainer will review your changes to determine
+whether or not they should be merged. We may ask questions or request additional
+changes which must be addressed. For example, we may request changes so that the code
+meets structure, formatting, accuracy, or testing requirements.
+
+If your PR is approved and merged, your changes will be a part of the `dev`
+branch of the repository, where they will stay until a new release is made. At that
+point, `dev` will merge into `main` and a new release will be created. The maintainers
+of a repository hold the authority on when a new release should be created. For example,
+important bug fixes may take higher priority, while small improvements may stay on `dev`
+for a while. Rest assured, even if a new release is not immediately made, your approved
+changes will be always packaged into the next release.
 
 ## Notes on Code Style
 
@@ -104,7 +118,9 @@ It is recommended to use this tool to autoformat Python code when checked in.
 Software in the ITS Propagation Library is primarily implemented in C++, then
 wrapped with interfaces exposing the C++ library to users of other languages. The
 primary repository for each software package uses [CMake](https://cmake.org/) to
-handle cross-platform C++ build configuration, C++ unit tests, and generation of
+handle cross-platform C++ build configuration, C++ unit tests (with
+[GoogleTest](https://github.com/google/googletest) and
+[CTest](https://cmake.org/cmake/help/latest/manual/ctest.1.html)), and generation of
 API documentation (with [Doxygen](https://www.doxygen.nl/)). Many IDEs support CMake
 integration in some form or fashion, and it is recommended that you familiarize yourself
 with any such functionality of your chosen IDE.
@@ -113,8 +129,16 @@ This section shows a typical project structure for a primary (i.e., non-wrapper)
 repository. For details about wrapper repositories, refer to their own README files.
 
 ```bash
+app/                         # The command-line driver which can run the library
+  data/                      # Example input and output files for use with the driver
+  include/                   # Headers used by the command-line driver
+  src/                       # Source code for the command-line driver
+  tests/                     # Header and source files for testing the command-line driver
+  CMakeLists.txt             # Configuration for the command-line driver and its tests
+  README.md                  # Usage information for the command-line driver
 docs/
   CMakeLists.txt             # Doxygen configuration
+  ...                        # Static files (images, HTML, CS, Markdown) used by Doxygen
 extern/
   ...                        # External Git submodules/dependencies
 include/
@@ -128,7 +152,7 @@ tests/
     <TestDataFiles>.csv      # Testing data goes here. Does not have to be CSV.
   <TestFiles>.cpp            # Unit tests, usually one test file per source file.
   <TestFiles>.h              # Any headers used by tests go here as well.
-  CMakeLists.txt             # CTest+GTest config. Must add names of test files here.
+  CMakeLists.txt             # CTest+GTest config. Files containing tests must be included here.
 wrap/
   dotnet/                    # C#/.NET wrapper submodule. Should contain CMakeLists.txt
   matlab/                    # MATLAB wrapper submodule. Should contain CMakeLists.txt
@@ -138,34 +162,62 @@ CMakePresets.json            # Presets for CMake, e.g. "release", "debug", etc.
 ...
 ```
 
+### CMake Options and CMake Presets
+
 As you can see, multiple `CMakeLists.txt` files exist within the project. Each
 one contains configurations relevant to the directory where it is stored. For
-example, the `tests/CMakeLists.txt` file configures unit tests using CMake.
+example, the `tests/CMakeLists.txt` file configures unit tests using CMake. The
+top-level `CMakeLists.txt` stores the primary project configuration and includes
+the lower-level configurations based on the preset or specified CMake options.
 
-When modifying or extending this software, ensure that unit tests are added to
-cover your new code. In general, each C++ file in `src/` has a corresponding C++
-file in `tests/` which implements unit tests. If you've added a new file in `tests/`,
-make sure to add that file to the executable in `tests/CMakeLists.txt`.
+The following CMake options are used for top-level project configuration:
 
-To compile the software, from the cloned repository, run:
+| Option             | Default | Definition |
+|--------------------|---------|----------------------|--------------------|
+| `BUILD_DOCS`       | `ON`    | Generate documentation site with Doxygen |
+| `BUILD_DRIVER`     | `ON`    | Build the command-line driver executable |
+| `RUN_DRIVER_TESTS` | `ON`    | Test the command-line driver executable  |
+| `DOCS_ONLY`        | `OFF`   | Skip all steps _except_ generating the documentation site |
+| `RUN_TESTS`        | `ON`    | Run unit tests for the main library |
+| `COPY_TO_WRAPPERS` | `ON`    | Copy the compiled shared library into wrapper submodules |
+
+[CMake Presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) are
+provided to support common build configurations. These are specified in the
+`CMakePresets.json` file. The `release` preset will compile the library and driver
+with optimizations, build the documentation site, and run all unit tests. The `debug` preset
+will skip building the documentation site, driver, and driver tests, which can be useful for
+rapid development and testing. Additionally, the Debug configuration will attempt to pass
+debug flags to the compiler. Finally, the "docsOnly" preset skips all steps except for
+generating the Doxygen documentation site.
+
+| Option             | `release` preset | `debug` preset | `docsOnly` preset |
+|--------------------|------------------|----------------|-------------------|
+| `DOCS_ONLY`        | `OFF`            | `OFF`          | `ON`              |
+| `RUN_TESTS`        | `ON`             | `ON`           | `OFF`             |
+| `CMAKE_BUILD_TYPE` | `Release`        | `Debug`        | not set           |
+| `BUILD_DOCS`       | `ON`             | `OFF`          | `ON`              |
+| `BUILD_DRIVER`     | `ON`             | `OFF`          | `OFF`             |
+| `RUN_DRIVER_TESTS` | `ON`             | `OFF`          | `OFF`             |
+
+Below are some examples of how CMake can be called to compile this software.
 
 ```bash
-cmake -S . -B build
-cmake --build build
+# Configure and compile in release configuration
+cmake --preset release 
+cmake --build --preset release
+
+# Use the release configuration but don't build Doxygen docs
+cmake --preset release -DBUILD_DOCS=OFF
+cmake --build --preset release
+
+# Configure and compile in debug configuration
+cmake --preset debug
+cmake --build --preset debug
+
+# Use the release configuration but don't run driver tests
+cmake --preset release -DRUN_DRIVER_TESTS=OFF
+cmake --build --preset release
 ```
-
-After compiling the library, you can run unit tests as follows. First, change your
-working directory to the `build` directory, then run:
-
-```bash
-ctest
-```
-
-The included `CMakePresets.json` provides presets for common CMake configurations.
-The "Release" configurations will compile the software with optimizations, build
-documentation, and configure unit tests. The "Debug" configurations will skip building
-the documentation, which is useful for rapid development and testing. Additionally,
-the Debug configuration will attempt to pass debug flags to the compiler.
 
 ### Supported Platforms and Build Options
 
@@ -187,7 +239,8 @@ build and deploy the documentation using GitHub Pages. This action will ensure
 that any new code has been accompanied by Doxygen-formatted documentation. Code
 will not be merged until and unless it is completely documented using Doxygen,
 and the GitHub action successfully generates the documentation site. Below is an
-example showing the expected documentation formats.
+example showing the expected documentation formats. Except for inline documentation,
+use the JavaDoc banner style [described by Doxygen](https://www.doxygen.nl/manual/docblocks.html)
 
 ```cpp
 constexpr double = PI 3.1415; /**< Inline format, e.g. for constants */
@@ -197,7 +250,8 @@ constexpr double = PI 3.1415; /**< Inline format, e.g. for constants */
  *
  * This is an optional, longer description of the function. It can include
  * LaTeX formatting, for example: this function doubles its input @f$ x @f$ and
- * returns a value @f$ y @f$ with @f$ y = 2x @f$.
+ * returns a value @f$ y @f$ with @f$ y = 2x @f$. This whole documentation block
+ * is using the JavaDoc banner style!
  *
  * @param[in] x  The input and its expected units
  * @return       The result @f$ y = 2x @f$
@@ -207,6 +261,20 @@ double doubleTheInput(double x)
     return 2 * x;
 }
 ```
+
+### Doxygen for C++ Libraries
+
+The base C++ libraries include Doxygen configurations which generate static
+websites from code comments. These documentation sites are published as developer
+reference documentation using GitHub Pages. When building the Doxygen site locally,
+The site is generated in `docs/html/` and the main page can be accessed at `docs/html/index.html`.
+When new releases are made, GitHub Actions workflows are triggered which build and deploy
+the Doxygen site to GitHub Pages.
+
+### MATLAB Wrappers
+
+Most code in the MATLAB wrapper is actually written in C. In these files, the same
+documentation style as noted above for C++ should be used.
 
 ### Python Wrappers
 
@@ -236,8 +304,9 @@ def double_the_input(x: float) -> float:
 
 ### C#/.NET Wrappers
 
-In C#/.NET, documentation comments are written in XML format and are used to
-generate documentation through tools like Visual Studio. Use `<summary>` tags to
+In C#/.NET, documentation comments are written in
+[XML format](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/language-specification/documentation-comments)
+and are used to generate documentation through tools like Visual Studio. Use `<summary>` tags to
 provide brief descriptions of classes, constants, functions, etc. Functions should
 include `<param>` and `<returns>` elements for all inputs and outputs. An example
 of this documentation style is shown below.
@@ -264,4 +333,18 @@ public class CalculationUtils
         return 2 * x;
     }
 }
+```
+
+## Testing Code
+
+When modifying or extending this software, ensure that unit tests are added to
+cover your new code. In general, each C++ file in `src/` has a corresponding C++
+file in `tests/` which implements unit tests. If you've added a new file in `tests/`,
+make sure to add that file to the executable in `tests/CMakeLists.txt`.
+
+After compiling the library, you can run unit tests as follows. First, change your
+working directory to the `build` directory, then run:
+
+```bash
+ctest
 ```
