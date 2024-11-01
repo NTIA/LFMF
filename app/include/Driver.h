@@ -8,7 +8,7 @@
 #include "Structs.h"
 
 // TODO-TEMPLATE: Include your library's main interface header
-// #include "ITS.<YOUR_NAMESPACE>/<YOUR_LIBRARY>.h"
+#include "ITS.PropLibTemplate/PropLibTemplate.h"
 
 #include <fstream>   // for std::ofstream
 #include <iomanip>   // for std::left, std::setw
@@ -27,7 +27,7 @@
 //////////////////////////////
 // Library Namespace
 // TODO-TEMPLATE: use the namespace of your library
-// using namespace ITS::YourLibraryNamespace::YourLibraryName;
+using namespace ITS;
 
 /////////////////////////////
 // Functions

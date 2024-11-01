@@ -2,7 +2,8 @@
  * Maps status messages to library return codes
  */
 
-#include "ITS.TODO-TEMPLATE/TODO-TEMPLATE.h"
+// TODO-TEMPLATE include your primary library header
+#include "ITS.PropLibTemplate/PropLibTemplate.h"
 
 #ifdef _WIN32
     // Ensure strcpy_s is available on Windows

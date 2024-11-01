@@ -9,8 +9,8 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 ## PROJECT METADATA
 ###########################################
 # TODO-TEMPLATE: Add project metadata here. See CREATING-REPOSITORIES.md for an example.
-set(LIB_NAME "TODO-TEMPLATE: YOUR-LIBRARY")             # Name of library/target
-set(LIB_NAMESPACE "TODO-TEMPLATE: ITS.YOUR-NAMESPACE")  # Namespace for the named library
+set(LIB_NAME "PropLibTemplate")        # Name of library/target
+set(LIB_NAMESPACE "ITS")               # Namespace for the named library
 project(
     "${LIB_NAMESPACE}.${LIB_NAME}"
     VERSION 1.0
@@ -30,12 +30,12 @@ set(PYTHON_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/python")
 ## CMAKE OPTIONS AND DEFAULTS
 ###########################################
 # Define options. Defaults to: compile 64-bit library and driver, build docs, run tests
-option(BUILD_DOCS "Generate documentation with Doxygen" ON)
-option(BUILD_DRIVER "Build driver executable" ON)
-option(RUN_DRIVER_TESTS "Test the driver executable" ON)
-option(DOCS_ONLY "Skip all steps except generating documentation" OFF)
-option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
-option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
+option(BUILD_DOCS "Generate documentation site with Doxygen" ON)
+option(BUILD_DRIVER "Build the command-line driver executable" ON)
+option(RUN_DRIVER_TESTS "Test the command-line driver executable" ON)
+option(DOCS_ONLY "Skip all steps except generating the documentation site" OFF)
+option(RUN_TESTS "Run unit tests for the main library" ON)
+option(COPY_TO_WRAPPERS "Copy the compiled shared library into wrapper submodules" ON)
 
 ###########################################
 ## SETUP

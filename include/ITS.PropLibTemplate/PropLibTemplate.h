@@ -1,4 +1,4 @@
-/** @file TODO-TEMPLATE.h
+/** @file PropLibTemplate.h
  * Interface header for this library
  * // TODO-TEMPLATE: Rename this file to your ${LIB_NAME}
  */
