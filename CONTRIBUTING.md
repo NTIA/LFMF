@@ -172,13 +172,13 @@ the lower-level configurations based on the preset or specified CMake options.
 
 The following CMake options are used for top-level project configuration:
 
-| Option             | Default | Definition |
-|--------------------|---------|----------------------|--------------------|
+| Option             | Default | Definition                               |
+|--------------------|---------|------------------------------------------|
 | `BUILD_DOCS`       | `ON`    | Generate documentation site with Doxygen |
 | `BUILD_DRIVER`     | `ON`    | Build the command-line driver executable |
 | `RUN_DRIVER_TESTS` | `ON`    | Test the command-line driver executable  |
 | `DOCS_ONLY`        | `OFF`   | Skip all steps _except_ generating the documentation site |
-| `RUN_TESTS`        | `ON`    | Run unit tests for the main library |
+| `RUN_TESTS`        | `ON`    | Run unit tests for the main library      |
 | `COPY_TO_WRAPPERS` | `ON`    | Copy the compiled shared library into wrapper submodules |
 
 [CMake Presets](https://cmake.org/cmake/help/latest/manual/cmake-presets.7.html) are
