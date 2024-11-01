@@ -7,7 +7,7 @@ set(PROJECT_HEADERS "${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}")
 add_library(
     ${LIB_NAME} SHARED
     "ReturnCodes.cpp"
-    "{PROJECT_HEADERS}/ReturnCodes.h"
+    "${PROJECT_HEADERS}/ReturnCodes.h"
     "${PROJECT_HEADERS}/${LIB_NAME}.h"
 )
 
@@ -42,4 +42,11 @@ set_target_properties(
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
+endif()
+
+# Enable compiler warnings for common compilers
+if(MSVC)
+  target_compile_options(${LIB_NAME} PRIVATE /W4 /WX)
+else()
+  target_compile_options(${LIB_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()

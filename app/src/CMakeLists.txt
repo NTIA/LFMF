@@ -35,3 +35,10 @@ set_target_properties(
     ARCHIVE_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
     RUNTIME_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
 )
+
+# Enable compiler warnings for common compilers
+if(MSVC)
+  target_compile_options(${DRIVER_NAME} PRIVATE /W4 /WX)
+else()
+  target_compile_options(${DRIVER_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
