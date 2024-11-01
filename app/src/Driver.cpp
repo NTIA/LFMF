@@ -63,7 +63,7 @@ int main(int argc, char **argv) {
  * @param[out] params  Structure with user input params
  * @return             Return code
  ******************************************************************************/
-int ParseArguments(int argc, char **argv, DrvrParams &params) {
+DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
     // TODO-TEMPLATE: Populate vector with all valid arguments
     const std::vector<std::string> validArgs
         = {"-i", "-o", "-h", "--help", "-v", "--version"};
@@ -111,7 +111,7 @@ int ParseArguments(int argc, char **argv, DrvrParams &params) {
         }
     }
 
-    return SUCCESS;
+    return DRVR__SUCCESS;
 }
 
 /*******************************************************************************
@@ -148,17 +148,18 @@ void Help(std::ostream &os) {
  * @param[in] params  Structure with user input parameters
  * @return            Return code
  ******************************************************************************/
-int ValidateInputs(const DrvrParams &params) {
+DrvrReturnCode ValidateInputs(const DrvrParams &params) {
     DrvrParams not_set;
+    DrvrReturnCode rtn = DRVR__SUCCESS;
     // TODO-TEMPLATE: Check that required inputs were provided.
     // This template code checks that input/output files were given with -i and -o
     if (params.in_file == not_set.in_file)
-        return Validate_RequiredErrMsgHelper("-i", DRVRERR__VALIDATION_IN_FILE);
-
+        rtn = DRVRERR__VALIDATION_IN_FILE;
     if (params.out_file == not_set.out_file)
-        return Validate_RequiredErrMsgHelper(
-            "-o", DRVRERR__VALIDATION_OUT_FILE
-        );
+        rtn = DRVRERR__VALIDATION_OUT_FILE;
 
-    return SUCCESS;
+    if (rtn != DRVR__SUCCESS)
+        std::cerr << GetDrvrReturnStatus(rtn) << std::endl;
+
+    return rtn;
 }
