@@ -40,7 +40,6 @@ option(RUN_DRIVER_TESTS "Test the driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating documentation" OFF)
 option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
 option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
-option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(ENABLE_INSTALL "Enable installation of ${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" ON)
 
 ###########################################

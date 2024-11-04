@@ -32,7 +32,7 @@ endif()
 target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")
 
 # link library to proplib_compiler_flags
-target_link_libraries((${LIB_NAME} PUBLIC proplib_compiler_flags)
+target_link_libraries(${LIB_NAME} PUBLIC proplib_compiler_flags)
 
 # Platform-specific configurations
 if (WIN32)
