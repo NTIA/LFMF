@@ -31,17 +31,22 @@ endif()
 # Add the include directory
 target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")
 
-# Set minimum C++ version to C++11
-target_compile_features(${LIB_NAME} PUBLIC cxx_std_11)
+# link library to proplib_compiler_flags
+target_link_libraries((${LIB_NAME} PUBLIC proplib_compiler_flags)
 
 # Platform-specific configurations
 if (WIN32)
     set_target_properties(${LIB_NAME} PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS true)
 endif ()
+if (UNIX)
+    # avoid prefixing "lib" to the output file, for cross-platform consistency
+    set(CMAKE_SHARED_LIBRARY_PREFIX "")
+endif ()
 
 # Set some target metadata
 set_target_properties(
     ${LIB_NAME} PROPERTIES
+    OUTPUT_NAME ${LIB_NAME}-${PROJECT_VERSION}
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR} # Include version in .so output filenames
 )
@@ -50,7 +55,7 @@ if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
     # Create a variable called installable_libs that is a list of all libraries
     # we want to install (e.g. LFMF and lfmf_compiler_flags)
     # Then install the installable libraries to the lib folder.
-    set(installable_libs ${LIB_NAME})
+    set(installable_libs ${LIB_NAME} proplib_compiler_flags)
 
     install(TARGETS ${installable_libs}
             DESTINATION ${CMAKE_INSTALL_BINDIR})
