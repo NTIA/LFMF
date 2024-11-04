@@ -79,7 +79,7 @@ struct Result
 //////////////////////////////////////
 // Main LFMF Function
 
-DLLEXPORT int LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
+DLLEXPORT ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol, Result *result);
 
 //////////////////////////////////////
@@ -90,7 +90,7 @@ double ResidueSeries(double d, double k, double h_1__km, double h_2__km, double 
 complex<double> wofz(complex<double> qi);
 complex<double> Airy(complex<double> Z, int kind, int scaling);
 complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi, int kind, int scaling);
-int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
+ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol);
 
 }  // namespace LFMF

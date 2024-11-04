@@ -27,7 +27,7 @@ namespace LFMF {
  *  @return       error         - Error code
 *
  *****************************************************************************/
-int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
+ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol)
 {
     if (h_tx__meter < 0 || h_tx__meter > 50)

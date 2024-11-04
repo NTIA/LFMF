@@ -1,7 +1,7 @@
 ############################################
 ## CONFIGURE UNIT TESTS
 ############################################
-set(TEST_NAME "Test${LIB_NAME}")
+set(TEST_NAME "${LIB_NAME}GTest")
 
 message(STATUS "STATUS: Start building the google tests: " ${TEST_NAME})
 
@@ -25,8 +25,6 @@ endif()
 add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
 include(GoogleTest)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-
-set(GOOGLETEST_ADDED ON)
 
 target_compile_features(${TEST_NAME} PUBLIC cxx_std_17)
 target_link_libraries(${TEST_NAME} ${LIB_NAME} GTest::gtest_main)
