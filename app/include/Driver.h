@@ -37,8 +37,9 @@ DrvrReturnCode ValidateInputs(const DrvrParams &params);
 
 // Driver Utils
 std::string GetDatetimeString();
+DrvrReturnCode ParseBoolean(const std::string &str, bool &value);
 DrvrReturnCode ParseDouble(const std::string &str, double &value);
 DrvrReturnCode ParseInteger(const std::string &str, int &value);
-void PrintLabel(std::ofstream &fp, const std::string &lbl);
+void PrintLabel(std::ostream &os, const std::string &lbl);
 void StringToLower(std::string &str);
 void Version(std::ostream &os = std::cout);

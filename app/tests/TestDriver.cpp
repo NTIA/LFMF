@@ -62,4 +62,4 @@ TEST_F(DriverTest, ValidationOutFileError) {
 
 // TODO-TEMPLATE: Add tests for any additional validation errors
 
-// TODO-TEMPALTE: Add other general tests for the driver
+// TODO-TEMPLATE: Add other general tests for the driver
