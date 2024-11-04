@@ -24,6 +24,7 @@ Executing the command-line driver requires specifying input arguments, defined
 in the below table:
 
 (TODO-TEMPLATE review and update the flags below)
+
 | Flag   | Type   | Required | Description                                                           |
 |--------|--------|----------|-----------------------------------------------------------------------|
 | `-i`   | string | true     | File specifying model input parameters in `key,value` format          |
@@ -41,6 +42,7 @@ Input arguments are not case sensitive and do not have to be specified in a cert
 order. A generic example of calling the command-line driver on Windows is:
 
 (TODO-TEMPLATE: update example driver command below)
+
 ```cmd
 <Driver>.exe -i <input_file> -dbg -o <output_file>
 ```
@@ -52,6 +54,7 @@ Using these input files and the commands specified should produce outputs identi
 to the provided corresponding output files.
 
 (TODO-TEMPLATE: Provide all included examples in the table below)
+
 | Input File                | Terrain File                                        | Output File                 | Arguments                                          |
 |---------------------------|-----------------------------------------------------|-----------------------------|----------------------------------------------------|
 | [`in.txt`](./data/in.txt) | [`terrain_profile.txt`](./data/terrain_profile.txt) | [`out.txt`](./data/out.txt) | `-i in.txt -t terrain_profile.txt -o out.txt -dbg` |
