@@ -45,6 +45,32 @@ std::string GetDatetimeString() {
 }
 
 /*******************************************************************************
+ * Parse a boolean value read from the input parameter file.
+ * 
+ * Supports either "true" or "false" (case-insensitive) or "0" or "1"
+ * 
+ * @param[in]  str    Input file value as string
+ * @param[out] value  Input file value converted to bool
+ * @return            Return code
+ ******************************************************************************/
+DrvrReturnCode ParseBoolean(const std::string &str, bool &value) {
+    try {
+        std::string str_lower = str;
+        StringToLower(str_lower);
+        if (str_lower == "0" || str_lower == "false") {
+            value = false;
+        } else if (str_lower == "1" || str_lower == "true") {
+            value = true;
+        } else {
+            return DRVRERR__PARSE;
+        }
+    } catch (...) {
+        return DRVRERR__PARSE;
+    }
+    return DRVR__SUCCESS;
+}
+
+/*******************************************************************************
  * Parse a double value read from the input parameter file
  * 
  * @param[in]  str    Input file value as string
@@ -87,26 +113,13 @@ DrvrReturnCode ParseInteger(const std::string &str, int &value) {
 }
 
 /*******************************************************************************
- * Common error handling function
- * 
- * @param[in] err  Error parsing code
- * @param[in] msg  Error message
- * @return         Error code from input param
- ******************************************************************************/
-int ParsingErrorHelper(const int err, const std::string &msg) {
-    std::cerr << "Driver Error " << err << ": Unable to parse '" << msg
-              << "' value." << std::endl;
-    return err;
-}
-
-/*******************************************************************************
  * Helper function to standardize printing of text labels to file
  * 
- * @param[in] fp   Output stream, a text file open for writing
+ * @param[in] os   Output stream for writing
  * @param[in] lbl  Text message
  ******************************************************************************/
-void PrintLabel(std::ofstream &fp, const std::string &lbl) {
-    fp << "[" << lbl << "]";
+void PrintLabel(std::ostream &os, const std::string &lbl) {
+    os << "[" << lbl << "]";
 }
 
 
@@ -119,20 +132,6 @@ void StringToLower(std::string &str) {
     std::transform(str.begin(), str.end(), str.begin(), [](const char c) {
         return static_cast<char>(std::tolower(c));
     });
-}
-
-/*******************************************************************************
- * Helper function to format and print error messages encountered during
- * validation of input parameters
- * 
- * @param[in] opt  Command flag in error
- * @param[in] err  Error code
- * @return         Return code
- ******************************************************************************/
-int Validate_RequiredErrMsgHelper(const std::string &opt, const int err) {
-    std::cerr << "Driver Error " << err << ": Option \"" << opt
-              << "\" is required but was not provided" << std::endl;
-    return err;
 }
 
 /*******************************************************************************

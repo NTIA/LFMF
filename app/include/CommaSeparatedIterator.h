@@ -1,8 +1,8 @@
 /** @file CommaSeparatedIterator.h
  * Iterator class for reading comma-delimited input text streams.
  */
-#ifndef __DRIVER_COMMASEPITR_H__
-#define __DRIVER_COMMASEPITR_H__
+#ifndef __LFMF_DRIVER_COMMASEPITR_H__
+#define __LFMF_DRIVER_COMMASEPITR_H__
 
 #include <istream>  // for std::istream
 #include <string>   // For std::string

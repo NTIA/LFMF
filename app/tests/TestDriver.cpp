@@ -8,7 +8,7 @@ TEST_F(DriverTest, MissingOptionError1) {
     std::string cmd = executable + " -i -o out.txt";
     SuppressOutputs(cmd);
     int rtn = RunCommand(cmd);
-    EXPECT_EQ(rtn, DRVRERR__MISSING_OPTION);
+    EXPECT_EQ(DRVRERR__MISSING_OPTION, rtn);
 }
 
 TEST_F(DriverTest, MissingOptionError2) {
@@ -16,14 +16,14 @@ TEST_F(DriverTest, MissingOptionError2) {
     std::string cmd = executable + " -i";
     SuppressOutputs(cmd);
     int rtn = RunCommand(cmd);
-    EXPECT_EQ(rtn, DRVRERR__MISSING_OPTION);
+    EXPECT_EQ(DRVRERR__MISSING_OPTION, rtn);
 }
 
 TEST_F(DriverTest, InvalidOptionError) {
     std::string cmd = executable + " -X";
     SuppressOutputs(cmd);
     int rtn = RunCommand(cmd);
-    EXPECT_EQ(rtn, DRVRERR__INVALID_OPTION);
+    EXPECT_EQ(DRVRERR__INVALID_OPTION, rtn);
 }
 
 TEST_F(DriverTest, OpeningInputFileError) {
@@ -31,7 +31,7 @@ TEST_F(DriverTest, OpeningInputFileError) {
     params.in_file = "/invalid/path/input.xyz";
     params.DBG = false;
     int rtn = RunDriver(params);
-    EXPECT_EQ(rtn, DRVRERR__OPENING_INPUT_FILE);
+    EXPECT_EQ(DRVRERR__OPENING_INPUT_FILE, rtn);
 }
 
 TEST_F(DriverTest, OpeningOutputFileError) {
@@ -41,14 +41,14 @@ TEST_F(DriverTest, OpeningOutputFileError) {
     params.DBG = true;
     params.out_file = "/invalid/path/output.xyz";
     int rtn = RunDriverWithInputFile(inputs, params);
-    EXPECT_EQ(rtn, DRVRERR__OPENING_OUTPUT_FILE);
+    EXPECT_EQ(DRVRERR__OPENING_OUTPUT_FILE, rtn);
 }
 
 TEST_F(DriverTest, ValidationInFileError) {
     std::string cmd = executable + " -o out.txt";
     SuppressOutputs(cmd);
     int rtn = RunCommand(cmd);
-    EXPECT_EQ(rtn, DRVRERR__VALIDATION_IN_FILE);
+    EXPECT_EQ(DRVRERR__VALIDATION_IN_FILE, rtn);
 }
 
 TEST_F(DriverTest, ValidationOutFileError) {
@@ -57,9 +57,9 @@ TEST_F(DriverTest, ValidationOutFileError) {
     std::string cmd = executable + " -i in.txt";
     SuppressOutputs(cmd);
     int rtn = RunCommand(cmd);
-    EXPECT_EQ(rtn, DRVRERR__VALIDATION_OUT_FILE);
+    EXPECT_EQ(DRVRERR__VALIDATION_OUT_FILE, rtn);
 }
 
 // TODO-TEMPLATE: Add tests for any additional validation errors
 
-// TODO-TEMPALTE: Add other general tests for the driver
+// TODO-TEMPLATE: Add other general tests for the driver

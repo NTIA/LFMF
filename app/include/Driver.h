@@ -1,8 +1,8 @@
 /** @file Driver.h
  * Interface header for this driver executable
  */
-#ifndef __DRIVER_H__
-#define __DRIVER_H__
+#ifndef __LFMF_DRIVER_H__
+#define __LFMF_DRIVER_H__
 
 #include "CommaSeparatedIterator.h"
 #include "ReturnCodes.h"
@@ -15,6 +15,7 @@
 #include <iostream>  // for std::cout
 #include <ostream>   // for std::endl, std::ostream
 #include <string>    // for std::string
+#include <vector>    // for std::vector
 
 /////////////////////////////
 // Macros
@@ -35,11 +36,16 @@ DrvrReturnCode ValidateInputs(const DrvrParams &params);
 
 // Driver Utils
 std::string GetDatetimeString();
+DrvrReturnCode ParseBoolean(const std::string &str, bool &value);
 DrvrReturnCode ParseDouble(const std::string &str, double &value);
 DrvrReturnCode ParseInteger(const std::string &str, int &value);
 void PrintLabel(std::ofstream &fp, const std::string &lbl);
 void StringToLower(std::string &str);
-
 void Version(std::ostream &os = std::cout);
+
+// LFMF Model
+ReturnCode CallLFMFModel(LFMFParams &lfmf_params, std::vector<double> &L_ces__db);
+DrvrReturnCode ParseLFMFInputFile(const std::string &in_file, LFMFParams &lfmf_params);
+void WriteLFMFInputs(std::ofstream &fp, const LFMFParams &params);
 
 #endif
