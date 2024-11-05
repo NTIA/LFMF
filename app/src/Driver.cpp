@@ -36,12 +36,14 @@ int main(int argc, char **argv) {
     if (rtn > DRVR__RETURN_SUCCESS)
         return rtn;
 
-    // Print results to file
+    // Open output file for writing
     std::ofstream fp(params.out_file);
     if (!fp) {
         std::cerr << "Error opening output file. Exiting." << std::endl;
         return DRVRERR__OPENING_OUTPUT_FILE;
     }
+
+    // Print generator information to file
     fp << std::left << std::setw(25) << "Model" << LIBRARY_NAME;
     fp PRINT "Library Version" << "v" << LIBRARY_VERSION;
     fp PRINT "Driver Version" << "v" << DRIVER_VERSION;
