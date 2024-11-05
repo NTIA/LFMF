@@ -4,8 +4,6 @@
 #ifndef __LFMF_DRIVER_STRUCTS_H__
 #define __LFMF_DRIVER_STRUCTS_H__
 
-#include <string>  // for std::string
-
 /////////////////////////////
 // Data Structures
 
@@ -25,7 +23,7 @@ struct LFMFParams {
         double d__km;           ///<  Path distance, in km
         double epsilon;         ///<  Relative permittivity
         double sigma;           ///<  Conductivity
-        double pol;             ///<  Polarization: 0 - POLARIZATION__HORIZONTAL, 1 - POLARIZATION__VERTICAL
+        int pol;                ///<  Polarization: 0 = Horizontal, 1 = Vertical
 };
 
 /** Key names for LFMF Model input file parameters */

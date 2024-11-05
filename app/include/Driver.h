@@ -4,18 +4,22 @@
 #ifndef __LFMF_DRIVER_H__
 #define __LFMF_DRIVER_H__
 
-#include "CommaSeparatedIterator.h"
-#include "ReturnCodes.h"
-#include "Structs.h"
-#include "DriverConfig.h"
-#include "ITS.Propagation.LFMF/LFMF.h"
-
+#include <algorithm>  // for std::transform
 #include <fstream>   // for std::ofstream
 #include <iomanip>   // for std::left, std::setw
 #include <iostream>  // for std::cout
+#include <istream>   // for std::istream
 #include <ostream>   // for std::endl, std::ostream
 #include <string>    // for std::string
-#include <vector>    // for std::vector
+#include <tuple>     // for std::tie
+#include <unordered_map>  // for std::unordered_map
+#include <vector>
+
+#include "CommaSeparatedIterator.h"
+#include "DriverConfig.h"
+#include "ReturnCodes.h"
+#include "Structs.h"
+#include "ITS.Propagation.LFMF/LFMF.h"
 
 /////////////////////////////
 // Macros
@@ -27,6 +31,7 @@
 
 //////////////////////////////
 // Library Namespace
+using namespace ITS::Propagation::LFMF;
 
 /////////////////////////////
 // Functions
@@ -44,8 +49,9 @@ void StringToLower(std::string &str);
 void Version(std::ostream &os = std::cout);
 
 // LFMF Model
-ReturnCode CallLFMFModel(LFMFParams &lfmf_params, std::vector<double> &L_ces__db);
+ReturnCode CallLFMFModel(LFMFParams &lfmf_params, Result &result);
 DrvrReturnCode ParseLFMFInputFile(const std::string &in_file, LFMFParams &lfmf_params);
 void WriteLFMFInputs(std::ofstream &fp, const LFMFParams &params);
+void WriteLFMFOutputs(std::ofstream &fp, const Result &result);
 
 #endif

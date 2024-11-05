@@ -4,10 +4,6 @@
 #ifndef __LFMF_DRIVER_COMMASEPITR_H__
 #define __LFMF_DRIVER_COMMASEPITR_H__
 
-#include <istream>  // for std::istream
-#include <string>   // For std::string
-#include <utility>  // for std::pair
-
 /*******************************************************************************
  * @class CommaSeparatedIterator
  * An iterator that reads lines from an input stream, splitting each line

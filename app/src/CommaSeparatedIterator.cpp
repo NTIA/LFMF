@@ -1,17 +1,7 @@
 /** @file CommaSeparatedIterator.cpp
  * Implementation of class to read comma-delimited input text streams.
 */
-#include "CommaSeparatedIterator.h"
-
 #include "Driver.h"
-
-#include <algorithm>  // for transform
-#include <cctype>     // for std::tolower
-#include <cstddef>    // for std::ptrdiff_t, std::size_t
-#include <fstream>    // for std::istream
-#include <iterator>   // for std::input_iterator_tag
-#include <stdexcept>  // for std::runtime_error
-#include <string>     // for std::getline, std::string
 
 CommaSeparatedIterator::CommaSeparatedIterator(std::istream &stream):
     stream_(stream) {

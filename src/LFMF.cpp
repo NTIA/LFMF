@@ -20,9 +20,7 @@ namespace LFMF {
  *  @param[in]    d__km         - Path distance, in km
  *  @param[in]    epsilon       - Relative permittivity
  *  @param[in]    sigma         - Conductivity
- *  @param[in]    pol           - Polarization
- *                                  + 0 : POLARIZATION__HORIZONTAL
- *                                  + 1 : POLARIZATION__VERTICAL
+ *  @param[in]    pol           - Polarization: 0 = Horizontal, 1 = Vertical
  *
  *  @param[out]   result        - Result structure
  *
