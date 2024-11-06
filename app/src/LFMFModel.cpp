@@ -7,8 +7,8 @@
 const std::string LFMFInputKeys::h_tx__meter = "h_tx__meter";
 const std::string LFMFInputKeys::h_rx__meter = "h_rx__meter";
 const std::string LFMFInputKeys::f__mhz = "f__mhz";
-const std::string LFMFInputKeys::P_tx__watt = "P_tx__watt";
-const std::string LFMFInputKeys::N_s = "N_s";
+const std::string LFMFInputKeys::P_tx__watt = "p_tx__watt";
+const std::string LFMFInputKeys::N_s = "n_s";
 const std::string LFMFInputKeys::d__km = "d__km";
 const std::string LFMFInputKeys::epsilon = "epsilon";
 const std::string LFMFInputKeys::sigma = "sigma";
