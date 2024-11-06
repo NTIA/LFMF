@@ -128,15 +128,15 @@ DrvrReturnCode
  * @param[in] params  LFMF input parameter struct
  ******************************************************************************/
 void WriteLFMFInputs(std::ofstream &fp, const LFMFParams &params) {
-    fp PRINT LFMFInputKeys::h_tx__meter SETW13 params.h_tx__meter << "(meter)";
-    fp PRINT LFMFInputKeys::h_rx__meter SETW13 params.h_rx__meter << "(meter)";
-    fp PRINT LFMFInputKeys::f__mhz SETW13 params.f__mhz << "(MHz)";
-    fp PRINT LFMFInputKeys::P_tx__watt SETW13 params.P_tx__watt << "(Watts)";
-    fp PRINT LFMFInputKeys::N_s SETW13 params.N_s << "(N-Units)";
-    fp PRINT LFMFInputKeys::d__km SETW13 params.d__km << "(km)";
-    fp PRINT LFMFInputKeys::epsilon SETW13 params.epsilon << "()";
-    fp PRINT LFMFInputKeys::sigma SETW13 params.sigma << "()";
-    fp PRINT LFMFInputKeys::pol SETW13 params.pol << "(0 = Horizontal, 1 = Vertical)";
+    fp PRINT LFMFInputKeys::h_tx__meter SETW13 params.h_tx__meter << "[meter]";
+    fp PRINT LFMFInputKeys::h_rx__meter SETW13 params.h_rx__meter << "[meter]";
+    fp PRINT LFMFInputKeys::f__mhz SETW13 params.f__mhz << "[MHz]";
+    fp PRINT LFMFInputKeys::P_tx__watt SETW13 params.P_tx__watt << "[Watts]";
+    fp PRINT LFMFInputKeys::N_s SETW13 params.N_s << "[N-Units]";
+    fp PRINT LFMFInputKeys::d__km SETW13 params.d__km << "[km]";
+    fp PRINT LFMFInputKeys::epsilon SETW13 params.epsilon;
+    fp PRINT LFMFInputKeys::sigma SETW13 params.sigma;
+    fp PRINT LFMFInputKeys::pol SETW13 params.pol << "[0 = Horizontal, 1 = Vertical]";
 }
 
 /*******************************************************************************
@@ -147,12 +147,12 @@ void WriteLFMFInputs(std::ofstream &fp, const LFMFParams &params) {
  ******************************************************************************/
 void WriteLFMFOutputs(std::ofstream &fp, const Result &result) {
     fp PRINT "Basic transmission loss" SETW13 std::fixed
-        << std::setprecision(1) << result.A_btl__db << "(dB)";
+        << std::setprecision(2) << result.A_btl__db << "[dB]";
     fp PRINT "Electrice field strength" SETW13 std::fixed
-        << std::setprecision(1) << result.E_dBuVm << "(dB(uV/m))";
+        << std::setprecision(2) << result.E_dBuVm << "[dB(uV/m)]";
     fp PRINT "Received power" SETW13 std::fixed
-        << std::setprecision(1) << result.P_rx__dbm << "(dB)";
+        << std::setprecision(2) << result.P_rx__dbm << "[dB]";
     fp PRINT "Solution method" SETW13 std::fixed
         << std::setprecision(0) << result.method
-        << "(0 = Flat earth with curve correction, 1 = Residue series)";
+        << "[0 = Flat earth with curve correction, 1 = Residue series]";
 }

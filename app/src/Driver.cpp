@@ -54,7 +54,7 @@ int main(int argc, char **argv) {
     }
 
     // Print generator information to file
-    fp << std::left << std::setw(25) << "Model" << LIBRARY_NAME;
+    fp << std::left << std::setw(30) << "Model" << LIBRARY_NAME;
      
     fp PRINT "Library Version"
         << "v" << LIBRARY_VERSION;
@@ -68,11 +68,11 @@ int main(int argc, char **argv) {
     fp << std::endl << std::endl;
 
     // Print inputs to file
-    fp << "Inputs";   
+    fp << "Inputs:";   
     WriteLFMFInputs(fp, lfmf_params);
 
     // Print results to file
-    fp << std::endl << std::endl << "Results";
+    fp << std::endl << std::endl << "Results:";
     fp PRINT "Return Code" SETW13 rtn;
     //PrintLabel(fp, GetReturnStatus(rtn));
     if (rtn == SUCCESS) {
@@ -145,12 +145,11 @@ void Help(std::ostream &os) {
     os << "Options (not case sensitive)" << std::endl;
     os << "\t-i      :: Input file name" << std::endl;
     os << "\t-o      :: Output file name" << std::endl;
-    os << "\t-model  :: Model to run [HGTCM, TSM, ASM]" << std::endl;
     os << std::endl << "Examples:" << std::endl;
     os << "\t[WINDOWS] " << DRIVER_NAME
-       << ".exe -i inputs.txt -model ASM -o results.txt" << std::endl;
+       << ".exe -i inputs.txt -o results.txt" << std::endl;
     os << "\t[LINUX]   .\\" << DRIVER_NAME
-       << " -i in.txt -model ASM -o results.txt" << std::endl;
+       << " -i in.txt -o results.txt" << std::endl;
     os << "Other Options (which don't run the model)" << std::endl;
     os << "\t-h      :: Display this help message" << std::endl;
     os << "\t-v      :: Display program version information" << std::endl;
