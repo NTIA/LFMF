@@ -81,6 +81,8 @@ int main(int argc, char **argv) {
     FreeReturnStatusCharArray(return_status);
     
     if (rtn == SUCCESS) {
+        std::cout << "Basic transmission loss: " << std::fixed 
+            << std::setprecision(2) << result.A_btl__db << std::endl;
         WriteLFMFOutputs(fp, result);
     }
     fp.close();
