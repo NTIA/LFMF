@@ -5,6 +5,7 @@
 #define __ITS_PROPAGATION_LFMF_LFMF_H__
 
 #include <complex>
+#include "LFMFConfig.h"
 #include "ReturnCodes.h"
 
 using std::complex;
@@ -82,9 +83,13 @@ struct Result
 DLLEXPORT ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol, Result *result);
 
+DLLEXPORT char *GetReturnStatusCharArray(const int code);
+DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
+
 //////////////////////////////////////
 // Helper Functions
 
+std::string GetReturnStatus(const int code);
 double FlatEarthCurveCorrection(complex<double> delta, complex<double> q, double h_1__km, double h_2__km, double d, double k, double a_e__km);
 double ResidueSeries(double d, double k, double h_1__km, double h_2__km, double nu, double theta, complex<double> q);
 complex<double> wofz(complex<double> qi);

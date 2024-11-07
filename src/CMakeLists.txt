@@ -7,15 +7,20 @@ message(STATUS "STATUS: Start building the libaray: " ${LIB_NAME})
 # Include source AND header files here so IDEs can find them
 set(LIB_HEADERS "${PROJECT_SOURCE_DIR}/include")
 
+# configure a header file to pass the version number only
+configure_file(${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h.in ${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h)
+
 set(LIB_FILES
     Airy.cpp
     FlatEarthCurveCorrection.cpp
     LFMF.cpp
     ResidueSeries.cpp
+    ReturnCodes.cpp
     ValidateInputs.cpp
     WiRoot.cpp
     wofz.cpp
     "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h"
+    "${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h"
     "${LIB_HEADERS}/${PROJECT_NAME}/ReturnCodes.h"
 )
 
@@ -66,6 +71,7 @@ if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
     # Install the library headers to the include folder.
     install(FILES 
             "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h" 
+            "${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h"
             "${LIB_HEADERS}/${PROJECT_NAME}/ReturnCodes.h"
             DESTINATION 
             ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}

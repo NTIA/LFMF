@@ -1,6 +1,7 @@
 /** @file Driver.cpp
  * Implements the main function of the executable, and other high-level functions
  */
+
 #include "Driver.h"
 
 /*******************************************************************************
@@ -74,7 +75,11 @@ int main(int argc, char **argv) {
     // Print results to file
     fp << std::endl << std::endl << "Results:";
     fp PRINT "Return Code" SETW13 rtn;
-    //PrintLabel(fp, GetReturnStatus(rtn));
+    char *return_status = GetReturnStatusCharArray(rtn);    
+    PrintLabel(fp, return_status);
+    std::cout << LIBRARY_NAME << " Return Code: " << rtn << ", " << return_status << std::endl;
+    FreeReturnStatusCharArray(return_status);
+    
     if (rtn == SUCCESS) {
         WriteLFMFOutputs(fp, result);
     }

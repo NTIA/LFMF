@@ -30,3 +30,22 @@ set_target_properties(
     ${DRIVER_NAME} PROPERTIES
     OUTPUT_NAME ${DRIVER_NAME}-${DRIVER_VERSION}
 )
+
+
+
+if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
+
+    install(TARGETS ${DRIVER_NAME}
+            DESTINATION ${CMAKE_INSTALL_BINDIR})
+
+    # Install the library headers to the include folder.
+    install(FILES 
+            "${DRIVER_HEADERS}/CommaSeparatedIterator.h"
+            "${DRIVER_HEADERS}/Driver.h"
+            "${DRIVER_HEADERS}/DriverConfig.h"
+            "${DRIVER_HEADERS}/ReturnCodes.h"
+            "${DRIVER_HEADERS}/Structs.h"
+            DESTINATION 
+            ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
+    )
+endif()
