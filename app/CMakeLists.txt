@@ -37,5 +37,7 @@ if (RUN_DRIVER_TESTS)
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
     endfunction()
-    result_test("results" "${PROJECT_SOURCE_DIR}/app/data/i_lfmf.txt" "o_lfmf0.txt" "Return Code: 0")
+    result_test("results01" "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_01.txt" "o_lfmf_01.txt" "Return Code: 0")
+    result_test("results02" "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_02.txt" "o_lfmf_02.txt" "Return Code: 0")
+    result_test("results03" "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_03.txt" "o_lfmf_03.txt" "Return Code: 0")
 endif()

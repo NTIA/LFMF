@@ -1,8 +1,8 @@
 Model                         LFMF
 Library Version               v1.0
 Driver Version                v1.0.0
-Date Generated                Thu Nov  7 11:28:34 2024
-Input Arguments               -i C:/Workspace/Propagation/LFMF/app/data/i_lfmf.txt -o o_lfmf0.txt 
+Date Generated                Thu Nov  7 11:39:58 2024
+Input Arguments               -i i_lfmf_01.txt -o o_lfmf_01.txt 
 
 Inputs:
 h_tx__meter                   0            [meter]
