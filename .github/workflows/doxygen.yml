@@ -54,7 +54,7 @@ jobs:
             path: ./docs/html/
 
   deploy:
-    if: ${{ (github.event_name == 'release') && (github.repository != 'NTIA/proplib-template') }}
+    if: ${{ github.event_name == 'release' }}
     needs: build
     permissions:
       contents: read
