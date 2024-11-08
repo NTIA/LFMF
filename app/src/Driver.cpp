@@ -32,6 +32,14 @@ int main(int argc, char **argv) {
 
     // TODO-TEMPLATE: Add driver logic, e.g. validating inputs and calling the model
 
+    // TODO-TEMPLATE this code block exists for a unit test to pass. Similar logic
+    // should be added to functions which parse input files.
+    std::ifstream file(params.in_file);
+    if (!file) {
+        std::cerr << "Failed to open file " << params.in_file << std::endl;
+        return DRVRERR__OPENING_INPUT_FILE;
+    }
+
     // Return driver error code if one was returned
     if (rtn > DRVR__RETURN_SUCCESS)
         return rtn;
@@ -68,7 +76,7 @@ int main(int argc, char **argv) {
 DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
     // TODO-TEMPLATE: Populate vector with all valid arguments
     const std::vector<std::string> validArgs
-        = {"-i", "-o", "-h", "--help", "-v", "--version"};
+        = {"-i", "-o", "-dbg", "-h", "--help", "-v", "--version"};
 
     for (int i = 1; i < argc; i++) {
         // Parse arg to lowercase string
@@ -93,6 +101,7 @@ DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
             // TODO-TEMPLATE handle any model input flags here
         } else if (arg == "-dbg") {
             params.DBG = true;
+            continue;
         }
 
         // Check if end of arguments reached or next argument is another flag
