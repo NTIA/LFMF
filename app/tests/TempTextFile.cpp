@@ -19,7 +19,7 @@
 
 #include <algorithm>  // for std::remove
 #include <fstream>    // for std::ofstream
-#include <iostream>   // for std::cerr, std::cout, std::ios::trunc
+#include <iostream>   // for std::cerr, std::ios::trunc
 #include <ostream>    // for std::endl
 #include <stdexcept>  // for std::runtime_error
 #include <string>     // for std::string

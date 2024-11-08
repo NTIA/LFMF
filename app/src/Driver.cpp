@@ -3,6 +3,15 @@
  */
 #include "Driver.h"
 
+#include <algorithm> // for std::find
+#include <fstream>   // for std::ifstream, std::ofstream
+#include <iomanip>   // for std::setw
+#include <ios>       // for std::left
+#include <iostream>  // for std::cerr
+#include <ostream>   // for std::endl
+#include <string>    // for std::string
+#include <vector>    // for std::vector
+
 /*******************************************************************************
  * Main function of the driver executable
  * 

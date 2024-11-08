@@ -10,7 +10,6 @@
 // TODO-TEMPLATE: Include your library's main interface header
 #include "ITS.PropLibTemplate/PropLibTemplate.h"
 
-#include <fstream>   // for std::ofstream
 #include <iomanip>   // for std::left, std::setw
 #include <iostream>  // for std::cout
 #include <ostream>   // for std::endl, std::ostream

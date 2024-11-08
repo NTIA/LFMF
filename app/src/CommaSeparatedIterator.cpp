@@ -5,11 +5,8 @@
 
 #include "Driver.h"
 
-#include <algorithm>  // for transform
-#include <cctype>     // for std::tolower
-#include <cstddef>    // for std::ptrdiff_t, std::size_t
-#include <fstream>    // for std::istream
-#include <iterator>   // for std::input_iterator_tag
+#include <cstddef>    // for std::size_t
+#include <istream>    // for std::istream
 #include <stdexcept>  // for std::runtime_error
 #include <string>     // for std::getline, std::string
 

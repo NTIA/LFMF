@@ -6,7 +6,6 @@
 #include "Driver.h"
 #include "TempTextFile.h"
 
-#include <algorithm>      // for std::replace
 #include <cstdio>         // for std::remove, std::perror
 #include <cstdlib>        // for std::system
 #include <gtest/gtest.h>  // GoogleTest
