@@ -12,7 +12,6 @@ permissions:
 
 jobs:
   create_release_artifacts:
-    if: github.repository != 'NTIA/proplib-template'
     name: Create release artifacts
     runs-on: ${{ matrix.os }}
     strategy:
