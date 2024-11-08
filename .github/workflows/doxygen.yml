@@ -8,6 +8,8 @@ on:
     types: ["published"]
   pull_request:
     branches: ["main", "dev"]
+  push:
+    branches: ["main", "dev"]
   workflow_dispatch:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
