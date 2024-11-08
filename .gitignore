@@ -13,6 +13,14 @@ Thumbs.db
 **.so
 **.dylib
 
+######################################
+## Derived files produced by wrappers
+######################################
+**.mltbx
+**.whl
+**.tar.gz
+**.nupkg
+
 #################
 ## Visual Studio
 #################
