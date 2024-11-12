@@ -54,6 +54,9 @@ ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, 
     if (sigma <= 0)
         return ERROR__SIGMA;
 
+    if (pol != POLARIZATION__HORIZONTAL && pol != POLARIZATION__VERTICAL)
+        return ERROR__POLARIZATION;
+
     return SUCCESS;
 }
 

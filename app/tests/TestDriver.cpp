@@ -12,7 +12,7 @@ TEST(DriverTest, TestName0) {
     EXPECT_EQ(1, 1);
     EXPECT_TRUE(true);
 }
-/*
+
 TEST_F(DriverTest, MissingOptionError1) {
     // Test case: missing option between two provided flags
     std::string cmd = executable + " -i -o out.txt";
@@ -69,7 +69,7 @@ TEST_F(DriverTest, ValidationOutFileError) {
     int rtn = RunCommand(cmd);
     EXPECT_EQ(DRVRERR__VALIDATION_OUT_FILE, rtn);
 }
-*/
+
 // TODO-TEMPLATE: Add tests for any additional validation errors
 
 // TODO-TEMPLATE: Add other general tests for the driver

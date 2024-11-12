@@ -1,21 +1,23 @@
+/** @file LFMFGTestUtils.cpp
+ * Implements the google tests from ITS.Propagation.LFMF.
+ */
+
 #include "LFMFGTest.h"
 #include <fstream>
 #include <sstream>
 #include <filesystem>
 
-
-/*=============================================================================
- |
- |  Description:  This function loads test data from a CSV file
- |
- |      Input:      &filename       - Test Data CSV file name
- |
- |    Returns:      testData        - a vector includes one or more test cases
- |                                    in SlantPathInputsAndResult Structure
- |
- *===========================================================================*/
-std::vector<LFMFInputsAndResult>
-    ReadLFMFInputsAndResult(const std::string &filename) {
+/******************************************************************************
+ *
+ *  Description:  This function loads test data from a CSV file
+ *
+ *  @param[in]    &filename     - Test Data CSV file name
+ *
+ *  @returns      testData      - a vector includes one or more test cases
+ *                                in SlantPathInputsAndResult Structure
+ *
+ *****************************************************************************/
+std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &filename) {
     std::vector<LFMFInputsAndResult> testData;
     std::string dataDir = GetDirectory("data");
     std::ifstream file(dataDir + filename);
@@ -81,35 +83,31 @@ std::vector<LFMFInputsAndResult>
     return testData;
 }
 
-/*=============================================================================
- |
- |  Description:  This function appends director separator based on
- |                Operating System
- |
- |        Input:  &str              - Path name
- |
- |      Outputs:  str               - Path name with director separator
- |
- |      Returns:  [void]
- |
- *===========================================================================*/
+/******************************************************************************
+ *
+ *  Description:  This function appends director separator based on
+ *                Operating System
+ *
+ *  @param[out]   &str              - Path name with director separator
+ *
+ *****************************************************************************/
 static void AppendDirectorySep(std::string& str) {
-#ifdef _WIN32
-    str += "\\";
-#else
-    str += "/";
-#endif
+    #ifdef _WIN32
+        str += "\\";
+    #else
+        str += "/";
+    #endif
 }
 
-/*=============================================================================
- |
- |  Description:  This function gets the full path of a given directory
- |
- |        Input:  name             - directory name
- |
- |      Returns:  dataDir          - full path of the given directory
- |
- *===========================================================================*/
+/******************************************************************************
+ *
+ *  Description:  This function gets the full path of a given directory
+ *
+ *  @param[in]    name             - directory name
+ * 
+ *  Returns       dataDir          - full path of the given directory
+ *
+ *****************************************************************************/
 static std::string GetDirectory(std::string name) {
     std::string dataDir(__FILE__);
     dataDir.resize(dataDir.find_last_of("/\\"));
@@ -120,22 +118,24 @@ static std::string GetDirectory(std::string name) {
     return dataDir;
 }
 
-// Read CSV file, Excel dialect. Accept "quoted fields ""with quotes"""
+/*******************************************************************************
+ * Read CSV file, Excel dialect. Accept "quoted fields "\with quotes"\"
+ ******************************************************************************/
 enum class CSVState {
     UnquotedField,
     QuotedField,
     QuotedQuote
 };
 
-/*=============================================================================
- |
- |  Description:  This function parse a CSV row into cells
- |
- |        Input:  &row              - a CSV row in string
- |
- |      Returns:  fields            - a vector of CSV cells in string
- |
- *===========================================================================*/
+/******************************************************************************
+ *
+ *  Description:  This function parse a CSV row into cells
+ *
+ *  @param[in]    &row              - a CSV row in string
+ * 
+ *  Returns       fields            - a vector of CSV cells in string
+ *
+ *****************************************************************************/
 std::vector<std::string> readCSVRow(const std::string& row) {
     CSVState state = CSVState::UnquotedField;
     std::vector<std::string> fields{ "" };
@@ -181,15 +181,15 @@ std::vector<std::string> readCSVRow(const std::string& row) {
     return fields;
 }
 
-/*=============================================================================
- |
- |  Description:  This function loads a CSV file in vector
- |
- |        Input:  &in               - Input file stream
- |
- |      Returns:  table             - A vector includes CSV file cells by row
- |
- *===========================================================================*/
+/******************************************************************************
+ *
+ *  Description:  This function loads a CSV file in vector
+ *
+ *  @param[in]    &in               - Input file stream
+ * 
+ *  Returns       table             - A vector includes CSV file cells by row
+ *
+ *****************************************************************************/
 std::vector<std::vector<std::string>> readCSV(std::istream& in) {
     std::vector<std::vector<std::string>> table;
     std::string row;

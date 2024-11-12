@@ -3,12 +3,9 @@
  */
 #pragma once
 
-
-
 #include <gtest/gtest.h>  // GoogleTest
 #include "Driver.h"
 #include "TempTextFile.h"
-
 
 #ifndef _WIN32
     #include <unistd.h>  // for WEXITSTATUS
