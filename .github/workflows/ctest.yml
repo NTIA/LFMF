@@ -26,7 +26,6 @@ jobs:
     - name: Clone required submodules
       run: |
         git submodule init extern/googletest
-        git submodule init extern/doxygen-awesome-css
         git submodule update
 
     - name: Install CMake
