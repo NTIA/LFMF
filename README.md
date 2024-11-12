@@ -1,29 +1,64 @@
 # NTIA/ITS Propagation Library Template Project #
 <!-- TODO-TEMPLATE: Update software name above -->
+<!-- TODO-TEMPLATE: README BADGES
 
-[![Unit Tests Status][gh-actions-test-badge]][gh-actions-test-link]
-[![C++ API Reference][gh-actions-docs-badge]][gh-actions-docs-link]
-![GitHub Release][gh-releases-badge]
-![GitHub Issues][gh-issues-badge]
-<!-- TODO-TEMPLATE: Only include the DOI badge if a DOI exists for a release. -->
-<!-- [![DOI][doi-badge]][doi-link] -->
-
-<!-- TODO-TEMPLATE: Update repository links (and action names if needed) below -->
+- The first badge links to the PropLib Wiki and does not need to be edited
+- The second badge automatically displays and links to the most recent GitHub Release.
+    - Make sure to update the [gh-releases-badge] and [gh-releases-link] URLs with your repo name
+- The third badge links to the zenodo DOI page. Only include this badge if a DOI exists for a release.
+    - Update the [doi-link] using the "id" from https://api.github.com/repos/ntia/{repo_name}. For example, the
+      [doi-link] for ITM would be https://zenodo.org/badge/latestdoi/218981682. Using the repository ID in this link
+      will automatically make the link always point to the most recent DOI for the repository, so this won't need to be
+      edited every time a new release is made.
+    - Update the [doi-badge] to include the "all versions" DOI which always points to the latest version. This can be found
+      when creating the DOI in zenodo. The slash in the DOI must be replaced with "%2F" to render in the badge. For example,
+      the P2108 DOI is 10.5281/zenodo.7114033 which must be input as "10.5281%2Fzenodo.7114033"
+- The fourth badge is the CMake/CTest GitHub actions status.
+    - Update the repository name in [gh-actions-test-badge] and [gh-actions-test-link]
+- The fifth badge is the Doxygen github actions status.
+    - Update the repository name in [gh-actions-docs-badge]
+    - Update the repository name in [gh-pages-docs-link]
+- The sixth badge displays open GitHub Issues
+    - Update the repository name in [gh-issues-badge]
+    - Update the repository name in [gh-issues-link]
+-->
+[![NTIA/ITS PropLib][proplib-badge]][proplib-link]
+<!-- TODO-TEMPLATE: Add badges. See above for details.
+[![GitHub Release][gh-releases-badge]][gh-releases-link]
+[![DOI][doi-badge]][doi-link]
+[![GitHub Actions Unit Test Status][gh-actions-test-badge]][gh-actions-test-link]
+[![C++ API Reference][gh-actions-docs-badge]][gh-pages-docs-link]
+[![GitHub Issues][gh-issues-badge]][gh-issues-link]
+-->
+[proplib-badge]: https://img.shields.io/badge/PropLib-badge?label=%F0%9F%87%BA%F0%9F%87%B8%20NTIA%2FITS&labelColor=162E51&color=D63E04
+[proplib-link]: https://ntia.github.io/propagation-library-wiki
+[gh-actions-test-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/proplib-template/ctest.yml?branch=main&logo=cmake&label=Build%2FTests&labelColor=162E51
 [gh-actions-test-link]: https://github.com/NTIA/proplib-template/actions/workflows/ctest.yml
-[gh-actions-test-badge]: https://github.com/NTIA/proplib-template/actions/workflows/ctest.yml/badge.svg?branch=main
-[gh-actions-docs-link]: https://github.com/NTIA/proplib-template/actions/workflows/doxygen.yml
-[gh-actions-docs-badge]: https://github.com/NTIA/proplib-template/actions/workflows/doxygen.yml/badge.svg?branch=main
-[gh-releases-badge]: https://img.shields.io/github/v/release/NTIA/proplib-template
-[gh-issues-badge]: https://img.shields.io/github/issues/NTIA/proplib-template
-<!-- TODO-TEMPLATE: Only create a DOI for versioned public releases -->
-<!-- [doi-badge]: https://zenodo.org/badge/DOI/TODO-TEMPLATE/zenodo.TODO-TEMPLATE.svg
-[doi-link]: https://doi.org/TODO-TEMPLATE/zenodo.TODO-TEMPLATE -->
+[gh-actions-docs-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/proplib-template/doxygen.yml?branch=main&logo=c%2B%2B&label=Docs&labelColor=162E51
+[gh-pages-docs-link]: https://ntia.github.io/proplib-template
+[gh-releases-badge]: https://img.shields.io/github/v/release/NTIA/proplib-template?logo=github&label=Release&labelColor=162E51&color=D63E04
+[gh-releases-link]: https://github.com/NTIA/proplib-template/releases
+[gh-issues-badge]: https://img.shields.io/github/issues/NTIA/proplib-template?logo=github&label=Issues&labelColor=162E51
+[gh-issues-link]: https://github.com/NTIA/proplib-template/issues
+[doi-badge]: https://img.shields.io/badge/{TODO-ALL-VERSIONS-DOI}-x?logo=doi&logoColor=ffffff&labelColor=162E51&color=D63E04
+[doi-link]: https://zenodo.org/badge/latestdoi/{TODO-REPOSITORY-ID}
 
 <!-- TODO-TEMPLATE: Replace the below description with one for your software -->
 This code repository is a template repository for software in the NTIA/ITS
 Propagation Library (PropLib). This template is intended for developers wishing
 to develop a cross-platform C++ library as part of PropLib. Instructions on how
 to use this repository are found in its [GitHub Wiki](https://github.com/NTIA/proplib-template/wiki).
+
+Additional template repositories exist for building C#/.NET, MATLAB, and Python
+wrappers for PropLib C++ libraries. See:
+
+- [NTIA/proplib-template-dotnet](https://github.com/NTIA/proplib-template-dotnet)
+- [NTIA/proplib-template-matlab](https://github.com/NTIA/proplib-template-matlab)
+- [NTIA/proplib-template-python](https://github.com/NTIA/proplib-template-python)
+
+## Contact ##
+
+For questions about using this template repository, contact <aromaniello@ntia.gov>
 
 <!-- TODO-TEMPLATE: Create the README contents. Boilerplate provided below.
 
