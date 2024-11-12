@@ -28,7 +28,7 @@ jobs:
         uses: lukka/run-cmake@v10
         with:
           configurePreset: release
-          configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF']"
+          configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF']"
           buildPreset: release
     
       - name: Upload release artifact (macOS or Linux)
@@ -39,6 +39,8 @@ jobs:
           path: |
             ${{ github.workspace }}/bin/*.dylib
             ${{ github.workspace }}/bin/*.so
+            ${{ github.workspace }}/bin/*Driver-Darwin-*
+            ${{ github.workspace }}/bin/*Driver-Linux-*
           if-no-files-found: error
           overwrite: true
         
@@ -47,6 +49,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: release-${{ matrix.os }}
-          path: ${{ github.workspace }}\bin\Debug\*.dll
+          path: |
+            ${{ github.workspace }}\bin\Release\*.dll
+            ${{ github.workspace }}\bin\Release\*Driver-*.exe
           if-no-files-found: error
           overwrite: true
