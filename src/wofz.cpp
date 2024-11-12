@@ -1,5 +1,23 @@
-#include "..\include\LFMF.h"
+/** @file wofz.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
 
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
+
+
+/******************************************************************************
+ *
+ *  Description:  Compute the LFMF propagation prediction
+ *
+ *  @param[in]    z             - Input argument
+ *
+ *  @return       w             - The desired wofz function calculated at z
+ *
+ *****************************************************************************/
 complex<double> wofz(complex<double> z) 
 {
  
@@ -227,3 +245,7 @@ w = complex<double>(U, V);
 return w;
  
 }
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS

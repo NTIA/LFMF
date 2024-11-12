@@ -22,13 +22,22 @@
     <ClCompile Include="..\src\LFMF.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\ReturnCodes.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\LFMF.h">
-      <Filter>Header</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\LFMF.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\ReturnCodes.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\LFMFConfig.h">
+      <Filter>Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

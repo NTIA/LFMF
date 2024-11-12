@@ -1,30 +1,38 @@
-#include "..\include\LFMF.h"
+/** @file FlatEarthCurveCorrection.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
 
-/*=============================================================================
- |
- |  Description:  Calculates the groundwave field strength using the flat Earth
- |                approximation with curvature correction.
- |
- |   References:  99-368 "Medium Frequency Propagation
- |                  Prediction Techniques and Antenna Modeling for
- |                  Intelligent Transportation Systems (ITS) Broadcast 
- |                  Applications", Nicholas DeMinco.  Eq (31)
- |                J. Wait, "Radiation From a Vertical Antenna Over a Curved
- |                  Stratified Ground", Journal of Research of the National 
- |                  Bureau of Standards Vol 56, No. 4, April 1956 
- |                  Research Paper 2671
- |
- |        Input:  Delta         - Surface impedance
- |                q             - Intermediate value -j*nu*delta
- |                h_1__km       - Height of the higher antenna, in km
- |                h_2__km       - Height of the lower antenna, in km
- |                d__km         - Path distance, in km
- |                k             - Wavenumber, in rad/km
- |                a_e__km       - Effective earth radius, in km
- |
- |      Returns:  E_gw          - Normalized field strength in mV/m
- |
- *===========================================================================*/
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
+
+/******************************************************************************
+ *
+ *  Description:  Calculates the groundwave field strength using the flat Earth
+ *                approximation with curvature correction.
+ *
+ *   References:  99-368 "Medium Frequency Propagation
+ *                Prediction Techniques and Antenna Modeling for
+ *                Intelligent Transportation Systems (ITS) Broadcast 
+ *                Applications", Nicholas DeMinco.  Eq (31)
+ *                J. Wait, "Radiation From a Vertical Antenna Over a Curved
+ *                Stratified Ground", Journal of Research of the National 
+ *                Bureau of Standards Vol 56, No. 4, April 1956 
+ *                Research Paper 2671
+ *
+ *  @param[in]    Delta         - Surface impedance
+ *  @param[in]    q             - Intermediate value -j*nu*delta
+ *  @param[in]    h_1__km       - Height of the higher antenna, in km
+ *  @param[in]    h_2__km       - Height of the lower antenna, in km
+ *  @param[in]    d__km         - Path distance, in km
+ *  @param[in]    k             - Wavenumber, in rad/km
+ *  @param[in]    a_e__km       - Effective earth radius, in km
+ *
+ *  @return       E_gw          - Normalized field strength in mV/m
+ *
+ *****************************************************************************/
 double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double h_1__km, double h_2__km, double d__km, double k, double a_e__km)
 {
     complex<double> j = complex<double>(0.0, 1.0);
@@ -89,3 +97,7 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
 
     return E_gw__mVm;
 };
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS

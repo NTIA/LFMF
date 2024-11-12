@@ -19,7 +19,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\LFMF.h" />
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\LFMFConfig.h" />
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\ReturnCodes.h" />
+    <ClInclude Include="..\include\ITS.Propagation.LFMF\LFMF.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -27,6 +29,7 @@
     <ClCompile Include="..\src\FlatEarthCurveCorrection.cpp" />
     <ClCompile Include="..\src\LFMF.cpp" />
     <ClCompile Include="..\src\ResidueSeries.cpp" />
+    <ClCompile Include="..\src\ReturnCodes.cpp" />
     <ClCompile Include="..\src\ValidateInputs.cpp" />
     <ClCompile Include="..\src\WiRoot.cpp" />
     <ClCompile Include="..\src\wofz.cpp" />
@@ -116,6 +119,7 @@
       </PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -137,6 +141,7 @@
       </PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -158,6 +163,7 @@
       </PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -179,6 +185,7 @@
       </PrecompiledHeaderFile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <CallingConvention>StdCall</CallingConvention>
+      <AdditionalIncludeDirectories>..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

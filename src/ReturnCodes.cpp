@@ -2,8 +2,7 @@
  * Maps status messages to library return codes
  */
 
-// TODO-TEMPLATE include your primary library header
-#include "ITS.PropLibTemplate/PropLibTemplate.h"
+#include "ITS.Propagation.LFMF/LFMF.h"
 
 #ifdef _WIN32
     // Ensure strcpy_s is available on Windows
@@ -20,7 +19,8 @@
 #include <unordered_map>  // for std::unordered_map
 
 namespace ITS {
-// TODO-TEMPLATE: put these functions in this software's namespace
+namespace Propagation {
+namespace LFMF {
 
 /*******************************************************************************
  * Get an error message string from a return code.
@@ -30,8 +30,16 @@ namespace ITS {
  ******************************************************************************/
 std::string GetReturnStatus(int code) {
     static const std::unordered_map<ReturnCode, std::string> messages = {
-        {SUCCESS, "Successful execution"}
-        // TODO-TEMPLATE: Add messages corresponding to all return codes here
+        {SUCCESS, "Successful execution"},
+        {ERROR__TX_TERMINAL_HEIGHT, "TX terminal height is out of range"},
+        {ERROR__RX_TERMINAL_HEIGHT, "RX terminal height is out of range"},
+        {ERROR__FREQUENCY, "Frequency is out of range"},
+        {ERROR__TX_POWER, "Transmit power is out of range"},
+        {ERROR__SURFACE_REFRACTIVITY, "Surface refractivity is out of range"},
+        {ERROR__PATH_DISTANCE, "Path distance is out of range"},
+        {ERROR__EPSILON, "Epsilon is out of range"},
+        {ERROR__SIGMA, "Sigma is out of range"},
+        {ERROR__POLARIZATION, "Invalid value for polarization"},
     };
     // Construct status message
     std::string msg = LIBRARY_NAME;
@@ -56,7 +64,7 @@ std::string GetReturnStatus(int code) {
  * @param[in] code  Integer return code.
  * @return          A status message corresponding to the input code.
  ******************************************************************************/
-EXPORTED char *GetReturnStatusCharArray(const int code) {
+DLLEXPORT char *GetReturnStatusCharArray(const int code) {
     const std::string msg = GetReturnStatus(code);
     char *c_msg = new char[msg.size() + 1];
 #ifdef _WIN32
@@ -72,8 +80,10 @@ EXPORTED char *GetReturnStatusCharArray(const int code) {
  * 
  * @param[in] c_msg  The status message C-style string to delete
  ******************************************************************************/
-EXPORTED void FreeReturnStatusCharArray(char *c_msg) {
+DLLEXPORT void FreeReturnStatusCharArray(char *c_msg) {
     delete[] c_msg;
 }
 
+}  // namespace LFMF
+}  // namespace Propagation
 }  // namespace ITS

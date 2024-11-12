@@ -1,45 +1,45 @@
-#include "..\include\LFMF.h"
+/** @file WiRoot.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
 
-/*=============================================================================
- |
- |  Description:  This routine finds the roots to the equation
- |
- |                  Wi'(ti) - q*Wi(ti) = 0
- |
- |                The parameter i selects the ith root of the equation. The 
- |                function Wi(ti) is the "Airy function of the third kind"
- |                as defined by Hufford[1] and Wait. The root is found by 
- |                iteration starting from a real root.
- |
- |                Note: Although roots that are found for W1 (Wait) and 
- |                Wi(2) (Hufford) will be equal, and the roots found for 
- |                W2 (Wait) and Wi(1) (Hufford) will be equal, the return
- |                values for *Wi and *DWi will not be the same. The input 
- |                parameters for kind and scale are used here as they 
- |                are in Airy() for consistency.
- |
- |   References:  "Airy Functions of the third kind" are found in equation 38 
- |                  of NTIA Report 87-219 "A General Theory of Radio 
- |                  Propagation through a Stratified Atmosphere", George 
- |                  Hufford, July 1987
- |
- |        Input:  i             - The ith complex root of 
- |                                Wi'(2)(ti) - q*Wi(2)(ti) starting with 1
- |                DWi           - Derivative of "Airy function of the 
- |                                third kind" Wi'(2)(ti)
- |                q             - Intermediate value -j*nu*delta
- |                Wi            - "Airy function of the third kind" Wi(2)(ti)
- |                kind          - Kind of Airy function to use
- |                scaling       - Type of scaling to use
- |
- |      Outputs:  DWi           - Derivative of "Airy function of the 
- |                                third kind" Wi'(2)(ti)
- |                Wi            - "Airy function of the third kind" Wi(2)(ti)
- |
- |      Returns:  tw            - ith complex root of the "Airy function of 
- |                                the third kind"
- |
- *===========================================================================*/
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
+
+/******************************************************************************
+ *
+ *  Description:  This routine finds the roots to the equation Wi'(ti) - q*Wi(ti) = 0
+ *
+ *                The parameter i selects the ith root of the equation. The 
+ *                function Wi(ti) is the "Airy function of the third kind"
+ *                as defined by Hufford[1] and Wait. The root is found by 
+ *                iteration starting from a real root.
+ *
+ *                Note: Although roots that are found for W1 (Wait) and 
+ *                Wi(2) (Hufford) will be equal, and the roots found for 
+ *                W2 (Wait) and Wi(1) (Hufford) will be equal, the return
+ *                values for *Wi and *DWi will not be the same. The input 
+ *                parameters for kind and scale are used here as they 
+ *                are in Airy() for consistency.
+ *
+ *   References:  "Airy Functions of the third kind" are found in equation 38 
+ *                of NTIA Report 87-219 "A General Theory of Radio 
+ *                Propagation through a Stratified Atmosphere", George 
+ *                Hufford, July 1987
+ *
+ *  @param[in]    i             - The ith complex root of Wi'(2)(ti) - q*Wi(2)(ti) starting with 1
+ *  @param[in]    q             - Intermediate value -j*nu*delta
+ *  @param[in]    kind          - Kind of Airy function to use
+ *  @param[in]    scaling       - Type of scaling to use
+ *
+ *  @param[out]   DWi           - Derivative of "Airy function of the third kind" Wi'(2)(ti)
+ *  @param[out]   Wi            - "Airy function of the third kind" Wi(2)(ti)
+ *
+ *  @return       tw            - ith complex root of the "Airy function of the third kind"
+ *
+ *****************************************************************************/
 complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi, int kind, int scaling) 
 {
     complex<double> ph;             // Airy root phase 
@@ -239,3 +239,7 @@ complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<d
 
     return tw;
 };
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS

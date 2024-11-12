@@ -1,27 +1,33 @@
-#include "..\include\LFMF.h"
+/** @file ValidateInputs.cpp
+ * Implements the model from ITS.Propagation.LFMF.
+ */
 
-/*=============================================================================
- |
- |  Description:  Perform input parameter validation
- |
- |        Input:  h_tx__meter   - Height of the transmitter, in meter
- |                h_rx__meter   - Height of the receiver, in meter
- |                f__mhz        - Frequency, in MHz
- |                P_tx__watt    - Transmitter power, in Watts
- |                N_s           - Surface refractivity, in N-Units
- |                d__km         - Path distance, in km
- |                epsilon       - Relative permittivity
- |                sigma         - Conductivity
- |                pol           - Polarization
- |                                  + 0 : POLARIZATION__HORIZONTAL
- |                                  + 1 : POLARIZATION__VERTICAL
- |
- |      Outputs:  [None]
- |
- |      Returns:  error         - Error code
- |
- *===========================================================================*/
-int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
+#include "ITS.Propagation.LFMF/LFMF.h"
+
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
+
+/******************************************************************************
+ *
+ *  Description:  Perform input parameter validation
+ *
+ *  @param[in]    h_tx__meter   - Height of the transmitter, in meter
+ *  @param[in]    h_rx__meter   - Height of the receiver, in meter
+ *  @param[in]    f__mhz        - Frequency, in MHz
+ *  @param[in]    P_tx__watt    - Transmitter power, in Watts
+ *  @param[in]    N_s           - Surface refractivity, in N-Units
+ *  @param[in]    d__km         - Path distance, in km
+ *  @param[in]    epsilon       - Relative permittivity
+ *  @param[in]    sigma         - Conductivity
+ *  @param[in]    pol           - Polarization
+ *                                  + 0 : POLARIZATION__HORIZONTAL
+ *                                  + 1 : POLARIZATION__VERTICAL
+ *
+ *  @return       error         - Error code
+*
+ *****************************************************************************/
+ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
     double N_s, double d__km, double epsilon, double sigma, int pol)
 {
     if (h_tx__meter < 0 || h_tx__meter > 50)
@@ -48,9 +54,9 @@ int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double 
     if (sigma <= 0)
         return ERROR__SIGMA;
 
-    if (pol != POLARIZATION__HORIZONTAL &&
-        pol != POLARIZATION__VERTICAL)
-        return ERROR__POLARIZATION;
-
     return SUCCESS;
 }
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS
