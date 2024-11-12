@@ -1,16 +1,8 @@
 /** @file Driver.cpp
  * Implements the main function of the executable, and other high-level functions
  */
-#include "Driver.h"
 
-#include <algorithm> // for std::find
-#include <fstream>   // for std::ifstream, std::ofstream
-#include <iomanip>   // for std::setw
-#include <ios>       // for std::left
-#include <iostream>  // for std::cerr
-#include <ostream>   // for std::endl
-#include <string>    // for std::string
-#include <vector>    // for std::vector
+#include "Driver.h"
 
 /*******************************************************************************
  * Main function of the driver executable
@@ -39,19 +31,21 @@ int main(int argc, char **argv) {
         return rtn;
     }
 
-    // TODO-TEMPLATE: Add driver logic, e.g. validating inputs and calling the model
+    // Initialize model inputs/outputs
+    LFMFParams lfmf_params;
+    Result result;
 
-    // TODO-TEMPLATE this code block exists for a unit test to pass. Similar logic
-    // should be added to functions which parse input files.
-    std::ifstream file(params.in_file);
-    if (!file) {
-        std::cerr << "Failed to open file " << params.in_file << std::endl;
-        return DRVRERR__OPENING_INPUT_FILE;
+    rtn = ParseLFMFInputFile(params.in_file, lfmf_params);
+    if (rtn != DRVR__SUCCESS) {
+        return rtn;
     }
+    rtn = CallLFMFModel(lfmf_params, result);
 
     // Return driver error code if one was returned
-    if (rtn > DRVR__RETURN_SUCCESS)
+    if (rtn > DRVR__RETURN_SUCCESS) {
+        std::cerr << GetDrvrReturnStatus(rtn) << std::endl;
         return rtn;
+    }
 
     // Open output file for writing
     std::ofstream fp(params.out_file);
@@ -61,17 +55,38 @@ int main(int argc, char **argv) {
     }
 
     // Print generator information to file
-    fp << std::left << std::setw(25) << "Model" << LIBRARY_NAME;
-    fp PRINT "Library Version" << "v" << LIBRARY_VERSION;
-    fp PRINT "Driver Version" << "v" << DRIVER_VERSION;
+    fp << std::left << std::setw(30) << "Model" << LIBRARY_NAME;
+     
+    fp PRINT "Library Version"
+        << "v" << LIBRARY_VERSION;
+    fp PRINT "Driver Version"
+        << "v" << DRIVER_VERSION;
     fp PRINT "Date Generated" << GetDatetimeString();
     fp PRINT "Input Arguments";
     for (int i = 1; i < argc; i++) {
         fp << argv[i] << " ";
     }
     fp << std::endl << std::endl;
-    // TODO-TEMPLATE populate the rest of the output file
+
+    // Print inputs to file
+    fp << "Inputs:";   
+    WriteLFMFInputs(fp, lfmf_params);
+
+    // Print results to file
+    fp << std::endl << std::endl << "Results:";
+    fp PRINT "Return Code" SETW13 rtn;
+    char *return_status = GetReturnStatusCharArray(rtn);    
+    PrintLabel(fp, return_status);
+    std::cout << LIBRARY_NAME << " Return Code: " << rtn << ", " << return_status << std::endl;
+    FreeReturnStatusCharArray(return_status);
+    
+    if (rtn == SUCCESS) {
+        std::cout << "Basic transmission loss: " << std::fixed 
+            << std::setprecision(2) << result.A_btl__db << std::endl;
+        WriteLFMFOutputs(fp, result);
+    }
     fp.close();
+    return SUCCESS;
 }
 
 /*******************************************************************************
@@ -83,9 +98,8 @@ int main(int argc, char **argv) {
  * @return             Return code
  ******************************************************************************/
 DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
-    // TODO-TEMPLATE: Populate vector with all valid arguments
     const std::vector<std::string> validArgs
-        = {"-i", "-o", "-dbg", "-h", "--help", "-v", "--version"};
+        = {"-i", "-o", "-model", "-h", "--help", "-v", "--version"};
 
     for (int i = 1; i < argc; i++) {
         // Parse arg to lowercase string
@@ -107,10 +121,6 @@ DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
         } else if (arg == "-h" || arg == "--help") {
             Help();
             return DRVR__RETURN_SUCCESS;
-            // TODO-TEMPLATE handle any model input flags here
-        } else if (arg == "-dbg") {
-            params.DBG = true;
-            continue;
         }
 
         // Check if end of arguments reached or next argument is another flag
@@ -119,9 +129,7 @@ DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
             return DRVRERR__MISSING_OPTION;
         }
 
-        // TODO-TEMPLATE: Handle inputs which provide values (e.g. "-i in.txt").
-        // Template code will set in_file and out_file in DrvrParams based on -i
-        // and -o options. It will also set DrvrParams.DBG based on a -dbg flag
+        // Handle inputs which provide values (e.g. "-i in.txt").
         if (arg == "-i") {
             params.in_file = argv[i + 1];
             i++;
@@ -140,22 +148,18 @@ DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
  * @param[in] os  Output stream for writing; defaults to `std::cout`
  ******************************************************************************/
 void Help(std::ostream &os) {
-    // TODO-TEMPLATE: Update driver help message
     os << std::endl << "Usage: .\\<Driver Executable> [Options]" << std::endl;
     os << "Options (not case sensitive)" << std::endl;
-    os << "\t-i    :: Input file name" << std::endl;
-    os << "\t-t    :: Terrain file name" << std::endl;
-    os << "\t-o    :: Output file name" << std::endl;
-    os << "\t-dbg  :: Dump intermediate values to output file [optional]"
-       << std::endl;
+    os << "\t-i      :: Input file name" << std::endl;
+    os << "\t-o      :: Output file name" << std::endl;
     os << std::endl << "Examples:" << std::endl;
-    os << "\t[WINDOWS] " << DRIVER_NAME << ".exe -i in.txt -o out.txt"
-       << std::endl;
-    os << "\t[LINUX]   .\\" << DRIVER_NAME << " -i in.txt -o out.txt"
-       << std::endl;
+    os << "\t[WINDOWS] " << DRIVER_NAME
+       << ".exe -i inputs.txt -o results.txt" << std::endl;
+    os << "\t[LINUX]   .\\" << DRIVER_NAME
+       << " -i in.txt -o results.txt" << std::endl;
     os << "Other Options (which don't run the model)" << std::endl;
-    os << "\t-h    :: Display this help message" << std::endl;
-    os << "\t-v    :: Display program version information" << std::endl;
+    os << "\t-h      :: Display this help message" << std::endl;
+    os << "\t-v      :: Display program version information" << std::endl;
     os << std::endl;
 };
 
@@ -171,8 +175,6 @@ void Help(std::ostream &os) {
 DrvrReturnCode ValidateInputs(const DrvrParams &params) {
     DrvrParams not_set;
     DrvrReturnCode rtn = DRVR__SUCCESS;
-    // TODO-TEMPLATE: Check that required inputs were provided.
-    // This template code checks that input/output files were given with -i and -o
     if (params.in_file == not_set.in_file)
         rtn = DRVRERR__VALIDATION_IN_FILE;
     if (params.out_file == not_set.out_file)

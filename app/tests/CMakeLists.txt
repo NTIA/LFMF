@@ -26,16 +26,17 @@ target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME})
 # Make driver executable location available to source
 add_definitions(-DDRIVER_LOCATION="$<TARGET_FILE:${DRIVER_NAME}>")
 
-set_target_properties(
-    ${DRIVER_TEST_NAME} PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-    ARCHIVE_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-    RUNTIME_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-)
+#set_target_properties(
+#    ${DRIVER_TEST_NAME} PROPERTIES
+#    LIBRARY_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
+#    ARCHIVE_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
+#    RUNTIME_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
+#)
 
 ###########################################
 ## SET UP AND DISCOVER TESTS
 ###########################################
+target_compile_features(${DRIVER_TEST_NAME} PUBLIC cxx_std_11)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME} GTest::gtest_main)
 gtest_discover_tests(${DRIVER_TEST_NAME})

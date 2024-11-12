@@ -1,0 +1,9 @@
+h_tx__meter,0
+h_rx__meter,0
+f__mhz,0.01
+P_tx__watt,1000
+N_s,301
+d__km,1000
+epsilon,15
+sigma,0.005
+pol,0

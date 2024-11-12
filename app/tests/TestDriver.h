@@ -3,19 +3,18 @@
  */
 #pragma once
 
+
+
+#include <gtest/gtest.h>  // GoogleTest
 #include "Driver.h"
 #include "TempTextFile.h"
 
-#include <cstdio>         // for std::remove, std::perror
-#include <cstdlib>        // for std::system
-#include <gtest/gtest.h>  // GoogleTest
-#include <iostream>       // for std::cout
-#include <ostream>        // for std::endl, std::flush
-#include <string>         // for std::string
 
 #ifndef _WIN32
     #include <unistd.h>  // for WEXITSTATUS
 #endif
+
+#define DRIVER_LOCATION ""
 
 /*******************************************************************************
  * @class DriverTest
@@ -32,7 +31,7 @@ class DriverTest: public ::testing::Test {
         void SetUp() override {
             // TODO-TEMPLATE review and optionally adjust default params here
             // Set the default driver params
-            params.DBG = false;
+            //params.DBG = false;
             params.out_file = "tmp_out.txt";
 
             // Get the name of the executable to test
@@ -76,9 +75,9 @@ class DriverTest: public ::testing::Test {
             // Construct command from parameters
             std::string command = executable;
             command += " -i " + params.in_file;
-            if (params.DBG) {
-                command += " -DBG";
-            }
+            //if (params.DBG) {
+                //command += " -DBG";
+            //}
             command += " -o " + params.out_file;
 
             // Suppress text output of the driver, to avoid cluttering
