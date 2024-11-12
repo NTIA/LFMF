@@ -5,7 +5,6 @@ name: Create Release Artifacts
 on:
   push:
     tags: ['v[0-9]+.*']
-  workflow_dispatch:
 
 permissions:
   contents: write
@@ -45,12 +44,12 @@ jobs:
           overwrite: true
         
       - name: Upload release artifact (Windows)
-        if: matrix.os == 'Windows'
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
           name: release-${{ matrix.os }}
           path: |
             ${{ github.workspace }}\bin\Release\*.dll
-            ${{ github.workspace }}\bin\Release\*Driver-*.exe
+            ${{ github.workspace }}\bin\Release\*Driver-Windows-*.exe
           if-no-files-found: error
           overwrite: true
