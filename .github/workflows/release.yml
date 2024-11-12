@@ -1,0 +1,52 @@
+# This action compiles multi-platform binaries for a release.
+# It is triggered when a new tag is made with a version number starting with "v"
+name: Create Release Artifacts
+
+on:
+  push:
+    tags: ['v[0-9]+.*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  create_release_artifacts:
+    name: Create release artifacts
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+  
+      - name: Install CMake # (latest stable version)
+        uses: lukka/get-cmake@latest
+  
+      - name: "CMake: Build"
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: release
+          configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF']"
+          buildPreset: release
+    
+      - name: Upload release artifact (macOS or Linux)
+        if: runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.os }}
+          path: |
+            ${{ github.workspace }}/bin/*.dylib
+            ${{ github.workspace }}/bin/*.so
+          if-no-files-found: error
+          overwrite: true
+        
+      - name: Upload release artifact (Windows)
+        if: matrix.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.os }}
+          path: ${{ github.workspace }}\bin\Debug\*.dll
+          if-no-files-found: error
+          overwrite: true

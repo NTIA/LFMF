@@ -1,77 +1,138 @@
-# Low Frequency / Medium Frequency (LF/MF) Propagation Model
+# NTIA/ITS Propagation Library Template Project #
+<!-- TODO-TEMPLATE: Update software name above -->
+<!-- TODO-TEMPLATE: README BADGES
 
-This code repository contains an the NTIA/ITS implementation of the Low Frequency / Medium Frequency (LF/MF) Propagation Model. LF/MF predicts basic transmission loss in the frequency range 0.01 - 30 MHz for propagation paths over a smooth Earth and antenna heights less than 50 meters.
+- The first badge links to the PropLib Wiki and does not need to be edited
+- The second badge automatically displays and links to the most recent GitHub Release.
+    - Make sure to update the [gh-releases-badge] and [gh-releases-link] URLs with your repo name
+- The third badge links to the zenodo DOI page. Only include this badge if a DOI exists for a release.
+    - Update the [doi-link] using the "id" from https://api.github.com/repos/ntia/{repo_name}. For example, the
+      [doi-link] for ITM would be https://zenodo.org/badge/latestdoi/218981682. Using the repository ID in this link
+      will automatically make the link always point to the most recent DOI for the repository, so this won't need to be
+      edited every time a new release is made.
+    - Update the [doi-badge] to include the "all versions" DOI which always points to the latest version. This can be found
+      when creating the DOI in zenodo. The slash in the DOI must be replaced with "%2F" to render in the badge. For example,
+      the P2108 DOI is 10.5281/zenodo.7114033 which must be input as "10.5281%2Fzenodo.7114033"
+- The fourth badge is the CMake/CTest GitHub actions status.
+    - Update the repository name in [gh-actions-test-badge] and [gh-actions-test-link]
+- The fifth badge is the Doxygen github actions status.
+    - Update the repository name in [gh-actions-docs-badge]
+    - Update the repository name in [gh-pages-docs-link]
+- The sixth badge displays open GitHub Issues
+    - Update the repository name in [gh-issues-badge]
+    - Update the repository name in [gh-issues-link]
+-->
+[![NTIA/ITS PropLib][proplib-badge]][proplib-link]
+<!-- TODO-TEMPLATE: Add badges. See above for details.
+[![GitHub Release][gh-releases-badge]][gh-releases-link]
+[![DOI][doi-badge]][doi-link]
+[![GitHub Actions Unit Test Status][gh-actions-test-badge]][gh-actions-test-link]
+[![C++ API Reference][gh-actions-docs-badge]][gh-pages-docs-link]
+[![GitHub Issues][gh-issues-badge]][gh-issues-link]
+-->
+[proplib-badge]: https://img.shields.io/badge/PropLib-badge?label=%F0%9F%87%BA%F0%9F%87%B8%20NTIA%2FITS&labelColor=162E51&color=D63E04
+[proplib-link]: https://ntia.github.io/propagation-library-wiki
+[gh-actions-test-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/proplib-template/ctest.yml?branch=main&logo=cmake&label=Build%2FTests&labelColor=162E51
+[gh-actions-test-link]: https://github.com/NTIA/proplib-template/actions/workflows/ctest.yml
+[gh-actions-docs-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/proplib-template/doxygen.yml?branch=main&logo=c%2B%2B&label=Docs&labelColor=162E51
+[gh-pages-docs-link]: https://ntia.github.io/proplib-template
+[gh-releases-badge]: https://img.shields.io/github/v/release/NTIA/proplib-template?logo=github&label=Release&labelColor=162E51&color=D63E04
+[gh-releases-link]: https://github.com/NTIA/proplib-template/releases
+[gh-issues-badge]: https://img.shields.io/github/issues/NTIA/proplib-template?logo=github&label=Issues&labelColor=162E51
+[gh-issues-link]: https://github.com/NTIA/proplib-template/issues
+[doi-badge]: https://img.shields.io/badge/{TODO-ALL-VERSIONS-DOI}-x?logo=doi&logoColor=ffffff&labelColor=162E51&color=D63E04
+[doi-link]: https://zenodo.org/badge/latestdoi/{TODO-REPOSITORY-ID}
 
-## Inputs ##
+<!-- TODO-TEMPLATE: Replace the below description with one for your software -->
+This code repository is a template repository for software in the NTIA/ITS
+Propagation Library (PropLib). This template is intended for developers wishing
+to develop a cross-platform C++ library as part of PropLib. Instructions on how
+to use this repository are found in its [GitHub Wiki](https://github.com/NTIA/proplib-template/wiki).
 
-| Variable          | Type   | Units | Limits       | Description  |
-|-------------------|--------|-------|--------------|--------------|
-| `h_tx__meter`     | double | meter | 0 <= `h_tx__meter` <= 50 | Height of the transmitter |
-| `h_rx__meter`     | double | meter | 0 <= `h_rx__meter` <= 50 | Height of the receiver |
-| `f__mhz`          | double | MHz   | 0.01 <= `f__mhz` <= 30 | Frequency |
-| `P_tx__watt`      | double | Watt  | 0 < `P_tx__watt` | Transmitter power |
-| `N_s`             | double | N-Units | 250 <= `N_s` <= 400 | Surface refractivity |
-| `d__km`           | double | km    | 0 < `d__km`  | Path distance |
-| `epsilon`         | double |       | 1 <= `epsilon` | Relative permittivity |
-| `sigma`           | double | S/m   | 0 < `sigma` | Conductivity |
-| `pol`             | int    |       |              | Polarization <ul><li>0 = Horizontal</li><li>1 = Vertical</li></ul> |
+Additional template repositories exist for building C#/.NET, MATLAB, and Python
+wrappers for PropLib C++ libraries. See:
 
-## Outputs ##
-
-Outputs to LFMF are contained within a defined `Result` structure.
-
-| Variable      | Type   | Units | Description |
-|---------------|--------|-------|-------------|
-| `A_btl__db`   | double | dB    | Basic transmission loss |
-| `E_dBuVm`     | double | dB(uV/m) | Electrice field strength |
-| `P_rx__dbm`   | double | dBm   | Received power |
-| `method`      | int    |       | Solution method <ul><li>0 = Flat earth with curve correction</li><li>1 = Residue series</li></ul> |
-
-## Return Codes ##
-
-Possible return codes, including the corresponding defined constant name as defined in `LFMF.h`:
-
-| Value | Const Name                       | Description  |
-| ------|----------------------------------|--------------|
-|     0 | `SUCCESS`                        | Successful execution |
-|  1000 | `ERROR__TX_TERMINAL_HEIGHT`      | TX terminal height is out of range |
-|  1001 | `ERROR__RX_TERMINAL_HEIGHT`      | RX terminal height is out of range |
-|  1002 | `ERROR__FREQUENCY`               | Frequency is out of range |
-|  1003 | `ERROR__TX_POWER`                | Transmit power is out of range |
-|  1004 | `ERROR__SURFACE_REFRACTIVITY`    | Surface refractivity is out of range |
-|  1005 | `ERROR__PATH_DISTANCE`           | Path distance is out of range |
-|  1006 | `ERROR__EPSILON`                 | Epsilon is out of range |
-|  1007 | `ERROR__SIGMA`                   | Sigma is out of range |
-|  1008 | `ERROR__POLARIZATION`            | Invalid value for polarization |
-
-## Example Values ##
-
-A set of example inputs and outputs are provided for testing purposes.  This is not a comprehensive validation test set.  The test set can be found in [LFMF_Examples.csv](LFMF_Examples.csv).
-
-## Notes on Code Style ##
-
-* In general, variables follow the naming convention in which a single underscore denotes a subscript (pseudo-LaTeX format), where a double underscore is followed by the units, i.e. h_tx__meter.
-* Variables are named to match their corresponding mathematical variables from their publication text.
-* Wherever possible, equation numbers are provided.
-
-## Configure and Build ##
-
-### C++ Software
-
-The software is designed to be built into a DLL (or corresponding library for non-Windows systems). The source code can be built for any OS that supports the standard C++ libraries. A Visual Studio 2022 project file is provided for Windows users to support the build process and configuration.
-
-### C#/.NET Wrapper Software
-
-The .NET support of LFMF consists of a simple pass-through wrapper around the native DLL.  It is compiled to target .NET Framework 4.8.1.  Distribution and updates are provided through the published NuGet package.
-
-## References ##
-
-* Bremmer, H. "Terrestrial Radio Waves" _Elsevier_, 1949. 
-* DeMinco, N. "Medium Frequency Propagation Prediction Techniques and Antenna Modeling for Intelligent Transportation Systems (ITS) Broadcast Applications", [_NTIA Report 99-368_](https://www.its.bldrdoc.gov/publications/2399.aspx), August 1999
-* DeMinco, N. "Ground-wave Analysis Model For MF Broadcast System", [_NTIA Report 86-203_](https://www.its.bldrdoc.gov/publications/2226.aspx), September 1986
-* Sommerfeld, A. "The propagation of waves in wireless telegraphy", _Ann. Phys._, 1909, 28, p.665
-* Wait, J. "Radiation From a Vertical Antenna Over a Curved Stratified Ground", _Journal of Research of the National Bureau of Standards_.  Vol 56, No. 4, April 1956. Research Paper 2671
+- [NTIA/proplib-template-dotnet](https://github.com/NTIA/proplib-template-dotnet)
+- [NTIA/proplib-template-matlab](https://github.com/NTIA/proplib-template-matlab)
+- [NTIA/proplib-template-python](https://github.com/NTIA/proplib-template-python)
 
 ## Contact ##
 
-For questions, contact Nick DeMinco, NDeminco@ntia.gov
+For questions about using this template repository, contact <aromaniello@ntia.gov>
+
+<!-- TODO-TEMPLATE: Create the README contents. Boilerplate provided below.
+
+## Getting Started ##
+
+TODO-TEMPLATE: Update links in this section, if applicable
+TODO-TEMPLATE: Otherwise, add correct "getting started" information here.
+
+To get started using this model, refer to
+[its page on the **NTIA/ITS Propagation Library Wiki**](https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/).
+There, you will find installation instructions, usage information, and code
+examples for all supported languages.
+
+If you're a developer and would like to contribute to or extend this repository,
+you will find comprehensive documentation of this C++ code
+[here](https://ntia.github.io/TODO-TEMPLATE), and a guide for contributors
+[here](CONTRIBUTING.md).
+
+## Configure and Build ##
+
+The software is designed to be built into a DLL (or corresponding `.so` or `.dylib`
+library for non-Windows systems). A CMake build configuration and presets are
+provided for cross-platform builds, which can be carried out, for example, by:
+
+```cmd
+# From this repository's root directory, try one of the following command pairs:
+
+# "Release" configurations compile the library, build docs, and configure tests:
+cmake --preset release
+cmake --build --preset release
+
+# "Debug" configurations skip building the docs:
+cmake --preset debug
+cmake --build --preset debug
+
+# "DocsOnly" configurations only build the docs:
+cmake --preset docsOnly
+cmake --build --preset docsOnly
+```
+
+Note that this repository makes use of several
+[Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+to reference dependencies used for running unit tests and building documentation.
+In order to do either, ensure the required submodules are cloned by running:
+
+```cmd
+# From this repository's root directory
+git submodule init extern/googletest           # Required to run tests
+git submodule init extern/doxygen-awesome-css  # Required to build docs
+git submodule update                           # Clones the initialized submodules
+```
+
+## Running Tests ##
+
+TODO-TEMPLATE: Update this section if needed, based on tests in the repo
+TODO-TEMPLATE: Add any other testing info, such as links to available data
+
+If you've configured tests when building the project, for example by using one of
+the "Release" or "Debug" CMake presets, you can run the included unit tests as follows:
+
+```cmd
+ctest --preset release
+```
+
+## References ##
+
+TODO-TEMPLATE: Add refs to, e.g., publications related to the software
+TODO-TEMPLATE: Update or remove the link here to the Doxygen docs
+
+* [ITS Propagation Library Wiki](https://ntia.github.io/propagation-library-wiki)
+* [`ITS.TODO-TEMPLATE.THIS-LIBRARY` C++ API Reference](https://ntia.github.io/TODO-TEMPLATE)
+
+## Contact ##
+
+For technical questions, contact <code@ntia.gov>.
+
+-->

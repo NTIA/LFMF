@@ -1,0 +1,48 @@
+# This action compiles the library and runs all unit tests using an OS and CMake matrix
+# Doxygen documentation is also built. Build fails on missing documentation.
+name: Unit Tests
+
+on:
+  push:
+    branches: ["main", "dev"]
+  pull_request:
+    branches: ["main", "dev"]
+  workflow_dispatch:
+
+# Define the matrix for different operating systems
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }} / CMake ${{ matrix.cmakeVersion }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
+        cmakeVersion: ["3.21", latest]
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Clone required submodules
+      run: |
+        git submodule init extern/googletest
+        git submodule init extern/doxygen-awesome-css
+        git submodule update
+
+    - name: Install CMake
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: ${{ matrix.cmakeVersion }}
+    
+    - name: Install Doxygen
+      uses: ssciwr/doxygen-install@v1
+      with:
+        version: "1.12.0"
+
+    - name: "CMake: Build and Test"
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: release
+        buildPreset: release
+        testPreset: release
