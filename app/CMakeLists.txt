@@ -15,13 +15,13 @@ add_subdirectory(src)
 ###########################################
 if (RUN_DRIVER_TESTS)
     #set_target_properties(${DRIVER_NAME} PROPERTIES ENABLE_EXPORTS ON)
-    #add_subdirectory(tests)
+    add_subdirectory(tests)
     
     message(STATUS "STATUS: RUNTIME_OUTPUT_DIRECTORY: " ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
  
     # define a function to simplify adding tests
     function(do_test test_name test_arg test_result)
-      add_test(NAME ${test_name} COMMAND ${DRIVER_NAME}-${DRIVER_VERSION} ${test_arg} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+      add_test(NAME ${test_name} COMMAND ${DRIVER_NAME}-${DRIVER_VERSION} ${test_arg} CONFIGURATIONS Debug WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
@@ -33,7 +33,7 @@ if (RUN_DRIVER_TESTS)
     do_test("version" "-v" "Driver Version: ${DRIVER_VERSION}")
 
     function(result_test test_name input_file output_file test_result)
-      add_test(NAME ${test_name} COMMAND ${DRIVER_NAME}-${DRIVER_VERSION} -i ${input_file} -o ${output_file} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+      add_test(NAME ${test_name} COMMAND ${DRIVER_NAME}-${DRIVER_VERSION} -i ${input_file} -o ${output_file} CONFIGURATIONS Debug WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )

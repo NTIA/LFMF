@@ -1,7 +1,7 @@
 /** @file TempTextFile.cpp
  * Implements a class to create and write to temporary text files
  */
-#include "TestDriver.h"
+#include "TempTextFile.h"
 
 #ifdef _WIN32
     // Ensure tmpnam_s is available on Windows
@@ -17,9 +17,12 @@
     #include <unistd.h>  // for close
 #endif
 
-
+#include <algorithm>  // for std::remove
+#include <fstream>    // for std::ofstream
+#include <iostream>   // for std::cerr, std::ios::trunc
+#include <ostream>    // for std::endl
 #include <stdexcept>  // for std::runtime_error
-
+#include <string>     // for std::string
 
 TempTextFile::TempTextFile(const std::string &content) {
 #ifdef _WIN32

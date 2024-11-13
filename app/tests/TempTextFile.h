@@ -3,7 +3,7 @@
  */
 #pragma once
 
-#include <string>    // for std::string
+#include <string>  // for std::string
 
 /*******************************************************************************
  * A class to manage a temporary text file.

@@ -2,15 +2,21 @@
  * Primary header and test fixture for command line driver tests.
  */
 #pragma once
-
 #include <gtest/gtest.h>  // GoogleTest
+
 #include "Driver.h"
 #include "TempTextFile.h"
+
+#include <cstdio>         // for std::remove, std::perror
+#include <cstdlib>        // for std::system
+
+#include <iostream>       // for std::cout
+#include <ostream>        // for std::endl, std::flush
+#include <string>         // for std::string
 
 #ifndef _WIN32
     #include <unistd.h>  // for WEXITSTATUS
 #endif
-
 
 /*******************************************************************************
  * @class DriverTest
@@ -25,9 +31,7 @@ class DriverTest: public ::testing::Test {
          * Sets up the test environment.
          **********************************************************************/
         void SetUp() override {
-            // TODO-TEMPLATE review and optionally adjust default params here
             // Set the default driver params
-            //params.DBG = false;
             params.out_file = "tmp_out.txt";
 
             // Get the name of the executable to test
@@ -58,23 +62,17 @@ class DriverTest: public ::testing::Test {
          * struct. Optionally, the command can be written such that stdout and
          * are suppressed.
          * 
-         * @param[in] params          The driver parameters
-         * @param[in] suppressOutputs Whether to suppress outputs (default: true)
-         * @return                    The constructed command string
+         * @param[in] dParams          The driver parameters
+         * @param[in] suppressOutputs  Whether to suppress outputs (default: true)
+         * @return                     The constructed command string
          **********************************************************************/
         std::string BuildCommand(
-            const DrvrParams &params, const bool suppressOutputs = true
+            const DrvrParams &dParams, const bool suppressOutputs = true
         ) {
-            // TODO-TEMPLATE: Modify this function to correctly
-            // unpack the DrvrParams struct and build the command
-
             // Construct command from parameters
             std::string command = executable;
-            command += " -i " + params.in_file;
-            //if (params.DBG) {
-                //command += " -DBG";
-            //}
-            command += " -o " + params.out_file;
+            command += " -i " + dParams.in_file;
+            command += " -o " + dParams.out_file;
 
             // Suppress text output of the driver, to avoid cluttering
             // test outputs.
@@ -107,11 +105,11 @@ class DriverTest: public ::testing::Test {
         /***********************************************************************
          * Runs the driver executable.
          * 
-         * @param[in] params  Parameters to parse as command line arguments
-         * @return            Return code from the driver execution
+         * @param[in] dParams  Parameters to parse as command line arguments
+         * @return             Return code from the driver execution
          **********************************************************************/
-        int RunDriver(const DrvrParams &params) {
-            std::string cmd = BuildCommand(params);
+        int RunDriver(const DrvrParams &dParams) {
+            std::string cmd = BuildCommand(dParams);
             return RunCommand(cmd);
         }
 
@@ -126,13 +124,13 @@ class DriverTest: public ::testing::Test {
          * driver, it is deleted before this method returns.
          * 
          * @param[in] inFileContents  The contents to write to the input file
-         * @param[in] params          A populated driver parameters struct (see above)
+         * @param[in] dParams         A populated driver parameters struct (see above)
          * @return                    Return code from the driver execution
          **********************************************************************/
         int RunDriverWithInputFile(
-            const std::string &inFileContents, const DrvrParams &params
+            const std::string &inFileContents, const DrvrParams &dParams
         ) {
-            DrvrParams updated_params = params;
+            DrvrParams updated_params = dParams;
             TempTextFile tempFile(inFileContents);
             updated_params.in_file = tempFile.getFileName();
             int rtn = RunDriver(updated_params);

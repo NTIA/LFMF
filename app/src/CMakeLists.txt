@@ -31,8 +31,6 @@ set_target_properties(
     OUTPUT_NAME ${DRIVER_NAME}-${DRIVER_VERSION}
 )
 
-
-
 if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
 
     install(TARGETS ${DRIVER_NAME}
