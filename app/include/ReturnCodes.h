@@ -29,4 +29,4 @@ enum DrvrReturnCode {
 };
 // clang-format on
 
-std::string GetDrvrReturnStatus(int code);
+std::string GetDrvrReturnStatusMsg(int code);
