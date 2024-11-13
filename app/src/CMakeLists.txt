@@ -28,7 +28,7 @@ target_link_libraries(${DRIVER_NAME} ${LIB_NAME} proplib_compiler_flags)
 # Set some target metadata
 set_target_properties(
     ${DRIVER_NAME} PROPERTIES
-    OUTPUT_NAME ${DRIVER_NAME}-${DRIVER_VERSION}
+    OUTPUT_NAME ${DRIVER_NAME}-${CMAKE_SYSTEM_NAME}-${DRIVER_VERSION}
 )
 
 if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)

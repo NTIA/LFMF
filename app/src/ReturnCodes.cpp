@@ -9,7 +9,7 @@
  * @param[in] code  Driver return code.
  * @return          A status message corresponding to the input code.
  ******************************************************************************/
-std::string GetDrvrReturnStatus(int code) {
+std::string GetDrvrReturnStatusMsg(int code) {
     static const std::unordered_map<DrvrReturnCode, std::string> messages
         = {{DRVR__SUCCESS, "Successful execution"},
            {DRVR__RETURN_SUCCESS, "Internal driver success"},

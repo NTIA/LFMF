@@ -181,7 +181,7 @@ DrvrReturnCode ValidateInputs(const DrvrParams &params) {
         rtn = DRVRERR__VALIDATION_OUT_FILE;
 
     if (rtn != DRVR__SUCCESS)
-        std::cerr << GetDrvrReturnStatus(rtn) << std::endl;
+        std::cerr << GetDrvrReturnStatusMsg(rtn) << std::endl;
 
     return rtn;
 }
