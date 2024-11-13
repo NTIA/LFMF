@@ -8,7 +8,7 @@ message(STATUS "STATUS: Start building the google tests: " ${TEST_NAME})
 # Add all google test files here
 add_executable(
     ${TEST_NAME}
-    "TestLFMF.cpp"
+    "TestLFMFReturnCode.cpp"
     "LFMFGTestUtils.cpp"
     "LFMFGTest.h"
 )
@@ -16,7 +16,6 @@ add_executable(
 ###########################################
 ## SET UP AND DISCOVER TESTS
 ###########################################
-
 
 target_compile_features(${TEST_NAME} PUBLIC cxx_std_17)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
