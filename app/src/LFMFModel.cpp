@@ -15,11 +15,11 @@ const std::string LFMFInputKeys::sigma = "sigma";
 const std::string LFMFInputKeys::pol = "pol"; 
 
 /*******************************************************************************
- * Top-level control function for Aeronautical Statistical Model operation
+ * Top-level control function for LFMF Model
  * 
- * @param[in]  lfmf_params  Aeronautical Statistical Model input parameter struct
- * @param[out] results      LFMF Results in Result struct
- * @return                  Return code
+ * @param[in]  lfmf_params     - LFMF Model input parameter struct
+ * @param[out] result          - LFMF Results in Result struct
+ * @returns    rtn             - Return code
  ******************************************************************************/
 ReturnCode CallLFMFModel(LFMFParams &lfmf_params, Result &result) {
     ReturnCode rtn;
@@ -105,7 +105,7 @@ DrvrReturnCode ParseLFMFInputStream(std::istream &stream, LFMFParams &lfmf_param
 }
 
 /*******************************************************************************
- * Parse Aeronautical Statistical Model input parameter file
+ * Parse LFMF Model input parameter file
  * 
  * @param[in]  in_file     Path to LFMF input parameter file
  * @param[out] lfmf_params  LFMF input parameter struct
@@ -122,7 +122,7 @@ DrvrReturnCode
 }
 
 /*******************************************************************************
- * Write Aeronautical Statistical Model inputs to the report file
+ * Write LFMF Model inputs to the report file
  * 
  * @param[in] fp      Output stream, a text file open for writing
  * @param[in] params  LFMF input parameter struct
