@@ -27,7 +27,7 @@ enum DrvrReturnCode {
     DRVRERR__PARSE_PATH_DISTANCE,           /**< Failed to parse path distance value */
     DRVRERR__PARSE_EPSILON,                 /**< Failed to parse epsilon value */
     DRVRERR__PARSE_SIGMA,                   /**< Failed to parse sigma value */
-    DRVRERR__PARSE_POLARIZATION,			/**< Failed to parse polarization value */
+    DRVRERR__PARSE_POLARIZATION,            /**< Failed to parse polarization value */
 
     // Validation Errors
     DRVRERR__VALIDATION_IN_FILE = 192,      /**< Input file not specified */

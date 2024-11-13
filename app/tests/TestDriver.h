@@ -11,7 +11,6 @@
     #include <unistd.h>  // for WEXITSTATUS
 #endif
 
-#define DRIVER_LOCATION ""
 
 /*******************************************************************************
  * @class DriverTest

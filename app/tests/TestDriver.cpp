@@ -5,14 +5,6 @@
 
 #include "TestDriver.h"
 
-
-
-
-TEST(DriverTest, TestName0) {
-    EXPECT_EQ(1, 1);
-    EXPECT_TRUE(true);
-}
-
 TEST_F(DriverTest, MissingOptionError1) {
     // Test case: missing option between two provided flags
     std::string cmd = executable + " -i -o out.txt";
