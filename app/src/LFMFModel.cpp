@@ -95,7 +95,7 @@ DrvrReturnCode ParseLFMFInputStream(std::istream &stream, LFMFParams &lfmf_param
         }
 
         if (rtn != DRVR__SUCCESS) {
-            std::cerr << GetDrvrReturnStatus(rtn) << std::endl;
+            std::cerr << GetDrvrReturnStatusMsg(rtn) << std::endl;
             return rtn;
         }
         ++it;

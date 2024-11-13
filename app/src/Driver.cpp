@@ -43,7 +43,7 @@ int main(int argc, char **argv) {
 
     // Return driver error code if one was returned
     if (rtn > DRVR__RETURN_SUCCESS) {
-        std::cerr << GetDrvrReturnStatus(rtn) << std::endl;
+        std::cerr << GetDrvrReturnStatusMsg(rtn) << std::endl;
         return rtn;
     }
 
