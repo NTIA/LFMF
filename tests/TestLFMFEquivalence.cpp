@@ -1,4 +1,4 @@
-/** @file TestLFMFEquivalent.cpp
+/** @file TestLFMFEquivalence.cpp
  * Implements the google tests from ITS.Propagation.LFMF.
  */
 
@@ -11,7 +11,7 @@
  *                Test Data are from https://github.com/eeveetza/LFMFSmoothEarth.
  *
  *****************************************************************************/
-class TestLFMFEquivalent: public ::testing::Test {
+class TestLFMFEquivalence: public ::testing::Test {
     protected:
     void SetUp() override {
         // Load test data from CSV
@@ -30,7 +30,7 @@ class TestLFMFEquivalent: public ::testing::Test {
  *  Description:  Test case to verify LFMF results are correct
  *
  *****************************************************************************/
-TEST_F(TestLFMFEquivalent, EquivalentToMatLAB) {
+TEST_F(TestLFMFEquivalence, EquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     std::cout << "TestLFMF from '" << fileName << "': " << testData.size() << " Test instances." << std::endl;
