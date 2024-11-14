@@ -8,7 +8,7 @@
  *
  *  Description:  The purpose of this is to ensure that CMAKE compiles
  *                the LFMF model DLL correctly.
- *                Test Data is stored in CSV format.
+ *                Test Data are stored in CSV format.
  *
  *****************************************************************************/
 class TestLFMFReturnCode : public ::testing::Test {
@@ -30,7 +30,7 @@ protected:
  *  Description:  Test case to verify LFMF results are correct
  *
  *****************************************************************************/
-TEST_F(TestLFMFReturnCode, TestLFMFSuccess) {
+TEST_F(TestLFMFReturnCode, ReturnSuccess) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     std::cout << "TestLFMF from '" << fileName << "': " << testData.size() << " Test instances." << std::endl;

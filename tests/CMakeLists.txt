@@ -9,6 +9,7 @@ message(STATUS "STATUS: Start building the google tests: " ${TEST_NAME})
 add_executable(
     ${TEST_NAME}
     "TestLFMFReturnCode.cpp"
+    "TestLFMFSmoothEarth.cpp"
     "LFMFGTestUtils.cpp"
     "LFMFGTest.h"
 )
