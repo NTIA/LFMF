@@ -8,7 +8,7 @@
 #    This is relevant for specifying unit test data file paths
 #    Automated testing only runs >=3.21 for this reason.
 # >=3.14 required for GoogleTest v1.12.x
-cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 ###########################################
 ## PROJECT METADATA
@@ -40,7 +40,6 @@ option(RUN_DRIVER_TESTS "Test the driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating documentation" OFF)
 option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
 option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
-option(ENABLE_INSTALL "Enable installation of ${LIB_NAME}. (Projects embedding (${LIB_NAME} may want to turn this OFF.)" ON)
 
 ###########################################
 ## SETUP
@@ -121,22 +120,6 @@ if (NOT DOCS_ONLY)
     endif ()
 
     message(STATUS "STATUS: ${PROJECT_NAME} VERSION_MAJOR is " ${PROJECT_VERSION_MAJOR} ", VERSION_MINOR is " ${PROJECT_VERSION_MINOR})
-
-    if (ENABLE_INSTALL)
-        if(APPLE)
-            set(CMAKE_INSTALL_RPATH "@executable_path/../lib")
-        elseif(UNIX)
-            set(CMAKE_INSTALL_RPATH "$ORIGIN/../lib")
-        endif()
-        # setup installer
-        include(InstallRequiredSystemLibraries)
-        set(CPACK_RESOURCE_FILE_LICENSE "${PROJECT_SOURCE_DIR}/LICENSE.md")
-        set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")
-        set(CPACK_PACKAGE_VERSION_MINOR "${PROJECT_VERSION_MINOR}")
-        set(CPACK_GENERATOR "TGZ" CACHE STRING "Set the CPack Archive Generator")
-        set(CPACK_SOURCE_GENERATOR "TGZ" CACHE STRING "Set the CPack Archive Source Generator")
-        include(CPack)
-    endif ()
 endif ()
 
 # Generate documentation

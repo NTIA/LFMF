@@ -55,25 +55,3 @@ set_target_properties(
     VERSION ${PROJECT_VERSION}
     SOVERSION ${PROJECT_VERSION_MAJOR} # Include version in .so output filenames
 )
-
-if (DEFINED ENABLE_INSTALL AND ENABLE_INSTALL)
-    # Create a variable called installable_libs that is a list of all libraries
-    # we want to install (e.g. LFMF and lfmf_compiler_flags)
-    # Then install the installable libraries to the lib folder.
-    set(installable_libs ${LIB_NAME} proplib_compiler_flags)
-
-    install(TARGETS ${installable_libs}
-            DESTINATION ${CMAKE_INSTALL_BINDIR})
-
-    install(TARGETS ${installable_libs}
-            DESTINATION ${CMAKE_INSTALL_LIBDIR})
-
-    # Install the library headers to the include folder.
-    install(FILES 
-            "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h" 
-            "${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h"
-            "${LIB_HEADERS}/${PROJECT_NAME}/ReturnCodes.h"
-            DESTINATION 
-            ${CMAKE_INSTALL_INCLUDEDIR}/${PROJECT_NAME}
-    )
-endif()

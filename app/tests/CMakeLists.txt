@@ -1,7 +1,7 @@
 ############################################
 ## CONFIGURE COMMAND LINE DRIVER TESTS
 ############################################
-set(DRIVER_TEST_NAME "${DRIVER_NAME}GTest")
+set(DRIVER_TEST_NAME "${DRIVER_NAME}Test")
 
 add_executable(
     ${DRIVER_TEST_NAME}

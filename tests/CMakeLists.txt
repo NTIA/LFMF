@@ -1,7 +1,7 @@
 ############################################
 ## CONFIGURE UNIT TESTS
 ############################################
-set(TEST_NAME "${LIB_NAME}GTest")
+set(TEST_NAME "${LIB_NAME}Test")
 
 message(STATUS "STATUS: Start building the google tests: " ${TEST_NAME})
 
@@ -17,7 +17,6 @@ add_executable(
 ###########################################
 ## SET UP AND DISCOVER TESTS
 ###########################################
-
 target_compile_features(${TEST_NAME} PUBLIC cxx_std_17)
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 target_link_libraries(${TEST_NAME} ${LIB_NAME} GTest::gtest_main)
