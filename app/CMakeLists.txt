@@ -21,7 +21,7 @@ if (RUN_DRIVER_TESTS)
  
     # define a function to simplify adding tests
     function(do_test test_name test_arg test_result)
-      add_test(NAME ${test_name} COMMAND ${DRIVER_NAME}-${DRIVER_VERSION} ${test_arg} CONFIGURATIONS Debug WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+      add_test(NAME ${test_name} COMMAND $<TARGET_FILE_NAME:${DRIVER_NAME}> ${test_arg} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
@@ -33,12 +33,21 @@ if (RUN_DRIVER_TESTS)
     do_test("version" "-v" "Driver Version: ${DRIVER_VERSION}")
 
     function(result_test test_name input_file output_file test_result)
-      add_test(NAME ${test_name} COMMAND ${DRIVER_NAME}-${DRIVER_VERSION} -i ${input_file} -o ${output_file} CONFIGURATIONS Debug WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+      add_test(NAME ${test_name} COMMAND $<TARGET_FILE_NAME:${DRIVER_NAME}> -i ${input_file} -o ${output_file} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
     endfunction()
-    result_test("results01" "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_01.txt" "o_lfmf_01.txt" "Return Code: 0, LFMF v${PROJECT_VERSION} Status: Successful execution\nBasic transmission loss: 184.49")
-    result_test("results02" "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_02.txt" "o_lfmf_02.txt" "Return Code: 0, LFMF v${PROJECT_VERSION} Status: Successful execution\nBasic transmission loss: 151.33")
-    result_test("results03" "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_03.txt" "o_lfmf_03.txt" "Return Code: 0, LFMF v${PROJECT_VERSION} Status: Successful execution\nBasic transmission loss: 264.33")
+    result_test("results01" 
+                "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_01.txt" 
+                "o_lfmf_01.txt" 
+                "Return Code: 0, LFMF v${PROJECT_VERSION} Status: Successful execution\nBasic transmission loss: 184.49")
+    result_test("results02" 
+                "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_02.txt" 
+                "o_lfmf_02.txt" 
+                "Return Code: 0, LFMF v${PROJECT_VERSION} Status: Successful execution\nBasic transmission loss: 151.33")
+    result_test("results03" 
+                "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_03.txt" 
+                "o_lfmf_03.txt" 
+                "Return Code: 0, LFMF v${PROJECT_VERSION} Status: Successful execution\nBasic transmission loss: 264.33")
 endif()
