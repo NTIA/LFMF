@@ -1,4 +1,4 @@
-/** @file TestLFMFReturnCode.cpp
+/** @file TestLFMFSmoothEarth.cpp
  * Implements the google tests from ITS.Propagation.LFMF.
  */
 
