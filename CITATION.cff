@@ -4,15 +4,15 @@ title: >-
 message: Please cite this software using these metadata.
 type: software
 authors:
-  - family-names: TODO-TEMPLATE
-    given-names: TODO-TEMPLATE
-    name-suffix: TODO-TEMPLATE
+  - family-names: Kozma
+    given-names: William
+    name-suffix: Jr.
     affiliation: >-
       U.S. Department of Commerce, National
       Telecommunications and Information Administration,
       Institute for Telecommunication Sciences
-    orcid: 'TODO-TEMPLATE'
-    email: TODO-TEMPLATE
+    orcid: 'https://orcid.org/0000-0002-7417-4009'
+    email: wkozma@ntia.gov
   - name: >-
       U.S. Department of Commerce, National
       Telecommunications and Information Administration,
@@ -24,11 +24,12 @@ authors:
     country: US
     email: code@ntia.gov
     website: 'https://its.ntia.gov'
-repository-code: 'https://github.com/NTIA/TODO-TEMPLATE'
-url: 'https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE'
-repository: 'https://github.com/NTIA/TODO-TEMPLATE'
+repository-code: 'https://github.com/NTIA/LFMF'
+url: 'https://ntia.github.io/propagation-library-wiki/models/LFMF'
+repository: 'https://github.com/NTIA/LFMF'
 keywords:
-  - TODO-TEMPLATE
+  - propagation
+  - its
 license: 'NTIA Public Domain'
 version: 1.0.0
-date-released: 'TODO-TEMPLATE'
+date-released: '2024-12-01'

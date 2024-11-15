@@ -1,17 +1,17 @@
 {
     "creators": [
         {
-            "orcid": "TODO-TEMPLATE",
-            "affiliation": "U.S. Department of Commerce, National Telecommunications and Information Administration, Institute for Telecommunication Sciences",
-            "name": "TODO-TEMPLATE"
+            "orcid": "0000-0002-7417-4009",
+            "affiliation": "The Institute for Telecommunication Sciences",
+            "name": "Kozma Jr, William"
         }
     ],
     "license": "NTIA Public Domain",
-    "title": "TODO-TEMPLATE, Python Wrapper",
+    "title": "Low Frequency / Medium Frequency (LF/MF) Propagation Model",
     "upload_type": "software",
-    "version": "TODO-TEMPLATE",
-    "keywords": ["TODO-TEMPLATE"],
+    "version": "1.0",
+    "keywords": [ "Study Group 3", "ITS", "LFMF", "Propagation" ],
     "communities": [
-        {"identifier": "its-proplib"}
+        { "identifier": "its-proplib" }
     ]
 }

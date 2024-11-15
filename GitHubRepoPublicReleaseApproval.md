@@ -2,7 +2,7 @@
 
 **Project Name:** Office of Spectrum Management R&D - Propagation Library
 
-**Software Name:** TODO-TEMPLATE
+**Software Name:** Low Frequency / Medium Frequency (LF/MF) Propagation Model
 
 The software identified above, which is contained within the repository this document is stored in, has met the following criteria for public release:
 

@@ -1,4 +1,4 @@
-# NTIA/ITS Propagation Library Template Project #
+# Low Frequency / Medium Frequency (LF/MF) Propagation Model #
 <!-- TODO-TEMPLATE: Update software name above -->
 <!-- TODO-TEMPLATE: README BADGES
 
