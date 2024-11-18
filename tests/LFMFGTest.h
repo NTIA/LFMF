@@ -37,4 +37,5 @@ std::vector<std::vector<std::string>> readCSV(std::istream& in);
 static void AppendDirectorySep(std::string& str);
 
 static std::string GetDirectory(std::string name);
+
 #endif

@@ -15,6 +15,7 @@ namespace LFMF {
 enum ReturnCode {
     SUCCESS = 0,                        ///< Return Success
 
+    // Invalid Inputs
     ERROR__TX_TERMINAL_HEIGHT = 32,     ///< TX terminal height is out of range
     ERROR__RX_TERMINAL_HEIGHT,          ///< RX terminal height is out of range
     ERROR__FREQUENCY,                   ///< Frequency is out of range
