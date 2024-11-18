@@ -29,7 +29,6 @@ in the below table:
 |--------|--------|----------|-----------------------------------------------------------------------|
 | `-i`   | string | true     | File specifying model input parameters in `key,value` format          |
 | `-o`   | string | true     | Filename where output results should be written                       |
-| `-dbg` | N/A    | false    | If specified, intermediate values will be written to the output file  |
 
 Additional arguments are available to print help text and version information:
 
@@ -41,10 +40,8 @@ Additional arguments are available to print help text and version information:
 Input arguments are not case sensitive and do not have to be specified in a certain
 order. A generic example of calling the command-line driver on Windows is:
 
-(TODO-TEMPLATE: update example driver command below)
-
 ```cmd
-<Driver>.exe -i <input_file> -dbg -o <output_file>
+LFMFDriver-Windows-1.0.0.exe -i input.txt -o output.txt
 ```
 
 ### Examples ###
@@ -53,11 +50,11 @@ The following files are included as references for the functionality of this sof
 Using these input files and the commands specified should produce outputs identical
 to the provided corresponding output files.
 
-(TODO-TEMPLATE: Provide all included examples in the table below)
-
-| Input File                | Terrain File                                        | Output File                 | Arguments                                          |
-|---------------------------|-----------------------------------------------------|-----------------------------|----------------------------------------------------|
-| [`in.txt`](./data/in.txt) | [`terrain_profile.txt`](./data/terrain_profile.txt) | [`out.txt`](./data/out.txt) | `-i in.txt -t terrain_profile.txt -o out.txt -dbg` |
+| Input File                               | Output File                             | Arguments                           |
+|------------------------------------     -|-------------------------------------    |-------------------------------------|
+| [`i_lfmf_01_.txt`](./data/i_lfmf_01.txt) | [`o_lfmf_01.txt`](./data/o_lfmf_01.txt) | `-i i_lfmf_01.txt -o o_lfmf_01.txt` |
+| [`i_lfmf_02_.txt`](./data/i_lfmf_02.txt) | [`o_lfmf_02.txt`](./data/o_lfmf_02.txt) | `-i i_lfmf_02.txt -o o_lfmf_02.txt` |
+| [`i_lfmf_03_.txt`](./data/i_lfmf_03.txt) | [`o_lfmf_03.txt`](./data/o_lfmf_03.txt) | `-i i_lfmf_03.txt -o o_lfmf_03.txt` |
 
 ## Command-line Driver Errors ##
 

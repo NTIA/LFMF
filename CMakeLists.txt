@@ -65,7 +65,7 @@ target_compile_options(proplib_compiler_flags INTERFACE
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
+endif ()
 
 # control where the static and shared libraries are built so that on windows
 # we don't need to tinker with the path to run the executable

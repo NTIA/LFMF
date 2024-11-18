@@ -25,13 +25,13 @@ set(LIB_FILES
 )
 
 # By default, create shared library
-if(NOT DEFINED BUILD_SHARED_LIBS)
+if (NOT DEFINED BUILD_SHARED_LIBS)
     message(STATUS "STATUS: BUILD_SHARED_LIBS is not defined to build the library: " ${LIB_NAME} ".")
     add_library(${LIB_NAME} SHARED ${LIB_FILES})
-else()
+else ()
     message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build the library: " ${LIB_NAME} ".")
     add_library(${LIB_NAME} ${LIB_FILES})
-endif()
+endif ()
 
 # Add the include directory
 target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")

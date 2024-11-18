@@ -22,24 +22,24 @@ if (RUN_DRIVER_TESTS)
     message(STATUS "STATUS: RUNTIME_OUTPUT_DIRECTORY: " ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
  
     # define a function to simplify adding tests
-    function(do_test test_name test_arg test_result)
+    function (do_test test_name test_arg test_result)
       add_test(NAME ${test_name} COMMAND $<TARGET_FILE_NAME:${DRIVER_NAME}> ${test_arg} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
-    endfunction()
+    endfunction ()
 
     # do a bunch of result based tests
     do_test("NoArguments" "" "${DRIVER_NAME} Error:")
     do_test("help" "-h" "Usage:")
     do_test("version" "-v" "Driver Version: ${DRIVER_VERSION}")
 
-    function(result_test test_name input_file output_file test_result)
+    function (result_test test_name input_file output_file test_result)
       add_test(NAME ${test_name} COMMAND $<TARGET_FILE_NAME:${DRIVER_NAME}> -i ${input_file} -o ${output_file} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
-    endfunction()
+    endfunction ()
     result_test("results01" 
                 "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_01.txt" 
                 "o_lfmf_01.txt" 
@@ -52,4 +52,4 @@ if (RUN_DRIVER_TESTS)
                 "${PROJECT_SOURCE_DIR}/app/data/i_lfmf_03.txt" 
                 "o_lfmf_03.txt" 
                 "Return Code: 0, LFMF v${PROJECT_VERSION} Status: Successful execution\nBasic transmission loss: 264.33")
-endif()
+endif ()
