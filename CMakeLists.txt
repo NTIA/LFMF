@@ -34,12 +34,12 @@ set(PYTHON_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/python")
 ## CMAKE OPTIONS AND DEFAULTS
 ###########################################
 # Define options. Defaults to: compile 64-bit library and driver, build docs, run tests
-option(BUILD_DOCS "Generate documentation with Doxygen" ON)
-option(BUILD_DRIVER "Build driver executable" ON)
-option(RUN_DRIVER_TESTS "Test the driver executable" ON)
-option(DOCS_ONLY "Skip all steps except generating documentation" OFF)
-option(RUN_TESTS "Run C++ unit tests with Google Test + CTest" ON)
-option(COPY_TO_WRAPPERS "Copy compiled library into wrapper submodules" ON)
+option(BUILD_DOCS "Generate documentation site with Doxygen" ON)
+option(BUILD_DRIVER "Build the command-line driver executable" ON)
+option(RUN_DRIVER_TESTS "Test the command-line driver executable" ON)
+option(DOCS_ONLY "Skip all steps except generating the documentation site" OFF)
+option(RUN_TESTS "Run unit tests for the main library" ON)
+option(COPY_TO_WRAPPERS "Copy the compiled shared library into wrapper submodules" ON)
 
 ###########################################
 ## SETUP
@@ -88,30 +88,30 @@ if (NOT DOCS_ONLY)
 
     if (RUN_TESTS OR RUN_DRIVER_TESTS)
         if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
-            enable_testing()      
+            enable_testing()
             set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
             if (DEFINED BUILD_SHARED_LIBS AND BUILD_SHARED_LIBS)
                 set(BUILD_SHARED_LIBS_${LIB_NAME} ${BUILD_SHARED_LIBS})
                 set(BUILD_SHARED_LIBS OFF)
                 message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build gtest library.")
-            endif()
+            endif ()
             add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
             include(GoogleTest)
             
             if (DEFINED BUILD_SHARED_LIBS_${LIB_NAME})
                 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_${LIB_NAME}})
                 message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build ${LIB_NAME} library.")
-            endif()
+            endif ()
         else ()
             message(SEND_ERROR
                 "Unable to build tests. GoogleTest submodule is missing. "
                 "Run `git submodule init extern/googletest` then "
                 "`git submodule update` and try again."
             )
-        endif()
+        endif ()
     endif ()
-    
-    if (RUN_TESTS)              # Build and run unit tests    
+
+    if (RUN_TESTS)              # Build and run unit tests
         add_subdirectory(tests)
     endif ()
 

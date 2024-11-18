@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 title: >-
-  TODO-TEMPLATE
+  Low Frequency / Medium Frequency (LF/MF) Propagation Model
 message: Please cite this software using these metadata.
 type: software
 authors:
@@ -28,8 +28,9 @@ repository-code: 'https://github.com/NTIA/LFMF'
 url: 'https://ntia.github.io/propagation-library-wiki/models/LFMF'
 repository: 'https://github.com/NTIA/LFMF'
 keywords:
-  - propagation
   - its
+  - propagation
+  - lfmf
 license: 'NTIA Public Domain'
-version: 1.0.0
+version: 1.0
 date-released: '2024-12-01'

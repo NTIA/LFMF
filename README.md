@@ -1,5 +1,5 @@
 # Low Frequency / Medium Frequency (LF/MF) Propagation Model #
-<!-- TODO-TEMPLATE: Update software name above -->
+
 <!-- TODO-TEMPLATE: README BADGES
 
 - The first badge links to the PropLib Wiki and does not need to be edited
@@ -23,58 +23,38 @@
     - Update the repository name in [gh-issues-link]
 -->
 [![NTIA/ITS PropLib][proplib-badge]][proplib-link]
-<!-- TODO-TEMPLATE: Add badges. See above for details.
 [![GitHub Release][gh-releases-badge]][gh-releases-link]
 [![DOI][doi-badge]][doi-link]
 [![GitHub Actions Unit Test Status][gh-actions-test-badge]][gh-actions-test-link]
 [![C++ API Reference][gh-actions-docs-badge]][gh-pages-docs-link]
 [![GitHub Issues][gh-issues-badge]][gh-issues-link]
--->
+
 [proplib-badge]: https://img.shields.io/badge/PropLib-badge?label=%F0%9F%87%BA%F0%9F%87%B8%20NTIA%2FITS&labelColor=162E51&color=D63E04
 [proplib-link]: https://ntia.github.io/propagation-library-wiki
-[gh-actions-test-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/proplib-template/ctest.yml?branch=main&logo=cmake&label=Build%2FTests&labelColor=162E51
-[gh-actions-test-link]: https://github.com/NTIA/proplib-template/actions/workflows/ctest.yml
-[gh-actions-docs-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/proplib-template/doxygen.yml?branch=main&logo=c%2B%2B&label=Docs&labelColor=162E51
-[gh-pages-docs-link]: https://ntia.github.io/proplib-template
-[gh-releases-badge]: https://img.shields.io/github/v/release/NTIA/proplib-template?logo=github&label=Release&labelColor=162E51&color=D63E04
-[gh-releases-link]: https://github.com/NTIA/proplib-template/releases
-[gh-issues-badge]: https://img.shields.io/github/issues/NTIA/proplib-template?logo=github&label=Issues&labelColor=162E51
-[gh-issues-link]: https://github.com/NTIA/proplib-template/issues
+[gh-actions-test-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/LFMF/ctest.yml?branch=main&logo=cmake&label=Build%2FTests&labelColor=162E51
+[gh-actions-test-link]: https://github.com/NTIA/LFMF/actions/workflows/ctest.yml
+[gh-actions-docs-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/LFMF/doxygen.yml?branch=main&logo=c%2B%2B&label=Docs&labelColor=162E51
+[gh-pages-docs-link]: https://ntia.github.io/LFMF
+[gh-releases-badge]: https://img.shields.io/github/v/release/NTIA/LFMF?logo=github&label=Release&labelColor=162E51&color=D63E04
+[gh-releases-link]: https://github.com/NTIA/LFMF/releases
+[gh-issues-badge]: https://img.shields.io/github/issues/NTIA/LFMF?logo=github&label=Issues&labelColor=162E51
+[gh-issues-link]: https://github.com/NTIA/LFMF/issues
 [doi-badge]: https://img.shields.io/badge/{TODO-ALL-VERSIONS-DOI}-x?logo=doi&logoColor=ffffff&labelColor=162E51&color=D63E04
 [doi-link]: https://zenodo.org/badge/latestdoi/{TODO-REPOSITORY-ID}
 
-<!-- TODO-TEMPLATE: Replace the below description with one for your software -->
-This code repository is a template repository for software in the NTIA/ITS
-Propagation Library (PropLib). This template is intended for developers wishing
-to develop a cross-platform C++ library as part of PropLib. Instructions on how
-to use this repository are found in its [GitHub Wiki](https://github.com/NTIA/proplib-template/wiki).
-
-Additional template repositories exist for building C#/.NET, MATLAB, and Python
-wrappers for PropLib C++ libraries. See:
-
-- [NTIA/proplib-template-dotnet](https://github.com/NTIA/proplib-template-dotnet)
-- [NTIA/proplib-template-matlab](https://github.com/NTIA/proplib-template-matlab)
-- [NTIA/proplib-template-python](https://github.com/NTIA/proplib-template-python)
-
-## Contact ##
-
-For questions about using this template repository, contact <aromaniello@ntia.gov>
-
-<!-- TODO-TEMPLATE: Create the README contents. Boilerplate provided below.
+This code repository contains the U.S. Reference Software Implementation of
+Low Frequency / Medium Frequency (LF/MF) Propagation Model.
 
 ## Getting Started ##
 
-TODO-TEMPLATE: Update links in this section, if applicable
-TODO-TEMPLATE: Otherwise, add correct "getting started" information here.
-
 To get started using this model, refer to
-[its page on the **NTIA/ITS Propagation Library Wiki**](https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/).
+[its page on the **NTIA/ITS Propagation Library Wiki**](https://ntia.github.io/propagation-library-wiki/models/LFMF/).
 There, you will find installation instructions, usage information, and code
 examples for all supported languages.
 
 If you're a developer and would like to contribute to or extend this repository,
 you will find comprehensive documentation of this C++ code
-[here](https://ntia.github.io/TODO-TEMPLATE), and a guide for contributors
+[here](https://ntia.github.io/LFMF), and a guide for contributors
 [here](CONTRIBUTING.md).
 
 ## Configure and Build ##
@@ -113,9 +93,6 @@ git submodule update                           # Clones the initialized submodul
 
 ## Running Tests ##
 
-TODO-TEMPLATE: Update this section if needed, based on tests in the repo
-TODO-TEMPLATE: Add any other testing info, such as links to available data
-
 If you've configured tests when building the project, for example by using one of
 the "Release" or "Debug" CMake presets, you can run the included unit tests as follows:
 
@@ -125,14 +102,10 @@ ctest --preset release
 
 ## References ##
 
-TODO-TEMPLATE: Add refs to, e.g., publications related to the software
-TODO-TEMPLATE: Update or remove the link here to the Doxygen docs
-
 * [ITS Propagation Library Wiki](https://ntia.github.io/propagation-library-wiki)
-* [`ITS.TODO-TEMPLATE.THIS-LIBRARY` C++ API Reference](https://ntia.github.io/TODO-TEMPLATE)
+* [LFMF Wiki Page](https://ntia.github.io/propagation-library-wiki/models/LFMF)
+* [`ITS.Propagation.LFMF` C++ API Reference](https://ntia.github.io/LFMF)
 
 ## Contact ##
 
 For technical questions, contact <code@ntia.gov>.
-
--->

@@ -18,6 +18,6 @@ The software identified above, which is contained within the repository this doc
 
 In order to complete this approval, please create a new branch, upload and commit your version of this Markdown document to that branch, then create a pull request for that branch. The following must login to GitHub and approve that pull request before the pull request can be merged and this repo made public:
 
-* **Project Lead:** TODO-TEMPLATE
+* **Project Lead:** Kozma Jr, William
 
 * **Supervising Division Chief or Release Authority:** TODO-TEMPLATE
