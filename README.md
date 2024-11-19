@@ -97,7 +97,7 @@ If you've configured tests when building the project, for example by using one o
 the "Release" or "Debug" CMake presets, you can run the included unit tests as follows:
 
 ```cmd
-ctest --preset release
+ctest --preset release -C Release
 ```
 
 ## References ##

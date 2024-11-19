@@ -23,7 +23,7 @@ if (RUN_DRIVER_TESTS)
  
     # define a function to simplify adding tests
     function (do_test test_name test_arg test_result)
-      add_test(NAME ${test_name} COMMAND $<TARGET_FILE_NAME:${DRIVER_NAME}> ${test_arg} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+      add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${DRIVER_NAME}> ${test_arg})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
@@ -35,7 +35,7 @@ if (RUN_DRIVER_TESTS)
     do_test("version" "-v" "Driver Version: ${DRIVER_VERSION}")
 
     function (result_test test_name input_file output_file test_result)
-      add_test(NAME ${test_name} COMMAND $<TARGET_FILE_NAME:${DRIVER_NAME}> -i ${input_file} -o ${output_file} WORKING_DIRECTORY ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+      add_test(NAME ${test_name} COMMAND $<TARGET_FILE:${DRIVER_NAME}> -i ${input_file} -o ${output_file})
       set_tests_properties(${test_name}
           PROPERTIES PASS_REGULAR_EXPRESSION ${test_result}
           )
