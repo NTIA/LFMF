@@ -8,6 +8,10 @@ on:
     branches: ["main", "dev"]
   workflow_dispatch:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
+
 # Define the matrix for different operating systems
 jobs:
   build-and-test:
