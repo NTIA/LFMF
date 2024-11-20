@@ -5,27 +5,18 @@
 - The first badge links to the PropLib Wiki and does not need to be edited
 - The second badge automatically displays and links to the most recent GitHub Release.
     - Make sure to update the [gh-releases-badge] and [gh-releases-link] URLs with your repo name
-- The third badge links to the zenodo DOI page. Only include this badge if a DOI exists for a release.
-    - Update the [doi-link] using the "id" from https://api.github.com/repos/ntia/{repo_name}. For example, the
-      [doi-link] for ITM would be https://zenodo.org/badge/latestdoi/218981682. Using the repository ID in this link
-      will automatically make the link always point to the most recent DOI for the repository, so this won't need to be
-      edited every time a new release is made.
-    - Update the [doi-badge] to include the "all versions" DOI which always points to the latest version. This can be found
-      when creating the DOI in zenodo. The slash in the DOI must be replaced with "%2F" to render in the badge. For example,
-      the P2108 DOI is 10.5281/zenodo.7114033 which must be input as "10.5281%2Fzenodo.7114033"
-- The fourth badge is the CMake/CTest GitHub actions status.
+- The third badge is the CMake/CTest GitHub actions status.
     - Update the repository name in [gh-actions-test-badge] and [gh-actions-test-link]
-- The fifth badge is the Doxygen github actions status.
+- The fourth badge is the Doxygen github actions status.
     - Update the repository name in [gh-actions-docs-badge]
     - Update the repository name in [gh-pages-docs-link]
-- The sixth badge displays open GitHub Issues
+- The fifth badge displays open GitHub Issues
     - Update the repository name in [gh-issues-badge]
     - Update the repository name in [gh-issues-link]
 -->
 [![NTIA/ITS PropLib][proplib-badge]][proplib-link]
 <!-- TODO-TEMPLATE: Add badges. See above for details.
 [![GitHub Release][gh-releases-badge]][gh-releases-link]
-[![DOI][doi-badge]][doi-link]
 [![GitHub Actions Unit Test Status][gh-actions-test-badge]][gh-actions-test-link]
 [![C++ API Reference][gh-actions-docs-badge]][gh-pages-docs-link]
 [![GitHub Issues][gh-issues-badge]][gh-issues-link]
@@ -40,8 +31,6 @@
 [gh-releases-link]: https://github.com/NTIA/proplib-template/releases
 [gh-issues-badge]: https://img.shields.io/github/issues/NTIA/proplib-template?logo=github&label=Issues&labelColor=162E51
 [gh-issues-link]: https://github.com/NTIA/proplib-template/issues
-[doi-badge]: https://img.shields.io/badge/{TODO-ALL-VERSIONS-DOI}-x?logo=doi&logoColor=ffffff&labelColor=162E51&color=D63E04
-[doi-link]: https://zenodo.org/badge/latestdoi/{TODO-REPOSITORY-ID}
 
 <!-- TODO-TEMPLATE: Replace the below description with one for your software -->
 This code repository is a template repository for software in the NTIA/ITS
