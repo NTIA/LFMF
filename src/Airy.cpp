@@ -124,7 +124,7 @@ complex<double> Airy(complex<double> Z, int kind, int scaling)
 
     bool reflection;    // Flag to indicate that the answer needs to be flipped over since this routine only finds solutions in quadrant 1 and 2
 
-    complex<double> A[2], ZT, B0, B1, B2, B3, AN, U, AIRYW, ZA, ZB, ZE, ZR, V, ZV, ZU, PHZU; // Temps
+    complex<double> A[2], ZT, B0, B1, B2, B3, AN, U, ZA, ZB, ZU; // Temps
     complex<double> CoE;        // Center of Expansion of the Taylor series
     complex<double> Ai;         // Ai is either Ai(at the center of expansion of the Taylor series) or Bi( at the center of expansion of the Taylor series )
     complex<double> Aip;        // Aip is the derivative of the above

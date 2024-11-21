@@ -43,11 +43,9 @@ namespace LFMF {
 complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi, int kind, int scaling) 
 {
     complex<double> ph;             // Airy root phase 
-    complex<double> ct;             // Temp
     complex<double> ti;             // the ith complex root of Wi'(2)(ti) - q*Wi(2)(ti) = 0   
 
     complex<double> tw;             // Return variable 
-    complex<double> T;              // Temp
     complex<double> A;              // Temp
 
     double t, tt;                   // Temp

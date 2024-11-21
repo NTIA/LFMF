@@ -3,10 +3,6 @@
  */
 
 #include "LFMFGTest.h"
-TEST(LFMFUnitTest, TestName) {
-  EXPECT_EQ(1, 1);
-  EXPECT_TRUE(true);
-}
 
 TEST(LFMFUnitTest, AiryUnit) {
     complex<double> Z = complex<double>(1.1682788835042248, -2.0240843744484041);
