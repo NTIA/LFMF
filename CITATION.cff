@@ -6,7 +6,6 @@ type: software
 authors:
   - given-names: TODO-TEMPLATE
     family-names: TODO-TEMPLATE
-    name-particle: TODO-TEMPLATE (optional)
     email: TODO-TEMPLATE@ntia.gov
     affiliation: >-
       U.S. Department of Commerce, National
