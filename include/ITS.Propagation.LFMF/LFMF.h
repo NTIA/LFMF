@@ -10,6 +10,7 @@
 #include "ReturnCodes.h"
 
 using std::complex;
+using std::abs;
 
 namespace ITS {
 namespace Propagation {
