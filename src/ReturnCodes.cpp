@@ -3,7 +3,7 @@
  */
 
 // TODO-TEMPLATE include your primary library header
-#include "ITS.PropLibTemplate/PropLibTemplate.h"
+#include "PropLibTemplate.h"
 
 #ifdef _WIN32
     // Ensure strcpy_s is available on Windows

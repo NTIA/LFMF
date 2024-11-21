@@ -3,12 +3,10 @@
 ###########################################
 ## TODO-TEMPLATE: Include source AND header files here.
 ## TODO-TEMPLATE: See CREATING-REPOSITORIES.md for examples.
-set(PROJECT_HEADERS "${PROJECT_SOURCE_DIR}/include/${PROJECT_NAME}")
 add_library(
     ${LIB_NAME} SHARED
     "ReturnCodes.cpp"
-    "${PROJECT_HEADERS}/ReturnCodes.h"
-    "${PROJECT_HEADERS}/${LIB_NAME}.h"
+    "${PROJECT_SOURCE_DIR}/include/${LIB_NAME}.h"
 )
 
 # Add the include directory

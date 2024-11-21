@@ -140,8 +140,7 @@ docs/
 extern/
   ...                        # External Git submodules/dependencies
 include/
-  <PackageNamespace>/        # Include namespace folder, e.g. "ITS.Propagation.ITM"
-    <HeaderFiles>.h          # Library header files go here, e.g. "ITM.h" and "ErrorCodes.h"
+  <HeaderFile>.h             # Library interface header file goes here, e.g. "ITM.h"
 src/
   <SourceFiles>.cpp          # Source files go here, e.g. "LongleyRice.cpp" and "FreeSpaceLoss.cpp"
   CMakeLists.txt             # Configures cross-platform build

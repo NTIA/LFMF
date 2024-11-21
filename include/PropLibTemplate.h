@@ -4,8 +4,11 @@
  */
 #pragma once
 
-// TODO-TEMPLATE add other local includes here
-#include "ReturnCodes.h"
+#include <string>         // for std::string
+#include <unordered_map>  // for std::unordered_map
+
+// TODO-TEMPLATE: This header should provide EVERYTHING needed to interface
+// with the shared library, without needing to include other headers.
 
 namespace ITS {
 // TODO-TEMPLATE: Use your library's namespace
@@ -18,6 +21,21 @@ namespace ITS {
         #define EXPORTED extern "C"
     #endif
 #endif
+
+////////////////////////////////////////////////////////////////////////////////
+// Enums
+
+/*******************************************************************************
+ * Return Codes defined by this software (0-127)
+ ******************************************************************************/
+// clang-format off
+enum ReturnCode {
+    SUCCESS = 0,               /**< Successful execution */
+
+    // TODO-TEMPLATE add return codes for this software
+    // TODO-TEMPLATE: Add corresponding status messages in src/ReturnCodes.cpp
+};
+// clang-format on
 
 ////////////////////////////////////////////////////////////////////////////////
 // Constants
