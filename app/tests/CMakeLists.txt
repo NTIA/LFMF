@@ -26,13 +26,6 @@ target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME})
 # Make driver executable location available to source
 add_definitions(-DDRIVER_LOCATION="$<TARGET_FILE:${DRIVER_NAME}>")
 
-set_target_properties(
-    ${DRIVER_TEST_NAME} PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-    ARCHIVE_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-    RUNTIME_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-)
-
 ###########################################
 ## SET UP AND DISCOVER TESTS
 ###########################################
