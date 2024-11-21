@@ -13,12 +13,14 @@
 namespace ITS {
 // TODO-TEMPLATE: Use your library's namespace
 
-// Define cross-platform EXPORTED
+// Define cross-platform PROPLIB_API to export functions
 #ifndef DOXYGEN_SHOULD_SKIP
-    #ifdef _WIN32
-        #define EXPORTED extern "C" __declspec(dllexport)
-    #else
-        #define EXPORTED extern "C"
+    #ifndef PROPLIB_API
+        #ifdef _WIN32
+            #define PROPLIB_API extern "C" __declspec(dllexport)
+        #else
+            #define PROPLIB_API extern "C"
+        #endif
     #endif
 #endif
 
@@ -44,12 +46,12 @@ enum ReturnCode {
 ////////////////////////////////////////////////////////////////////////////////
 // Public Functions
 // TODO-TEMPLATE: Add functions which should be exported in the DLL
-EXPORTED char *GetReturnStatusCharArray(const int code);
-EXPORTED void FreeReturnStatusCharArray(char *c_msg);
+PROPLIB_API char *GetReturnStatusCharArray(const int code);
+PROPLIB_API void FreeReturnStatusCharArray(char *c_msg);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Private Functions
-// TODO-TEMPLATE: Add other/internal functions here (no need for "EXPORTED")
+// TODO-TEMPLATE: Add other/internal functions here (no need for "PROPLIB_API")
 std::string GetReturnStatus(const int code);
 
 }  // namespace ITS
