@@ -222,7 +222,7 @@ if (YI < 0.0) {
         //        AGAINST OVERFLOW
         
         if ((YQUAD > RMAXGONI) || (XQUAD > RMAXEXP)) {
-            flag = true;
+            //flag = true;    //Not used, comments out for compile warning
             w = complex<double>(0.0, 0.0);
             return w;
         }
