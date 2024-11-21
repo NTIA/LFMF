@@ -2,9 +2,13 @@ name: Validate CITATION.cff
 
 on:
   push:
-    paths: CITATION.cff
+    paths:
+      - CITATION.cff
+      - .github/workflows/cff-validator.yml
   pull_request:
-    paths: CITATION.cff
+    paths:
+      - CITATION.cff
+      - .github/workflows/cff-validator.yml
   workflow_dispatch:
 
 jobs:
