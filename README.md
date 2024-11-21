@@ -38,7 +38,7 @@ Propagation Library (PropLib). This template is intended for developers wishing
 to develop a cross-platform C++ library as part of PropLib. Instructions on how
 to use this repository are found in its [GitHub Wiki](https://github.com/NTIA/proplib-template/wiki).
 
-Additional template repositories exist for building C#/.NET, MATLAB, and Python
+Additional template repositories exist for building .NET, MATLAB, and Python
 wrappers for PropLib C++ libraries. See:
 
 - [NTIA/proplib-template-dotnet](https://github.com/NTIA/proplib-template-dotnet)
@@ -95,9 +95,8 @@ In order to do either, ensure the required submodules are cloned by running:
 
 ```cmd
 # From this repository's root directory
-git submodule init extern/googletest           # Required to run tests
-git submodule init extern/doxygen-awesome-css  # Required to build docs
-git submodule update                           # Clones the initialized submodules
+git submodule init
+git submodule update
 ```
 
 ## Running Tests ##

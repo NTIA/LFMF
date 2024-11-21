@@ -11,7 +11,7 @@ library or take it as a dependency.
 On the wiki, you'll find installation instructions, usage guides, and code examples
 for this and other software within the NTIA/ITS Propagation Library. Further, the
 wiki includes instructions for using this library from other software languages,
-including Python, MATLAB, and C#/.NET.
+including bindings for Python, MATLAB, and .NET.
 
 ## Site Navigation
 
