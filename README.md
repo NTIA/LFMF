@@ -51,6 +51,13 @@ For questions about using this template repository, contact <aromaniello@ntia.go
 
 <!-- TODO-TEMPLATE: Create the README contents. Boilerplate provided below.
 
+Additional bindings to the shared library built from this repository are provided
+for .NET, MATLAB, and Python in the following repositories:
+
+- [NTIA/TODO-TEMPLATE-dotnet](https://github.com/NTIA/TODO-TEMPLATE-dotnet)
+- [NTIA/TODO-TEMPLATE-matlab](https://github.com/NTIA/TODO-TEMPLATE-matlab)
+- [NTIA/TODO-TEMPLATE-python](https://github.com/NTIA/TODO-TEMPLATE-python)
+
 ## Getting Started ##
 
 TODO-TEMPLATE: Update links in this section, if applicable
