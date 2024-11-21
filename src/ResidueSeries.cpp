@@ -67,8 +67,9 @@ double ResidueSeries(double k, double h_1__km, double h_2__km, double nu, double
 
         if (i != 0) 
         {
-            if ((abs((GW * GW).real()) + abs((GW * GW).imag())) == 0.0)     // when the ground wave is too small, close to 0
-            //if (((abs((GW * GW).real()) + (abs((GW * GW).imag()))) == 0.0)  // when the ground wave is too small, close to 0
+            //if ((GW.real() * GW.real() + GW.imag() * GW.imag()) < 1.0e-16)
+            if ((abs((GW * GW).real()) + abs((GW * GW).imag())) < 1.0e-16)      // when the ground wave is too small, close to 0
+            //if ((abs((GW * GW).real()) + (abs((GW * GW).imag()))) == 0.0)     // when the ground wave is too small, close to 0
                 return 0; // end the loop and output E = 0
             else if (((abs((G / GW).real())) + (abs((G / GW).imag()))) < 0.0005)  // when the new G is too small compared to its series sum
             { 
