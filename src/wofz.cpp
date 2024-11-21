@@ -80,7 +80,7 @@ double YABS = abs(YI);
 double X    = XABS/6.3;
 double Y    = YABS/4.4;
  
-bool flag = false;
+//bool flag = false;    //Not used, comments out for compile warning
  
 complex<double> w;
  
@@ -93,7 +93,7 @@ int NU, NP1;
 //    QRHO = (X**2 + Y**2) AGAINST OVERFLOW
  
 if ((XABS > RMAXREAL) || (YABS > RMAXREAL)) {
-    flag = true;
+    //flag = true;  //Not used, comments out for compile warning
     w = complex<double>(0.0,0.0);
     return w;
 }
@@ -167,6 +167,8 @@ if (A) {
     
     if (B) {
         QLAMBDA = pow(H2, KAPN);
+    } else {
+        QLAMBDA = 0.0;  //Will not be used, initialization for compile warning
     }
     
     RX = 0.0;

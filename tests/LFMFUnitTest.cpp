@@ -37,7 +37,6 @@ TEST(LFMFUnitTest, WiRootUnit) {
 };
 
 TEST(LFMFUnitTest, ResidueSeriesUnit) {
-    double d__km = 1000.0000000000000;
     double k = 0.20958450219516817;
     double h_1__km = 0.0000000000000000;
     double h_2__km = 0.0000000000000000;
@@ -45,7 +44,7 @@ TEST(LFMFUnitTest, ResidueSeriesUnit) {
     double theta__rad = 0.11774375919975148;
     complex<double> q = complex<double>(-644.31445826967774, -645.31889509633902);
 
-    double r = ResidueSeries(d__km, k, h_1__km, h_2__km, nu, theta__rad, q);
+    double r = ResidueSeries(k, h_1__km, h_2__km, nu, theta__rad, q);
     EXPECT_NEAR(r, 2.4998877307699495e-07, 1e-6);
 };
 

@@ -153,7 +153,10 @@ complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<d
         {
             dkind = DWTWO;
         };
-    };
+    } else {
+        dkind = DWONE;      //Not used, initialization for compile warning
+    }
+
 
 
     // Note: The zeros of the Airy functions i[ak'] and Ak'[ak], ak' and ak, are on the negative real axis. 

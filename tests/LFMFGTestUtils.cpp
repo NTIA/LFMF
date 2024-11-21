@@ -107,7 +107,7 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
  *  @param[out]   &str              - Path name with director separator
  *
  *****************************************************************************/
-static void AppendDirectorySep(std::string& str) {
+void AppendDirectorySep(std::string& str) {
     #ifdef _WIN32
         str += "\\";
     #else
@@ -124,7 +124,7 @@ static void AppendDirectorySep(std::string& str) {
  *  Returns       dataDir          - full path of the given directory
  *
  *****************************************************************************/
-static std::string GetDirectory(std::string name) {
+std::string GetDirectory(std::string name) {
     std::string dataDir(__FILE__);
     dataDir.resize(dataDir.find_last_of("/\\"));
     //dataDir.resize(dataDir.find_last_of("/\\"));

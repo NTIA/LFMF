@@ -13,7 +13,6 @@ namespace LFMF {
  *  Description:  Calculates the groundwave field strength using the
  *                Residue Series method
  *
- *  @param[in]    d__km         - Path distance, in km
  *  @param[in]    k             - Wavenumber, in rad/km
  *  @param[in]    h_1__km       - Height of the lower antenna, in km
  *  @param[in]    h_2__km       - Height of the higher antenna, in km
@@ -24,7 +23,7 @@ namespace LFMF {
  *  @return       E_gw          - Normalized field strength in mV/m
  *
  *****************************************************************************/
-double ResidueSeries(double d__km, double k, double h_1__km, double h_2__km, double nu, double theta__rad, complex<double> q)
+double ResidueSeries(double k, double h_1__km, double h_2__km, double nu, double theta__rad, complex<double> q)
 {
     complex<double> DW2[200], W2[200]; // dummy variables
     complex<double> G;

@@ -93,7 +93,7 @@ DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
 
 std::string GetReturnStatus(const int code);
 double FlatEarthCurveCorrection(complex<double> delta, complex<double> q, double h_1__km, double h_2__km, double d, double k, double a_e__km);
-double ResidueSeries(double d, double k, double h_1__km, double h_2__km, double nu, double theta, complex<double> q);
+double ResidueSeries(double k, double h_1__km, double h_2__km, double nu, double theta, complex<double> q);
 complex<double> wofz(complex<double> qi);
 complex<double> Airy(complex<double> Z, int kind, int scaling);
 complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi, int kind, int scaling);

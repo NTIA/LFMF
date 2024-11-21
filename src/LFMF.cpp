@@ -73,7 +73,7 @@ ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_
     }
     else
     {
-        E_gw = ResidueSeries(d__km, k, h_1__km, h_2__km, nu, theta__rad, q);
+        E_gw = ResidueSeries(k, h_1__km, h_2__km, nu, theta__rad, q);
         result->method = METHOD__RESIDUE_SERIES;
     }
 
