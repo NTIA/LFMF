@@ -569,7 +569,7 @@ complex<double> Airy(complex<double> Z, int kind, int scaling)
     if ((ZU.real() >= -6.5) && (ZU.real() <= 7.5) && (ZU.imag() <= 6.35)) {
 
         // choose center of expansion of the Taylor series
-        CoERealidx = (int)(ZU.real() + _copysign(0.5, ZU.real()));
+        CoERealidx = (int)(ZU.real() + std::copysign(0.5, ZU.real()));
         CoEImagidx = (int)(sin(PI / 3.0) * (ZU.imag() + 0.5)); // sin(60)*(Z.imag()+0.5)
 
         N = NQTT[CoERealidx + 6] + CoEImagidx;  // N is index of center of expansion
@@ -647,11 +647,9 @@ complex<double> Airy(complex<double> Z, int kind, int scaling)
 
     // Determine if the data for the center of expansion is exceeded 
     if (((ZU.real() < -6.5) || (ZU.real() > 7.5) || (ZU.imag() > 6.35))
-        ||
-        (N >= NQ8)
-        ||
-        (Z.real() == 0 && Z.imag() == 0)) {
-
+        || (N >= NQ8)
+        || (abs(Z.real()) < 1.0e-9 && abs(Z.imag()) < 1.0e-9)) {
+        //|| (Z.real() == 0.0 && Z.imag() == 0.0)) {
 
         ///////////////////////////////////////////////
         // Compute the function by Asymptotic Series //

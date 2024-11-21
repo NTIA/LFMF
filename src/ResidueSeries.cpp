@@ -34,7 +34,7 @@ double ResidueSeries(double d__km, double k, double h_1__km, double h_2__km, dou
     complex<double> T[200], W1[200], W[200];
     double yHigh, yLow;
 
-    complex<double> GW = complex<double>(0, 0); // initial ground wave
+    complex<double> GW = complex<double>(0.0, 0.0); // initial ground wave
 
     // Associated argument for the height-gain function H_1[h_1]
     yHigh = k * h_2__km / nu;
@@ -68,9 +68,11 @@ double ResidueSeries(double d__km, double k, double h_1__km, double h_2__km, dou
 
         if (i != 0) 
         {
-            if (((abs((GW*GW).real())) + (abs((GW*GW).imag()))) == 0)     // when the ground wave is too small, close to 0
-                return 0; // end the loop and output E = 0
-            else if (((abs((G / GW).real())) + (abs((G / GW).imag()))) < 0.0005)  // when the new G is too small compared to its series sum
+            //if (((abs((GW*GW).real() * 1e+20) < 1e-9) && (abs((GW*GW).imag() * 1e+20) < 1e-9)))     // when the ground wave is too small, close to 0
+            //if (((abs((GW * GW).real())) + (abs((GW * GW).imag()))) == 0.0)  // when the ground wave is too small, close to 0
+                //return 0; // end the loop and output E = 0
+            //else 
+            if (((abs((G / GW).real())) + (abs((G / GW).imag()))) < 0.0005)  // when the new G is too small compared to its series sum
             { 
                 // when the new G is too small compared to its series sum, it's ok to stop the loop
                 // because adding small number to a significant big one doesn't affect their sum.

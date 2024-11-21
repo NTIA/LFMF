@@ -32,33 +32,43 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
     typedef std::vector<std::string>::size_type cell_vec_size_t;
         
     for (row_vec_size_t r = 1; r < csvRows.size(); r++) {
+        int c = 0;
         for (cell_vec_size_t i = 0; i < csvRows[0].size(); i++) {
             if (csvRows[0][i] == "h_tx__meter") {
                 d.h_tx__meter = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "h_rx__meter") {
                 d.h_rx__meter = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "f__mhz") {
                 d.f__mhz = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "P_tx__watt") {
                 d.P_tx__watt = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "N_s") {
                 d.N_s = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "d__km") {
                 d.d__km = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "epsilon") {
                 d.epsilon = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "sigma") {
                 d.sigma = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "pol") {
                 d.pol = std::stoi(csvRows[r][i]);
+                c++;
             }
 
             if (csvRows[0][i] == "rtn") {
@@ -66,18 +76,24 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
             }
             if (csvRows[0][i] == "A_btl__db") {
                 d.expectedResult.A_btl__db = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "E_dBuVm") {
                 d.expectedResult.E_dBuVm = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "P_rx__dbm") {
                 d.expectedResult.P_rx__dbm = std::stod(csvRows[r][i]);
+                c++;
             }
             if (csvRows[0][i] == "method") {
                 d.expectedResult.method = std::stoi(csvRows[r][i]);
+                c++;
             }
         }
-        testData.push_back(d);
+        if (c == 13) {
+            testData.push_back(d);
+        }
     }
 
     return testData;

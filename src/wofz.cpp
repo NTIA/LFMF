@@ -189,15 +189,17 @@ if (A) {
         }
     }
     
-    if (H  == 0.0) {
+    if (abs(H) < 1e-9) {
+    //if (H == 0.0) {
         U = FACTOR*RX;
         V = FACTOR*RY;
-    }else{
+    } else {
         U = FACTOR*SX;
         V = FACTOR*SY;
     }
     
-    if (YABS == 0.0){
+    if (abs(YABS) < 1.0e-9) {
+    //if (YABS == 0.0) {
         U = exp(-XABS*XABS);
     }
 }

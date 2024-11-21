@@ -8,6 +8,7 @@ message(STATUS "STATUS: Start building the google tests: " ${TEST_NAME})
 # Add all google test files here
 add_executable(
     ${TEST_NAME}
+    "LFMFUnitTest.cpp"
     "TestLFMFReturnCode.cpp"
     "TestLFMFEquivalence.cpp"
     "LFMFGTestUtils.cpp"
