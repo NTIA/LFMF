@@ -239,7 +239,7 @@ complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<d
     };
 
     return tw;
-};
+}
 
 }  // namespace LFMF
 }  // namespace Propagation

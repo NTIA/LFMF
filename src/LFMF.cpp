@@ -110,6 +110,30 @@ ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_
     return SUCCESS;
 }
 
+/******************************************************************************
+ *
+ *  Description:  Relative epsilon comparisons method
+ *
+ *  @param[in]    A             - First double to compare
+ *  @param[in]    B             - Second double to compare
+ *  @param[in]    maxRelDiff    - Maximum relative difference
+ *
+ *  @return       equal         - if it is equal of the two doubles
+ *
+ *****************************************************************************/
+bool AlmostEqualRelative(double A, double B, double maxRelDiff) {
+    // Calculate the difference.
+    double diff = fabs(A - B);
+    A = fabs(A);
+    B = fabs(B);
+    // Find the largest
+    double largest = (B > A) ? B : A;
+
+    if (diff <= largest * maxRelDiff)
+        return true;
+    return false;
+}
+
 }  // namespace LFMF
 }  // namespace Propagation
 }  // namespace ITS

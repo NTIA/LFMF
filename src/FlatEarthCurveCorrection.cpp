@@ -96,7 +96,7 @@ double FlatEarthCurveCorrection(complex<double> Delta, complex<double> q, double
     double E_gw__mVm = abs(fofx*(1.0 + j * k*h_2__km*Delta)*(1.0 + j * k*h_1__km*Delta));
 
     return E_gw__mVm;
-};
+}
 
 }  // namespace LFMF
 }  // namespace Propagation

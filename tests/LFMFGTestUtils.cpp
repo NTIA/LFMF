@@ -18,84 +18,100 @@
  *
  *****************************************************************************/
 std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &filename) {
-    std::vector<LFMFInputsAndResult> testData;
-    std::string dataDir = GetDirectory("data");
-    std::ifstream file(dataDir + filename);
-    LFMFInputsAndResult d {};  // struct to store data from a single line of CSV
-
-    std::vector<std::vector<std::string>> csvRows = readCSV(file);
-    if (csvRows.size() <= 1) {
-        return testData;
-    }    
+    
+        std::vector<LFMFInputsAndResult> testData;
+        std::string dataDir = GetDirectory("data");
+        std::ifstream file(dataDir + filename);
+        LFMFInputsAndResult d {
+        };  // struct to store data from a single line of CSV
+        try {
+        std::vector<std::vector<std::string>> csvRows = readCSV(file);
+        if (csvRows.size() <= 1) {
+            return testData;
+        }
+    
 
     typedef std::vector<std::vector<std::string> >::size_type row_vec_size_t;
     typedef std::vector<std::string>::size_type cell_vec_size_t;
         
     for (row_vec_size_t r = 1; r < csvRows.size(); r++) {
         int c = 0;
-        for (cell_vec_size_t i = 0; i < csvRows[0].size(); i++) {
-            if (csvRows[0][i] == "h_tx__meter") {
-                d.h_tx__meter = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "h_rx__meter") {
-                d.h_rx__meter = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "f__mhz") {
-                d.f__mhz = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "P_tx__watt") {
-                d.P_tx__watt = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "N_s") {
-                d.N_s = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "d__km") {
-                d.d__km = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "epsilon") {
-                d.epsilon = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "sigma") {
-                d.sigma = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "pol") {
-                d.pol = std::stoi(csvRows[r][i]);
-                c++;
-            }
+        if (r % 100 == 0) {
+            std::cout << " Test instance: " << r << std::endl;
+        }
+            for (cell_vec_size_t i = 0; i < csvRows[0].size(); i++) {
+                try {
+                    if (csvRows[0][i] == "h_tx__meter") {
+                        d.h_tx__meter = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "h_rx__meter") {
+                        d.h_rx__meter = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "f__mhz") {
+                        d.f__mhz = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "P_tx__watt") {
+                        d.P_tx__watt = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "N_s") {
+                        d.N_s = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "d__km") {
+                        d.d__km = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "epsilon") {
+                        d.epsilon = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "sigma") {
+                        d.sigma = std::stod(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "pol") {
+                        d.pol = std::stoi(csvRows[r][i]);
+                        c++;
+                    }
 
-            if (csvRows[0][i] == "rtn") {
-                d.expectedReturn = std::stoi(csvRows[r][i]);
+                    if (csvRows[0][i] == "rtn") {
+                        d.expectedReturn = std::stoi(csvRows[r][i]);
+                    }
+                    if (csvRows[0][i] == "A_btl__db") {
+                        d.expectedResult.A_btl__db = stringToDouble(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "E_dBuVm") {
+                        d.expectedResult.E_dBuVm = stringToDouble(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "P_rx__dbm") {
+                        d.expectedResult.P_rx__dbm = stringToDouble(csvRows[r][i]);
+                        c++;
+                    }
+                    if (csvRows[0][i] == "method") {
+                        d.expectedResult.method = std::stoi(csvRows[r][i]);
+                        c++;
+                    }
+                } catch (const char *msg) {
+                    // Code to handle the exception
+                    std::cerr << "Error: " << r << ", " << csvRows[r][i]
+                              << std::endl;
+                }
             }
-            if (csvRows[0][i] == "A_btl__db") {
-                d.expectedResult.A_btl__db = std::stod(csvRows[r][i]);
-                c++;
+            if (c == 13) {
+                testData.push_back(d);
             }
-            if (csvRows[0][i] == "E_dBuVm") {
-                d.expectedResult.E_dBuVm = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "P_rx__dbm") {
-                d.expectedResult.P_rx__dbm = std::stod(csvRows[r][i]);
-                c++;
-            }
-            if (csvRows[0][i] == "method") {
-                d.expectedResult.method = std::stoi(csvRows[r][i]);
-                c++;
-            }
-        }
-        if (c == 13) {
-            testData.push_back(d);
-        }
+        
     }
-
+    } catch (const char *msg) {
+        // Code to handle the exception
+        std::cerr << "Error: " << std::endl;
+    }
     return testData;
 }
 
@@ -218,4 +234,25 @@ std::vector<std::vector<std::string>> readCSV(std::istream& in) {
         table.push_back(fields);
     }
     return table;
+}
+
+double stringToDouble(std::string s) {
+    if (s == "Inf") {
+        return INF;
+    } else if (s == "-Inf") {
+        return -INF;
+    } else {
+        return std::stod(s);
+    }
+}
+
+void compareDouble(double expected, double actual) {
+    double TOLERANCE = 1.0e-6;
+    if (expected == INF) {
+        EXPECT_EQ(INF, actual);
+    } else if (expected == -INF) {
+        EXPECT_EQ(-INF, actual);
+    } else {
+        EXPECT_NEAR(actual, expected, TOLERANCE);
+    }
 }

@@ -191,8 +191,8 @@ if (A) {
         }
     }
     
-    if (abs(H) < 1e-9) {
-    //if (H == 0.0) {
+    //if (H == 0.0) {       // Replaced with AlmostEqualRelative
+    if (AlmostEqualRelative(H, 0.0)) {
         U = FACTOR*RX;
         V = FACTOR*RY;
     } else {
@@ -200,8 +200,8 @@ if (A) {
         V = FACTOR*SY;
     }
     
-    if (abs(YABS) < 1.0e-9) {
-    //if (YABS == 0.0) {
+    //if (YABS == 0.0) {        // Replaced with AlmostEqualRelative
+    if (AlmostEqualRelative(YABS, 0.0)) {
         U = exp(-XABS*XABS);
     }
 }

@@ -21,8 +21,7 @@ class TestLFMFEquivalence: public ::testing::Test {
     // Vector to hold test data
     std::vector<LFMFInputsAndResult> testData;
 
-    double TOLERANCE = 1.0e-6;
-    std::string fileName = "ValidationExampleLFMFSmoothEarth.csv";
+    std::string fileName = "ValidationExampleLFMFSmoothEarth.csv";  //"ValidationPolarizationHorizontal.csv";
 };
 
 /******************************************************************************
@@ -55,18 +54,12 @@ TEST_F(TestLFMFEquivalence, FlatEarthCurveMethodEquivalentToMatLAB) {
             );
 
             EXPECT_EQ(rtn, SUCCESS);
-            EXPECT_NEAR(
-                result.A_btl__db, data.expectedResult.A_btl__db, TOLERANCE
-            );
-            EXPECT_NEAR(result.E_dBuVm, data.expectedResult.E_dBuVm, TOLERANCE);
-            EXPECT_NEAR(
-                result.P_rx__dbm, data.expectedResult.P_rx__dbm, TOLERANCE
-            );
+            compareDouble(data.expectedResult.A_btl__db, result.A_btl__db);
+            compareDouble(data.expectedResult.E_dBuVm, result.E_dBuVm);
+            compareDouble(data.expectedResult.P_rx__dbm, result.P_rx__dbm);
             EXPECT_EQ(result.method, data.expectedResult.method);
         }
     }
-    std::cout << "TestLFMF from '" << fileName << "': " << i
-              << " Flat Earth Curve Method Test instances." << std::endl;
 };
 
 /******************************************************************************
@@ -80,7 +73,7 @@ TEST_F(TestLFMFEquivalence, ResidueSeriesMethodEquivalentToMatLAB) {
     int i = 0;
     for (const auto &data : testData) {
         if (data.expectedResult.method == METHOD__RESIDUE_SERIES) {
-            i++;            
+            i++;
             Result result;
             if (i % 100 == 0) {
                 std::cout << " Test instance: " << i << std::endl;
@@ -99,17 +92,10 @@ TEST_F(TestLFMFEquivalence, ResidueSeriesMethodEquivalentToMatLAB) {
             );
 
             EXPECT_EQ(rtn, SUCCESS);
-            EXPECT_NEAR(
-                result.A_btl__db, data.expectedResult.A_btl__db, TOLERANCE
-            );
-            EXPECT_NEAR(result.E_dBuVm, data.expectedResult.E_dBuVm, TOLERANCE);
-            EXPECT_NEAR(
-                result.P_rx__dbm, data.expectedResult.P_rx__dbm, TOLERANCE
-            );
+            compareDouble(data.expectedResult.A_btl__db, result.A_btl__db);
+            compareDouble(data.expectedResult.E_dBuVm, result.E_dBuVm);
+            compareDouble(data.expectedResult.P_rx__dbm, result.P_rx__dbm);
             EXPECT_EQ(result.method, data.expectedResult.method);
         }
     }
-    std::cout << "TestLFMF from '" << fileName << "': " << i
-              << " Residue Series Method Test instances." << std::endl;
 };
-

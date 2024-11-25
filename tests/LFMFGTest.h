@@ -11,6 +11,8 @@
 
 using namespace ITS::Propagation::LFMF;
 
+#define INF std::numeric_limits<double>::infinity()     ///< Infinity in double
+
 /** @struct LFMFInputsAndResult
  * struct Inputs and Outputs for LFMF Model
  */
@@ -37,5 +39,9 @@ std::vector<std::vector<std::string>> readCSV(std::istream& in);
 void AppendDirectorySep(std::string& str);
 
 std::string GetDirectory(std::string name);
+
+double stringToDouble(std::string s);
+
+void compareDouble(double expected, double actual);
 
 #endif

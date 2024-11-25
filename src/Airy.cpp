@@ -648,8 +648,8 @@ complex<double> Airy(complex<double> Z, int kind, int scaling)
     // Determine if the data for the center of expansion is exceeded 
     if (((ZU.real() < -6.5) || (ZU.real() > 7.5) || (ZU.imag() > 6.35))
         || (N >= NQ8)
-        || (abs(Z.real()) < 1.0e-9 && abs(Z.imag()) < 1.0e-9)) {
-        //|| (Z.real() == 0.0 && Z.imag() == 0.0)) {
+        //|| (Z.real() == 0.0 && Z.imag() == 0.0)) {    //Replaced with AlmostEqualRelative
+        || (AlmostEqualRelative(Z.real(), 0.0) && AlmostEqualRelative(Z.imag(), 0.0))) {
 
         ///////////////////////////////////////////////
         // Compute the function by Asymptotic Series //
@@ -818,7 +818,7 @@ complex<double> Airy(complex<double> Z, int kind, int scaling)
 
     return Ai;
 
-};
+}
 
 }  // namespace LFMF
 }  // namespace Propagation
