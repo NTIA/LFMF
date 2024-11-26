@@ -31,7 +31,9 @@ jobs:
           - os: windows-latest
             architecture: arm64
           - os: ubuntu-latest
-            architecture: [arm64, x86]
+            architecture: arm64
+          - os: ubuntu-latest
+            architecture: x86
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
