@@ -10,6 +10,28 @@
 # >=3.14 required for GoogleTest v1.12.x
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
+# If on macOS, handle arm64/x86_64 architectures (must be done before project())
+if (APPLE)
+    # Get the current platform's native architecture
+    execute_process(
+        COMMAND uname -m
+        RESULT_VARIABLE result
+        OUTPUT_VARIABLE MACOS_NATIVE_ARCHITECTURE
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    message(STATUS "Current macOS architecture is " ${MACOS_NATIVE_ARCHITECTURE})
+
+    # If running on Apple silicon, try a universal build. Otherwise, a native build.
+    if ((CMAKE_GENERATOR STREQUAL "Xcode") AND (MACOS_NATIVE_ARCHITECTURE STREQUAL "arm64"))
+        set(CMAKE_OSX_ARCHITECTURE "arm64;x86_64" CACHE STRING "")
+        set(PROPLIB_ARCHITECTURE "macOS_universal")
+        message(STATUS "Configured for universal macOS build")
+    else ()
+        set(PROPLIB_ARCHITECTURE MACOS_NATIVE_ARCHITECTURE)
+        message(STATUS "Configured for native macOS build")
+    endif ()
+endif ()
+
 ###########################################
 ## PROJECT METADATA
 ###########################################
@@ -58,7 +80,7 @@ target_compile_options(proplib_compiler_flags INTERFACE
 if (POLICY CMP0141)
   cmake_policy(SET CMP0141 NEW)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
-endif()
+endif ()
 
 # control where the static and shared libraries are built
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Archive Output Directory")
