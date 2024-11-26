@@ -8,7 +8,7 @@
 #include "Structs.h"
 
 // TODO-TEMPLATE: Include your library's main interface header
-#include "ITS.PropLibTemplate/PropLibTemplate.h"
+#include "PropLibTemplate.h"
 
 #include <iomanip>   // for std::left, std::setw
 #include <iostream>  // for std::cout

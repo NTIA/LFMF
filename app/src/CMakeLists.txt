@@ -22,16 +22,15 @@ target_include_directories(${DRIVER_NAME} PUBLIC "${DRIVER_HEADERS}")
 target_link_libraries(${DRIVER_NAME} ${LIB_NAME})
 
 # Add definitions to enable version identification inside the driver
-add_definitions(-DLIBRARY_VERSION="${PROJECT_VERSION}")
-add_definitions(-DDRIVER_VERSION="${DRIVER_VERSION}")
-add_definitions(-DLIBRARY_NAME="${LIB_NAME}")
-add_definitions(-DDRIVER_NAME="${DRIVER_NAME}")
+add_compile_definitions(
+    LIBRARY_VERSION="${PROJECT_VERSION}"
+    DRIVER_VERSION="${DRIVER_VERSION}"
+    LIBRARY_NAME="${LIB_NAME}"
+    DRIVER_NAME="${DRIVER_NAME}"
+)
 
 # Set some target metadata
 set_target_properties(
     ${DRIVER_NAME} PROPERTIES
     OUTPUT_NAME ${DRIVER_NAME}-${CMAKE_SYSTEM_NAME}-${DRIVER_VERSION}
-    LIBRARY_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-    ARCHIVE_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
-    RUNTIME_OUTPUT_DIRECTORY ${DRIVER_EXE_DIR}
 )

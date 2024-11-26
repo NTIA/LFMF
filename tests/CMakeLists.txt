@@ -11,13 +11,6 @@ add_executable(
     "TestUtils.h"
 )
 
-set_target_properties(
-    ${TEST_NAME} PROPERTIES
-    LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
-    ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
-    RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin"
-)
-
 ###########################################
 ## SET UP AND DISCOVER TESTS
 ###########################################

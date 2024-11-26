@@ -4,31 +4,28 @@ title: >-
 message: Please cite this software using these metadata.
 type: software
 authors:
-  - family-names: TODO-TEMPLATE
-    given-names: TODO-TEMPLATE
-    name-suffix: TODO-TEMPLATE
+  - given-names: TODO-TEMPLATE
+    family-names: TODO-TEMPLATE
+    email: TODO-TEMPLATE@ntia.gov
     affiliation: >-
       U.S. Department of Commerce, National
       Telecommunications and Information Administration,
       Institute for Telecommunication Sciences
-    orcid: 'TODO-TEMPLATE'
-    email: TODO-TEMPLATE
+    orcid: 'https://orcid.org/0000-0000-0000-0000'
   - name: >-
       U.S. Department of Commerce, National
       Telecommunications and Information Administration,
-      Institute for Telecommunications Sciences
+      Institute for Telecommunication Sciences
     address: 325 Broadway
     city: Boulder
-    region: Colorado
+    country: CO
     post-code: '80305'
-    country: US
+    alias: NTIA/ITS
     email: code@ntia.gov
     website: 'https://its.ntia.gov'
 repository-code: 'https://github.com/NTIA/TODO-TEMPLATE'
-url: 'https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE'
-repository: 'https://github.com/NTIA/TODO-TEMPLATE'
+url: 'https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/'
 keywords:
+  - propagation
   - TODO-TEMPLATE
-license: 'NTIA Public Domain'
 version: 1.0.0
-date-released: 'TODO-TEMPLATE'
