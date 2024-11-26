@@ -38,7 +38,7 @@ Propagation Library (PropLib). This template is intended for developers wishing
 to develop a cross-platform C++ library as part of PropLib. Instructions on how
 to use this repository are found in its [GitHub Wiki](https://github.com/NTIA/proplib-template/wiki).
 
-Additional template repositories exist for building C#/.NET, MATLAB, and Python
+Additional template repositories exist for building .NET, MATLAB, and Python
 wrappers for PropLib C++ libraries. See:
 
 - [NTIA/proplib-template-dotnet](https://github.com/NTIA/proplib-template-dotnet)
@@ -51,15 +51,26 @@ For questions about using this template repository, contact <aromaniello@ntia.go
 
 <!-- TODO-TEMPLATE: Create the README contents. Boilerplate provided below.
 
+Additional bindings to the shared library built from this repository are provided
+for .NET, MATLAB, and Python in the following repositories:
+
+- [NTIA/TODO-TEMPLATE-dotnet](https://github.com/NTIA/TODO-TEMPLATE-dotnet)
+- [NTIA/TODO-TEMPLATE-matlab](https://github.com/NTIA/TODO-TEMPLATE-matlab)
+- [NTIA/TODO-TEMPLATE-python](https://github.com/NTIA/TODO-TEMPLATE-python)
+
 ## Getting Started ##
 
 TODO-TEMPLATE: Update links in this section, if applicable
 TODO-TEMPLATE: Otherwise, add correct "getting started" information here.
 
-To get started using this model, refer to
+To get started using this library, refer to
 [its page on the **NTIA/ITS Propagation Library Wiki**](https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/).
 There, you will find installation instructions, usage information, and code
 examples for all supported languages.
+
+An executable is also provided which can be used to run the functions provided
+by this library using plain text input and output files. Installation and usage
+details for the command-line driver are provided in [its own README](./app/README.md).
 
 If you're a developer and would like to contribute to or extend this repository,
 you will find comprehensive documentation of this C++ code
@@ -95,9 +106,8 @@ In order to do either, ensure the required submodules are cloned by running:
 
 ```cmd
 # From this repository's root directory
-git submodule init extern/googletest           # Required to run tests
-git submodule init extern/doxygen-awesome-css  # Required to build docs
-git submodule update                           # Clones the initialized submodules
+git submodule init
+git submodule update
 ```
 
 ## Running Tests ##

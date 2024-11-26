@@ -25,13 +25,6 @@ project(
 )
 
 ###########################################
-## SPECIFY MULTI-LANGUAGE WRAPPERS
-###########################################
-set(DOTNET_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/dotnet")
-set(MATLAB_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/matlab")
-set(PYTHON_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/python")
-
-###########################################
 ## CMAKE OPTIONS AND DEFAULTS
 ###########################################
 # Define options. Defaults to: compile 64-bit library and driver, build docs, run tests
@@ -40,7 +33,6 @@ option(BUILD_DRIVER "Build the command-line driver executable" ON)
 option(RUN_DRIVER_TESTS "Test the command-line driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating the documentation site" OFF)
 option(RUN_TESTS "Run unit tests for the main library" ON)
-option(COPY_TO_WRAPPERS "Copy the compiled shared library into wrapper submodules" ON)
 
 ###########################################
 ## SETUP
@@ -78,9 +70,6 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set
 ##########################################
 if (NOT DOCS_ONLY)
     add_subdirectory(src)  # Build the shared library
-    if (COPY_TO_WRAPPERS)  # Copy compiled library to wrappers
-        add_subdirectory(wrap)
-    endif ()
     if (RUN_TESTS OR RUN_DRIVER_TESTS)
         if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
             enable_testing()
