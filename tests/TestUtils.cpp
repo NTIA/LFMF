@@ -15,8 +15,11 @@ void appendDirectorySep(std::string &str) {
 std::string getDataDirectory() {
     std::string dataDir(__FILE__);
     dataDir.resize(dataDir.find_last_of("/\\"));
+    dataDir.resize(dataDir.find_last_of("/\\"));
     appendDirectorySep(dataDir);
-    dataDir += "data";
+    dataDir += "extern";
+    appendDirectorySep(dataDir);
+    dataDir += "TODO-TEMPLATE";  // Name of data directory as clone in the `extern` directory
     appendDirectorySep(dataDir);
     return dataDir;
 }
