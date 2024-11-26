@@ -72,8 +72,18 @@ target_compile_features(proplib_compiler_flags INTERFACE cxx_std_11)
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 target_compile_options(proplib_compiler_flags INTERFACE
-  "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
-  "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
+    # For GCC-like compilers in any configuration
+    "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
+    # For GCC-like compilers in Release configurations
+    "$<${gcc_like_cxx}:$<$<CONFIG:Release>:-O3;-DNDEBUG>>"
+    # For GCC-like compilers in Debug configurations
+    "$<${gcc_like_cxx}:$<$<CONFIG:Debug>:-g;-O0>>"
+    # For MSVC compiler in any configuration
+    "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
+    # For MSVC compiler in Release configurations
+    "$<${msvc_cxx}:$<$<CONFIG:Release>:/O2;/DNDEBUG>>"
+    # For MSVC compiler in Debug configurations
+    "$<${msvc_cxx}:$<$<CONFIG:Debug>:/Od;/Zi>>"
 )
 
 # Enable Hot Reload for MSVC compilers if supported.
