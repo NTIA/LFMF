@@ -10,7 +10,8 @@ add_executable(
     ${TEST_NAME}
     "LFMFUnitTest.cpp"
     "TestLFMFReturnCode.cpp"
-    "TestLFMFEquivalence.cpp"
+    "TestLFMFPolarizationHorizontal.cpp"
+    "TestLFMFPolarizationVertical.cpp"
     "LFMFGTestUtils.cpp"
     "LFMFGTest.h"
 )

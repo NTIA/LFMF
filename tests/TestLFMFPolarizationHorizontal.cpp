@@ -1,4 +1,4 @@
-/** @file TestLFMFEquivalence.cpp
+/** @file TestLFMFPolarizationHorizontal.cpp
  * Implements the google tests from ITS.Propagation.LFMF.
  */
 
@@ -11,7 +11,7 @@
  *                Test Data are from https://github.com/eeveetza/LFMFSmoothEarth.
  *
  *****************************************************************************/
-class TestLFMFEquivalence: public ::testing::Test {
+class TestLFMFPolarizationHorizontal: public ::testing::Test {
     protected:
     void SetUp() override {
         // Load test data from CSV
@@ -21,7 +21,7 @@ class TestLFMFEquivalence: public ::testing::Test {
     // Vector to hold test data
     std::vector<LFMFInputsAndResult> testData;
 
-    std::string fileName = "ValidationExampleLFMFSmoothEarth.csv";  //"ValidationPolarizationHorizontal.csv";
+    std::string fileName = "ValidationPolarizationHorizontal.csv";
 };
 
 /******************************************************************************
@@ -29,7 +29,7 @@ class TestLFMFEquivalence: public ::testing::Test {
  *  Description:  Test case to verify LFMF Flat earth curve method results are correct
  *
  *****************************************************************************/
-TEST_F(TestLFMFEquivalence, FlatEarthCurveMethodEquivalentToMatLAB) {
+TEST_F(TestLFMFPolarizationHorizontal, FlatEarthCurveMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     int i = 0;
@@ -67,7 +67,7 @@ TEST_F(TestLFMFEquivalence, FlatEarthCurveMethodEquivalentToMatLAB) {
  *  Description:  Test case to verify LFMF Residue series method results are correct
  *
  *****************************************************************************/
-TEST_F(TestLFMFEquivalence, ResidueSeriesMethodEquivalentToMatLAB) {
+TEST_F(TestLFMFPolarizationHorizontal, ResidueSeriesMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     int i = 0;
