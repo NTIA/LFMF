@@ -46,7 +46,7 @@ add_library(proplib_compiler_flags INTERFACE)
 target_compile_features(proplib_compiler_flags INTERFACE cxx_std_11)
 
 # add compiler warning flags just when building this project via
-# the BUILD_INTERFACE genex
+# the BUILD_INTERFACE generator expression
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 target_compile_options(proplib_compiler_flags INTERFACE
@@ -71,11 +71,23 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set
 if (NOT DOCS_ONLY)
     add_subdirectory(src)  # Build the shared library
     if (RUN_TESTS OR RUN_DRIVER_TESTS)
+        # Set up GoogleTest
         if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
             enable_testing()
             set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+            # Ensure GoogleTest is built as a static library
+            if (DEFINED BUILD_SHARED_LIBS AND BUILD_SHARED_LIBS)
+                set(BUILD_SHARED_LIBS_${LIB_NAME} ${BUILD_SHARED_LIBS})
+                set(BUILD_SHARED_LIBS OFF)
+                message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build gtest library.")
+            endif ()
             add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
             include(GoogleTest)
+            # Restore initial value of BUILD_SHARED_LIBS
+            if (DEFINED BUILD_SHARED_LIBS_${LIB_NAME})
+                set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_${LIB_NAME}})
+                message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build ${LIB_NAME} library.")
+            endif ()
         else ()
             message(SEND_ERROR
                 "Unable to build tests. GoogleTest submodule is missing. "
