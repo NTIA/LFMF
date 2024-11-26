@@ -24,7 +24,7 @@ target_include_directories(
 target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME})
 
 # Make driver executable location available to source
-add_definitions(-DDRIVER_LOCATION="$<TARGET_FILE:${DRIVER_NAME}>")
+add_compile_definitions(DRIVER_LOCATION="$<TARGET_FILE:${DRIVER_NAME}>")
 
 ###########################################
 ## SET UP AND DISCOVER TESTS
