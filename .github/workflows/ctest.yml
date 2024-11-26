@@ -15,7 +15,7 @@ concurrency:
 # Define the matrix for different operating systems
 jobs:
   build-and-test:
-    name: ${{ runner.os }} / ${{ matrix.architecture }} / CMake ${{ matrix.cmakeVersion }}
+    name: ${{ matrix.os }} / ${{ matrix.architecture }} / CMake ${{ matrix.cmakeVersion }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
