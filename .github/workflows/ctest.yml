@@ -23,16 +23,15 @@ jobs:
           - ubuntu-latest
           - macos-latest
           - windows-latest
-          - windows-2019               # Used for Windows 32-bit builds
-        architecture: [arm64, x64]
+        architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
-        exclude:                       # Only use x64 strategies for Linux and Windows
+        exclude:
+          - os: macos-latest
+            architecture: x86
           - os: windows-latest
             architecture: arm64
-          - os: windows-2019
-            architecture: arm64
           - os: ubuntu-latest
-            architecture: arm64
+            architecture: [arm64, x86]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
