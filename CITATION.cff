@@ -18,8 +18,9 @@ authors:
       Institute for Telecommunication Sciences
     address: 325 Broadway
     city: Boulder
-    country: CO
+    country: US
     post-code: '80305'
+    region: Colorado
     alias: NTIA/ITS
     email: code@ntia.gov
     website: 'https://its.ntia.gov'
