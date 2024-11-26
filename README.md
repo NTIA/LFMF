@@ -63,10 +63,14 @@ for .NET, MATLAB, and Python in the following repositories:
 TODO-TEMPLATE: Update links in this section, if applicable
 TODO-TEMPLATE: Otherwise, add correct "getting started" information here.
 
-To get started using this model, refer to
+To get started using this library, refer to
 [its page on the **NTIA/ITS Propagation Library Wiki**](https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/).
 There, you will find installation instructions, usage information, and code
 examples for all supported languages.
+
+An executable is also provided which can be used to run the functions provided
+by this library using plain text input and output files. Installation and usage
+details for the command-line driver are provided in [its own README](./app/README.md).
 
 If you're a developer and would like to contribute to or extend this repository,
 you will find comprehensive documentation of this C++ code
