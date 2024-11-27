@@ -42,6 +42,6 @@ std::string GetDirectory(std::string name);
 
 double stringToDouble(std::string s);
 
-void compareDouble(double expected, double actual);
+void compareDouble(double expected, double actual, double TOLERANCE=1.0e-6);
 
 #endif

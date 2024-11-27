@@ -7,11 +7,12 @@ message(STATUS "STATUS: Start building the google tests: " ${TEST_NAME})
 
 # Add all google test files here
 add_executable(
-    ${TEST_NAME}
-    "LFMFUnitTest.cpp"
+    ${TEST_NAME}    
     "TestLFMFReturnCode.cpp"
     "TestLFMFPolarizationHorizontal.cpp"
     "TestLFMFPolarizationVertical.cpp"
+    "TestLFMFPolarizationHorizontalMax.cpp"
+    "TestLFMFPolarizationVerticalMax.cpp"
     "LFMFGTestUtils.cpp"
     "LFMFGTest.h"
 )

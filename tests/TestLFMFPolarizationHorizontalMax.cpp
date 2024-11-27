@@ -1,4 +1,4 @@
-/** @file TestLFMFPolarizationHorizontal.cpp
+/** @file TestLFMFPolarizationHorizontalMax.cpp
  * Implements the google tests from ITS.Propagation.LFMF.
  */
 
@@ -9,12 +9,12 @@
  *  Description:  The purpose of this is to ensure that the LFMF model
  *                executes the same results as matlab code.
  *                Test Data are from https://github.com/eeveetza/LFMFSmoothEarth.
- *                Polarization:   Horizontal
- *                Lower antenna:  0, in meter
- *                Higher antenna: 0, in meter
+ *  *             Polarization:   Horizontal
+ *                Lower antenna:   0, in meter
+ *                Higher antenna: 50, in meter
  *
  *****************************************************************************/
-class TestLFMFPolarizationHorizontal: public ::testing::Test {
+class TestLFMFPolarizationHorizontalMax: public ::testing::Test {
     protected:
     void SetUp() override {
         // Load test data from CSV
@@ -24,7 +24,7 @@ class TestLFMFPolarizationHorizontal: public ::testing::Test {
     // Vector to hold test data
     std::vector<LFMFInputsAndResult> testData;
 
-    std::string fileName = "ValidationPolarizationHorizontal.csv";
+    std::string fileName = "ValidationPolarizationHorizontalMax.csv";
 };
 
 /******************************************************************************
@@ -32,7 +32,7 @@ class TestLFMFPolarizationHorizontal: public ::testing::Test {
  *  Description:  Test case to verify LFMF Flat earth curve method results are correct
  *
  *****************************************************************************/
-TEST_F(TestLFMFPolarizationHorizontal, FlatEarthCurveMethodEquivalentToMatLAB) {
+TEST_F(TestLFMFPolarizationHorizontalMax, FlatEarthCurveMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     int i = 0;
@@ -70,7 +70,7 @@ TEST_F(TestLFMFPolarizationHorizontal, FlatEarthCurveMethodEquivalentToMatLAB) {
  *  Description:  Test case to verify LFMF Residue series method results are correct
  *
  *****************************************************************************/
-TEST_F(TestLFMFPolarizationHorizontal, ResidueSeriesMethodEquivalentToMatLAB) {
+TEST_F(TestLFMFPolarizationHorizontalMax, ResidueSeriesMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     int i = 0;

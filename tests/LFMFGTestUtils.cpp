@@ -246,8 +246,7 @@ double stringToDouble(std::string s) {
     }
 }
 
-void compareDouble(double expected, double actual) {
-    double TOLERANCE = 1.0e-6;
+void compareDouble(double expected, double actual, double TOLERANCE) {
     if (expected == INF) {
         EXPECT_EQ(INF, actual);
     } else if (expected == -INF) {

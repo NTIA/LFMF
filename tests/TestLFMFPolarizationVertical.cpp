@@ -9,6 +9,9 @@
  *  Description:  The purpose of this is to ensure that the LFMF model
  *                executes the same results as matlab code.
  *                Test Data are from https://github.com/eeveetza/LFMFSmoothEarth.
+ *                Polarization:   Vertical
+ *                Lower antenna:  0, in meter
+ *                Higher antenna: 0, in meter
  *
  *****************************************************************************/
 class TestLFMFPolarizationVertical: public ::testing::Test {
