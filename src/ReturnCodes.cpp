@@ -66,7 +66,7 @@ std::string GetReturnStatus(int code) {
  * @param[in] code  Integer return code.
  * @return          A status message corresponding to the input code.
  ******************************************************************************/
-DLLEXPORT char *GetReturnStatusCharArray(const int code) {
+char *GetReturnStatusCharArray(const int code) {
     const std::string msg = GetReturnStatus(code);
     char *c_msg = new char[msg.size() + 1];
 #ifdef _WIN32
@@ -82,7 +82,7 @@ DLLEXPORT char *GetReturnStatusCharArray(const int code) {
  * 
  * @param[in] c_msg  The status message C-style string to delete
  ******************************************************************************/
-DLLEXPORT void FreeReturnStatusCharArray(char *c_msg) {
+void FreeReturnStatusCharArray(char *c_msg) {
     delete[] c_msg;
 }
 

@@ -10,6 +10,28 @@
 # >=3.14 required for GoogleTest v1.12.x
 cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
+# If on macOS, handle arm64/x86_64 architectures (must be done before project())
+if (APPLE)
+    # Get the current platform's native architecture
+    execute_process(
+        COMMAND uname -m
+        RESULT_VARIABLE result
+        OUTPUT_VARIABLE MACOS_NATIVE_ARCHITECTURE
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+    message(STATUS "Current macOS architecture is " ${MACOS_NATIVE_ARCHITECTURE})
+
+    # If running on Apple silicon, try a universal build. Otherwise, a native build.
+    if ((CMAKE_GENERATOR STREQUAL "Xcode") AND (MACOS_NATIVE_ARCHITECTURE STREQUAL "arm64"))
+        set(CMAKE_OSX_ARCHITECTURE "arm64;x86_64" CACHE STRING "")
+        set(PROPLIB_ARCHITECTURE "macOS_universal")
+        message(STATUS "Configured for universal macOS build")
+    else ()
+        set(PROPLIB_ARCHITECTURE MACOS_NATIVE_ARCHITECTURE)
+        message(STATUS "Configured for native macOS build")
+    endif ()
+endif ()
+
 ###########################################
 ## PROJECT METADATA
 ###########################################
@@ -24,13 +46,6 @@ project(
 )
 
 ###########################################
-## SPECIFY MULTI-LANGUAGE WRAPPERS
-###########################################
-set(DOTNET_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/dotnet")
-set(MATLAB_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/matlab")
-set(PYTHON_WRAPPER_DIR "${PROJECT_SOURCE_DIR}/wrap/python")
-
-###########################################
 ## CMAKE OPTIONS AND DEFAULTS
 ###########################################
 # Define options. Defaults to: compile 64-bit library and driver, build docs, run tests
@@ -39,7 +54,6 @@ option(BUILD_DRIVER "Build the command-line driver executable" ON)
 option(RUN_DRIVER_TESTS "Test the command-line driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating the documentation site" OFF)
 option(RUN_TESTS "Run unit tests for the main library" ON)
-option(COPY_TO_WRAPPERS "Copy the compiled shared library into wrapper submodules" ON)
 
 ###########################################
 ## SETUP
@@ -53,12 +67,22 @@ add_library(proplib_compiler_flags INTERFACE)
 target_compile_features(proplib_compiler_flags INTERFACE cxx_std_11)
 
 # add compiler warning flags just when building this project via
-# the BUILD_INTERFACE genex
+# the BUILD_INTERFACE generator expression
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 target_compile_options(proplib_compiler_flags INTERFACE
-  "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
-  "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
+    # For GCC-like compilers in any configuration
+    "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
+    # For GCC-like compilers in Release configurations
+    "$<${gcc_like_cxx}:$<$<CONFIG:Release>:-O3;-DNDEBUG>>"
+    # For GCC-like compilers in Debug configurations
+    "$<${gcc_like_cxx}:$<$<CONFIG:Debug>:-g;-O0>>"
+    # For MSVC compiler in any configuration
+    "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
+    # For MSVC compiler in Release configurations
+    "$<${msvc_cxx}:$<$<CONFIG:Release>:/O2;/DNDEBUG>>"
+    # For MSVC compiler in Debug configurations
+    "$<${msvc_cxx}:$<$<CONFIG:Debug>:/Od;/Zi>>"
 )
 
 # Enable Hot Reload for MSVC compilers if supported.
@@ -67,29 +91,23 @@ if (POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<IF:$<AND:$<C_COMPILER_ID:MSVC>,$<CXX_COMPILER_ID:MSVC>>,$<$<CONFIG:Debug,RelWithDebInfo>:EditAndContinue>,$<$<CONFIG:Debug,RelWithDebInfo>:ProgramDatabase>>")
 endif ()
 
-# control where the static and shared libraries are built so that on windows
-# we don't need to tinker with the path to run the executable
+# control where the static and shared libraries are built
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Archive Output Directory")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Library Output Directory")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Runtime Output Directory")
-
-#include(CMakeDependentOption)
-#include(GNUInstallDirs)
 
 ##########################################
 ## BUILD/RUN
 ##########################################
 if (NOT DOCS_ONLY)
-    add_subdirectory(src)  # Build the library
-
-    if (COPY_TO_WRAPPERS)  # Copy compiled library to wrappers
-        add_subdirectory(wrap)
-    endif ()
+    add_subdirectory(src)  # Build the shared library
 
     if (RUN_TESTS OR RUN_DRIVER_TESTS)
+        # Set up GoogleTest
         if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
             enable_testing()
             set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+            # Ensure GoogleTest is built as a static library
             if (DEFINED BUILD_SHARED_LIBS AND BUILD_SHARED_LIBS)
                 set(BUILD_SHARED_LIBS_${LIB_NAME} ${BUILD_SHARED_LIBS})
                 set(BUILD_SHARED_LIBS OFF)
@@ -97,7 +115,7 @@ if (NOT DOCS_ONLY)
             endif ()
             add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
             include(GoogleTest)
-            
+            # Restore initial value of BUILD_SHARED_LIBS
             if (DEFINED BUILD_SHARED_LIBS_${LIB_NAME})
                 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_${LIB_NAME}})
                 message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build ${LIB_NAME} library.")
@@ -110,8 +128,7 @@ if (NOT DOCS_ONLY)
             )
         endif ()
     endif ()
-
-    if (RUN_TESTS)              # Build and run unit tests
+    if (RUN_TESTS)         # Build and run unit tests
         add_subdirectory(tests)
     endif ()
 

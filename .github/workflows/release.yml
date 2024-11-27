@@ -15,7 +15,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os:
+          - ubuntu-latest
+          - macos-latest
+          - windows-latest
+          - windows-2019               # Used for Windows 32-bit builds
+        architecture: [arm64, x64]
+        cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
+        exclude:                       # Only use x64 strategies for Linux and Windows
+          - os: windows-latest
+            architecture: arm64
+          - os: windows-2019
+            architecture: arm64
+          - os: ubuntu-latest
+            architecture: arm64
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4

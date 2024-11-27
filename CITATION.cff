@@ -16,12 +16,13 @@ authors:
   - name: >-
       U.S. Department of Commerce, National
       Telecommunications and Information Administration,
-      Institute for Telecommunications Sciences
+      Institute for Telecommunication Sciences
     address: 325 Broadway
     city: Boulder
-    region: Colorado
-    post-code: '80305'
     country: US
+    post-code: '80305'
+    region: Colorado
+    alias: NTIA/ITS
     email: code@ntia.gov
     website: 'https://its.ntia.gov'
 repository-code: 'https://github.com/NTIA/LFMF'
@@ -31,6 +32,5 @@ keywords:
   - its
   - propagation
   - lfmf
-license: 'NTIA Public Domain'
 version: 1.0
 date-released: '2024-12-01'
