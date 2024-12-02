@@ -17,7 +17,7 @@ mark next to each attests that the criterion has been met.
     all template or placeholder code has been removed.
     * [ ] The repository includes the appropriate `LICENSE.md` file
 2. [ ] Any test data necessary for the code and its unit tests to function is included in this
-GitHub repository, or in a parent repository which includes this one as a Git submodule.
+GitHub repository, either directly or as a linked Git submodule.
 3. [ ] The README.md file has passed editorial review from the ITS Publications Office.
 4. [ ] The project complies with the ITS Code Style Guide or an appropriate style
 guide as agreed to by the sponsor, project lead, or Supervising Division Chief.
