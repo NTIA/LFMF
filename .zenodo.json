@@ -34,7 +34,7 @@
         {
             "identifier": "https://github.com/NTIA/TODO-TEMPLATE-test-data",
             "relation": "isSupplementedBy",
-            "resource_type": "software"
+            "resource_type": "dataset"
         },
         {
             "identifier": "https://ntia.github.io/TODO-TEMPLATE/",
