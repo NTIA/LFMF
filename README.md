@@ -39,11 +39,14 @@ to develop a cross-platform C++ library as part of PropLib. Instructions on how
 to use this repository are found in its [GitHub Wiki](https://github.com/NTIA/proplib-template/wiki).
 
 Additional template repositories exist for building .NET, MATLAB, and Python
-wrappers for PropLib C++ libraries. See:
+wrappers for PropLib C++ libraries. Finally, another template is available as
+an example of a submodule repository to provide common test data to all versions
+of the software. See:
 
 - [NTIA/proplib-template-dotnet](https://github.com/NTIA/proplib-template-dotnet)
 - [NTIA/proplib-template-matlab](https://github.com/NTIA/proplib-template-matlab)
 - [NTIA/proplib-template-python](https://github.com/NTIA/proplib-template-python)
+- [NTIA/proplib-template-test-data](https://github.com/NTIA/proplib-template-test-data)
 
 ## Contact ##
 
