@@ -32,6 +32,8 @@ std::string GetDrvrReturnStatusMsg(int code) {
 
     // Construct status message
     std::string msg = DRIVER_NAME;
+    msg += " v";
+    msg += DRIVER_VERSION;
     if (code == DRVR__SUCCESS) {
         msg += " Status: ";
     } else {
