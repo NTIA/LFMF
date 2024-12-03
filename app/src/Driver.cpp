@@ -51,6 +51,7 @@ int main(int argc, char **argv) {
 
     // Return driver error code if one was returned
     if (rtn > DRVR__RETURN_SUCCESS)
+        std::cerr << GetDrvrReturnStatusMsg(rtn) << std::endl;
         return rtn;
 
     // Open output file for writing
@@ -72,6 +73,7 @@ int main(int argc, char **argv) {
     fp << std::endl << std::endl;
     // TODO-TEMPLATE populate the rest of the output file
     fp.close();
+    return SUCCESS;
 }
 
 /*******************************************************************************
