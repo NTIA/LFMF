@@ -50,9 +50,10 @@ int main(int argc, char **argv) {
     }
 
     // Return driver error code if one was returned
-    if (rtn > DRVR__RETURN_SUCCESS)
+    if (rtn > DRVR__RETURN_SUCCESS) {
         std::cerr << GetDrvrReturnStatusMsg(rtn) << std::endl;
         return rtn;
+    }
 
     // Open output file for writing
     std::ofstream fp(params.out_file);
