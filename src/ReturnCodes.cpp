@@ -35,6 +35,8 @@ std::string GetReturnStatus(int code) {
     };
     // Construct status message
     std::string msg = LIBRARY_NAME;
+    msg += " v";
+    msg += LIBRARY_VERSION;
     if (code == SUCCESS) {
         msg += " Status: ";
     } else {
