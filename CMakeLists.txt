@@ -65,7 +65,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_library(proplib_compiler_flags INTERFACE)
-target_compile_features(proplib_compiler_flags INTERFACE cxx_std_11)
 
 # add compiler warning flags just when building this project via
 # the BUILD_INTERFACE generator expression
