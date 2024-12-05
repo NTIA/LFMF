@@ -59,12 +59,11 @@ option(RUN_TESTS "Run unit tests for the main library" ON)
 ###########################################
 ## SETUP
 ###########################################
-# GoogleTest v1.12.1 requires at least C++11
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-
+# Create an interface to set common compiler flags
 add_library(proplib_compiler_flags INTERFACE)
+
+# Require at least C++11
+target_compile_features(proplib_compiler_flags INTERFACE cxx_std_11)
 
 # add compiler warning flags just when building this project via
 # the BUILD_INTERFACE generator expression
