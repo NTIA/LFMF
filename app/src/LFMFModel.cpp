@@ -86,9 +86,14 @@ DrvrReturnCode ParseLFMFInputStream(std::istream &stream, LFMFParams &lfmf_param
             if (rtn == DRVRERR__PARSE)
                 rtn = DRVRERR__PARSE_SIGMA;
         } else if (key.compare(LFMFInputKeys::pol) == 0) {
-            rtn = ParseInteger(value, lfmf_params.pol);
+            int i_pol;
+            rtn = ParseInteger(
+                value, i_pol
+            );
             if (rtn == DRVRERR__PARSE)
                 rtn = DRVRERR__PARSE_POLARIZATION;
+            else
+                lfmf_params.pol = static_cast<Polarization>(i_pol);
         } else {
             std::cerr << "Unknown parameter: " << key << std::endl;
             rtn = DRVRERR__PARSE;

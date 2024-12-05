@@ -23,7 +23,8 @@ struct LFMFParams {
         double d__km;           ///<  Path distance, in km
         double epsilon;         ///<  Relative permittivity
         double sigma;           ///<  Conductivity
-        int pol;                ///<  Polarization: 0 = Horizontal, 1 = Vertical
+        ITS::Propagation::LFMF::Polarization
+            pol;  ///<  Polarization: 0 = Horizontal, 1 = Vertical
 };
 
 /** Key names for LFMF Model input file parameters */

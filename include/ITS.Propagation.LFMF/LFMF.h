@@ -138,7 +138,12 @@ complex<double> WiRoot(
     AiryFunctionScaling scaling
 );
 ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s, double d__km, double epsilon, double sigma, int pol);
+    double N_s,
+    double d__km,
+    double epsilon,
+    double sigma,
+    Polarization pol
+);
 bool AlmostEqualRelative(double A, double B, double maxRelDiff = DBL_EPSILON);
 
 }  // namespace LFMF
