@@ -27,43 +27,68 @@ namespace LFMF {
     #endif
 #endif
 
-#define MAX(x, y) (((x) > (y)) ? (x) : (y))                 ///< A macro that returns the maximum of \a a and \a b.
-#define MIN(x, y) (((x) < (y)) ? (x) : (y))                 ///< A macro that returns the minimum of \a a and \a b.
-#define DIM(x, y) (((x) > (y)) ? (x - y) : (0))             ///< A macro that returns the difference of \a a and \a b.
+#define MAX(x, y) (((x) > (y)) ? (x) : (y))         ///< A macro that returns the maximum of \a a and \a b.
+#define MIN(x, y) (((x) < (y)) ? (x) : (y))         ///< A macro that returns the minimum of \a a and \a b.
+#define DIM(x, y) (((x) > (y)) ? (x - y) : (0))     ///< A macro that returns the difference of \a a and \a b.
 
-#define PI                          3.1415926535897932384   ///< Approximate value of @f$ \pi @f$
-#define epsilon_0                   8.854187817e-12         ///< Vacuum permittivity (F/m) 
-#define a_0__km                     6370                    ///< Earth radius, in km
-#define C                           299792458.0             ///< Speed of light (m/s)
-#define SQRTPI                      sqrt(PI)                ///< Approximate value of the square root of @f$ \pi @f$
-#define THIRD                       1.0 / 3.0               ///< Value of one third 
-#define FALSE                       0                       ///< False
-#define TRUE                        1                       ///< True
-#define D2R                         PI/180.0                ///< Approximate convert ratio from Degrees to Radians
-#define R2D                         180.0/PI                ///< Approximate convert ratio from Radians to Degrees
-#define ETA                         119.9169832*PI          ///< Intrinsic impedance of free space (ohms)
+constexpr double PI = 3.1415926535897932384;        ///< Approximate value of @f$ \pi @f$
+constexpr double epsilon_0 = 8.854187817e-12;       ///< Vacuum permittivity (F/m)
+constexpr double a_0__km = 6370;                    ///< Earth radius, in km
+constexpr double C = 299792458.0;                   ///< Speed of light (m/s)
+constexpr double THIRD = 1.0 / 3.0;                 ///< Value of one third
+constexpr double D2R = PI / 180.0;                  ///< Approximate convert ratio from Degrees to Radians
+constexpr double R2D = 180.0 / PI;                  ///< Approximate convert ratio from Radians to Degrees
+constexpr double ETA = 119.9169832 * PI;            ///< Intrinsic impedance of free space (ohms)
 
-#define POLARIZATION__HORIZONTAL    0                       ///< Polarization horizontal
-#define POLARIZATION__VERTICAL      1                       ///< Polarization vertical
+constexpr int YES = 1;                              ///< Find the derivative i.e., Ai'() or Bi'()
+constexpr int NO = 0;                               ///< Find Ai() or Bi()
 
-#define METHOD__FLAT_EARTH_CURVE    0                       ///< Flat earth curve method
-#define METHOD__RESIDUE_SERIES      1                       ///< Residue series method
+/*******************************************************************************
+ * Polarization
+ ******************************************************************************/
+// clang-format off
+enum Polarization {
+    POLARIZATION__HORIZONTAL,           ///< Polarization horizontal
+    POLARIZATION__VERTICAL,             ///< Polarization vertical
+};
+// clang-format on
 
-#define YES                         1                       ///< Find the derivative i.e., Ai'() or Bi'()
-#define NO                          0                       ///< Find Ai() or Bi()
-// kind
-#define AIRY                        1                       ///< Find the Airy Function 
-#define AIRYD                       2                       ///< Find the Airy function Derivative
-#define BAIRY                       3                       ///< Find the Bairy Function
-#define BAIRYD                      4                       ///< Find the Bairy function Derivative
-#define WTWO                        5                       ///< find Hufford Wi(2) or Wait W2
-#define DWTWO                       6                       ///< find Hufford Wi'(2) or Wait W2'
-#define WONE                        7                       ///< find Hufford Wi(1) or Wait W1
-#define DWONE                       8                       ///< find Hufford Wi'(1) or Wait W1'
-// scaling
-#define HUFFORD                     9                       ///< Use Hufford scaling
-#define WAIT                        10                      ///< Use Wait scaling
-#define NONE                        11                      ///< No Scaling
+/*******************************************************************************
+ * Solution method
+ ******************************************************************************/
+// clang-format off
+enum SolutionMethod {
+    METHOD__FLAT_EARTH_CURVE,           ///< Flat earth curve method
+    METHOD__RESIDUE_SERIES,             ///< Residue series method
+};
+// clang-format on
+
+/*******************************************************************************
+ * Airy function kind
+ ******************************************************************************/
+// clang-format off
+enum AiryFunctionKind {
+    AIRY = 1,                           ///< Find the Airy Function 
+    AIRYD,                              ///< Find the Airy function Derivative
+    BAIRY,                              ///< Find the Bairy Function
+    BAIRYD,                             ///< Find the Bairy function Derivative
+    WTWO,                               ///< find Hufford Wi(2) or Wait W2
+    DWTWO,                              ///< find Hufford Wi'(2) or Wait W2'
+    WONE,                               ///< find Hufford Wi(1) or Wait W1
+    DWONE,                              ///< find Hufford Wi'(1) or Wait W1'
+};
+// clang-format on
+
+/*******************************************************************************
+ * Airy function scaling
+ ******************************************************************************/
+// clang-format off
+enum AiryFunctionScaling {
+    HUFFORD,                            ///< Use Hufford scaling
+    WAIT,                               ///< Use Wait scaling
+    NONE,                               ///< No Scaling
+};
+// clang-format on
 
 //////////////////////////////////////
 // Data Structures
