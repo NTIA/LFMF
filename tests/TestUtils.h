@@ -3,6 +3,9 @@
  */
 #pragma once
 
-#include <gtest/gtest.h>  // for GoogleTest
+// clang-format off
+// GoogleTest must be included first
+#include <gtest/gtest.h>  // GoogleTest
+// clang-format on
 
 // TODO-TEMPLATE: define any common test fixtures here

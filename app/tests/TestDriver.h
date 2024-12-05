@@ -3,15 +3,19 @@
  */
 #pragma once
 
+// clang-format off
+// GoogleTest must be included first
+#include <gtest/gtest.h>  // GoogleTest
+// clang-format on
+
 #include "Driver.h"
 #include "TempTextFile.h"
 
-#include <cstdio>         // for std::remove, std::perror
-#include <cstdlib>        // for std::system
-#include <gtest/gtest.h>  // GoogleTest
-#include <iostream>       // for std::cout
-#include <ostream>        // for std::endl, std::flush
-#include <string>         // for std::string
+#include <cstdio>    // for std::remove, std::perror
+#include <cstdlib>   // for std::system
+#include <iostream>  // for std::cout
+#include <ostream>   // for std::endl, std::flush
+#include <string>    // for std::string
 
 #ifndef _WIN32
     #include <unistd.h>  // for WEXITSTATUS
