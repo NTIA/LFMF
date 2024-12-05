@@ -25,7 +25,7 @@ struct LFMFInputsAndResult {
     double d__km;           ///<  Path distance, in km
     double epsilon;         ///<  Relative permittivity
     double sigma;           ///<  Conductivity
-    int pol;                ///<  Polarization: 0 = Horizontal, 1 = Vertical
+    Polarization pol;       ///<  Polarization: 0 = Horizontal, 1 = Vertical
     int expectedReturn;     ///<  Expected Return Code
     Result expectedResult;  ///<  Expected Outputs in Result Struct
 };

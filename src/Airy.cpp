@@ -110,8 +110,9 @@ namespace LFMF {
  *                Ai(z) + j*Bi(z) = -8.611221e-002 + 2.242080e-001 i
  *
  *****************************************************************************/
-complex<double> Airy(complex<double> Z, int kind, int scaling) 
-{
+complex<double> Airy(
+    complex<double> Z, AiryFunctionKind kind, AiryFunctionScaling scaling
+) {
     // NQTT, ASLT data
     int NQTT[15] = { 1,3,7,12,17,23,29,35,41,47,53,59,64,68,71 }; // Centers of Expansion of Taylor series on real axis indices into the 
                                                                   // AV, APV, BV and BPV arrays

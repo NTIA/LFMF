@@ -74,7 +74,7 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
                         c++;
                     }
                     if (csvRows[0][i] == "pol") {
-                        d.pol = std::stoi(csvRows[r][i]);
+                        d.pol = static_cast<Polarization>(std::stoi(csvRows[r][i]));
                         c++;
                     }
 
@@ -94,7 +94,7 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
                         c++;
                     }
                     if (csvRows[0][i] == "method") {
-                        d.expectedResult.method = std::stoi(csvRows[r][i]);
+                        d.expectedResult.method = static_cast<SolutionMethod>(std::stoi(csvRows[r][i]));
                         c++;
                     }
                 } catch (const char *msg) {
