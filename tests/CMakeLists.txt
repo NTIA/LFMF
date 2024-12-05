@@ -3,8 +3,8 @@
 ############################################
 set(TEST_NAME "Test${LIB_NAME}")
 
-## TODO-TEMPLATE: Include source AND header files here.
-## TODO-TEMPLATE: See CREATING-REPOSITORIES.md for examples.
+## TODO-TEMPLATE: Include all source AND header files for tests here.
+## Do not include the source and header files of the library under test.
 add_executable(
     ${TEST_NAME}
     "TestUtils.cpp"
