@@ -5,6 +5,7 @@
 #define __ITS_PROPAGATION_LFMF_LFMF_H__
 
 #include <complex>
+#include <cfloat>
 
 #include "LFMFConfig.h"
 
