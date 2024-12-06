@@ -20,20 +20,13 @@ namespace LFMF {
  *  @param[in]    d__km         - Path distance, in km
  *  @param[in]    epsilon       - Relative permittivity
  *  @param[in]    sigma         - Conductivity
- *  @param[in]    pol           - Polarization
- *                                  + 0 : POLARIZATION__HORIZONTAL
- *                                  + 1 : POLARIZATION__VERTICAL
  *
  *  @return       error         - Error code
 *
  *****************************************************************************/
 ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s,
-    double d__km,
-    double epsilon,
-    double sigma,
-    Polarization pol
-) {
+    double N_s, double d__km, double epsilon, double sigma)
+{
     if (h_tx__meter < 0 || h_tx__meter > 50)
         return ERROR__TX_TERMINAL_HEIGHT;
 
@@ -58,9 +51,23 @@ ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, 
     if (sigma <= 0)
         return ERROR__SIGMA;
 
+    return SUCCESS;
+}
+
+
+/******************************************************************************
+ *
+ *  Description:  Perform input Polarization validation
+ *
+ *  @param[in]    pol           - Polarization
+ *
+ *  @return       error         - Error code
+*
+ *****************************************************************************/
+ReturnCode ValidatePolarization(int pol)
+{
     if (pol != POLARIZATION__HORIZONTAL && pol != POLARIZATION__VERTICAL)
         return ERROR__POLARIZATION;
-
     return SUCCESS;
 }
 

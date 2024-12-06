@@ -392,7 +392,6 @@ TEST_F(TestLFMFReturnCode, InvalidSigma) {
  *  Description:  Test case to verify LFMF input polarization is invalid
  *
  *****************************************************************************/
-/*
 TEST_F(TestLFMFReturnCode, InvalidPolarization) {
     for (const auto &data : testData) {
         Result result;
@@ -427,4 +426,4 @@ TEST_F(TestLFMFReturnCode, InvalidPolarization) {
 
         EXPECT_EQ(rtn, ERROR__POLARIZATION);
     }
-}*/
+}

@@ -74,7 +74,7 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
                         c++;
                     }
                     if (csvRows[0][i] == "pol") {
-                        d.pol = static_cast<Polarization>(std::stoi(csvRows[r][i]));
+                        d.pol = std::stoi(csvRows[r][i]);
                         c++;
                     }
 

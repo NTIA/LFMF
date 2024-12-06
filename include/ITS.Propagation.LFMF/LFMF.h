@@ -5,10 +5,8 @@
 #define __ITS_PROPAGATION_LFMF_LFMF_H__
 
 #include <complex>
-#include <cfloat>
 
 #include "LFMFConfig.h"
-#include "ReturnCodes.h"
 
 using std::complex;
 using std::abs;
@@ -90,6 +88,26 @@ enum AiryFunctionScaling {
 };
 // clang-format on
 
+/*******************************************************************************
+ * Return Codes defined by this software (0-127)
+ ******************************************************************************/
+// clang-format off
+enum ReturnCode {
+    SUCCESS = 0,                        ///< Return Success
+
+    // Invalid Inputs
+    ERROR__TX_TERMINAL_HEIGHT = 32,     ///< TX terminal height is out of range
+    ERROR__RX_TERMINAL_HEIGHT,          ///< RX terminal height is out of range
+    ERROR__FREQUENCY,                   ///< Frequency is out of range
+    ERROR__TX_POWER,                    ///< Transmit power is out of range
+    ERROR__SURFACE_REFRACTIVITY,        ///< Surface refractivity is out of range
+    ERROR__PATH_DISTANCE,               ///< Path distance is out of range
+    ERROR__EPSILON,                     ///< Epsilon is out of range
+    ERROR__SIGMA,                       ///< Sigma is out of range
+    ERROR__POLARIZATION,                ///< Invalid value for polarization
+};
+// clang-format on
+
 //////////////////////////////////////
 // Data Structures
 
@@ -108,14 +126,8 @@ struct Result
 //////////////////////////////////////
 // Public Functions
 
-DLLEXPORT ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s,
-    double d__km,
-    double epsilon,
-    double sigma,
-    Polarization pol,
-    Result *result
-);
+DLLEXPORT ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt, double N_s,
+    double d__km, double epsilon, double sigma, int pol, Result *result);
 
 DLLEXPORT char *GetReturnStatusCharArray(const int code);
 DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
@@ -123,27 +135,18 @@ DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
 //////////////////////////////////////
 // Private Functions
 
+ReturnCode LFMF_CPP(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt, double N_s,
+    double d__km, double epsilon, double sigma, Polarization pol, Result *result);
 std::string GetReturnStatus(const int code);
 double FlatEarthCurveCorrection(complex<double> delta, complex<double> q, double h_1__km, double h_2__km, double d, double k, double a_e__km);
 double ResidueSeries(double k, double h_1__km, double h_2__km, double nu, double theta, complex<double> q);
 complex<double> wofz(complex<double> qi);
-complex<double>
-    Airy(complex<double> Z, AiryFunctionKind kind, AiryFunctionScaling scaling);
-complex<double> WiRoot(
-    int i,
-    complex<double> *DWi,
-    complex<double> q,
-    complex<double> *Wi,
-    AiryFunctionKind kind,
-    AiryFunctionScaling scaling
-);
+complex<double> Airy(complex<double> Z, AiryFunctionKind kind, AiryFunctionScaling scaling);
+complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi,
+    AiryFunctionKind kind, AiryFunctionScaling scaling);
 ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s,
-    double d__km,
-    double epsilon,
-    double sigma,
-    Polarization pol
-);
+    double N_s, double d__km, double epsilon, double sigma);
+ReturnCode ValidatePolarization(int pol);
 bool AlmostEqualRelative(double A, double B, double maxRelDiff = DBL_EPSILON);
 
 }  // namespace LFMF

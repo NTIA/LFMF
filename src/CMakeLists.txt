@@ -21,7 +21,6 @@ set(LIB_FILES
     wofz.cpp
     "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h"
     "${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h"
-    "${LIB_HEADERS}/${PROJECT_NAME}/ReturnCodes.h"
 )
 
 # By default, create shared library

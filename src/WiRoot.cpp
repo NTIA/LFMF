@@ -40,14 +40,9 @@ namespace LFMF {
  *  @return       tw            - ith complex root of the "Airy function of the third kind"
  *
  *****************************************************************************/
-complex<double> WiRoot(
-    int i,
-    complex<double> *DWi,
-    complex<double> q,
-    complex<double> *Wi,
-    AiryFunctionKind kind,
-    AiryFunctionScaling scaling
-) {
+complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi,
+    AiryFunctionKind kind, AiryFunctionScaling scaling)
+{
     complex<double> ph;             // Airy root phase 
     complex<double> ti;             // the ith complex root of Wi'(2)(ti) - q*Wi(2)(ti) = 0   
 

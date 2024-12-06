@@ -8,6 +8,55 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
+    /******************************************************************************
+ *
+ *  Description:  Compute the LFMF propagation prediction
+ *
+ *  @param[in]    h_tx__meter   - Height of the transmitter, in meter
+ *  @param[in]    h_rx__meter   - Height of the receiver, in meter
+ *  @param[in]    f__mhz        - Frequency, in MHz
+ *  @param[in]    P_tx__watt    - Transmitter power, in Watts
+ *  @param[in]    N_s           - Surface refractivity, in N-Units
+ *  @param[in]    d__km         - Path distance, in km
+ *  @param[in]    epsilon       - Relative permittivity
+ *  @param[in]    sigma         - Conductivity
+ *  @param[in]    pol           - Polarization: 0 = Horizontal, 1 = Vertical
+ *
+ *  @param[out]   result        - Result structure
+ *
+ *  @return       error         - Error code
+ *
+ *****************************************************************************/
+ReturnCode LFMF(
+    double h_tx__meter,
+    double h_rx__meter,
+    double f__mhz,
+    double P_tx__watt,
+    double N_s,
+    double d__km,
+    double epsilon,
+    double sigma,
+    int pol,
+    Result *result
+) {
+    ReturnCode rtn = ValidatePolarization(pol);
+    if (rtn != SUCCESS)
+        return rtn;
+
+    return LFMF_CPP(
+        h_tx__meter,
+        h_rx__meter,
+        f__mhz,
+        P_tx__watt,
+        N_s,
+        d__km,
+        epsilon,
+        sigma,
+        static_cast<Polarization>(pol),
+        result
+    );
+}
+
 /******************************************************************************
  *
  *  Description:  Compute the LFMF propagation prediction
@@ -27,16 +76,11 @@ namespace LFMF {
  *  @return       error         - Error code
  *
  *****************************************************************************/
-ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s,
-    double d__km,
-    double epsilon,
-    double sigma,
-    Polarization pol,
-    Result *result
-) {
+ReturnCode LFMF_CPP(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
+    double N_s, double d__km, double epsilon, double sigma, Polarization pol, Result *result)
+{
     ReturnCode rtn = ValidateInput(h_tx__meter, h_rx__meter, f__mhz, P_tx__watt,
-        N_s, d__km, epsilon, sigma, pol);
+        N_s, d__km, epsilon, sigma);
     if (rtn != SUCCESS)
         return rtn;
 
@@ -121,7 +165,7 @@ ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_
  *
  *  @param[in]    A             - First double to compare
  *  @param[in]    B             - Second double to compare
- *  @param[in]    maxRelDiff    - Maximum relative difference
+ *  @param[in]    maxRelDiff    - Maximum relative difference, by default is DBL_EPSILON
  *
  *  @return       equal         - if it is equal of the two doubles
  *
