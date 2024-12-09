@@ -27,18 +27,9 @@ namespace LFMF {
  *  @return       error         - Error code
  *
  *****************************************************************************/
-ReturnCode LFMF(
-    double h_tx__meter,
-    double h_rx__meter,
-    double f__mhz,
-    double P_tx__watt,
-    double N_s,
-    double d__km,
-    double epsilon,
-    double sigma,
-    int pol,
-    Result *result
-) {
+ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
+    double N_s, double d__km, double epsilon, double sigma, int pol, Result *result)
+{
     ReturnCode rtn = ValidatePolarization(pol);
     if (rtn != SUCCESS)
         return rtn;

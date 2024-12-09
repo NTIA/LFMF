@@ -5,7 +5,7 @@
 #define __ITS_PROPAGATION_LFMF_LFMF_H__
 
 #include <complex>
-#include <cfloat>
+#include <cfloat>           ///< for DBL_EPSILON
 
 #include "LFMFConfig.h"
 
