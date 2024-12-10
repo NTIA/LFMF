@@ -18,28 +18,24 @@
  *
  *****************************************************************************/
 std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &filename) {
+
+    std::vector<LFMFInputsAndResult> testData;
+    std::string dataDir = GetDirectory("data");
+    std::ifstream file(dataDir + filename);
+    LFMFInputsAndResult d {};   // struct to store data from a single line of CSV
     
-        std::vector<LFMFInputsAndResult> testData;
-        std::string dataDir = GetDirectory("data");
-        std::ifstream file(dataDir + filename);
-        LFMFInputsAndResult d {
-        };  // struct to store data from a single line of CSV
-        try {
-        std::vector<std::vector<std::string>> csvRows = readCSV(file);
-        if (csvRows.size() <= 1) {
-            return testData;
-        }
-    
+    std::vector<std::vector<std::string>> csvRows = readCSV(file);
+    if (csvRows.size() <= 1) {
+        return testData;
+    }
 
     typedef std::vector<std::vector<std::string> >::size_type row_vec_size_t;
     typedef std::vector<std::string>::size_type cell_vec_size_t;
         
     for (row_vec_size_t r = 1; r < csvRows.size(); r++) {
         int c = 0;
-        if (r % 100 == 0) {
-            std::cout << " Test instance: " << r << std::endl;
-        }
-            for (cell_vec_size_t i = 0; i < csvRows[0].size(); i++) {
+        if (csvRows[r].size() > 1) {
+            for (cell_vec_size_t i = 0; i < csvRows[r].size(); i++) {
                 try {
                     if (csvRows[0][i] == "h_tx__meter") {
                         d.h_tx__meter = std::stod(csvRows[r][i]);
@@ -82,35 +78,35 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
                         d.expectedReturn = std::stoi(csvRows[r][i]);
                     }
                     if (csvRows[0][i] == "A_btl__db") {
-                        d.expectedResult.A_btl__db = stringToDouble(csvRows[r][i]);
+                        d.expectedResult.A_btl__db
+                            = stringToDouble(csvRows[r][i]);
                         c++;
                     }
                     if (csvRows[0][i] == "E_dBuVm") {
-                        d.expectedResult.E_dBuVm = stringToDouble(csvRows[r][i]);
+                        d.expectedResult.E_dBuVm
+                            = stringToDouble(csvRows[r][i]);
                         c++;
                     }
                     if (csvRows[0][i] == "P_rx__dbm") {
-                        d.expectedResult.P_rx__dbm = stringToDouble(csvRows[r][i]);
+                        d.expectedResult.P_rx__dbm
+                            = stringToDouble(csvRows[r][i]);
                         c++;
                     }
                     if (csvRows[0][i] == "method") {
-                        d.expectedResult.method = static_cast<SolutionMethod>(std::stoi(csvRows[r][i]));
+                        d.expectedResult.method = static_cast<SolutionMethod>(
+                            std::stoi(csvRows[r][i])
+                        );
                         c++;
                     }
                 } catch (const char *msg) {
                     // Code to handle the exception
-                    std::cerr << "Error: " << r << ", " << csvRows[r][i]
-                              << std::endl;
+                    std::cerr << "Error: " << r << ", " << csvRows[r][i] << std::endl;
                 }
             }
             if (c == 13) {
                 testData.push_back(d);
             }
-        
-    }
-    } catch (const char *msg) {
-        // Code to handle the exception
-        std::cerr << "Error: " << std::endl;
+        }
     }
     return testData;
 }

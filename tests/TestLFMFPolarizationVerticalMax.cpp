@@ -35,14 +35,9 @@ class TestLFMFPolarizationVerticalMax: public ::testing::Test {
 TEST_F(TestLFMFPolarizationVerticalMax, FlatEarthCurveMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
-    int i = 0;
     for (const auto &data : testData) {
         if (data.expectedResult.method == METHOD__FLAT_EARTH_CURVE) {
-            i++;
             Result result;
-            if (i % 100 == 0) {
-                std::cout << " Test instance: " << i << std::endl;
-            }
             int rtn = LFMF(
                 data.h_tx__meter,
                 data.h_rx__meter,
@@ -73,14 +68,9 @@ TEST_F(TestLFMFPolarizationVerticalMax, FlatEarthCurveMethodEquivalentToMatLAB) 
 TEST_F(TestLFMFPolarizationVerticalMax, ResidueSeriesMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
-    int i = 0;
     for (const auto &data : testData) {
         if (data.expectedResult.method == METHOD__RESIDUE_SERIES) {
-            i++;
             Result result;
-            if (i % 100 == 0) {
-                std::cout << " Test instance: " << i << std::endl;
-            }
             int rtn = LFMF(
                 data.h_tx__meter,
                 data.h_rx__meter,

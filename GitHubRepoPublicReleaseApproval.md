@@ -29,4 +29,4 @@ for that branch. The following must login to GitHub and approve that pull reques
 before the pull request can be merged and this repo made public:
 
 * Project Lead: Kozma Jr, William
-* Supervising Division Chief or Release Authority: TODO-TEMPLATE
+* Supervising Division Chief or Release Authority: Chris Anderson
