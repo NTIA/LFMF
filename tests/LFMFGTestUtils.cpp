@@ -76,6 +76,7 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
 
                     if (csvRows[0][i] == "rtn") {
                         d.expectedReturn = std::stoi(csvRows[r][i]);
+                        c++;
                     }
                     if (csvRows[0][i] == "A_btl__db") {
                         d.expectedResult.A_btl__db
@@ -103,7 +104,8 @@ std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &file
                     std::cerr << "Error: " << r << ", " << csvRows[r][i] << std::endl;
                 }
             }
-            if (c == 13) {
+            // Make sure all columns loaded
+            if (c == 14) {
                 testData.push_back(d);
             }
         }
