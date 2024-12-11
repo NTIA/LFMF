@@ -91,18 +91,23 @@ you will find comprehensive documentation of this C++ code
 
 The software is designed to be built into a DLL (or corresponding `.so` or `.dylib`
 library for non-Windows systems). A CMake build configuration and presets are
-provided for cross-platform builds, which can be carried out, for example, by:
+provided for cross-platform builds. Presets provide default sets of compiler flags,
+and additional set default CMake options to control which parts of the project are
+build. Below are a few examples of how this project can be built using provided presets.
 
 ```cmd
 # From this repository's root directory, try one of the following command pairs:
 
-# "Release" configurations compile the library, build docs, and configure tests:
-cmake --preset release
-cmake --build --preset release
+# "Release" configurations compile the library and driver, build docs, and configure tests:
+cmake --preset release64
+cmake --build --preset release64
 
-# "Debug" configurations skip building the docs:
-cmake --preset debug
-cmake --build --preset debug
+# "Debug" configurations skip building the docs, driver, and driver tests:
+cmake --preset debug64
+cmake --build --preset debug64
+
+# Additional options can override presets:
+cmake --preset debug64 -DBUILD_DRIVER=ON
 
 # "DocsOnly" configurations only build the docs:
 cmake --preset docsOnly

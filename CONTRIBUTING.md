@@ -151,7 +151,7 @@ tests/
   <TestFiles>.h              # Any headers used by tests go here as well.
   CMakeLists.txt             # CTest+GTest config. Files containing tests must be included here.
 CMakeLists.txt               # Top-level CMakeLists.txt: project metadata and options
-CMakePresets.json            # Presets for CMake, e.g. "release", "debug", etc.
+CMakePresets.json            # Presets for CMake, e.g. "release64", "debug32", etc.
 ...
 ```
 
@@ -194,21 +194,21 @@ generating the Doxygen documentation site.
 Below are some examples of how CMake can be called to compile this software.
 
 ```bash
-# Configure and compile in release configuration
-cmake --preset release 
-cmake --build --preset release
+# Configure and compile in 64-bit release configuration
+cmake --preset release64
+cmake --build --preset release64
 
-# Use the release configuration but don't build Doxygen docs
-cmake --preset release -DBUILD_DOCS=OFF
-cmake --build --preset release
+# Use the 64-bit release configuration but don't build Doxygen docs
+cmake --preset release64 -DBUILD_DOCS=OFF
+cmake --build --preset release64
 
-# Configure and compile in debug configuration
-cmake --preset debug
-cmake --build --preset debug
+# Configure and compile in 32-bit debug configuration
+cmake --preset debug32
+cmake --build --preset debug32
 
-# Use the release configuration but don't run driver tests
-cmake --preset release -DRUN_DRIVER_TESTS=OFF
-cmake --build --preset release
+# Use the 64-bit release configuration but don't run driver tests
+cmake --preset release64 -DRUN_DRIVER_TESTS=OFF
+cmake --build --preset release64
 ```
 
 ### Supported Platforms and Build Options

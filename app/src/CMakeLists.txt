@@ -21,6 +21,8 @@ target_include_directories(${DRIVER_NAME} PUBLIC "${DRIVER_HEADERS}")
 # Link the library to the executable
 target_link_libraries(${DRIVER_NAME} ${LIB_NAME})
 
+configure_proplib_target(${DRIVER_NAME})
+
 # Add definitions to enable version identification inside the driver
 add_compile_definitions(
     LIBRARY_VERSION="${PROJECT_VERSION}"
@@ -32,5 +34,7 @@ add_compile_definitions(
 # Set some target metadata
 set_target_properties(
     ${DRIVER_NAME} PROPERTIES
-    OUTPUT_NAME ${DRIVER_NAME}-${CMAKE_SYSTEM_NAME}-${DRIVER_VERSION}
+    OUTPUT_NAME ${DRIVER_NAME}-${DRIVER_VERSION}-${CMAKE_SYSTEM_NAME}_
+    DEBUG_POSTFIX ${ARCH_SUFFIX}
+    RELEASE_POSTFIX ${ARCH_SUFFIX}
 )

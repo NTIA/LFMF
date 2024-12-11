@@ -1,8 +1,6 @@
 ############################################
 ## CONFIGURE COMMAND LINE DRIVER TESTS
 ############################################
-set(DRIVER_TEST_NAME "Test${DRIVER_NAME}")
-
 ## TODO-TEMPLATE: Include source AND header files for tests here.
 add_executable(
     ${DRIVER_TEST_NAME}
@@ -31,4 +29,5 @@ add_compile_definitions(DRIVER_LOCATION="$<TARGET_FILE:${DRIVER_NAME}>")
 ###########################################
 include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME} GTest::gtest_main)
+include(GoogleTest)
 gtest_discover_tests(${DRIVER_TEST_NAME})
