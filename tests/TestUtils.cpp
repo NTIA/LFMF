@@ -38,3 +38,9 @@ std::string GetDataDirectory() {
     AppendDirectorySep(dataDir);
     return dataDir;
 }
+
+// TODO-TEMPLATE: Remove this test and write your own in other files.
+// This is included to verify test discovery is functional in the template.
+TEST(TemplateTest, TestTemplate) {
+    EXPECT_EQ(1, 1);
+}
