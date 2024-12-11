@@ -7,8 +7,8 @@
 #    See https://stackoverflow.com/questions/69846931/
 #    This is relevant for specifying unit test data file paths
 #    Automated testing only runs >=3.21 for this reason.
-# >=3.14 required for GoogleTest v1.12.x
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+# >=3.15 required for CMake features used in this project
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 # If on macOS, handle arm64/x86_64 architectures (must be done before project())
 if (APPLE)
