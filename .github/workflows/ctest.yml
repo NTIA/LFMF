@@ -48,10 +48,20 @@ jobs:
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 
-    - name: "CMake: Build and Test"
+    - name: "CMake: Build and Test (64-bit)"
+      if: matrix.architecture != 'x86'
       uses: lukka/run-cmake@v10
       with:
-        configurePreset: release
+        configurePreset: release64
         configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
-        buildPreset: release
-        testPreset: release
+        buildPreset: release64
+        testPreset: default
+
+    - name: "CMake: Build and Test (32-bit)"
+      if: matrix.architecture == 'x86'
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: release32
+        configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
+        buildPreset: release32
+        testPreset: default
