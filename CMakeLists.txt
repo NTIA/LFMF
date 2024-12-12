@@ -85,11 +85,12 @@ option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
 ###########################################
 ## SETUP
 ###########################################
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+
 # Create an interface to set common compiler flags
 # add_library(proplib_compiler_flags INTERFACE)
-
-# Require at least C++11
-# target_compile_features(proplib_compiler_flags INTERFACE cxx_std_11)
 
 # add compiler warning flags just when building this project via
 # the BUILD_INTERFACE generator expression
@@ -102,19 +103,19 @@ function(configure_proplib_target proplib_target)
         # For GCC-like compilers in any configuration
         "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
         # For GCC-like compilers in Release configurations
-        "$<${gcc_like_cxx}:$<$<CONFIG:Release>:-O3;-DNDEBUG>>"
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:-O3;-DNDEBUG>>>"
         # For GCC-like compilers in Debug configurations
-        "$<${gcc_like_cxx}:$<$<CONFIG:Debug>:-g;-O0>>"
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:-g;-O0>>>"
         # For GCC-like compilers in 32-bit configurations
-        "$<${gcc_like_cxx}:$<$<BOOL:${BUILD_32BIT}>:-m32>>"
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<BOOL:${BUILD_32BIT}>:-m32>>>"
         # For MSVC compiler in any configuration
         "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
         # For MSVC compiler in Release configurations
-        "$<${msvc_cxx}:$<$<CONFIG:Release>:/O2;/DNDEBUG>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/O2;/DNDEBUG>>>"
         # For MSVC compiler in Debug configurations
-        "$<${msvc_cxx}:$<$<CONFIG:Debug>:/Od;/Zi>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:/Od;/Zi>>>"
         # For MSVC compiler in 32-bit configurations
-        "$<${msvc_cxx}:$<$<BOOL:${BUILD_32BIT}>:/m32>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<BOOL:${BUILD_32BIT}>:/m32>>>"
     )
 endfunction()
 # target_compile_options(proplib_compiler_flags INTERFACE
