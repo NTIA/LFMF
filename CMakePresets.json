@@ -150,5 +150,54 @@
         }
     ],
     "testPresets": [
+        {
+            "name": "proplib-test-base",
+            "hidden": true,
+            "description": "Base test preset for ITS PropLib libraries",
+            "output": {
+                "shortProgress": true,
+                "outputOnFailure": true
+            }
+        },
+        {
+            "name": "proplib-test-debug-base",
+            "hidden": true,
+            "inherits": "proplib-test-base",
+            "description": "Base 'Debug' test preset for ITS PropLib libraries"
+        },
+        {
+            "name": "proplib-test-release-base",
+            "hidden": true,
+            "inherits": "proplib-test-base",
+            "description": "Base 'Release' test preset for ITS PropLib libraries"
+        },
+        {
+            "name": "debug64",
+            "inherits": "proplib-test-debug-base",
+            "displayName": "Test Debug, 64-bit",
+            "description": "Build library and tests with debug options, skip building docs",
+            "configurePreset": "debug64"
+        },
+        {
+            "name": "release64",
+            "inherits": "proplib-test-release-base",
+            "displayName": "Test Release, 64-Bit",
+            "description": "Build library and tests with release options, and build docs",
+            "configurePreset": "release64"
+        },
+        {
+            "name": "debug32",
+            "inherits": "proplib-test-debug-base",
+            "displayName": "Test Debug, 32-Bit",
+            "description": "Build library and tests with debug options, skip building docs",
+            "configurePreset": "debug32"
+        },
+        {
+            "name": "release32",
+            "inherits": "proplib-test-release-base",
+            "displayName": "Test Release, 32-Bit",
+            "description": "Build library and tests with release options, and build docs",
+            "configurePreset": "release32"
+        }
     ]
 }

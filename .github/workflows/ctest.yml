@@ -55,7 +55,7 @@ jobs:
         configurePreset: release64
         configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
         buildPreset: release64
-        testPreset: default
+        testPreset: release64
 
     - name: "CMake: Build and Test (32-bit)"
       if: matrix.architecture == 'x86'
@@ -64,4 +64,4 @@ jobs:
         configurePreset: release32
         configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
         buildPreset: release32
-        testPreset: default
+        testPreset: release32
