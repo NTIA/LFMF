@@ -66,7 +66,7 @@ jobs:
           overwrite: true
       
       - name: Check macOS file type
-        if: runner.os != 'macOS'
+        if: runner.os == 'macOS'
         run: file ${{ github.workspace }}/bin/*.dylib
         
       - name: Upload release artifact (Windows)
