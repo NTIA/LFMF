@@ -15,20 +15,15 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest
-          - windows-latest
-          - windows-2019               # Used for Windows 32-bit builds
-        architecture: [arm64, x64]
-        cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
-        exclude:                       # Only use x64 strategies for Linux and Windows
+        include:
           - os: windows-latest
-            architecture: arm64
-          - os: windows-2019
+            architecture: x64
+          - os: windows-latest
+            architecture: x86
+          - os: macos-latest
             architecture: arm64
           - os: ubuntu-latest
-            architecture: arm64
+            architecture: x64
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -36,12 +31,21 @@ jobs:
       - name: Install CMake # (latest stable version)
         uses: lukka/get-cmake@latest
   
-      - name: "CMake: Build"
+      - name: "CMake: Build (64-bit)"
+        if: matrix.architecture != 'x86'
         uses: lukka/run-cmake@v10
         with:
-          configurePreset: release
+          configurePreset: release64
           configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF']"
-          buildPreset: release
+          buildPreset: release64
+
+      - name: "CMake: Build (32-bit)"
+        if: matrix.architecture == 'x86'
+        uses: lukka/run-cmake@v10
+        with:
+          configurePreset: release32
+          configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF']"
+          buildPreset: release32
     
       - name: Upload release artifact (macOS or Linux)
         if: runner.os != 'Windows'
