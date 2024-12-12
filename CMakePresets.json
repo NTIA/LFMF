@@ -12,10 +12,8 @@
             "description": "Base configuration preset for ITS PropLib libraries",
             "binaryDir": "${sourceDir}/build/${presetName}",
             "cacheVariables": {
-                "CMAKE_BUILD_RPATH_USE_ORIGIN": "ON",
                 "DOCS_ONLY": "OFF",
                 "RUN_TESTS": "ON",
-                "BUILD_SHARED_LIBS": "ON",
                 "BUILD_32BIT": "OFF"
             }
         },
@@ -25,11 +23,15 @@
             "inherits": "proplib-config-base",
             "description": "Base 'Release' configuration preset for ITS PropLib libraries",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
-                "CMAKE_CONFIGURATION_TYPES": "Release",
+                "CMAKE_BUILD_RPATH_USE_ORIGIN": "ON",
+                "BUILD_SHARED_LIBS": "ON",
                 "BUILD_DOCS": "ON",
                 "BUILD_DRIVER": "ON",
                 "RUN_DRIVER_TESTS": "ON"
+            },
+            "environment": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CONFIGURATION_TYPES": "Release"
             }
         },
         {
@@ -38,11 +40,15 @@
             "inherits": "proplib-config-base",
             "description": "Base 'Debug' configuration preset for ITS PropLib libraries",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug",
-                "CMAKE_CONFIGURATION_TYPES": "Debug",
+                "CMAKE_BUILD_RPATH_USE_ORIGIN": "ON",
+                "BUILD_SHARED_LIBS": "ON",
                 "BUILD_DOCS": "OFF",
                 "BUILD_DRIVER": "OFF",
                 "RUN_DRIVER_TESTS": "OFF"
+            },
+            "environment": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CONFIGURATION_TYPES": "Debug"
             }
         },
         {
