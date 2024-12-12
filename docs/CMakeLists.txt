@@ -57,7 +57,7 @@ set(DOXYGEN_EXTRACT_PRIVATE "YES")
 set(DOXYGEN_INTERNAL_DOCS "YES")
 
 doxygen_add_docs(
-    "${CMAKE_PROJECT_NAME}-Docs"
+    "${LIB_NAME}Docs"
     "${PROJECT_SOURCE_DIR}/app/src"
     "${PROJECT_SOURCE_DIR}/app/include"
     "${PROJECT_SOURCE_DIR}/src"

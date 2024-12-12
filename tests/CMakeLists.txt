@@ -1,7 +1,7 @@
 ############################################
 ## CONFIGURE UNIT TESTS
 ############################################
-set(TEST_NAME "Test${LIB_NAME}")
+set(TEST_NAME "${LIB_NAME}Test")
 proplib_message("Configuring library tests ${TEST_NAME}")
 
 ## TODO-TEMPLATE: Include all source AND header files for tests here.
