@@ -64,12 +64,16 @@ jobs:
             ${{ github.workspace }}/bin/*Driver-Linux-*
           if-no-files-found: error
           overwrite: true
+      
+      - name: Check macOS file type
+        if: runner.os != 'macOS'
+        run: file ${{ github.workspace }}/bin/*.dylib
         
       - name: Upload release artifact (Windows)
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: release-${{ matrix.os }}
+          name: release-${{ matrix.os }}-${{ matrix.architecture }}
           path: |
             ${{ github.workspace }}\bin\Release\*.dll
             ${{ github.workspace }}\bin\Release\*Driver-Windows-*.exe
