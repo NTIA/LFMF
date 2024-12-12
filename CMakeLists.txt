@@ -11,6 +11,7 @@
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 # If on macOS, handle arm64/x86_64 architectures (must be done before project())
+# For other OS, identify the architecture and save it to the ARCH_SUFFIX variable.
 if (APPLE)
     # Get the current platform's native architecture
     execute_process(
@@ -19,7 +20,6 @@ if (APPLE)
         OUTPUT_VARIABLE MACOS_NATIVE_ARCHITECTURE
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-
     # If running on Apple silicon, try a universal build. Otherwise, a native build.
     if ((CMAKE_GENERATOR STREQUAL "Xcode") AND (MACOS_NATIVE_ARCHITECTURE STREQUAL "arm64"))
         set(CMAKE_OSX_ARCHITECTURE "arm64;x86_64" CACHE STRING "")
