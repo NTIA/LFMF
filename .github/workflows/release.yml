@@ -5,25 +5,30 @@ name: Create Release Artifacts
 on:
   push:
     tags: ['v[0-9]+.*']
+  workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
   create_release_artifacts:
-    name: Create release artifacts
+    name: 'Create Release: ${{ matrix.relName}}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         include:
           - os: windows-latest
             architecture: x64
+            relName: Windows x64
           - os: windows-latest
             architecture: x86
+            relName: Windows x86
           - os: macos-latest
             architecture: arm64
+            relName: macOS Universal
           - os: ubuntu-latest
             architecture: x64
+            relName: Linux x64
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
