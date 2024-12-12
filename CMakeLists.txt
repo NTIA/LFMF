@@ -85,20 +85,17 @@ option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
 ###########################################
 ## SETUP
 ###########################################
+# C++11 and some extensions (e.g., for `auto`) are the minimum required
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
-# Create an interface to set common compiler flags
-# add_library(proplib_compiler_flags INTERFACE)
-
-# add compiler warning flags just when building this project via
-# the BUILD_INTERFACE generator expression
+# Get 0/1 values indicating compiler type
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 
+# Define a function to set compile options of a provided target.
 function(configure_proplib_target proplib_target)
-    target_compile_features(${proplib_target} INTERFACE cxx_std_11) # TODO interface here? and below?
     target_compile_options(${proplib_target} PRIVATE
         # For GCC-like compilers in any configuration
         "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
@@ -118,25 +115,6 @@ function(configure_proplib_target proplib_target)
         "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<BOOL:${BUILD_32BIT}>:/m32>>>"
     )
 endfunction()
-# target_compile_options(proplib_compiler_flags INTERFACE
-#     # For GCC-like compilers in any configuration
-#     "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
-#     # For GCC-like compilers in Release configurations
-#     "$<${gcc_like_cxx}:$<$<CONFIG:Release>:-O3;-DNDEBUG>>"
-#     # For GCC-like compilers in Debug configurations
-#     "$<${gcc_like_cxx}:$<$<CONFIG:Debug>:-g;-O0>>"
-#     # For MSVC compiler in any configuration
-#     "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
-#     # For MSVC compiler in Release configurations
-#     "$<${msvc_cxx}:$<$<CONFIG:Release>:/O2;/DNDEBUG>>"
-#     # For MSVC compiler in Debug configurations
-#     "$<${msvc_cxx}:$<$<CONFIG:Debug>:/Od;/Zi>>"
-# )
-
-# Force 32-bit compile when configured
-# if (CMAKE_GENERATOR_PLATFORM STREQUAL "Win32")
-#     set_target_properties(proplib_compiler_flags PROPERTIES COMPILE_OPTIONS "-m32" LINK_FLAGS "-m32")
-# endif ()
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
