@@ -30,6 +30,14 @@ if (APPLE)
 elseif (WIN32)
     if (CMAKE_GENERATOR_PLATFORM STREQUAL "Win32")
         set(ARCH_SUFFIX "x86")
+        if (NOT BUILD_32BIT)
+            message(WARNING
+            "Generator platform is Win32 but BUILD_32BIT was not set ON.\n"
+            "BUILD_32BIT is being turned on based on the generator platform,"
+            "possibly overwriting the preset or specified setting."
+            )
+            set(BUILD_32BIT ON)
+        endif ()
     else ()
         set(ARCH_SUFFIX "x64")
     endif ()
@@ -97,16 +105,17 @@ function(configure_proplib_target proplib_target)
         "$<${gcc_like_cxx}:$<$<CONFIG:Release>:-O3;-DNDEBUG>>"
         # For GCC-like compilers in Debug configurations
         "$<${gcc_like_cxx}:$<$<CONFIG:Debug>:-g;-O0>>"
+        # For GCC-like compilers in 32-bit configurations
+        "$<${gcc_like_cxx}:$<$<BOOL:${BUILD_32BIT}>:-m32>>"
         # For MSVC compiler in any configuration
         "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
         # For MSVC compiler in Release configurations
         "$<${msvc_cxx}:$<$<CONFIG:Release>:/O2;/DNDEBUG>>"
         # For MSVC compiler in Debug configurations
         "$<${msvc_cxx}:$<$<CONFIG:Debug>:/Od;/Zi>>"
+        # For MSVC compiler in 32-bit configurations
+        "$<${msvc_cxx}:$<$<BOOL:${BUILD_32BIT}>:/m32>>"
     )
-    if (CMAKE_GENERATOR_PLATFORM STREQUAL "Win32")
-        set_target_properties(${proplib_target} PROPERTIES COMPILE_OPTIONS "-m32" LINK_FLAGS "-m32")
-    endif ()
 endfunction()
 # target_compile_options(proplib_compiler_flags INTERFACE
 #     # For GCC-like compilers in any configuration
