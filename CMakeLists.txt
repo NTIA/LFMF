@@ -40,12 +40,14 @@ elseif (UNIX) # Only non-Apple Linux evaluates as True here
 endif ()
 
 # Set configuration type (different for single- or multi-config generators)
-if (${PROPLIB_CONFIG_TYPE} STREQUAL "Release")
-    set(CMAKE_CONFIGURATION_TYPES "Release")
-    set(CMAKE_BUILD_TYPE "Release")
-elseif (${PROPLIB_CONFIG_TYPE} STREQUAL "Debug")
-    set(CMAKE_CONFIGURATION_TYPES "Debug")
-    set(CMAKE_BUILD_TYPE "Debug")
+if (DEFINED PROPLIB_CONFIG_TYPE)
+    if (${PROPLIB_CONFIG_TYPE} STREQUAL "Release")
+        set(CMAKE_CONFIGURATION_TYPES "Release")
+        set(CMAKE_BUILD_TYPE "Release")
+    elseif (${PROPLIB_CONFIG_TYPE} STREQUAL "Debug")
+        set(CMAKE_CONFIGURATION_TYPES "Debug")
+        set(CMAKE_BUILD_TYPE "Debug")
+    endif ()
 endif ()
 
 # Convenience function for printing visible status messages.
