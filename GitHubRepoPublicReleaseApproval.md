@@ -18,14 +18,14 @@ mark next to each attests that the criterion has been met.
     * [ ] The repository includes the appropriate `LICENSE.md` file
 2. [ ] Any test data necessary for the code and its unit tests to function is included in this
 GitHub repository, either directly or as a linked Git submodule.
-3. [ ] The README.md file has passed editorial review from the ITS Publications Office.
+3. [ ] The README.md file has passed editorial review by the ITS Publications Office.
 4. [ ] The project complies with the ITS Code Style Guide or an appropriate style
 guide as agreed to by the sponsor, project lead, or Supervising Division Chief.
 5. [ ] Approved disclaimer and licensing language has been included.
 
 In order to complete this approval, please create a new branch, upload and commit
-your version of this Markdown document to that branch, then create a pull request
-for that branch. The following must login to GitHub and approve that pull request
+your version of this Markdown document to that branch, and then create a pull request
+for that branch. The following must log in to GitHub and approve that pull request
 before the pull request can be merged and this repo made public:
 
 * Project Lead: TODO-TEMPLATE
