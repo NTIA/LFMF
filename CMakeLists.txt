@@ -21,11 +21,11 @@ if (APPLE)
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
     # If running on Apple silicon, try a universal build. Otherwise, a native build.
-    if ((CMAKE_GENERATOR STREQUAL "Xcode") AND (MACOS_NATIVE_ARCHITECTURE STREQUAL "arm64"))
+    if ((${CMAKE_GENERATOR} STREQUAL "Xcode") AND (${MACOS_NATIVE_ARCHITECTURE} STREQUAL "arm64"))
         set(CMAKE_OSX_ARCHITECTURE "arm64;x86_64" CACHE STRING "")
         set(ARCH_SUFFIX "universal")
     else ()
-        set(ARCH_SUFFIX MACOS_NATIVE_ARCHITECTURE)
+        set(ARCH_SUFFIX ${MACOS_NATIVE_ARCHITECTURE})
     endif ()
 elseif (WIN32)
     if (BUILD_32BIT)
