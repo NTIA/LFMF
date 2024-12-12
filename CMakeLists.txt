@@ -22,7 +22,7 @@ if (APPLE)
     )
     # If running on Apple silicon, try a universal build. Otherwise, a native build.
     if (${MACOS_NATIVE_ARCHITECTURE} STREQUAL "arm64")
-        set(CMAKE_OSX_ARCHITECTURE "arm64;x86_64" CACHE STRING "")
+        set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "")
         set(ARCH_SUFFIX "universal")
     else ()
         set(ARCH_SUFFIX ${MACOS_NATIVE_ARCHITECTURE})
@@ -119,6 +119,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set
 
 proplib_message(
     "Initial Configuration Complete"
+    "Generator platform: ${CMAKE_GENERATOR_PLATFORM}"
+    "C++ Compiler: ${CMAKE_CXX_COMPILER}"
+    "CMake Build Type: ${CMAKE_BUILD_TYPE}"
     "Target architecture: ${ARCH_SUFFIX}"
     "CMake Options:"
     "  BUILD_32BIT = ${BUILD_32BIT}"
