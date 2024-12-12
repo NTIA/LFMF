@@ -90,7 +90,7 @@ set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
 function(configure_proplib_target proplib_target)
     target_compile_options(${proplib_target} PRIVATE
         # For GCC-like compilers in any configuration
-        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused;-static>>"
         # For GCC-like compilers in Release configurations
         "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:-O3;-DNDEBUG>>>"
         # For GCC-like compilers in Debug configurations
@@ -100,9 +100,9 @@ function(configure_proplib_target proplib_target)
         # For MSVC compiler in any configuration
         "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
         # For MSVC compiler in Release configurations
-        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/O2;/DNDEBUG>>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/O2;/DNDEBUG;/MT>>>"
         # For MSVC compiler in Debug configurations
-        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:/Od;/Zi>>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:/Od;/Zi;/MTd>>>"
     )
 endfunction()
 
