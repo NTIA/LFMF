@@ -25,7 +25,8 @@
             "inherits": "proplib-config-base",
             "description": "Base 'Release' configuration preset for ITS PropLib libraries",
             "cacheVariables": {
-                "PROPLIB_CONFIG_TYPE": "Release",
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_CONFIGURATION_TYPES": "Release",
                 "BUILD_DOCS": "ON",
                 "BUILD_DRIVER": "ON",
                 "RUN_DRIVER_TESTS": "ON"
@@ -37,7 +38,8 @@
             "inherits": "proplib-config-base",
             "description": "Base 'Debug' configuration preset for ITS PropLib libraries",
             "cacheVariables": {
-                "PROPLIB_CONFIG_TYPE": "Debug",
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_CONFIGURATION_TYPES": "Debug",
                 "BUILD_DOCS": "OFF",
                 "BUILD_DRIVER": "OFF",
                 "RUN_DRIVER_TESTS": "OFF"
