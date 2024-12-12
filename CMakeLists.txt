@@ -29,12 +29,23 @@ if (APPLE)
     endif ()
 elseif (WIN32)
     if (BUILD_32BIT)
+        set(CMAKE_GENERATOR_PLATFORM "Win32")
         set(ARCH_SUFFIX "x86")
     else ()
+        set(CMAKE_GENERATOR_PLATFORM "x64")
         set(ARCH_SUFFIX "x64")
     endif ()
 elseif (UNIX) # Only non-Apple Linux evaluates as True here
     set(ARCH_SUFFIX "x86_64")
+endif ()
+
+# Set configuration type (different for single- or multi-config generators)
+if (${PROPLIB_CONFIG_TYPE} STREQUAL "Release")
+    set(CMAKE_CONFIGURATION_TYPES "Release")
+    set(CMAKE_BUILD_TYPE "Release")
+elseif (${PROPLIB_CONFIG_TYPE} STREQUAL "Debug")
+    set(CMAKE_CONFIGURATION_TYPES "Debug")
+    set(CMAKE_BUILD_TYPE "Debug")
 endif ()
 
 # Convenience function for printing visible status messages.
@@ -103,8 +114,6 @@ function(configure_proplib_target proplib_target)
         "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/O2;/DNDEBUG>>>"
         # For MSVC compiler in Debug configurations
         "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:/Od;/Zi>>>"
-        # For MSVC compiler in 32-bit configurations
-        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<BOOL:${BUILD_32BIT}>:/m32>>>"
     )
 endfunction()
 
