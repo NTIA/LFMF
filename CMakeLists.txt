@@ -28,16 +28,8 @@ if (APPLE)
         set(ARCH_SUFFIX MACOS_NATIVE_ARCHITECTURE)
     endif ()
 elseif (WIN32)
-    if (CMAKE_GENERATOR_PLATFORM STREQUAL "Win32")
+    if (BUILD_32BIT)
         set(ARCH_SUFFIX "x86")
-        if (NOT BUILD_32BIT)
-            message(WARNING
-            "Generator platform is Win32 but BUILD_32BIT was not set ON.\n"
-            "BUILD_32BIT is being turned on based on the generator platform,"
-            "possibly overwriting the preset or specified setting."
-            )
-            set(BUILD_32BIT ON)
-        endif ()
     else ()
         set(ARCH_SUFFIX "x64")
     endif ()

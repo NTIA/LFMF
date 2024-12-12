@@ -63,7 +63,6 @@
             "description": "Build 32-bit library and tests with debug options. Skip building driver, driver tests, and docs.",
             "inherits": "proplib-config-debug-base",
             "cacheVariables": {
-                "CMAKE_GENERATOR_PLATFORM": "Win32",
                 "BUILD_32BIT": "ON"
             }
         },
@@ -73,7 +72,6 @@
             "description": "Build 32-bit library, driver, docs and tests with release options.",
             "inherits": "proplib-config-release-base",
             "cacheVariables": {
-                "CMAKE_GENERATOR_PLATFORM": "Win32",
                 "BUILD_32BIT": "ON"
             }
         },
