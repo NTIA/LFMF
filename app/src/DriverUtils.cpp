@@ -39,7 +39,8 @@ std::string GetDatetimeString() {
     }
 #endif
     char mbstr[100];
-    if (std::strftime(mbstr, sizeof(mbstr), "%c", &localTime) == 0) {
+    if (std::strftime(mbstr, sizeof(mbstr), "%a %b %d %H:%M:%S %Y", &localTime)
+        == 0) {
         return "Could not format datetime string";
     }
     return std::string(mbstr);
