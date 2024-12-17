@@ -27,7 +27,6 @@ authors:
     website: 'https://its.ntia.gov'
 repository-code: 'https://github.com/NTIA/LFMF'
 url: 'https://ntia.github.io/propagation-library-wiki/models/LFMF'
-repository: 'https://github.com/NTIA/LFMF'
 keywords:
   - its
   - propagation
