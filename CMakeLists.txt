@@ -22,7 +22,7 @@ if (APPLE)
     )
     # If running on Apple silicon, try a universal build. Otherwise, a native build.
     if (${MACOS_NATIVE_ARCHITECTURE} STREQUAL "arm64")
-        set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "")
+        set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
         set(ARCH_SUFFIX "universal")
     else ()
         set(ARCH_SUFFIX ${MACOS_NATIVE_ARCHITECTURE})
