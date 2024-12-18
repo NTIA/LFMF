@@ -52,7 +52,7 @@ jobs:
           configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF']"
           buildPreset: release32
     
-      - name: Upload release artifact (macOS or Linux)
+      - name: Upload release artifacts (binaries)
         if: runner.os != 'Windows'
         uses: actions/upload-artifact@v4
         with:
@@ -62,20 +62,11 @@ jobs:
             ${{ github.workspace }}/bin/*.so
             ${{ github.workspace }}/bin/*Driver-Darwin-*
             ${{ github.workspace }}/bin/*Driver-Linux-*
-          if-no-files-found: error
-          overwrite: true
-      
-      - name: Upload release artifact (Windows)
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: "${{ github.repository }} Release: ${{ runner.os }} ${{ matrix.architecture }}"
-          path: |
             ${{ github.workspace }}\bin\Release\*.dll
             ${{ github.workspace }}\bin\Release\*Driver-Windows-*.exe
           if-no-files-found: error
           overwrite: true
-
+      
       - name: Upload release artifact (C++ Header)  # TODO-TEMPLATE: Specify the correct header below
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
