@@ -80,7 +80,8 @@ examples for all supported languages.
 
 An executable is also provided which can be used to run the functions provided
 by this library using plain text input and output files. Installation and usage
-details for the command-line driver are provided in [its own README](./app/README.md).
+details for the command-line driver are also provided on
+[the wiki](https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/driver).
 
 If you're a developer and would like to contribute to or extend this repository,
 you will find comprehensive documentation of this C++ code
