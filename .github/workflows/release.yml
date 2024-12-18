@@ -56,7 +56,7 @@ jobs:
         if: runner.os != 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ github.repository }} Release: ${{ runner.os }} ${{ matrix.architecture }}"
+          name: "${{ github.event.repository.name }}-release-${{ runner.os }}-${{ matrix.architecture }}"
           path: |
             ${{ github.workspace }}/bin/*.dylib
             ${{ github.workspace }}/bin/*.so
@@ -71,7 +71,7 @@ jobs:
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ github.repository }} Release: C++ Library Header"
+          name: "${{ github.event.repository.name }}-release-cpp-header"
           path: ${{ github.workspace }}/include/PropLibTemplate.h
           if-no-files-found: error
           overwrite: true
