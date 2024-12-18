@@ -34,7 +34,7 @@ add_compile_definitions(
 # Set some target metadata
 set_target_properties(
     ${DRIVER_NAME} PROPERTIES
-    OUTPUT_NAME ${DRIVER_NAME}-${DRIVER_VERSION}-${CMAKE_SYSTEM_NAME}_
+    OUTPUT_NAME ${DRIVER_NAME}-${DRIVER_VERSION}-${CMAKE_SYSTEM_NAME}-
     DEBUG_POSTFIX ${ARCH_SUFFIX}
     RELEASE_POSTFIX ${ARCH_SUFFIX}
 )

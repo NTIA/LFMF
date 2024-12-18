@@ -46,7 +46,7 @@ endif ()
 # Set some target metadata
 set_target_properties(
     ${LIB_NAME} PROPERTIES
-    OUTPUT_NAME ${LIB_NAME}-${PROJECT_VERSION}_
+    OUTPUT_NAME ${LIB_NAME}-${PROJECT_VERSION}-
     VERSION ${PROJECT_VERSION}
     DEBUG_POSTFIX ${ARCH_SUFFIX}
     RELEASE_POSTFIX ${ARCH_SUFFIX}
