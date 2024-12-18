@@ -65,10 +65,6 @@ jobs:
           if-no-files-found: error
           overwrite: true
       
-      - name: Check macOS file type
-        if: runner.os == 'macOS'
-        run: file ${{ github.workspace }}/bin/*.dylib
-        
       - name: Upload release artifact (Windows)
         if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
