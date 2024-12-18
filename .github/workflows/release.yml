@@ -26,7 +26,7 @@ jobs:
           - os: macos-latest
             architecture: arm64
             relName: macOS Universal
-          - os: ubuntu-24.04
+          - os: ubuntu-latest
             architecture: x64
             relName: Linux x64
     steps:
@@ -57,7 +57,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: "${{ github.event.repository.name }}-release-${{ runner.os }}"
-          path: ${{ github.workspace }}/bin/*
+          path: |
+            ${{ github.workspace }}/bin/*-universal.dylib
+            ${{ github.workspace }}/bin/*-x86_64.so
+            ${{ github.workspace }}/bin/*Driver*-*-Darwin-universal
+            ${{ github.workspace }}/bin/*Driver*-*-Linux-x86-64
           if-no-files-found: error
           overwrite: true
 
