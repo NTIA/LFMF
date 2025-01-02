@@ -108,7 +108,7 @@ function(configure_proplib_target proplib_target)
         # For GCC-like compilers in 32-bit configurations
         "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<BOOL:${BUILD_32BIT}>:-m32>>>"
         # For MSVC compiler in any configuration
-        "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gd>>"
         # For MSVC compiler in Release configurations
         "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/O2;/DNDEBUG;/MT>>>"
         # For MSVC compiler in Debug configurations
