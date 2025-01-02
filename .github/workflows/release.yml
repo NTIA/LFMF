@@ -49,7 +49,7 @@ jobs:
         uses: lukka/run-cmake@v10
         with:
           configurePreset: release32
-          configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF']"
+          configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF', '-A', 'Win32']"
           buildPreset: release32
     
       - name: Upload release artifacts (binaries)
