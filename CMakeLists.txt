@@ -29,6 +29,7 @@ if (APPLE)
     endif ()
 elseif (WIN32)
     if (BUILD_32BIT)
+        set(ENV{CMAKE_GENERATOR_PLATFORM} "Win32")
         set(ARCH_SUFFIX "x86")
     else ()
         set(ARCH_SUFFIX "x64")
@@ -119,9 +120,9 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set
 
 proplib_message(
     "Initial Configuration Complete"
-    "Generator platform: ${CMAKE_GENERATOR_PLATFORM}"
+    "Generator: ${CMAKE_GENERATOR}"
+    "Generator platform: $ENV{CMAKE_GENERATOR_PLATFORM}"
     "C++ Compiler: ${CMAKE_CXX_COMPILER}"
-    "CMake Build Type: ${CMAKE_BUILD_TYPE}"
     "Target architecture: ${ARCH_SUFFIX}"
     "CMake Options:"
     "  BUILD_32BIT = ${BUILD_32BIT}"
