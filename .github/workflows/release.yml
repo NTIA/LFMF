@@ -61,7 +61,7 @@ jobs:
             ${{ github.workspace }}/bin/*-universal.dylib
             ${{ github.workspace }}/bin/*-x86_64.so
             ${{ github.workspace }}/bin/*Driver*-*-Darwin-universal
-            ${{ github.workspace }}/bin/*Driver*-*-Linux-x86-64
+            ${{ github.workspace }}/bin/*Driver*-*-Linux-x86_64
           if-no-files-found: error
           overwrite: true
 
