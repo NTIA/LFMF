@@ -2,10 +2,12 @@ name: Validate CITATION.cff
 
 on:
   push:
+    branches: ["main"]
     paths:
       - 'CITATION.cff'
       - '.github/workflows/cff-validator.yml'
   pull_request:
+    branches: ["main", "dev"]
     paths:
       - 'CITATION.cff'
       - '.github/workflows/cff-validator.yml'
