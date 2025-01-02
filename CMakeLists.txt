@@ -121,7 +121,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set
 proplib_message(
     "Initial Configuration Complete"
     "Generator: ${CMAKE_GENERATOR}"
-    "Generator platform: $ENV{CMAKE_GENERATOR_PLATFORM}"
+    "Generator platform (for multi-config generators only): $ENV{CMAKE_GENERATOR_PLATFORM}"
     "C++ Compiler: ${CMAKE_CXX_COMPILER}"
     "Target architecture: ${ARCH_SUFFIX}"
     "CMake Options:"
