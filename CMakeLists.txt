@@ -10,6 +10,16 @@
 # >=3.15 required for CMake features used in this project
 cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
+# Warn if '-A Win32' is provided but BUILD_32BIT has not been set. This may
+# indicate accidental use of a 64-bit CMake preset while intending to build for 32-bit.
+if (DEFINED ENV{CMAKE_GENERATOR_PLATFORM})
+    if ($ENV{CMAKE_GENERATOR_PLATFORM} STREQUAL "Win32")
+        if (NOT BUILD_32BIT)
+            message(WARNING "Generator platform is Win32 but 32-bit preset is not being used.")
+        endif ()
+    endif ()
+endif ()
+
 # If on macOS, handle arm64/x86_64 architectures (must be done before project())
 # For other OS, identify the architecture and save it to the ARCH_SUFFIX variable.
 if (APPLE)
@@ -29,7 +39,6 @@ if (APPLE)
     endif ()
 elseif (WIN32)
     if (BUILD_32BIT)
-        set(ENV{CMAKE_GENERATOR_PLATFORM} "Win32")
         set(ARCH_SUFFIX "x86")
     else ()
         set(ARCH_SUFFIX "x64")
