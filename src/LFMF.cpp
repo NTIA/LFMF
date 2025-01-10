@@ -2,7 +2,7 @@
  * Implements the model from ITS.Propagation.LFMF.
  */
 
-#include "ITS.Propagation.LFMF/LFMF.h"
+#include "LFMF.h"
 
 namespace ITS {
 namespace Propagation {

@@ -2,7 +2,7 @@
  * Maps status messages to library return codes
  */
 
-#include "ITS.Propagation.LFMF/LFMF.h"
+#include "LFMF.h"
 
 #ifdef _WIN32
     // Ensure strcpy_s is available on Windows

@@ -16,11 +16,10 @@
 #include <vector>           // for std::vector
 
 #include "CommaSeparatedIterator.h"
-#include "DriverConfig.h"
 #include "ReturnCodes.h"
 
 
-#include "ITS.Propagation.LFMF/LFMF.h"
+#include "LFMF.h"
 #include "Structs.h"
 /////////////////////////////
 // Macros

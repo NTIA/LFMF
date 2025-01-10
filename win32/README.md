@@ -23,7 +23,7 @@ Outputs to LFMF are contained within a defined `Result` structure.
 | Variable      | Type   | Units | Description |
 |---------------|--------|-------|-------------|
 | `A_btl__db`   | double | dB    | Basic transmission loss |
-| `E_dBuVm`     | double | dB(uV/m) | Electrice field strength |
+| `E_dBuVm`     | double | dB(uV/m) | Electric field strength |
 | `P_rx__dbm`   | double | dBm   | Received power |
 | `method`      | int    |       | Solution method <ul><li>0 = Flat earth with curve correction</li><li>1 = Residue series</li></ul> |
 

@@ -7,7 +7,7 @@
 
 #include "gtest/gtest.h"
 
-#include "ITS.Propagation.LFMF/LFMF.h"
+#include "LFMF.h"
 
 using namespace ITS::Propagation::LFMF;
 

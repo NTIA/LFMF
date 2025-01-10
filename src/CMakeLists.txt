@@ -8,9 +8,6 @@ message(STATUS "STATUS: Start building the libaray: " ${LIB_NAME})
 # Include source AND header files here so IDEs can find them
 set(LIB_HEADERS "${PROJECT_SOURCE_DIR}/include")
 
-# configure a header file to pass the version number only
-configure_file(${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h.in ${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h)
-
 set(LIB_FILES
     Airy.cpp
     FlatEarthCurveCorrection.cpp
@@ -20,8 +17,7 @@ set(LIB_FILES
     ValidateInputs.cpp
     WiRoot.cpp
     wofz.cpp
-    "${LIB_HEADERS}/${PROJECT_NAME}/LFMF.h"
-    "${LIB_HEADERS}/${PROJECT_NAME}/${LIB_NAME}Config.h"
+    "${LIB_HEADERS}/LFMF.h"
 )
 
 # By default, create shared library

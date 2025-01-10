@@ -7,8 +7,6 @@
 #include <complex>
 #include <cfloat>           ///< for DBL_EPSILON
 
-#include "LFMFConfig.h"
-
 using std::complex;
 using std::abs;
 

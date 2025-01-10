@@ -2,9 +2,6 @@
 ## BUILD THE DRIVER
 ###########################################
 
-# configure a header file to pass the version number only
-configure_file(${DRIVER_HEADERS}/DriverConfig.h.in ${DRIVER_HEADERS}/DriverConfig.h)
-
 add_executable(
     ${DRIVER_NAME}
     "CommaSeparatedIterator.cpp"
@@ -14,7 +11,6 @@ add_executable(
     "LFMFModel.cpp"
     "${DRIVER_HEADERS}/CommaSeparatedIterator.h"
     "${DRIVER_HEADERS}/Driver.h"
-    "${DRIVER_HEADERS}/DriverConfig.h"
     "${DRIVER_HEADERS}/ReturnCodes.h"
     "${DRIVER_HEADERS}/Structs.h"
 )
