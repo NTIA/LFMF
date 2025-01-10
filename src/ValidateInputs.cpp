@@ -15,7 +15,7 @@ namespace LFMF {
  *  @param[in]    h_tx__meter   - Height of the transmitter, in meter
  *  @param[in]    h_rx__meter   - Height of the receiver, in meter
  *  @param[in]    f__mhz        - Frequency, in MHz
- *  @param[in]    P_tx__watt    - Transmitter power, in Watts
+ *  @param[in]    P_tx__watt    - Transmitter power, in watts
  *  @param[in]    N_s           - Surface refractivity, in N-Units
  *  @param[in]    d__km         - Path distance, in km
  *  @param[in]    epsilon       - Relative permittivity

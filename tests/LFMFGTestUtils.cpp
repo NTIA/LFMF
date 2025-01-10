@@ -11,11 +11,9 @@
  *
  *  Description:  This function loads test data from a CSV file
  *
- *  @param[in]    &filename     - Test Data CSV file name
- *
- *  @returns      testData      - a vector includes one or more test cases
- *                                in SlantPathInputsAndResult Structure
- *
+ *  @param[in]  filename  Test Data CSV file name
+ *  @return               A vector includes one or more test cases in
+ *                        SlantPathInputsAndResult Structure
  *****************************************************************************/
 std::vector<LFMFInputsAndResult> ReadLFMFInputsAndResult(const std::string &filename) {
 

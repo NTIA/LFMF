@@ -1,8 +1,9 @@
 /** @file ReturnCodes.h
  * Defines return codes for the driver
  */
-#ifndef __LFMF_DRIVER_RETURNS_H__
-#define __LFMF_DRIVER_RETURNS_H__
+#pragma once
+
+#include <string>  // for std::string
 
 /*******************************************************************************
  * Return Codes defined by this driver software (128-255)
@@ -36,5 +37,3 @@ enum DrvrReturnCode {
 // clang-format on
 
 std::string GetDrvrReturnStatusMsg(int code);
-
-#endif

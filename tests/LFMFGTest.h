@@ -20,7 +20,7 @@ struct LFMFInputsAndResult {
     double h_tx__meter;     ///<  Height of the transmitter, in meter
     double h_rx__meter;     ///<  Height of the receiver, in meter
     double f__mhz;          ///<  Frequency, in MHz
-    double P_tx__watt;      ///<  Transmitter power, in Watts
+    double P_tx__watt;      ///<  Transmitter power, in watts
     double N_s;             ///<  Surface refractivity, in N-Units
     double d__km;           ///<  Path distance, in km
     double epsilon;         ///<  Relative permittivity

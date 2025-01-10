@@ -2,7 +2,6 @@
  * Primary header and test fixture for command line driver tests.
  */
 #pragma once
-#include <gtest/gtest.h>  // GoogleTest
 
 // clang-format off
 // GoogleTest must be included first

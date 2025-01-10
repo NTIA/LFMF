@@ -1,8 +1,16 @@
 /** @file Driver.cpp
  * Implements the main function of the executable, and other high-level functions
  */
-
 #include "Driver.h"
+
+#include <algorithm>  // for std::find
+#include <fstream>    // for std::ifstream, std::ofstream
+#include <iomanip>    // for std::setw
+#include <ios>        // for std::left
+#include <iostream>   // for std::cerr
+#include <ostream>    // for std::endl
+#include <string>     // for std::string
+#include <vector>     // for std::vector
 
 /*******************************************************************************
  * Main function of the driver executable
@@ -56,11 +64,8 @@ int main(int argc, char **argv) {
 
     // Print generator information to file
     fp << std::left << std::setw(30) << "Model" << LIBRARY_NAME;
-     
-    fp PRINT "Library Version"
-        << "v" << LIBRARY_VERSION;
-    fp PRINT "Driver Version"
-        << "v" << DRIVER_VERSION;
+    fp PRINT "Library Version" << "v" << LIBRARY_VERSION;
+    fp PRINT "Driver Version" << "v" << DRIVER_VERSION;
     fp PRINT "Date Generated" << GetDatetimeString();
     fp PRINT "Input Arguments";
     for (int i = 1; i < argc; i++) {
@@ -69,20 +74,14 @@ int main(int argc, char **argv) {
     fp << std::endl << std::endl;
 
     // Print inputs to file
-    fp << "Inputs:";   
+    fp << "Inputs:";
     WriteLFMFInputs(fp, lfmf_params);
 
     // Print results to file
     fp << std::endl << std::endl << "Results:";
     fp PRINT "Return Code" SETW13 rtn;
-    char *return_status = GetReturnStatusCharArray(rtn);    
-    PrintLabel(fp, return_status);
-    std::cout << LIBRARY_NAME << " Return Code: " << rtn << ", " << return_status << std::endl;
-    FreeReturnStatusCharArray(return_status);
-    
+    PrintLabel(fp, GetReturnStatus(rtn));
     if (rtn == SUCCESS) {
-        std::cout << "Basic transmission loss: " << std::fixed 
-            << std::setprecision(2) << result.A_btl__db << std::endl;
         WriteLFMFOutputs(fp, result);
     }
     fp.close();
@@ -99,7 +98,7 @@ int main(int argc, char **argv) {
  ******************************************************************************/
 DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
     const std::vector<std::string> validArgs
-        = {"-i", "-o", "-model", "-h", "--help", "-v", "--version"};
+        = {"-i", "-o", "-h", "--help", "-v", "--version"};
 
     for (int i = 1; i < argc; i++) {
         // Parse arg to lowercase string
@@ -153,10 +152,10 @@ void Help(std::ostream &os) {
     os << "\t-i      :: Input file name" << std::endl;
     os << "\t-o      :: Output file name" << std::endl;
     os << std::endl << "Examples:" << std::endl;
-    os << "\t[WINDOWS] " << DRIVER_NAME
-       << ".exe -i inputs.txt -o results.txt" << std::endl;
-    os << "\t[LINUX]   .\\" << DRIVER_NAME
-       << " -i in.txt -o results.txt" << std::endl;
+    os << "\t[WINDOWS] " << DRIVER_NAME << ".exe -i inputs.txt -o results.txt"
+       << std::endl;
+    os << "\t[LINUX]   .\\" << DRIVER_NAME << " -i in.txt -o results.txt"
+       << std::endl;
     os << "Other Options (which don't run the model)" << std::endl;
     os << "\t-h      :: Display this help message" << std::endl;
     os << "\t-v      :: Display program version information" << std::endl;

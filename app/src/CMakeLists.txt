@@ -1,7 +1,8 @@
 ###########################################
 ## BUILD THE DRIVER
 ###########################################
-
+## Include source AND header files here. Do not include
+## source/header files already included in `add_library()` in `src/CMakeLists.txt`
 add_executable(
     ${DRIVER_NAME}
     "CommaSeparatedIterator.cpp"

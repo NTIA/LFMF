@@ -1,26 +1,19 @@
 /** @file Driver.h
  * Interface header for this driver executable
  */
-#ifndef __LFMF_DRIVER_H__
-#define __LFMF_DRIVER_H__
+#pragma once
 
-#include <algorithm>        // for std::transform
-#include <fstream>          // for std::ofstream
-#include <iomanip>          // for std::left, std::setw
-#include <iostream>         // for std::cout
-#include <istream>          // for std::istream
-#include <ostream>          // for std::endl, std::ostream
-#include <string>           // for std::string
-#include <tuple>            // for std::tie
-#include <unordered_map>    // for std::unordered_map
-#include <vector>           // for std::vector
 
 #include "CommaSeparatedIterator.h"
-#include "ReturnCodes.h"
-
-
 #include "LFMF.h"
+#include "ReturnCodes.h"
 #include "Structs.h"
+
+#include <iomanip>   // for std::left, std::setw
+#include <iostream>  // for std::cout
+#include <ostream>   // for std::endl, std::ostream
+#include <string>    // for std::string
+
 /////////////////////////////
 // Macros
 
@@ -50,8 +43,7 @@ void Version(std::ostream &os = std::cout);
 
 // LFMF Model
 ReturnCode CallLFMFModel(LFMFParams &lfmf_params, Result &result);
-DrvrReturnCode ParseLFMFInputFile(const std::string &in_file, LFMFParams &lfmf_params);
+DrvrReturnCode
+    ParseLFMFInputFile(const std::string &in_file, LFMFParams &lfmf_params);
 void WriteLFMFInputs(std::ofstream &fp, const LFMFParams &params);
 void WriteLFMFOutputs(std::ofstream &fp, const Result &result);
-
-#endif

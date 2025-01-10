@@ -36,7 +36,9 @@ TEST_F(DriverTest, OpeningInputFileError) {
 
 TEST_F(DriverTest, OpeningOutputFileError) {
     // Provide valid inputs but invalid output file path
-    std::string inputs = "h_tx__meter,0\nh_rx__meter,0\nf__mhz,0.01\nP_tx__watt,1000\nN_s,301\nd__km,1000\nepsilon,15\nsigma,0.005\npol,0";
+    std::string inputs
+        = "h_tx__meter,0\nh_rx__meter,0\nf__mhz,0.01\nP_tx__watt,1000\nN_s,"
+          "301\nd__km,1000\nepsilon,15\nsigma,0.005\npol,0";
     params.out_file = "/invalid/path/output.xyz";
     int rtn = RunDriverWithInputFile(inputs, params);
     EXPECT_EQ(DRVRERR__OPENING_OUTPUT_FILE, rtn);

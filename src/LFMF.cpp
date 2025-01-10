@@ -15,7 +15,7 @@ namespace LFMF {
  *  @param[in]    h_tx__meter   - Height of the transmitter, in meter
  *  @param[in]    h_rx__meter   - Height of the receiver, in meter
  *  @param[in]    f__mhz        - Frequency, in MHz
- *  @param[in]    P_tx__watt    - Transmitter power, in Watts
+ *  @param[in]    P_tx__watt    - Transmitter power, in watts
  *  @param[in]    N_s           - Surface refractivity, in N-Units
  *  @param[in]    d__km         - Path distance, in km
  *  @param[in]    epsilon       - Relative permittivity
@@ -55,7 +55,7 @@ ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_
  *  @param[in]    h_tx__meter   - Height of the transmitter, in meter
  *  @param[in]    h_rx__meter   - Height of the receiver, in meter
  *  @param[in]    f__mhz        - Frequency, in MHz
- *  @param[in]    P_tx__watt    - Transmitter power, in Watts
+ *  @param[in]    P_tx__watt    - Transmitter power, in watts
  *  @param[in]    N_s           - Surface refractivity, in N-Units
  *  @param[in]    d__km         - Path distance, in km
  *  @param[in]    epsilon       - Relative permittivity
@@ -131,7 +131,7 @@ ReturnCode LFMF_CPP(double h_tx__meter, double h_rx__meter, double f__mhz, doubl
     //      Pt     Gt * Pt * ETA * 4*PI * f^2
     // L = ---- = ---------------------------  and convert to dB
     //      Pr            E^2 * c^2
-    // with all values entered using base units: Watts, Hz, and V/m
+    // with all values entered using base units: watts, Hz, and V/m
     // basic transmission loss is not a function of power/gain, but since electric field strength E_gw is a function of (Gt * Pt),
     //    and Lbtl is a function of 1/E_gw, we add in (Gt * Pt) to remove its effects
     result->A_btl__db = 10 * log10(P_tx__watt * G_tx) 

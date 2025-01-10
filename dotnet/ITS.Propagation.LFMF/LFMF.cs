@@ -43,7 +43,7 @@ namespace ITS.Propagation
         /// <param name="h_tx__meter">Transmitter height, in meters</param>
         /// <param name="h_rx__meter">Receiver height, in meters</param>
         /// <param name="f__mhz">Frequency, in MHz</param>
-        /// <param name="P_tx__watt">Transmit power, in Watts</param>
+        /// <param name="P_tx__watt">Transmit power, in watts</param>
         /// <param name="N_s">Surface refractivity, in N-Units</param>
         /// <param name="d__km">Path distance, in km</param>
         /// <param name="epsilon">Relative permittivity</param>
@@ -64,7 +64,7 @@ namespace ITS.Propagation
         /// <param name="h_tx__meter">Transmitter height, in meters</param>
         /// <param name="h_rx__meter">Receiver height, in meters</param>
         /// <param name="f__mhz">Frequency, in MHz</param>
-        /// <param name="P_tx__watt">Transmit power, in Watts</param>
+        /// <param name="P_tx__watt">Transmit power, in watts</param>
         /// <param name="N_s">Surface refractivity, in N-Units</param>
         /// <param name="d__km">Path distance, in km</param>
         /// <param name="epsilon">Relative permittivity</param>

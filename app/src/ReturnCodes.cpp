@@ -1,7 +1,11 @@
 /** @file ReturnCodes.cpp
  * Maps status message strings to driver return codes.
-*/
-#include "Driver.h"
+ */
+
+#include "ReturnCodes.h"
+
+#include <string>         // for std::string
+#include <unordered_map>  // for std::unordered_map
 
 /*******************************************************************************
  * Get an error message string from a return code.
