@@ -49,6 +49,7 @@ Thumbs.db
 #########
 CMakeLists.txt.user
 CMakeCache.txt
+CMakeUserPresets.json
 CMakeFiles
 CMakeScripts
 Testing

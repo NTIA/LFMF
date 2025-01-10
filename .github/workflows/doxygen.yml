@@ -7,9 +7,9 @@ on:
   release:
     types: ["published"]
   pull_request:
-    branches: ["main", "dev", "CrossPlatform-And-PropLib2.0"]
+    branches: ["main", "dev"]
   push:
-    branches: ["main", "dev", "CrossPlatform-And-PropLib2.0"]
+    branches: ["main"]
   workflow_dispatch:
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.

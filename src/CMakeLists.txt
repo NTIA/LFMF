@@ -1,6 +1,7 @@
 ###########################################
 ## BUILD THE LIBRARY
 ###########################################
+proplib_message("Configuring library ${LIB_NAME}")
 
 message(STATUS "STATUS: Start building the libaray: " ${LIB_NAME})
 
@@ -32,13 +33,20 @@ else ()
     add_library(${LIB_NAME} ${LIB_FILES})
 endif ()
 
-
-
 # Add the include directory
 target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")
 
 # link library to proplib_compiler_flags
-target_link_libraries(${LIB_NAME} PUBLIC proplib_compiler_flags)
+# target_link_libraries(${LIB_NAME} PUBLIC proplib_compiler_flags)
+
+# Configure compiler options
+configure_proplib_target(${LIB_NAME})
+
+# Add definition to get the library name and version inside the library
+add_compile_definitions(
+    LIBRARY_NAME="${LIB_NAME}"
+    LIBRARY_VERSION="${PROJECT_VERSION}"
+)
 
 # Platform-specific configurations
 if (WIN32)
@@ -52,7 +60,10 @@ endif ()
 # Set some target metadata
 set_target_properties(
     ${LIB_NAME} PROPERTIES
-    OUTPUT_NAME ${LIB_NAME}-${PROJECT_VERSION}
+    OUTPUT_NAME ${LIB_NAME}-${PROJECT_VERSION}-
     VERSION ${PROJECT_VERSION}
-    SOVERSION ${PROJECT_VERSION_MAJOR} # Include version in .so output filenames
+    DEBUG_POSTFIX ${ARCH_SUFFIX}
+    RELEASE_POSTFIX ${ARCH_SUFFIX}
 )
+
+proplib_message("Done configuring library ${LIB_NAME}")

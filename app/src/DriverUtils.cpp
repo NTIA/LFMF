@@ -13,6 +13,15 @@
     #endif
 #endif
 
+#include <algorithm>  // for std::transform
+#include <cctype>     // for std::tolower
+#include <cstddef>    // for std::size_t
+#include <ctime>      // for localtime_{s,r}, std::{time, time_t, tm, strftime}
+#include <iomanip>    // for std::setfill, std::setw
+#include <iostream>   // for std::cerr, std::endl
+#include <ostream>    // for std::ostream
+#include <string>     // for std::stod, std::stoi, std::string
+
 /******************************************************************************
  * Get a string containing the current date and time information.
  * 
@@ -30,7 +39,8 @@ std::string GetDatetimeString() {
     }
 #endif
     char mbstr[100];
-    if (std::strftime(mbstr, sizeof(mbstr), "%c", &localTime) == 0) {
+    if (std::strftime(mbstr, sizeof(mbstr), "%a %b %d %H:%M:%S %Y", &localTime)
+        == 0) {
         return "Could not format datetime string";
     }
     return std::string(mbstr);
@@ -89,7 +99,7 @@ DrvrReturnCode ParseDouble(const std::string &str, double &value) {
  ******************************************************************************/
 DrvrReturnCode ParseInteger(const std::string &str, int &value) {
     try {
-        size_t pos;
+        std::size_t pos;
         value = std::stoi(str, &pos, 10);
 
         // Verify the entire string was parsed

@@ -3,9 +3,9 @@ name: Unit Tests
 
 on:
   push:
-    branches: ["main", "dev", "CrossPlatform-And-PropLib2.0"]
+    branches: ["main"]
   pull_request:
-    branches: ["main", "dev", "CrossPlatform-And-PropLib2.0"]
+    branches: ["main", "dev"]
   workflow_dispatch:
 
 concurrency:
@@ -21,13 +21,20 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest
+          - macos-latest  # Apple
+          - macos-13      # Intel
           - windows-latest
         architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
         exclude:
           - os: macos-latest
             architecture: x86
+          - os: macos-latest
+            architecture: x64
+          - os: macos-13
+            architecture: x86
+          - os: macos-13
+            architecture: arm64
           - os: windows-latest
             architecture: arm64
           - os: ubuntu-latest
@@ -48,10 +55,20 @@ jobs:
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 
-    - name: "CMake: Build and Test"
+    - name: "CMake: Build and Test (64-bit)"
+      if: matrix.architecture != 'x86'
       uses: lukka/run-cmake@v10
       with:
-        configurePreset: release
+        configurePreset: release64
         configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
-        buildPreset: release
-        testPreset: release
+        buildPreset: release64
+        testPreset: release64
+
+    - name: "CMake: Build and Test (32-bit)"
+      if: matrix.architecture == 'x86'
+      uses: lukka/run-cmake@v10
+      with:
+        configurePreset: release32
+        configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
+        buildPreset: release32
+        testPreset: release32

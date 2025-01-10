@@ -7,10 +7,21 @@
 #    See https://stackoverflow.com/questions/69846931/
 #    This is relevant for specifying unit test data file paths
 #    Automated testing only runs >=3.21 for this reason.
-# >=3.14 required for GoogleTest v1.12.x
-cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
+# >=3.15 required for CMake features used in this project
+cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
+
+# Warn if '-A Win32' is provided but BUILD_32BIT has not been set. This may
+# indicate accidental use of a 64-bit CMake preset while intending to build for 32-bit.
+if (DEFINED ENV{CMAKE_GENERATOR_PLATFORM})
+    if ($ENV{CMAKE_GENERATOR_PLATFORM} STREQUAL "Win32")
+        if (NOT BUILD_32BIT)
+            message(WARNING "Generator platform is Win32 but 32-bit preset is not being used.")
+        endif ()
+    endif ()
+endif ()
 
 # If on macOS, handle arm64/x86_64 architectures (must be done before project())
+# For other OS, identify the architecture and save it to the ARCH_SUFFIX variable.
 if (APPLE)
     # Get the current platform's native architecture
     execute_process(
@@ -19,18 +30,34 @@ if (APPLE)
         OUTPUT_VARIABLE MACOS_NATIVE_ARCHITECTURE
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    message(STATUS "Current macOS architecture is " ${MACOS_NATIVE_ARCHITECTURE})
-
     # If running on Apple silicon, try a universal build. Otherwise, a native build.
-    if ((CMAKE_GENERATOR STREQUAL "Xcode") AND (MACOS_NATIVE_ARCHITECTURE STREQUAL "arm64"))
-        set(CMAKE_OSX_ARCHITECTURE "arm64;x86_64" CACHE STRING "")
-        set(PROPLIB_ARCHITECTURE "macOS_universal")
-        message(STATUS "Configured for universal macOS build")
+    if (${MACOS_NATIVE_ARCHITECTURE} STREQUAL "arm64")
+        set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
+        set(ARCH_SUFFIX "universal")
     else ()
-        set(PROPLIB_ARCHITECTURE MACOS_NATIVE_ARCHITECTURE)
-        message(STATUS "Configured for native macOS build")
+        set(ARCH_SUFFIX ${MACOS_NATIVE_ARCHITECTURE})
     endif ()
+elseif (WIN32)
+    if (BUILD_32BIT)
+        set(ARCH_SUFFIX "x86")
+    else ()
+        set(ARCH_SUFFIX "x64")
+    endif ()
+elseif (UNIX) # Only non-Apple Linux evaluates as True here
+    set(ARCH_SUFFIX "x86_64")
 endif ()
+
+# Convenience function for printing visible status messages.
+# Accepts arbitrary number of string inputs, each printed as a 
+# new line in the status message.
+function(proplib_message)
+    string(REPLACE ";" "\n--   " all_args "${ARGN}")
+    message(STATUS 
+    "==========[PROPLIB STATUS MESSAGE]==========\n"
+    "--   ${all_args}\n-- "
+    "============================================\n"
+    )
+endfunction()
 
 ###########################################
 ## PROJECT METADATA
@@ -54,36 +81,39 @@ option(BUILD_DRIVER "Build the command-line driver executable" ON)
 option(RUN_DRIVER_TESTS "Test the command-line driver executable" ON)
 option(DOCS_ONLY "Skip all steps except generating the documentation site" OFF)
 option(RUN_TESTS "Run unit tests for the main library" ON)
+option(BUILD_32BIT "Build project for x86/32-bit instead of x64/64-bit" OFF)
 
 ###########################################
 ## SETUP
 ###########################################
-# GoogleTest v1.12.1 requires at least C++11
+# C++11 and some extensions (e.g., for `auto`) are the minimum required
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_EXTENSIONS ON)
 
-add_library(proplib_compiler_flags INTERFACE)
-target_compile_features(proplib_compiler_flags INTERFACE cxx_std_11)
-
-# add compiler warning flags just when building this project via
-# the BUILD_INTERFACE generator expression
+# Get 0/1 values indicating compiler type
 set(gcc_like_cxx "$<COMPILE_LANG_AND_ID:CXX,ARMClang,AppleClang,Clang,GNU,LCC>")
 set(msvc_cxx "$<COMPILE_LANG_AND_ID:CXX,MSVC>")
-target_compile_options(proplib_compiler_flags INTERFACE
-    # For GCC-like compilers in any configuration
-    "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused>>"
-    # For GCC-like compilers in Release configurations
-    "$<${gcc_like_cxx}:$<$<CONFIG:Release>:-O3;-DNDEBUG>>"
-    # For GCC-like compilers in Debug configurations
-    "$<${gcc_like_cxx}:$<$<CONFIG:Debug>:-g;-O0>>"
-    # For MSVC compiler in any configuration
-    "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gz>>"
-    # For MSVC compiler in Release configurations
-    "$<${msvc_cxx}:$<$<CONFIG:Release>:/O2;/DNDEBUG>>"
-    # For MSVC compiler in Debug configurations
-    "$<${msvc_cxx}:$<$<CONFIG:Debug>:/Od;/Zi>>"
-)
+
+# Define a function to set compile options of a provided target.
+function(configure_proplib_target proplib_target)
+    target_compile_options(${proplib_target} PRIVATE
+        # For GCC-like compilers in any configuration
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:-Wall;-Wextra;-Wshadow;-Wformat=2;-Wunused;-static>>"
+        # For GCC-like compilers in Release configurations
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:-O3;-DNDEBUG>>>"
+        # For GCC-like compilers in Debug configurations
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:-g;-O0>>>"
+        # For GCC-like compilers in 32-bit configurations
+        "$<${gcc_like_cxx}:$<BUILD_INTERFACE:$<$<BOOL:${BUILD_32BIT}>:-m32>>>"
+        # For MSVC compiler in any configuration
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:/W3;/Gd>>"
+        # For MSVC compiler in Release configurations
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/O2;/DNDEBUG;/MT>>>"
+        # For MSVC compiler in Debug configurations
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:/Od;/Zi;/MTd>>>"
+    )
+endfunction()
 
 # Enable Hot Reload for MSVC compilers if supported.
 if (POLICY CMP0141)
@@ -96,29 +126,42 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Library Output Directory")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}/bin" CACHE STRING "Set the CMAKE Runtime Output Directory")
 
+proplib_message(
+    "Initial Configuration Complete"
+    "Generator: ${CMAKE_GENERATOR}"
+    "Generator platform (for multi-config generators only): $ENV{CMAKE_GENERATOR_PLATFORM}"
+    "C++ Compiler: ${CMAKE_CXX_COMPILER}"
+    "Target architecture: ${ARCH_SUFFIX}"
+    "CMake Options:"
+    "  BUILD_32BIT = ${BUILD_32BIT}"
+    "  BUILD_DOCS = ${BUILD_DOCS}"
+    "  BUILD_DRIVER = ${BUILD_DRIVER}"
+    "  RUN_DRIVER_TESTS = ${RUN_DRIVER_TESTS}"
+    "  DOCS_ONLY = ${DOCS_ONLY}"
+    "  RUN_TESTS = ${RUN_TESTS}"
+)
+
 ##########################################
 ## BUILD/RUN
 ##########################################
 if (NOT DOCS_ONLY)
-    add_subdirectory(src)  # Build the shared library
-
+    add_subdirectory(src)  # Configure the library
     if (RUN_TESTS OR RUN_DRIVER_TESTS)
-        # Set up GoogleTest
+        enable_testing()
+        include(CTest)
+        # Initialize GoogleTest if any tests will be configured
         if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
-            enable_testing()
             set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
             # Ensure GoogleTest is built as a static library
             if (DEFINED BUILD_SHARED_LIBS AND BUILD_SHARED_LIBS)
                 set(BUILD_SHARED_LIBS_${LIB_NAME} ${BUILD_SHARED_LIBS})
                 set(BUILD_SHARED_LIBS OFF)
-                message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build gtest library.")
             endif ()
-            add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest")
+            add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest" EXCLUDE_FROM_ALL)
             include(GoogleTest)
             # Restore initial value of BUILD_SHARED_LIBS
             if (DEFINED BUILD_SHARED_LIBS_${LIB_NAME})
                 set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_${LIB_NAME}})
-                message(STATUS "STATUS: BUILD_SHARED_LIBS is " ${BUILD_SHARED_LIBS} " to build ${LIB_NAME} library.")
             endif ()
         else ()
             message(SEND_ERROR
