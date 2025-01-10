@@ -62,7 +62,7 @@ For questions about using this template repository, contact <aromaniello@ntia.go
 <!-- TODO-TEMPLATE: Create the README contents. Boilerplate provided below.
 
 Additional bindings to the shared library built from this repository are provided
-for .NET, MATLAB, and Python in the following repositories:
+for .NET, MATLAB®, and Python® in the following repositories:
 
 - [NTIA/TODO-TEMPLATE-dotnet](https://github.com/NTIA/TODO-TEMPLATE-dotnet)
 - [NTIA/TODO-TEMPLATE-matlab](https://github.com/NTIA/TODO-TEMPLATE-matlab)
@@ -146,8 +146,21 @@ TODO-TEMPLATE: Update or remove the link here to the Doxygen docs
 * [ITS Propagation Library Wiki](https://ntia.github.io/propagation-library-wiki)
 * [`ITS.TODO-TEMPLATE.THIS-LIBRARY` C++ API Reference](https://ntia.github.io/TODO-TEMPLATE)
 
+## License ##
+
+See [`LICENSE.md`](./LICENSE.md).
+
+MATLAB is a registered trademark of The MathWorks, Inc. See
+[mathworks.com/trademarks](https://mathworks.com/trademarks) for a list of additional trademarks.
+
+"Python" and the Python logos are trademarks or registered trademarks of the Python Software Foundation, used by the National Telecommunications and Information Administration with permission from the Foundation.
+
 ## Contact ##
 
 For technical questions, contact <code@ntia.gov>.
+
+## Disclaimer ##
+
+Certain commercial equipment, instruments, or materials are identified in this project were used for the convenience of the developers. In no case does such identification imply recommendation or endorsement by the National Telecommunications and Information Administration, nor does it imply that the material or equipment identified is necessarily the best available for the purpose.
 
 -->
