@@ -118,7 +118,7 @@ enum ReturnCode {
 struct Result
 {
     double A_btl__db;               ///< Basic transmission loss, in dB
-    double E_dBuVm;                 ///< Electrice field strength, in dB(uV/m)
+    double E_dBuVm;                 ///< Electric field strength, in dB(uV/m)
     double P_rx__dbm;               ///< Received power, in dBm
 
     SolutionMethod method;          ///< Solution method: 0 = Flat earth with curve correction, 1 = Residue series

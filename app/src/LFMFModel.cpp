@@ -148,7 +148,7 @@ void WriteLFMFInputs(std::ofstream &fp, const LFMFParams &params) {
 void WriteLFMFOutputs(std::ofstream &fp, const Result &result) {
     fp PRINT "Basic transmission loss" SETW13 std::fixed
         << std::setprecision(2) << result.A_btl__db << "[dB]";
-    fp PRINT "Electrice field strength" SETW13 std::fixed
+    fp PRINT "Electric field strength" SETW13 std::fixed
         << std::setprecision(2) << result.E_dBuVm << "[dB(uV/m)]";
     fp PRINT "Received power" SETW13 std::fixed
         << std::setprecision(2) << result.P_rx__dbm << "[dB]";
