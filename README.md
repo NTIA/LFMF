@@ -104,6 +104,8 @@ ctest --preset release
 
 ## License ##
 
+See [`LICENSE.md`](./LICENSE.md).
+
 MATLAB is a registered trademark of The MathWorks, Inc. See
 [mathworks.com/trademarks](https://mathworks.com/trademarks) for a list of additional trademarks.
 
