@@ -22,9 +22,6 @@ endif ()
 # Add the include directory
 target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")
 
-# link library to proplib_compiler_flags
-# target_link_libraries(${LIB_NAME} PUBLIC proplib_compiler_flags)
-
 # Configure compiler options
 configure_proplib_target(${LIB_NAME})
 
