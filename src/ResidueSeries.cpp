@@ -38,8 +38,8 @@ double ResidueSeries(
     std::complex<double> T[200], W1[200], W[200];
     double yHigh, yLow;
 
-    std::complex<double> GW
-        = std::complex<double>(0.0, 0.0);  // initial ground wave
+    // Initialize the ground wave
+    std::complex<double> GW = std::complex<double>(0.0, 0.0);
 
     // Associated argument for the height-gain function H_1[h_1]
     yHigh = k * h_2__km / nu;
@@ -50,9 +50,8 @@ double ResidueSeries(
     const double x = nu * theta__rad;
 
     for (int i = 0; i < 200; i++) {
-        T[i] = WiRoot(
-            i + 1, &DW2[i], q, &W2[i], WONE, WAIT
-        );  // find the (i+1)th root of Airy function for given q
+        // find the (i+1)th root of Airy function for given q
+        T[i] = WiRoot(i + 1, DW2[i], q, W2[i], WONE, WAIT);
         W1[i] = Airy(T[i], WONE, WAIT);  // Airy function of (i)th root
 
         if (h_1__km > 0) {
@@ -63,24 +62,20 @@ double ResidueSeries(
             if (h_2__km > 0)
                 W[i] *= Airy(T[i] - yHigh, WONE, WAIT)
                       / W1[i];  //H_1(h_1)*H_1(h_2)
-        } else if (h_2__km > 0)
+        } else if (h_2__km > 0) {
             W[i] = Airy(T[i] - yHigh, WONE, WAIT) / W1[i];
-        else
+        } else {
             W[i] = std::complex<double>(1, 0);
+        }
 
         // W[i] is the coefficient of the distance factor for the i-th
-        W[i]
-            /= (T[i] - (q * q)
-            );  // H_1(h_1)*H_1(h_2)/(t_i-q^2) eqn.26 from NTIA report 99-368
-        G = W[i]
-          * std::exp(
-                -1.0 * j * x * T[i]
-          );      // sum of exp(-j*x*t_i)*W[i] eqn.26 from NTIA report 99-368
+        // H_1(h_1)*H_1(h_2)/(t_i-q^2) eqn.26 from NTIA report 99-368:
+        W[i] /= (T[i] - (q * q));
+        // sum of exp(-j*x*t_i)*W[i] eqn.26 from NTIA report 99-368:
+        G = W[i] * std::exp(-1.0 * j * x * T[i]);
         GW += G;  // sum the series
 
         if (i != 0) {
-            //if ((abs((GW * GW).real()) + (abs((GW * GW).imag()))) == 0.0) {     // when the ground wave is too small close to 0.
-            // Replaced with AlmostEqualRelative
             if (AlmostEqualRelative(
                     (std::abs((GW * GW).real()) + (std::abs((GW * GW).imag()))),
                     0.0,
@@ -104,7 +99,7 @@ double ResidueSeries(
         = std::sqrt(x)
         * std::complex<double>(std::sqrt(PI / 2), -std::sqrt(PI / 2)) * GW;
 
-    double E_gw = std::abs(Ew);  // take the magnitude of the result
+    const double E_gw = std::abs(Ew);  // take the magnitude of the result
 
     return E_gw;
 }

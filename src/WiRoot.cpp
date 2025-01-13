@@ -39,9 +39,9 @@ namespace LFMF {
  ******************************************************************************/
 std::complex<double> WiRoot(
     const int i,
-    std::complex<double> *DWi,
+    std::complex<double> &DWi,
     const std::complex<double> q,
-    std::complex<double> *Wi,
+    std::complex<double> &Wi,
     const AiryFunctionKind kind,
     const AiryFunctionScaling scaling
 ) {
@@ -116,8 +116,8 @@ std::complex<double> WiRoot(
     // Input parameters verified
 
     // Initialize the Wi and Wi'(z)functions
-    *DWi = std::complex<double>(0.0, 0.0);  // Wi'(z)
-    *Wi = std::complex<double>(0.0, 0.0);   // Wi(z)
+    DWi = std::complex<double>(0.0, 0.0);  // Wi'(z)
+    Wi = std::complex<double>(0.0, 0.0);   // Wi(z)
 
     // This routine starts with a real root of the Airy function to find the complex root
     // The real root has to be turned into a complex number.
@@ -126,7 +126,7 @@ std::complex<double> WiRoot(
     // Determine what scaling the user wants and which Wi function is used to set ph and
     // the dkind flag. This will allow that the real root that starts this process can be
     // scaled appropriately.
-    // This is the simmilar to the initial scaling that is done in Airy()
+    // This is the similar to the initial scaling that is done in Airy()
     // Note that W1 Wait = Wi(2) Hufford and W2 Wait = Wi(1) Hufford
     // So the following inequalities keep this all straight
     if ((kind == WONE && scaling == HUFFORD)
@@ -210,11 +210,11 @@ std::complex<double> WiRoot(
 
     do {
         // f(q) = Wi'(ti) - q*Wi(ti)
-        *Wi = Airy(ti, kind, scaling);
+        Wi = Airy(ti, kind, scaling);
         // f'(q) = tw*Wi(ti) - q*Wi'(ti);
-        *DWi = Airy(ti, dkind, scaling);
+        DWi = Airy(ti, dkind, scaling);
         // The Newton correction factor for iteration f(q)/f'(q)
-        A = (*DWi - q * (*Wi)) / (ti * (*Wi) - q * (*DWi));
+        A = (DWi - q * (Wi)) / (ti * (Wi) - q * (DWi));
         ti = ti - A;  // New root guess ti
         cnt++;        // Increment the counter
 
