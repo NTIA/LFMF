@@ -6,115 +6,107 @@
 
 #include <cmath>    // for abs, cos, exp, pow, sin, sqrt
 #include <complex>  // for std::arg, std::complex
-
+// TODO verify doxygen output is as-expected here
 namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
-/******************************************************************************
+/*******************************************************************************
+ * Finds the Airy, Bairy, Wi(1) and Wi(2) functions and their derivatives.
+ * 
+ * Function accepts a complex input argument and computes the result from a
+ * shifted Taylor series or by asymptotic approximation depending of the
+ * location of the input argument.
  *
- *  Description:  This routine finds the Airy, Bariy, Wi(1) and Wi(2) 
- *                functions and their derivatives for a complex input argument
- *                from a shifted Taylor series or by asymptotic approximation 
- *                depending of the location of the input argument.
+ * This routine determines the so-called "Airy Functions of the third kind"
+ * Wi(1) and Wi(2) that are found in equation 38 of NTIA Report 87-219
+ * "A General Theory of Radio Propagation through a Stratified Atmosphere",
+ * George Hufford, July 1987.
  *
- *                This routine determines the so-called "Airy Functions of the 
- *                third kind" Wi(1) and Wi(2) that are found in equation 38 
- *                of NTIA Report 87-219 "A General Theory of Radio 
- *                Propagation through a Stratified Atmosphere", George 
- *                Hufford, July 1987
+ * The Airy function that appeared in the original FORTRAN GWINT and GWRES
+ * implementations had the switches all mangled from what George Hufford had in
+ * mind. This routine has the corrected switches. Please see the Airy function
+ * code that appears in the appendix of OT/ITS RR 11 "A Wave Hop Propagation
+ * Program for an Anisotropic Ionosphere" L. A. Berry and J. E. Herman, April 1971.
  *
- *                The Airy function that appeared in the original GWINT and 
- *                GWRES had the switches all mangled from what George Hufford
- *                had in mind this routine has the corrected switches. Please
- *                see the Airy function code that appears in the appendix of
- *                OT/ITS RR 11 "A Wave Hop Propagation Program for an 
- *                Anisotropic Ionosphere" L. A. Berry and J. E. Herman 
- *                April 1971
+ * @param[in] Z        Complex input argument
+ * @param[in] kind     Switch indicating the type of Airy function to solve
+ * @param[in] scaling  Type of scaling to use
+ * @return             The desired Airy function calculated at Z
  *
- *  @param[in]    Z             - Input argument
- *  @param[in]    kind          - Switch that indicates what type of Airy function to solve for
- *  @param[in]    scaling       - Type of scaling to use
+ * @note A note on scaling the output from this program
  *
- *  @return       Ai            - The desired Airy function calculated at Z
+ * There is a definitional problem with the Airy function which is inevitable
+ * relative to how it was defined in the original LFMF code originated with
+ * the Hufford's AIRY subroutine.
  *
- *         Note:  A note on scaling the output from this program
+ * Using the scaling equal to HUFFORD in this program follows the definitions of
+ * Wi(1) and Wi(2) as defined by Hufford (87-219)
  *
- *                There is a definitional problem with the Airy function 
- *                which is inevitable relative to how it was defined in the 
- *                original LFMF code originated with the Hufford's AIRY 
- *                subroutine.
+ * Using the scaling equal to WAIT in this program uses the definitions of W1 and
+ * W2 defined in DeMinco (99-368) and in the original LFMF code following Berry via Wait.
  *
- *                Using the scaling equal to HUFFORD in this program follows
- *                the definitions of Wi(1) and Wi(2) as defined by Hufford 
- *                (87-219)
+ * The two solutions differ by a constant. As Hufford notes concerning Wi(1) and
+ * Wi(2) in 87-219:
  *
- *                Using the scaling equal to WAIT in this program uses the 
- *                definitions of W1 and W2 defined in Deminco (99-368) and 
- *                in the original LFMF code following Berry via Wait.
+ * "Except for multiplicative constants they correspond to what Fock (1965) calls w1
+ * and w2 and to what Wait (1962) calls w2 and w1"
  *
- *                The two solutions differ by a constant. As Hufford notes 
- *                concerning Wi(1) and Wi(2) in 87-219
+ * The following are the multiplicative constants that allow for the translation
+ * between Hufford Wi(2) and Wi(1) with Wait W1 and W2, respectively. These are
+ * given here as a reference if this function is used for programs other than LFMF.
  *
- *                "Except for multiplicative constants they correspond to 
- *                what Fock (1965) calls w1 and w2 and to what Wait (1962) 
- *                calls w2 and w1"
+ * ```cpp
+ * // Wait
+ * complex<double> WW2  = complex<double>(     sqrt(3.0*PI),      sqrt(PI));
+ * complex<double> WDW2 = complex<double>(-1.0*sqrt(3.0*PI),      sqrt(PI));
+ * complex<double> WW1  = complex<double>(     sqrt(3.0*PI), -1.0*sqrt(PI));
+ * complex<double> WDW1 = complex<double>(-1.0*sqrt(3.0*PI), -1.0*sqrt(PI));
  *
- *                The following are the multiplicative constants that allow 
- *                for the translation between Hufford Wi(2) and Wi(1) with 
- *                Wait W1 and W2, respectively. These are given here as a 
- *                reference if this function is used for programs other 
- *                than LFMF.
+ * // Hufford
+ * complex<double> HW2  = 2.0*complex<double>(cos( PI/3.0), sin( PI/3.0));
+ * complex<double> HDW2 = 2.0*complex<double>(cos(-PI/3.0), sin(-PI/3.0));
+ * complex<double> HW1  = 2.0*complex<double>(cos(-PI/3.0), sin(-PI/3.0));
+ * complex<double> HDW1 = 2.0*complex<double>(cos( PI/3.0), sin( PI/3.0));
  *
- *                // Wait
- *                complex<double> WW2  = complex<double>(     sqrt(3.0*PI),      sqrt(PI));
- *                complex<double> WDW2 = complex<double>(-1.0*sqrt(3.0*PI),      sqrt(PI));
- *                complex<double> WW1  = complex<double>(     sqrt(3.0*PI), -1.0*sqrt(PI));
- *                complex<double> WDW1 = complex<double>(-1.0*sqrt(3.0*PI), -1.0*sqrt(PI));
+ * // (Multiplicative constant) * Hufford's Wi'(1) = Wait W1'
+ * // So the multiplicative constants are:
+ * complex<double> uDW2 = WDW2/HDW1; // uDW2 = complex<double>(0.0,  sqrt(PI))
+ * complex<double> uW2  = WW2/HW1;   // uW2  = complex<double>(0.0,  sqrt(PI))
+ * complex<double> uDW1 = WDW1/HDW2; // uDW1 = complex<double>(0.0, -sqrt(PI))
+ * complex<double> uW1  = WW1/HW2;   // uW1  = complex<double>(0.0, -sqrt(PI))
+ * ```
  *
- *                // Hufford
- *                complex<double> HW2  = 2.0*complex<double>(cos( PI/3.0), sin( PI/3.0));
- *                complex<double> HDW2 = 2.0*complex<double>(cos(-PI/3.0), sin(-PI/3.0));
- *                complex<double> HW1  = 2.0*complex<double>(cos(-PI/3.0), sin(-PI/3.0));
- *                complex<double> HDW1 = 2.0*complex<double>(cos( PI/3.0), sin( PI/3.0));
+ * To make the solutions that are generated by this program for the Hufford
+ * Airy functions of the "3rd kind" abundantly clear please examine the
+ * following examples.
  *
- *                // (Multiplicative constant) * Huffords Wi'(1) = Wait W1'
- *                // So the multiplicative constants are:
- *                complex<double> uDW2 = WDW2/HDW1; // uDW2 = complex<double>(0.0,  sqrt(PI))
- *                complex<double> uW2  = WW2/HW1;   // uW2  = complex<double>(0.0,  sqrt(PI))
- *                complex<double> uDW1 = WDW1/HDW2; // uDW1 = complex<double>(0.0, -sqrt(PI))
- *                complex<double> uW1  = WW1/HW2;   // uW1  = complex<double>(0.0, -sqrt(PI))
+ * For Z = 8.0 + 8.0 i the Asymptotic Solution is used
  *
- *                To make the solutions that are generated by this program 
- *                for the Hufford Airy functions of the "3rd kind" abundantly
- *                clear please examine the following examples.
+ * Ai( 8.0 + 8.0 i) =  6.576933e-007 +  9.312331e-006 i
+ * Ai'(8.0 + 8.0 i) =  9.79016e-006  + -2.992170e-005 i
+ * Bi( 8.0 + 8.0 i) = -1.605154e+003 + -4.807200e+003 i
+ * Bi'(8.0 + 8.0 i) =  1301.23 + -16956 i
+ * Wi(1)(8.0 + 8.0 i) = -4.807200e+003 +  1.605154e+003 i
+ * Wi(2)(8.0 + 8.0 i) =  4.807200e+003 + -1.605154e+003 i
+ * Ai(z) - j*Bi(z) = -4.807200e+003 +  1.605154e+003 i
+ * Ai(z) + j*Bi(z) =  4.807200e+003 + -1.605154e+003 i
  *
- *                For Z = 8.0 + 8.0 i the Asymptotic Solution is used
+ * For Z = 1.0 - 2.0 i the Taylor series with a shifted center of expansion solution used.
  *
- *                Ai( 8.0 + 8.0 i) =  6.576933e-007 +  9.312331e-006 i
- *                Ai'(8.0 + 8.0 i) =  9.79016e-006  + -2.992170e-005 i
- *                Bi( 8.0 + 8.0 i) = -1.605154e+003 + -4.807200e+003 i
- *                Bi'(8.0 + 8.0 i) =  1301.23 + -16956 i
- *                Wi(1)(8.0 + 8.0 i) = -4.807200e+003 +  1.605154e+003 i
- *                Wi(2)(8.0 + 8.0 i) =  4.807200e+003 + -1.605154e+003 i
- *                Ai(z) - j*Bi(z) = -4.807200e+003 +  1.605154e+003 i
- *                Ai(z) + j*Bi(z) =  4.807200e+003 + -1.605154e+003 i
- *
- *                For Z = 1.0 - 2.0 i the Taylor series with a shifted
- *                center of expansion solution used.
- *
- *                Ai( 1.0 - 2.0 i) = -2.193862e-001 + 1.753859e-001 i
- *                Ai'(1.0 - 2.0 i) =  0.170445 + -0.387622 i
- *                Bi( 1.0 - 2.0 i) =  4.882205e-002 + -1.332740e-001 i
- *                Bi'(1.0 - 2.0 i) = -0.857239 + -0.495506 i
- *                Wi(1)(1.0 - 2.0 i) = -3.526603e-001 + 1.265638e-001 i
- *                Wi(2)(1.0 - 2.0 i) = -8.611221e-002 + 2.242079e-001 i
- *                Ai(z) - j*Bi(z) = -3.526603e-001 + 1.265639e-001 i
- *                Ai(z) + j*Bi(z) = -8.611221e-002 + 2.242080e-001 i
- *
- *****************************************************************************/
+ * Ai( 1.0 - 2.0 i) = -2.193862e-001 + 1.753859e-001 i
+ * Ai'(1.0 - 2.0 i) =  0.170445 + -0.387622 i
+ * Bi( 1.0 - 2.0 i) =  4.882205e-002 + -1.332740e-001 i
+ * Bi'(1.0 - 2.0 i) = -0.857239 + -0.495506 i
+ * Wi(1)(1.0 - 2.0 i) = -3.526603e-001 + 1.265638e-001 i
+ * Wi(2)(1.0 - 2.0 i) = -8.611221e-002 + 2.242079e-001 i
+ * Ai(z) - j*Bi(z) = -3.526603e-001 + 1.265639e-001 i
+ * Ai(z) + j*Bi(z) = -8.611221e-002 + 2.242080e-001 i
+ ******************************************************************************/
 std::complex<double> Airy(
-    std::complex<double> Z, AiryFunctionKind kind, AiryFunctionScaling scaling
+    const std::complex<double> Z,
+    const AiryFunctionKind kind,
+    const AiryFunctionScaling scaling
 ) {
     // NQTT, ASLT data
     int NQTT[15] = {
