@@ -11,31 +11,27 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
-/******************************************************************************
+/*******************************************************************************
+ * Calculates the groundwave field strength using the flat Earth approximation
+ * with curvature correction.
  *
- *  Description:  Calculates the groundwave field strength using the flat Earth
- *                approximation with curvature correction.
+ * References:
+ *     - NTIA Report 99-368 "Medium Frequency Propagation Prediction Techniques
+ *       and Antenna Modeling for Intelligent Transportation Systems (ITS)
+ *       Broadcast Applications", Nicholas DeMinco.  Eq (31)
+ *     - J. Wait, "Radiation From a Vertical Antenna Over a Curved Stratified
+ *       Ground", Journal of Research of the National Bureau of Standards Vol 56,
+ *       No. 4, April 1956 Research Paper 2671
  *
- *   References:  99-368 "Medium Frequency Propagation
- *                Prediction Techniques and Antenna Modeling for
- *                Intelligent Transportation Systems (ITS) Broadcast 
- *                Applications", Nicholas DeMinco.  Eq (31)
- *                J. Wait, "Radiation From a Vertical Antenna Over a Curved
- *                Stratified Ground", Journal of Research of the National 
- *                Bureau of Standards Vol 56, No. 4, April 1956 
- *                Research Paper 2671
- *
- *  @param[in]    delta         - Surface impedance
- *  @param[in]    q             - Intermediate value -j*nu*delta
- *  @param[in]    h_1__km       - Height of the higher antenna, in km
- *  @param[in]    h_2__km       - Height of the lower antenna, in km
- *  @param[in]    d__km         - Path distance, in km
- *  @param[in]    k             - Wavenumber, in rad/km
- *  @param[in]    a_e__km       - Effective earth radius, in km
- *
- *  @return       E_gw          - Normalized field strength in mV/m
- *
- *****************************************************************************/
+ * @param[in] delta    Surface impedance
+ * @param[in] q        Intermediate value -j*nu*delta
+ * @param[in] h_1__km  Height of the higher antenna, in km
+ * @param[in] h_2__km  Height of the lower antenna, in km
+ * @param[in] d__km    Path distance, in km
+ * @param[in] k        Wavenumber, in rad/km
+ * @param[in] a_e__km  Effective earth radius, in km
+ * @return             Normalized field strength in mV/m
+ ******************************************************************************/
 double FlatEarthCurveCorrection(
     const std::complex<double> delta,
     const std::complex<double> q,

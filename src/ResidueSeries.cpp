@@ -11,17 +11,17 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
-/******************************************************************************
+/*******************************************************************************
  * Calculates the groundwave field strength using the Residue Series method
  *
- *  @param[in] k           Wavenumber, in rad/km
- *  @param[in] h_1__km     Height of the lower antenna, in km
- *  @param[in] h_2__km     Height of the higher antenna, in km
- *  @param[in] nu          Intermediate value, pow(a_e__km * k / 2.0, THIRD);
- *  @param[in] theta__rad  Angular distance of path, in radians
- *  @param[in] q           Intermediate value -j*nu*delta
- *  @return                Normalized field strength in mV/m
- *****************************************************************************/
+ * @param[in] k           Wavenumber, in rad/km
+ * @param[in] h_1__km     Height of the lower antenna, in km
+ * @param[in] h_2__km     Height of the higher antenna, in km
+ * @param[in] nu          Intermediate value, pow(a_e__km * k / 2.0, THIRD);
+ * @param[in] theta__rad  Angular distance of path, in radians
+ * @param[in] q           Intermediate value -j*nu*delta
+ * @return                Normalized field strength in mV/m
+ ******************************************************************************/
 double ResidueSeries(
     const double k,
     const double h_1__km,

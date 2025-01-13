@@ -11,21 +11,21 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 // TODO: Use references for outputs
-/******************************************************************************
+/*******************************************************************************
  * Compute the LFMF propagation prediction
  *
- *  @param[in]  h_tx__meter  Height of the transmitter, in meter
- *  @param[in]  h_rx__meter  Height of the receiver, in meter
- *  @param[in]  f__mhz       Frequency, in MHz
- *  @param[in]  P_tx__watt   Transmitter power, in watts
- *  @param[in]  N_s          Surface refractivity, in N-Units
- *  @param[in]  d__km        Path distance, in km
- *  @param[in]  epsilon      Relative permittivity
- *  @param[in]  sigma        Conductivity
- *  @param[in]  pol          Polarization: 0 = Horizontal, 1 = Vertical
- *  @param[out] result       Result structure
- *  @return                  Error code
- *****************************************************************************/
+ * @param[in]  h_tx__meter  Height of the transmitter, in meter
+ * @param[in]  h_rx__meter  Height of the receiver, in meter
+ * @param[in]  f__mhz       Frequency, in MHz
+ * @param[in]  P_tx__watt   Transmitter power, in watts
+ * @param[in]  N_s          Surface refractivity, in N-Units
+ * @param[in]  d__km        Path distance, in km
+ * @param[in]  epsilon      Relative permittivity
+ * @param[in]  sigma        Conductivity
+ * @param[in]  pol          Polarization: 0 = Horizontal, 1 = Vertical
+ * @param[out] result       Result structure
+ * @return                  Error code
+ ******************************************************************************/
 ReturnCode LFMF(
     double h_tx__meter,
     double h_rx__meter,
@@ -56,21 +56,21 @@ ReturnCode LFMF(
     );
 }
 
-/******************************************************************************
+/*******************************************************************************
  * Compute the LFMF propagation prediction
  *
- *  @param[in]  h_tx__meter  Height of the transmitter, in meter
- *  @param[in]  h_rx__meter  Height of the receiver, in meter
- *  @param[in]  f__mhz       Frequency, in MHz
- *  @param[in]  P_tx__watt   Transmitter power, in watts
- *  @param[in]  N_s          Surface refractivity, in N-Units
- *  @param[in]  d__km        Path distance, in km
- *  @param[in]  epsilon      Relative permittivity
- *  @param[in]  sigma        Conductivity
- *  @param[in]  pol          Polarization: 0 = Horizontal, 1 = Vertical
- *  @param[out] result       Result structure
- *  @return                  Error code
- *****************************************************************************/
+ * @param[in]  h_tx__meter  Height of the transmitter, in meter
+ * @param[in]  h_rx__meter  Height of the receiver, in meter
+ * @param[in]  f__mhz       Frequency, in MHz
+ * @param[in]  P_tx__watt   Transmitter power, in watts
+ * @param[in]  N_s          Surface refractivity, in N-Units
+ * @param[in]  d__km        Path distance, in km
+ * @param[in]  epsilon      Relative permittivity
+ * @param[in]  sigma        Conductivity
+ * @param[in]  pol          Polarization: 0 = Horizontal, 1 = Vertical
+ * @param[out] result       Result structure
+ * @return                  Error code
+ ******************************************************************************/
 ReturnCode LFMF_CPP(
     const double h_tx__meter,
     const double h_rx__meter,
@@ -170,14 +170,14 @@ ReturnCode LFMF_CPP(
     return SUCCESS;
 }
 
-/******************************************************************************
- *  Relative epsilon comparisons method
+/*******************************************************************************
+ * Relative epsilon comparisons method
  *
- *  @param[in] A           First double to compare
- *  @param[in] B           Second double to compare
- *  @param[in] maxRelDiff  Maximum relative difference, defaults to DBL_EPSILON
- *  @return                If it is equal of the two doubles
- *****************************************************************************/
+ * @param[in] A           First double to compare
+ * @param[in] B           Second double to compare
+ * @param[in] maxRelDiff  Maximum relative difference, defaults to DBL_EPSILON
+ * @return                If it is equal of the two doubles
+ ******************************************************************************/
 bool AlmostEqualRelative(
     const double A, const double B, const double maxRelDiff
 ) {
