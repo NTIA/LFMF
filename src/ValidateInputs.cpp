@@ -64,7 +64,7 @@ ReturnCode ValidateInput(
  *
  * @param[in] pol  Polarization
  * @return         Return code
- *****************************************************************************/
+ ******************************************************************************/
 ReturnCode ValidatePolarization(const int pol) {
     if (pol != POLARIZATION__HORIZONTAL && pol != POLARIZATION__VERTICAL)
         return ERROR__POLARIZATION;
