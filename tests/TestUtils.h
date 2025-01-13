@@ -41,6 +41,7 @@ struct LFMFTestData {
 // clang-format on
 
 std::vector<LFMFTestData> ReadLFMFTestData(const std::string &filename);
-
+std::vector<LFMFTestData> ReadLFMFValidationData(const std::string &filename);
 void AppendDirectorySep(std::string &str);
 std::string GetDataDirectory();
+std::string GetLocalDataDirectory();

@@ -1,42 +1,33 @@
 /** @file TestLFMFPolarizationHorizontal.cpp
- * Implements the google tests from ITS.Propagation.LFMF.
+ * TODO
  */
 
-#include "LFMFGTest.h"
+#include "TestUtils.h"
 
-/******************************************************************************
- *
- *  Description:  The purpose of this is to ensure that the LFMF model
- *                executes the same results as matlab code.
- *                Test Data are from https://github.com/eeveetza/LFMFSmoothEarth.
- *                Polarization:   Horizontal
- *                Lower antenna:  0, in meter
- *                Higher antenna: 0, in meter
- *
- *****************************************************************************/
+/*******************************************************************************
+ * These tests, disabled by default, test this library against results generated
+ * by an an external, independently-developed MATLAB implementation. These are
+ * used during refactoring to ensure no breaking changes were accidentally made.
+ ******************************************************************************/
 class TestLFMFPolarizationHorizontal: public ::testing::Test {
     protected:
-    void SetUp() override {
-        // Load test data from CSV
-        testData = ReadLFMFInputsAndResult(fileName);
-    }
+        void SetUp() override {
+            
+            // Load test data from CSV
+            testData = ReadLFMFValidationData(fileName);
+        }
 
-    // Vector to hold test data
-    std::vector<LFMFInputsAndResult> testData;
-
-    std::string fileName = "ValidationPolarizationHorizontal.csv";
+        // Vector to hold test data
+        std::vector<LFMFTestData> testData;
+        std::string fileName = "ValidationPolarizationHorizontal.csv";
 };
 
-/******************************************************************************
- *
- *  Description:  Test case to verify LFMF Flat earth curve method results are correct
- *
- *****************************************************************************/
+/** Test case to verify LFMF Flat earth curve method results are correct */
 TEST_F(TestLFMFPolarizationHorizontal, FlatEarthCurveMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     for (const auto &data : testData) {
-        if (data.expectedResult.method == METHOD__FLAT_EARTH_CURVE) {
+        if (data.method == METHOD__FLAT_EARTH_CURVE) {
             Result result;
             int rtn = LFMF(
                 data.h_tx__meter,
@@ -52,24 +43,20 @@ TEST_F(TestLFMFPolarizationHorizontal, FlatEarthCurveMethodEquivalentToMatLAB) {
             );
 
             EXPECT_EQ(rtn, SUCCESS);
-            compareDouble(data.expectedResult.A_btl__db, result.A_btl__db);
-            compareDouble(data.expectedResult.E_dBuVm, result.E_dBuVm);
-            compareDouble(data.expectedResult.P_rx__dbm, result.P_rx__dbm);
-            EXPECT_EQ(result.method, data.expectedResult.method);
+            EXPECT_NEAR(data.A_btl__db, result.A_btl__db, ABSTOL_DBL);
+            EXPECT_NEAR(data.E_dBuVm, result.E_dBuVm, ABSTOL_DBL);
+            EXPECT_NEAR(data.P_rx__dbm, result.P_rx__dbm, ABSTOL_DBL);
+            EXPECT_EQ(result.method, data.method);
         }
     }
 };
 
-/******************************************************************************
- *
- *  Description:  Test case to verify LFMF Residue series method results are correct
- *
- *****************************************************************************/
+/** Test case to verify LFMF Residue series method results are correct */
 TEST_F(TestLFMFPolarizationHorizontal, ResidueSeriesMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     for (const auto &data : testData) {
-        if (data.expectedResult.method == METHOD__RESIDUE_SERIES) {
+        if (data.method == METHOD__RESIDUE_SERIES) {
             Result result;
             int rtn = LFMF(
                 data.h_tx__meter,
@@ -85,10 +72,10 @@ TEST_F(TestLFMFPolarizationHorizontal, ResidueSeriesMethodEquivalentToMatLAB) {
             );
 
             EXPECT_EQ(rtn, SUCCESS);
-            compareDouble(data.expectedResult.A_btl__db, result.A_btl__db);
-            compareDouble(data.expectedResult.E_dBuVm, result.E_dBuVm);
-            compareDouble(data.expectedResult.P_rx__dbm, result.P_rx__dbm);
-            EXPECT_EQ(result.method, data.expectedResult.method);
+            EXPECT_NEAR(data.A_btl__db, result.A_btl__db, ABSTOL_DBL);
+            EXPECT_NEAR(data.E_dBuVm, result.E_dBuVm, ABSTOL_DBL);
+            EXPECT_NEAR(data.P_rx__dbm, result.P_rx__dbm, ABSTOL_DBL);
+            EXPECT_EQ(result.method, data.method);
         }
     }
 };

@@ -8,10 +8,10 @@ proplib_message("Configuring library tests ${TEST_NAME}")
 ## Do not include the source and header files of the library under test.
 add_executable(
     ${TEST_NAME}    
-    # "TestLFMFPolarizationHorizontal.cpp"
-    # "TestLFMFPolarizationHorizontalMax.cpp"
-    # "TestLFMFPolarizationVertical.cpp"
-    # "TestLFMFPolarizationVerticalMax.cpp"
+    "TestLFMFPolarizationHorizontal.cpp"
+    "TestLFMFPolarizationHorizontalMax.cpp"
+    "TestLFMFPolarizationVertical.cpp"
+    "TestLFMFPolarizationVerticalMax.cpp"
     "TestLFMFReturnCode.cpp"
     "TestUtils.cpp"
     "TestUtils.h"
