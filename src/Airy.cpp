@@ -1,29 +1,30 @@
 /** @file Airy.cpp
- * Implements the model from ITS.Propagation.LFMF.
+ * Implements a function to calculate Airy functions and their derivatives.
  */
 
 #include "LFMF.h"
 
 #include <cmath>    // for abs, cos, exp, pow, sin, sqrt
 #include <complex>  // for std::arg, std::complex
-// TODO verify doxygen output is as-expected here
+
 namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
 /*******************************************************************************
- * Finds the Airy, Bairy, Wi(1) and Wi(2) functions and their derivatives.
+ * Finds the functions and their derivatives for Airy functions of the first,
+ * second, and third (following Hufford) kind.
  * 
- * Function accepts a complex input argument and computes the result from a
+ * The function accepts a complex input argument and computes the result from a
  * shifted Taylor series or by asymptotic approximation depending of the
  * location of the input argument.
  *
  * This routine determines the so-called "Airy Functions of the third kind"
- * Wi(1) and Wi(2) that are found in equation 38 of NTIA Report 87-219
- * "A General Theory of Radio Propagation through a Stratified Atmosphere",
+ * @f$ Wi(1) @f$ and @f$ Wi(2) @f$  that are found in equation 38 of NTIA Report
+ * 87-219 "A General Theory of Radio Propagation through a Stratified Atmosphere",
  * George Hufford, July 1987.
  *
- * The Airy function that appeared in the original FORTRAN GWINT and GWRES
+ * The Airy function that appeared in the original FORTRAN `GWINT` and `GWRES`
  * implementations had the switches all mangled from what George Hufford had in
  * mind. This routine has the corrected switches. Please see the Airy function
  * code that appears in the appendix of OT/ITS RR 11 "A Wave Hop Propagation
@@ -34,27 +35,29 @@ namespace LFMF {
  * @param[in] scaling  Type of scaling to use
  * @return             The desired Airy function calculated at Z
  *
- * @note A note on scaling the output from this program
+ * @note The following is a note on scaling the output from this program.
  *
  * There is a definitional problem with the Airy function which is inevitable
  * relative to how it was defined in the original LFMF code originated with
- * the Hufford's AIRY subroutine.
+ * the Hufford's `AIRY` subroutine.
  *
- * Using the scaling equal to HUFFORD in this program follows the definitions of
- * Wi(1) and Wi(2) as defined by Hufford (87-219)
+ * Using the scaling equal to `HUFFORD` in this program follows the definitions of
+ * @f$ Wi^{(1)} @f$ and @f$ Wi^{(2)} @f$ as defined by Hufford (87-219).
  *
- * Using the scaling equal to WAIT in this program uses the definitions of W1 and
- * W2 defined in DeMinco (99-368) and in the original LFMF code following Berry via Wait.
+ * Using the scaling equal to `WAIT` in this program uses the definitions of
+ * @f$ W_1 @f$ and @f$ W_2 @f$ defined in DeMinco (99-368) and in the original
+ * LFMF code following Berry via Wait.
  *
- * The two solutions differ by a constant. As Hufford notes concerning Wi(1) and
- * Wi(2) in 87-219:
+ * The two solutions differ by a constant. As Hufford notes concerning
+ * @f$ Wi^{(1)} @f$ and @f$ Wi^{(2)} @f$ in 87-219:
  *
- * "Except for multiplicative constants they correspond to what Fock (1965) calls w1
- * and w2 and to what Wait (1962) calls w2 and w1"
+ * > "Except for multiplicative constants they correspond to what Fock (1965)
+ * > calls W1 and W2 and to what Wait (1962) calls W2 and W1.
  *
  * The following are the multiplicative constants that allow for the translation
- * between Hufford Wi(2) and Wi(1) with Wait W1 and W2, respectively. These are
- * given here as a reference if this function is used for programs other than LFMF.
+ * between Hufford @f$ Wi^{(1)} @f$ and @f$ Wi^{(2)} @f$ with Wait @f$ w_1 @f$
+ * and @f$ w_2 @f$, respectively. These are given here as a reference if this
+ * function is used for programs other than LFMF.
  *
  * ```cpp
  * // Wait
@@ -81,8 +84,9 @@ namespace LFMF {
  * Airy functions of the "3rd kind" abundantly clear please examine the
  * following examples.
  *
- * For Z = 8.0 + 8.0 i the Asymptotic Solution is used
+ * For @f$ z = 8.0 + 8.0i @f$ the Asymptotic Solution is used.
  *
+ * ```text
  * Ai( 8.0 + 8.0 i) =  6.576933e-007 +  9.312331e-006 i
  * Ai'(8.0 + 8.0 i) =  9.79016e-006  + -2.992170e-005 i
  * Bi( 8.0 + 8.0 i) = -1.605154e+003 + -4.807200e+003 i
@@ -91,9 +95,12 @@ namespace LFMF {
  * Wi(2)(8.0 + 8.0 i) =  4.807200e+003 + -1.605154e+003 i
  * Ai(z) - j*Bi(z) = -4.807200e+003 +  1.605154e+003 i
  * Ai(z) + j*Bi(z) =  4.807200e+003 + -1.605154e+003 i
+ * ```
+ * 
+ * For @f$ z = 1.0 - 2.0i @f$ the Taylor series with a shifted center of
+ * expansion solution is used.
  *
- * For Z = 1.0 - 2.0 i the Taylor series with a shifted center of expansion solution used.
- *
+ * ```text
  * Ai( 1.0 - 2.0 i) = -2.193862e-001 + 1.753859e-001 i
  * Ai'(1.0 - 2.0 i) =  0.170445 + -0.387622 i
  * Bi( 1.0 - 2.0 i) =  4.882205e-002 + -1.332740e-001 i
@@ -102,6 +109,7 @@ namespace LFMF {
  * Wi(2)(1.0 - 2.0 i) = -8.611221e-002 + 2.242079e-001 i
  * Ai(z) - j*Bi(z) = -3.526603e-001 + 1.265639e-001 i
  * Ai(z) + j*Bi(z) = -8.611221e-002 + 2.242080e-001 i
+ * ```
  ******************************************************************************/
 std::complex<double> Airy(
     const std::complex<double> Z,
