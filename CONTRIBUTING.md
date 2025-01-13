@@ -128,25 +128,22 @@ repository. For details about wrapper repositories, refer to their own README fi
 
 ```bash
 app/                         # The command-line driver which can run the library
-  data/                      # Example input and output files for use with the driver
   include/                   # Headers used by the command-line driver
   src/                       # Source code for the command-line driver
   tests/                     # Header and source files for testing the command-line driver
   CMakeLists.txt             # Configuration for the command-line driver and its tests
-  README.md                  # Usage information for the command-line driver
 docs/
   CMakeLists.txt             # Doxygen configuration
   ...                        # Static files (images, HTML, CS, Markdown) used by Doxygen
 extern/
-  ...                        # External Git submodules/dependencies
+  test-data/                 # Git submodule containing test data files shared with wrappers
+  ...                        # Other external Git submodules/dependencies
 include/
   <HeaderFile>.h             # Library interface header file goes here, e.g. "ITM.h"
 src/
   <SourceFiles>.cpp          # Source files go here, e.g. "LongleyRice.cpp" and "FreeSpaceLoss.cpp"
   CMakeLists.txt             # Configures cross-platform build
 tests/
-  data/
-    <TestDataFiles>.csv      # Testing data goes here. Does not have to be CSV.
   <TestFiles>.cpp            # Unit tests, usually one test file per source file.
   <TestFiles>.h              # Any headers used by tests go here as well.
   CMakeLists.txt             # CTest+GTest config. Files containing tests must be included here.
