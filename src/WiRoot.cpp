@@ -10,24 +10,19 @@
 namespace ITS {
 namespace Propagation {
 namespace LFMF {
-// TODO add latex and confirm doxygen output
-// TODO rewrite signature to avoid passing pointers
+
 /*******************************************************************************
- * Finds the roots to the equation Wi'(ti) - q*Wi(ti) = 0
+ * Finds the roots to the equation @f$ Wi'(ti) - q*Wi(ti) = 0 @f$
  *
- * The parameter i selects the ith root of the equation. The function Wi(ti) is
- * the "Airy function of the third kind" as defined by Hufford[1] and Wait. The
- * root is found by iteration starting from a real root.
+ * The parameter i selects the ith root of the equation. The function
+ * @f$ Wi(ti) @f$ is the "Airy function of the third kind" as defined by Hufford[1]
+ * and Wait. The root is found by iteration starting from a real root.
  *
- * @note Although roots that are found for W1 (Wait) and Wi(2) (Hufford) will be
- * equal, and the roots found for W2 (Wait) and Wi(1) (Hufford) will be equal,
- * the return values for *Wi and *DWi will not be the same. The input parameters
- * for kind and scale are used here as they are in Airy() for consistency.
- *
- * References:
- *     - "Airy Functions of the third kind" are found in equation 38 of NTIA
- *       Report 87-219 "A General Theory of Radio Propagation through a
- *       Stratified Atmosphere", George Hufford, July 1987.
+ * @note Although roots that are found for @f$ W_1 @f$ (Wait) and @f$ Wi^{(2)} @f$
+ * (Hufford) will be equal, and the roots found for @f$ W_2 @f$ (Wait) and
+ * @f$ Wi^{(1)} @f$ (Hufford) will be equal, the return values for `Wi` and `DWi`
+ * will not be the same. The input parameters for kind and scale are used here as
+ * they are in `Airy()` for consistency.
  *
  * @param[in]  i        The ith complex root of Wi'(2)(ti) - q*Wi(2)(ti) starting with 1
  * @param[in]  q        Intermediate value -j*nu*delta
@@ -36,6 +31,12 @@ namespace LFMF {
  * @param[out] DWi      Derivative of "Airy function of the third kind" Wi'(2)(ti)
  * @param[out] Wi       "Airy function of the third kind" Wi(2)(ti)
  * @return              The ith complex root of the "Airy function of the third kind"
+ * 
+ * **References**
+ *     - "Airy Functions of the third kind" are found in equation 38 of [NTIA
+ *       Report 87-219](https://its.ntia.gov/publications/details?pub=2242)
+ *       "A General Theory of Radio Propagation through a Stratified Atmosphere",
+ *       George Hufford, July 1987.
  ******************************************************************************/
 std::complex<double> WiRoot(
     const int i,
@@ -46,15 +47,12 @@ std::complex<double> WiRoot(
     const AiryFunctionScaling scaling
 ) {
     std::complex<double> ph;  // Airy root phase
-    std::complex<double>
-        ti;  // the ith complex root of Wi'(2)(ti) - q*Wi(2)(ti) = 0
-
+    std::complex<double> ti;  // ith cplx root of Wi'(2)(ti) - q*Wi(2)(ti) = 0
     std::complex<double> tw;  // Return variable
-    std::complex<double> A;   // Temp
 
-    double t, tt;  // Temp
-    double eps;    // Temp
-
+    std::complex<double> A;  // Temp
+    double t, tt;            // Temp
+    double eps;              // Temp
     int cnt;                 // Temp
     AiryFunctionKind dkind;  // Temp
 
@@ -207,14 +205,13 @@ std::complex<double> WiRoot(
     // Eqn (14) E(t)  = W2'(t) - q W2(t)
     // Eqn (39) E'(t) = t W2(t) - q W2'(t)
     //////////////////////////////////////////////////////////////////////
-
     do {
         // f(q) = Wi'(ti) - q*Wi(ti)
         Wi = Airy(ti, kind, scaling);
         // f'(q) = tw*Wi(ti) - q*Wi'(ti);
         DWi = Airy(ti, dkind, scaling);
         // The Newton correction factor for iteration f(q)/f'(q)
-        A = (DWi - q * (Wi)) / (ti * (Wi) - q * (DWi));
+        A = (DWi - q * (Wi)) / (ti * (Wi)-q * (DWi));
         ti = ti - A;  // New root guess ti
         cnt++;        // Increment the counter
 
@@ -223,9 +220,8 @@ std::complex<double> WiRoot(
              ));
 
     // Check to see if there if the loop converged on an answer
-    if (cnt
-        == 26)  // The cnt that fails is an arbitrary number most converge in ~5 tries
-    {
+    // The cnt that fails is an arbitrary number; most converge in ~5 tries
+    if (cnt == 26) {
         // No Convergence return 0 + j*0 as the root as TW() did
         tw = std::complex<double>(0.0, 0.0);
     } else {
