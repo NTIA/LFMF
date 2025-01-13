@@ -5,11 +5,8 @@
 #include "TestUtils.h"
 
 /*******************************************************************************
- *
- *  Description:  The purpose of this is to ensure that CMAKE compiles
- *                the LFMF model DLL correctly.
- *                Test Data are stored in CSV format.
- *
+ * These tests ensure that CMAKE compiles the LFMF model DLL correctly.
+ * Data are stored in CSV format and provided in the LFMF-test-data submodule.
  ******************************************************************************/
 class TestLFMFReturnCode: public ::testing::Test {
     protected:
@@ -24,9 +21,7 @@ class TestLFMFReturnCode: public ::testing::Test {
         std::string fileName = "LFMF_Examples.csv";
 };
 
-/** Test case to verify LFMF results are correct
- *
- ******************************************************************************/
+/** Test case to verify LFMF results are correct */
 TEST_F(TestLFMFReturnCode, ReturnSuccess) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
@@ -59,11 +54,7 @@ TEST_F(TestLFMFReturnCode, ReturnSuccess) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input TX terminal height is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input TX terminal height is out of range */
 TEST_F(TestLFMFReturnCode, InvalidTXTerminalHeight) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__TX_TERMINAL_HEIGHT) {
@@ -87,11 +78,7 @@ TEST_F(TestLFMFReturnCode, InvalidTXTerminalHeight) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input RX terminal height is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input RX terminal height is out of range */
 TEST_F(TestLFMFReturnCode, InvalidRXTerminalHeight) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__RX_TERMINAL_HEIGHT) {
@@ -115,11 +102,7 @@ TEST_F(TestLFMFReturnCode, InvalidRXTerminalHeight) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input Frequency is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input Frequency is out of range */
 TEST_F(TestLFMFReturnCode, InvalidFrequency) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__FREQUENCY) {
@@ -143,11 +126,7 @@ TEST_F(TestLFMFReturnCode, InvalidFrequency) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input Transmit power is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input Transmit power is out of range */
 TEST_F(TestLFMFReturnCode, InvalidTransmitPower) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__TX_POWER) {
@@ -171,11 +150,7 @@ TEST_F(TestLFMFReturnCode, InvalidTransmitPower) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input Surface refractivity is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input Surface refractivity is out of range */
 TEST_F(TestLFMFReturnCode, InvalidSurfaceRefractivity) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__SURFACE_REFRACTIVITY) {
@@ -199,11 +174,7 @@ TEST_F(TestLFMFReturnCode, InvalidSurfaceRefractivity) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input Path distance is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input Path distance is out of range */
 TEST_F(TestLFMFReturnCode, InvalidPathDistance) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__PATH_DISTANCE) {
@@ -227,11 +198,7 @@ TEST_F(TestLFMFReturnCode, InvalidPathDistance) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input Epsilon is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input Epsilon is out of range */
 TEST_F(TestLFMFReturnCode, InvalidEpsilon) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__EPSILON) {
@@ -255,11 +222,7 @@ TEST_F(TestLFMFReturnCode, InvalidEpsilon) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input Sigma is out of range
- *
- ******************************************************************************/
+/** Test case to verify LFMF input Sigma is out of range */
 TEST_F(TestLFMFReturnCode, InvalidSigma) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__SIGMA) {
@@ -283,11 +246,7 @@ TEST_F(TestLFMFReturnCode, InvalidSigma) {
     }
 }
 
-/*******************************************************************************
- *
- *  Description:  Test case to verify LFMF input polarization is invalid
- *
- ******************************************************************************/
+/** Test case to verify LFMF input polarization is invalid */
 TEST_F(TestLFMFReturnCode, InvalidPolarization) {
     for (const auto &data : testData) {
         Result result;
