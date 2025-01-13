@@ -1,6 +1,6 @@
 # GitHub Repository Public Release Approval
 
-**Project Name:** NTIA/OSM Research and Development
+**Project Name:** NTIA/OSM Research and Development - Propagation Library
 
 **Software Name:** TODO-TEMPLATE
 
