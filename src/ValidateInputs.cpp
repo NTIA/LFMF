@@ -8,25 +8,29 @@ namespace ITS {
 namespace Propagation {
 namespace LFMF {
 
-/******************************************************************************
+/*******************************************************************************
+ * Validate that model input values are within valid ranges.
  *
- *  Description:  Perform input parameter validation
- *
- *  @param[in]    h_tx__meter   - Height of the transmitter, in meter
- *  @param[in]    h_rx__meter   - Height of the receiver, in meter
- *  @param[in]    f__mhz        - Frequency, in MHz
- *  @param[in]    P_tx__watt    - Transmitter power, in watts
- *  @param[in]    N_s           - Surface refractivity, in N-Units
- *  @param[in]    d__km         - Path distance, in km
- *  @param[in]    epsilon       - Relative permittivity
- *  @param[in]    sigma         - Conductivity
- *
- *  @return       error         - Error code
-*
- *****************************************************************************/
-ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s, double d__km, double epsilon, double sigma)
-{
+ * @param[in] h_tx__meter  Height of the transmitter, in meters
+ * @param[in] h_rx__meter  Height of the receiver, in meters
+ * @param[in] f__mhz       Frequency, in MHz
+ * @param[in] P_tx__watt   Transmitter power, in watts
+ * @param[in] N_s          Surface refractivity, in N-Units
+ * @param[in] d__km        Path distance, in km
+ * @param[in] epsilon      Relative permittivity
+ * @param[in] sigma        Conductivity, in siemens per meter
+ * @return                 Return code
+ ******************************************************************************/
+ReturnCode ValidateInput(
+    const double h_tx__meter,
+    const double h_rx__meter,
+    const double f__mhz,
+    const double P_tx__watt,
+    const double N_s,
+    const double d__km,
+    const double epsilon,
+    const double sigma
+) {
     if (h_tx__meter < 0 || h_tx__meter > 50)
         return ERROR__TX_TERMINAL_HEIGHT;
 
@@ -56,16 +60,12 @@ ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, 
 
 
 /******************************************************************************
+ * Perform input Polarization validation
  *
- *  Description:  Perform input Polarization validation
- *
- *  @param[in]    pol           - Polarization
- *
- *  @return       error         - Error code
-*
+ * @param[in] pol  Polarization
+ * @return         Return code
  *****************************************************************************/
-ReturnCode ValidatePolarization(int pol)
-{
+ReturnCode ValidatePolarization(const int pol) {
     if (pol != POLARIZATION__HORIZONTAL && pol != POLARIZATION__VERTICAL)
         return ERROR__POLARIZATION;
     return SUCCESS;
