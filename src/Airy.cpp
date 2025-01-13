@@ -567,8 +567,10 @@ std::complex<double> Airy(
     //      (ZU.imag() <= 6.35) 6.35 is 5.5/sin(PI/3) which is 0.5 past 5/sin(PI/3)
     if ((ZU.real() >= -6.5) && (ZU.real() <= 7.5) && (ZU.imag() <= 6.35)) {
         // choose center of expansion of the Taylor series
-        CoERealidx = (int)(ZU.real() + std::copysign(0.5, ZU.real()));
-        CoEImagidx = (int)(std::sin(PI / 3.0) * (ZU.imag() + 0.5)
+        CoERealidx
+            = static_cast<int>(ZU.real() + std::copysign(0.5, ZU.real()));
+        CoEImagidx = static_cast<int>(
+            std::sin(PI / 3.0) * (ZU.imag() + 0.5)
         );  // sin(60)*(Z.imag()+0.5)
 
         N = NQTT[CoERealidx + 6]
