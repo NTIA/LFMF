@@ -5,6 +5,7 @@
 
 #include <cfloat>   // for DBL_EPSILON
 #include <complex>  // for std::complex
+#include <string>   // for std::string
 
 namespace ITS {
 namespace Propagation {
