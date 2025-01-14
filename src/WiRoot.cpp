@@ -100,7 +100,6 @@ std::complex<double> WiRoot(
 
     // Verify that the input data is correct
     // Make sure that the desired root is greater than or equal to one
-    // TODO improve error handling
     if (i <= 0) {
         // There is an input parameter error; printf("WiRoot(): The root must be >= 0 (%d)\n", i);
         tw = std::complex<double>(-998.8, -998.8);
