@@ -45,7 +45,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Clone required submodules
+    - name: Clone required submodules # TODO-TEMPLATE: Add test-data submodule here, if needed
       run: |
         git submodule init extern/googletest
         git submodule update
