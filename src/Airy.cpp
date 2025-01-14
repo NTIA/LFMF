@@ -6,7 +6,6 @@
 
 #include <cmath>      // for abs, copysign, cos, exp, pow, sin, sqrt
 #include <complex>    // for std::arg, std::complex
-#include <ostream>    // for std::endl
 #include <sstream>    // for std::ostringstream
 #include <stdexcept>  // for std::invalid_argument, std::range_error
 
@@ -492,7 +491,7 @@ std::complex<double> Airy(
             << static_cast<int>(AiryKind::DWONE) << "), `WTWO` ("
             << static_cast<int>(AiryKind::WTWO) << "), `DWTWO` ("
             << static_cast<int>(AiryKind::DWTWO) << "), not "
-            << static_cast<int>(kind) << std::endl;
+            << static_cast<int>(kind);
         throw std::invalid_argument(oss.str());
     };
 
@@ -503,7 +502,7 @@ std::complex<double> Airy(
             << static_cast<int>(AiryScaling::NONE) << "), `HUFFORD` ("
             << static_cast<int>(AiryScaling::HUFFORD) << "), `WAIT` ("
             << static_cast<int>(AiryScaling::WAIT) << "), not "
-            << static_cast<int>(scaling) << std::endl;
+            << static_cast<int>(scaling);
         throw std::invalid_argument(oss.str());
     };
 

@@ -6,7 +6,6 @@
 
 #include <cmath>      // for abs, cos, pow, sin
 #include <complex>    // for std::complex
-#include <ostream>    // for std::endl
 #include <sstream>    // for std::ostringstream
 #include <stdexcept>  // for std::invalid_argument
 
@@ -109,7 +108,7 @@ std::complex<double> WiRoot(
     if (i <= 0) {
         // Input `i` must be > 0; throw an exception
         std::ostringstream oss;
-        oss << "WiRoot(): The root `i` must be > 0, not " << i << std::endl;
+        oss << "WiRoot(): The root `i` must be > 0, not " << i;
         throw std::invalid_argument(oss.str());
     };
 
@@ -119,7 +118,7 @@ std::complex<double> WiRoot(
         oss << "WiRoot(): `scaling` must be one of `HUFFORD` ("
             << static_cast<int>(AiryScaling::HUFFORD) << ") or `WAIT` ("
             << static_cast<int>(AiryScaling::WAIT) << "), not "
-            << static_cast<int>(scaling) << std::endl;
+            << static_cast<int>(scaling);
         throw std::invalid_argument(oss.str());
     };
 
@@ -129,7 +128,7 @@ std::complex<double> WiRoot(
         oss << "WiRoot(): `kind` must be one of `WTWO` ("
             << static_cast<int>(AiryKind::WTWO) << ") or `WONE` ("
             << static_cast<int>(AiryKind::WONE) << "), not "
-            << static_cast<int>(kind) << std::endl;
+            << static_cast<int>(kind);
         throw std::invalid_argument(oss.str());
     };
     // Input parameters verified
