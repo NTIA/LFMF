@@ -4,8 +4,11 @@
 
 #include "LFMF.h"
 
-#include <cmath>    // for abs, cos, pow, sin
-#include <complex>  // for std::complex
+#include <cmath>      // for abs, cos, pow, sin
+#include <complex>    // for std::complex
+#include <ostream>    // for std::endl
+#include <sstream>    // for std::ostringstream
+#include <stdexcept>  // for std::invalid_argument
 
 namespace ITS {
 namespace Propagation {
@@ -25,15 +28,18 @@ namespace LFMF {
  * kind and scale are used here as they are in `Airy()` for consistency.
  *
  * @param[in]  i        The @f$ i @f$-th complex root of
- *                      @f$ Wi'^{(2)}(ti) - q*Wi^{(2)}(ti) @f$, starting with 1
+ *                      @f$ Wi'^{(2)}(ti) - q*Wi^{(2)}(ti) @f$, starting with 1.
  * @param[in]  q        Intermediate value: @f$ -j \nu \delta @f$
- * @param[in]  kind     Kind of Airy function to use
- * @param[in]  scaling  Type of scaling to use
+ * @param[in]  kind     Kind of Airy function to use, either `WONE` or `WTWO`
+ * @param[in]  scaling  Type of scaling to use, either `HUFFORD` or `WAIT`
  * @param[out] DWi      Derivative of "Airy function of the third kind"
  *                      @f$ Wi'^{(2)}(ti) @f$
  * @param[out] Wi       "Airy function of the third kind" @f$ Wi^{(2)}(ti) @f$
  * @return              The @f$ i @f$-th complex root of the "Airy function of
  *                      the third kind"
+ * 
+ * @throws std::invalid_argument If the values provided for `i`, `kind`, or `scaling`
+ *                               are not valid for this function.
  * 
  * **References**
  *     - "Airy Functions of the third kind" are found in equation 38 of [NTIA
@@ -101,21 +107,30 @@ std::complex<double> WiRoot(
     // Verify that the input data is correct
     // Make sure that the desired root is greater than or equal to one
     if (i <= 0) {
-        // There is an input parameter error; printf("WiRoot(): The root must be >= 0 (%d)\n", i);
-        tw = std::complex<double>(-998.8, -998.8);
-        return tw;
+        // Input `i` must be > 0; throw an exception
+        std::ostringstream oss;
+        oss << "WiRoot(): The root `i` must be > 0, not " << i << std::endl;
+        throw std::invalid_argument(oss.str());
     };
 
     if ((scaling != AiryScaling::HUFFORD) && (scaling != AiryScaling::WAIT)) {
-        // There is an input parameter error; printf("WiRoot(): The scaling must be HUFFORD (%d) or WAIT (%d)\n", HUFFORD, WAIT);
-        tw = std::complex<double>(-997.7, -997.7);
-        return tw;
+        // Input `scaling` is invalid; throw an exception
+        std::ostringstream oss;
+        oss << "WiRoot(): `scaling` must be one of `HUFFORD` ("
+            << static_cast<int>(AiryScaling::HUFFORD) << ") or `WAIT` ("
+            << static_cast<int>(AiryScaling::WAIT) << "), not "
+            << static_cast<int>(scaling) << std::endl;
+        throw std::invalid_argument(oss.str());
     };
 
     if ((kind != AiryKind::WTWO) && (kind != AiryKind::WONE)) {
-        // There is an input parameter error; printf("WiRoot(): The kind must be W1 (%d) or W2 (%d)\n", WONE, WTWO);
-        tw = std::complex<double>(-996.6, -996.6);
-        return tw;
+        // Input `kind` is invalid; throw an exception
+        std::ostringstream oss;
+        oss << "WiRoot(): `kind` must be one of `WTWO` ("
+            << static_cast<int>(AiryKind::WTWO) << ") or `WONE` ("
+            << static_cast<int>(AiryKind::WONE) << "), not "
+            << static_cast<int>(kind) << std::endl;
+        throw std::invalid_argument(oss.str());
     };
     // Input parameters verified
 
