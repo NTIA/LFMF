@@ -45,9 +45,10 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Clone required submodules
+    - name: Clone required submodules # TODO-TEMPLATE: Check required submodules and update if needed
       run: |
         git submodule init extern/googletest
+        git submodule init extern/test-data
         git submodule update
 
     - name: Install CMake
