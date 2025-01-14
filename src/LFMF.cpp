@@ -156,8 +156,8 @@ ReturnCode LFMF_CPP(
     // basic transmission loss is not a function of power/gain, but since electric field strength E_gw is a function of (Gt * Pt),
     //    and Lbtl is a function of 1/E_gw, we add in (Gt * Pt) to remove its effects
     result.A_btl__db = 10 * std::log10(P_tx__watt * G_tx)
-                      + 10 * std::log10(ETA * 4 * PI) + 20 * std::log10(f__hz)
-                      - 20 * std::log10(E_gw / 1000) - 20 * std::log10(C);
+                     + 10 * std::log10(ETA * 4 * PI) + 20 * std::log10(f__hz)
+                     - 20 * std::log10(E_gw / 1000) - 20 * std::log10(C);
 
     // the 60 constant comes from converting field strength from mV/m to dB(uV/m) thus 20*log10(1e3)
     result.E_dBuVm = 60 + 20 * std::log10(E_gw);
