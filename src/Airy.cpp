@@ -4,8 +4,11 @@
 
 #include "LFMF.h"
 
-#include <cmath>    // for abs, copysign, cos, exp, pow, sin, sqrt
-#include <complex>  // for std::arg, std::complex
+#include <cmath>      // for abs, copysign, cos, exp, pow, sin, sqrt
+#include <complex>    // for std::arg, std::complex
+#include <ostream>    // for std::endl
+#include <sstream>    // for std::ostringstream
+#include <stdexcept>  // for std::invalid_argument
 
 namespace ITS {
 namespace Propagation {
@@ -32,8 +35,11 @@ namespace LFMF {
  *
  * @param[in] Z        Complex input argument
  * @param[in] kind     Switch indicating the type of Airy function to solve
- * @param[in] scaling  Type of scaling to use
+ * @param[in] scaling  Type of scaling to use (any valid enum value)
  * @return             The desired Airy function calculated at Z
+ * 
+ * @throws std::invalid_argument If the values provided for `kind` or `scaling`
+ *                               are not valid for this function.
  *
  * @note The following is a note on scaling the output from this program.
  *
@@ -471,17 +477,32 @@ std::complex<double> Airy(
     };
 
     ////////////////////////////////////////
-    // Validate input - kind & derivative //
+    // Validate inputs - kind & scaling   //
     ////////////////////////////////////////
     if ((kind != AiryKind::AIRY) && (kind != AiryKind::BAIRY)
         && (kind != AiryKind::WONE) && (kind != AiryKind::DWONE)
         && (kind != AiryKind::WTWO) && (kind != AiryKind::DWTWO)) {
-        return std::complex<double>(0, 0);  // Airy Error: Invalid kind value
+        std::ostringstream oss;
+        oss << "Airy(): `kind` must be one of `AIRY` ("
+            << static_cast<int>(AiryKind::AIRY) << "), `BAIRY` ("
+            << static_cast<int>(AiryKind::BAIRY) << "), `WONE` ("
+            << static_cast<int>(AiryKind::WONE) << "), `DWONE` ("
+            << static_cast<int>(AiryKind::DWONE) << "), `WTWO` ("
+            << static_cast<int>(AiryKind::WTWO) << "), `DWTWO` ("
+            << static_cast<int>(AiryKind::DWTWO) << "), not "
+            << static_cast<int>(kind) << std::endl;
+        throw std::invalid_argument(oss.str());
     };
 
     if ((scaling != AiryScaling::NONE) && (scaling != AiryScaling::HUFFORD)
         && (scaling != AiryScaling::WAIT)) {
-        return std::complex<double>(0, 0);  // Airy Error: Invalid scaling value
+        std::ostringstream oss;
+        oss << "Airy(): `scaling` must be one of `NONE` ("
+            << static_cast<int>(AiryScaling::NONE) << "), `HUFFORD` ("
+            << static_cast<int>(AiryScaling::HUFFORD) << "), `WAIT` ("
+            << static_cast<int>(AiryScaling::WAIT) << "), not "
+            << static_cast<int>(scaling) << std::endl;
+        throw std::invalid_argument(oss.str());
     };
 
     // Set a flag and index value to control function flow based on whether or not
