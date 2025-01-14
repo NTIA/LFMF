@@ -24,8 +24,6 @@ constexpr double PI = 3.1415926535897932384;        ///< Approximate value of @f
 constexpr double epsilon_0 = 8.854187817e-12;       ///< Vacuum permittivity (F/m)
 constexpr double a_0__km = 6370;                    ///< Earth radius, in km
 constexpr double C = 299792458.0;                   ///< Speed of light (m/s)
-constexpr double D2R = PI / 180.0;                  ///< Approximate convert ratio from Degrees to Radians
-constexpr double R2D = 180.0 / PI;                  ///< Approximate convert ratio from Radians to Degrees
 constexpr double ETA = 119.9169832 * PI;            ///< Intrinsic impedance of free space (ohms)
 
 constexpr int YES = 1;                              ///< Find the derivative i.e., Ai'() or Bi'()
