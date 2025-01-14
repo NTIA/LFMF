@@ -10,7 +10,7 @@
 namespace ITS {
 namespace Propagation {
 namespace LFMF {
-// TODO: Use references for outputs
+
 /*******************************************************************************
  * Compute the LFMF propagation prediction
  *
@@ -36,7 +36,7 @@ ReturnCode LFMF(
     const double epsilon,
     const double sigma,
     const int pol,
-    Result *result
+    Result &result
 ) {
     ReturnCode rtn = ValidatePolarization(pol);
     if (rtn != SUCCESS)
@@ -84,7 +84,7 @@ ReturnCode LFMF_CPP(
     const double epsilon,
     const double sigma,
     const Polarization pol,
-    Result *result
+    Result &result
 ) {
     ReturnCode rtn = ValidateInput(
         h_tx__meter, h_rx__meter, f__mhz, P_tx__watt, N_s, d__km, epsilon, sigma
@@ -131,10 +131,10 @@ ReturnCode LFMF_CPP(
         E_gw = FlatEarthCurveCorrection(
             delta, q, h_1__km, h_2__km, d__km, k, a_e__km
         );
-        result->method = SolutionMethod::FLAT_EARTH_CURVE;
+        result.method = SolutionMethod::FLAT_EARTH_CURVE;
     } else {
         E_gw = ResidueSeries(k, h_1__km, h_2__km, nu, theta__rad, q);
-        result->method = SolutionMethod::RESIDUE_SERIES;
+        result.method = SolutionMethod::RESIDUE_SERIES;
     }
 
     // Antenna gains
@@ -155,17 +155,17 @@ ReturnCode LFMF_CPP(
     // with all values entered using base units: watts, Hz, and V/m
     // basic transmission loss is not a function of power/gain, but since electric field strength E_gw is a function of (Gt * Pt),
     //    and Lbtl is a function of 1/E_gw, we add in (Gt * Pt) to remove its effects
-    result->A_btl__db = 10 * std::log10(P_tx__watt * G_tx)
+    result.A_btl__db = 10 * std::log10(P_tx__watt * G_tx)
                       + 10 * std::log10(ETA * 4 * PI) + 20 * std::log10(f__hz)
                       - 20 * std::log10(E_gw / 1000) - 20 * std::log10(C);
 
     // the 60 constant comes from converting field strength from mV/m to dB(uV/m) thus 20*log10(1e3)
-    result->E_dBuVm = 60 + 20 * std::log10(E_gw);
+    result.E_dBuVm = 60 + 20 * std::log10(E_gw);
 
     // Note power is a function of frequency.  42.8 comes from MHz to hz, power in dBm, and the remainder from
     // the collection of constants in the derivation of the below equation.
-    result->P_rx__dbm
-        = result->E_dBuVm + G_rx__dbi - 20.0 * std::log10(f__hz) + 42.8;
+    result.P_rx__dbm
+        = result.E_dBuVm + G_rx__dbi - 20.0 * std::log10(f__hz) + 42.8;
 
     return SUCCESS;
 }

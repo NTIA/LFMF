@@ -43,7 +43,7 @@ TEST_F(TestLFMFReturnCode, ReturnSuccess) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, data.rtn);
@@ -71,7 +71,7 @@ TEST_F(TestLFMFReturnCode, InvalidTXTerminalHeight) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__TX_TERMINAL_HEIGHT);
@@ -95,7 +95,7 @@ TEST_F(TestLFMFReturnCode, InvalidRXTerminalHeight) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__RX_TERMINAL_HEIGHT);
@@ -119,7 +119,7 @@ TEST_F(TestLFMFReturnCode, InvalidFrequency) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__FREQUENCY);
@@ -143,7 +143,7 @@ TEST_F(TestLFMFReturnCode, InvalidTransmitPower) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__TX_POWER);
@@ -167,7 +167,7 @@ TEST_F(TestLFMFReturnCode, InvalidSurfaceRefractivity) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__SURFACE_REFRACTIVITY);
@@ -191,7 +191,7 @@ TEST_F(TestLFMFReturnCode, InvalidPathDistance) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__PATH_DISTANCE);
@@ -215,7 +215,7 @@ TEST_F(TestLFMFReturnCode, InvalidEpsilon) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__EPSILON);
@@ -239,7 +239,7 @@ TEST_F(TestLFMFReturnCode, InvalidSigma) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__SIGMA);
@@ -262,7 +262,7 @@ TEST_F(TestLFMFReturnCode, InvalidPolarization) {
             data.epsilon,
             data.sigma,
             -1,
-            &result
+            result
         );
 
         EXPECT_EQ(rtn, ERROR__POLARIZATION);
@@ -277,7 +277,7 @@ TEST_F(TestLFMFReturnCode, InvalidPolarization) {
             data.epsilon,
             data.sigma,
             3,
-            &result
+            result
         );
 
         EXPECT_EQ(rtn, ERROR__POLARIZATION);
@@ -294,7 +294,7 @@ TEST_F(TestLFMFReturnCode, InvalidPolarization) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, ERROR__POLARIZATION);

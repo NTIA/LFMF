@@ -137,7 +137,7 @@ DLLEXPORT ReturnCode LFMF(
     const double epsilon,
     const double sigma,
     const int pol,
-    Result *result
+    Result &result
 );
 
 DLLEXPORT char *GetReturnStatusCharArray(const int code);
@@ -156,7 +156,7 @@ ReturnCode LFMF_CPP(
     const double epsilon,
     const double sigma,
     const Polarization pol,
-    Result *result
+    Result &result
 );
 std::string GetReturnStatus(const int code);
 double FlatEarthCurveCorrection(

@@ -39,7 +39,7 @@ TEST_F(TestLFMFPolarizationVertical, FlatEarthCurveMethodEquivalentToMatLAB) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, SUCCESS);
@@ -68,7 +68,7 @@ TEST_F(TestLFMFPolarizationVertical, ResidueSeriesMethodEquivalentToMatLAB) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, SUCCESS);

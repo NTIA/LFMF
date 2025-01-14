@@ -41,7 +41,7 @@ TEST_F(
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, SUCCESS);
@@ -70,7 +70,7 @@ TEST_F(TestLFMFPolarizationVerticalMax, ResidueSeriesMethodEquivalentToMatLAB) {
                 data.epsilon,
                 data.sigma,
                 data.pol,
-                &result
+                result
             );
 
             EXPECT_EQ(rtn, SUCCESS);

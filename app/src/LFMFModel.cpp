@@ -41,7 +41,7 @@ ReturnCode CallLFMFModel(LFMFParams &lfmf_params, Result &result) {
         lfmf_params.epsilon,
         lfmf_params.sigma,
         lfmf_params.pol,
-        &result
+        result
     );
 
     return rtn;
