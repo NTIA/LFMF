@@ -33,7 +33,7 @@ TEST_F(TestLFMFReturnCode, ReturnSuccess) {
         if (data.rtn == SUCCESS) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -61,7 +61,7 @@ TEST_F(TestLFMFReturnCode, InvalidTXTerminalHeight) {
         if (data.rtn == ERROR__TX_TERMINAL_HEIGHT) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -85,7 +85,7 @@ TEST_F(TestLFMFReturnCode, InvalidRXTerminalHeight) {
         if (data.rtn == ERROR__RX_TERMINAL_HEIGHT) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -109,7 +109,7 @@ TEST_F(TestLFMFReturnCode, InvalidFrequency) {
         if (data.rtn == ERROR__FREQUENCY) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -133,7 +133,7 @@ TEST_F(TestLFMFReturnCode, InvalidTransmitPower) {
         if (data.rtn == ERROR__TX_POWER) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -157,7 +157,7 @@ TEST_F(TestLFMFReturnCode, InvalidSurfaceRefractivity) {
         if (data.rtn == ERROR__SURFACE_REFRACTIVITY) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -181,7 +181,7 @@ TEST_F(TestLFMFReturnCode, InvalidPathDistance) {
         if (data.rtn == ERROR__PATH_DISTANCE) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -205,7 +205,7 @@ TEST_F(TestLFMFReturnCode, InvalidEpsilon) {
         if (data.rtn == ERROR__EPSILON) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -229,7 +229,7 @@ TEST_F(TestLFMFReturnCode, InvalidSigma) {
         if (data.rtn == ERROR__SIGMA) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -284,7 +284,7 @@ TEST_F(TestLFMFReturnCode, InvalidPolarization) {
         if (data.rtn == ERROR__POLARIZATION) {
             Result result;
 
-            int rtn = LFMF(
+            int rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,

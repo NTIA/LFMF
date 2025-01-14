@@ -161,6 +161,6 @@ void WriteLFMFOutputs(std::ofstream &fp, const Result &result) {
     fp PRINT "Received power" SETW13 std::fixed << std::setprecision(2)
                                                 << result.P_rx__dbm << "[dB]";
     fp PRINT "Solution method" SETW13 std::fixed
-        << std::setprecision(0) << result.method
+        << std::setprecision(0) << static_cast<int>(result.method)
         << "[0 = Flat earth with curve correction, 1 = Residue series]";
 }
