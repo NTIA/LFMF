@@ -66,7 +66,7 @@ set(LIB_NAME "LFMF")                        # Name of library/target
 set(LIB_NAMESPACE "ITS.Propagation")        # Namespace for the named library
 project(
     "${LIB_NAMESPACE}.${LIB_NAME}"
-    VERSION 1.0
+    VERSION 1.1
     DESCRIPTION "Low Frequency / Medium Frequency (LF/MF) Propagation Model"
     HOMEPAGE_URL "https://ntia.github.io/propagation-library-wiki/models/LFMF"
     LANGUAGES "CXX"
