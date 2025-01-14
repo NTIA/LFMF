@@ -1,12 +1,13 @@
 /** @file TestLFMFReturnCode.cpp
- * Implements the google tests from ITS.Propagation.LFMF.
+ * Test against a set of example cases, including intentionally triggering errors.
  */
 
 #include "TestUtils.h"
 
 /*******************************************************************************
- * These tests ensure that CMAKE compiles the LFMF model DLL correctly.
- * Data are stored in CSV format and provided in the LFMF-test-data submodule.
+ * These tests evaluate a number of expected input/output combinations against
+ * the current version of the LF/MF code, including combinations which are
+ * expected to produce specific errors.
  ******************************************************************************/
 class TestLFMFReturnCode: public ::testing::Test {
     protected:

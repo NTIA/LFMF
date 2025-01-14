@@ -1,5 +1,5 @@
 /** @file TestLFMFPolarizationVertical.cpp
- * TODO
+ * Validation tests for vertical polarization and low antennas
  */
 
 #include "TestUtils.h"

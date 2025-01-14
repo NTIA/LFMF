@@ -1,5 +1,5 @@
 /** @file TestLFMFPolarizationVerticalMax.cpp
- * Implements the google tests from ITS.Propagation.LFMF.
+ * Validation tests for vertical polarization and max-height RX.
  */
 
 #include "TestUtils.h"

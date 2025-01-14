@@ -1,5 +1,5 @@
 /** @file TestLFMFPolarizationHorizontalMax.cpp
- * TODO
+ * Validation tests for horizontal polarization and max-height TX.
  */
 
 #include "TestUtils.h"
