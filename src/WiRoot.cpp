@@ -18,11 +18,11 @@ namespace LFMF {
  * @f$ Wi(ti) @f$ is the "Airy function of the third kind" as defined by Hufford
  * [1] and Wait. The root is found by iteration starting from a real root.
  *
- * @note Although roots that are found for @f$ W_1 @f$ (Wait) and @f$ Wi^{(2)} @f$
- * (Hufford) will be equal, and the roots found for @f$ W_2 @f$ (Wait) and
- * @f$ Wi^{(1)} @f$ (Hufford) will be equal, the return values for `Wi` and `DWi`
- * will not be the same. The input parameters for kind and scale are used here as
- * they are in `Airy()` for consistency.
+ * @note Although roots that are found for @f$ w_1 @f$ (Wait) and
+ * @f$ \mathrm{Wi}^{(2)} @f$ (Hufford) will be equal, and the roots found for
+ * @f$ w_2 @f$ (Wait) and @f$ \mathrm{Wi}^{(1)} @f$ (Hufford) will be equal, the
+ * return values for `Wi` and `DWi` will not be the same. The input parameters for
+ * kind and scale are used here as they are in `Airy()` for consistency.
  *
  * @param[in]  i        The @f$ i @f$-th complex root of
  *                      @f$ Wi'^{(2)}(ti) - q*Wi^{(2)}(ti) @f$, starting with 1
@@ -40,6 +40,10 @@ namespace LFMF {
  *       Report 87-219](https://its.ntia.gov/publications/details?pub=2242)
  *       "A General Theory of Radio Propagation through a Stratified Atmosphere",
  *       George Hufford, July 1987.
+ * 
+ * @see ITS::Propagation::LFMF::AiryFunctionKind
+ * @see ITS::Propagation::LFMF::AiryFunctionScaling
+ * @see ITS::Propagation::LFMF::Airy
  ******************************************************************************/
 std::complex<double> WiRoot(
     const int i,

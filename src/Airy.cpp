@@ -21,8 +21,8 @@ namespace LFMF {
  *
  * This routine determines the so-called "Airy Functions of the third kind"
  * @f$ Wi(1) @f$ and @f$ Wi(2) @f$  that are found in equation 38 of NTIA Report
- * 87-219 "A General Theory of Radio Propagation through a Stratified Atmosphere",
- * George Hufford, July 1987.
+ * 87-219 "A General Theory of Radio Propagation through a Stratified
+ * Atmosphere", George Hufford, July 1987.
  *
  * The Airy function that appeared in the original FORTRAN `GWINT` and `GWRES`
  * implementations had the switches all mangled from what George Hufford had in
@@ -41,23 +41,24 @@ namespace LFMF {
  * relative to how it was defined in the original LFMF code originated with
  * the Hufford's `AIRY` subroutine.
  *
- * Using the scaling equal to `HUFFORD` in this program follows the definitions of
- * @f$ Wi^{(1)} @f$ and @f$ Wi^{(2)} @f$ as defined by Hufford (87-219).
+ * Using the scaling equal to `HUFFORD` in this program follows the definitions
+ * of @f$ \mathrm{Wi}^{(1)} @f$ and @f$ \mathrm{Wi}^{(2)} @f$ as defined by
+ * Hufford (87-219).
  *
  * Using the scaling equal to `WAIT` in this program uses the definitions of
  * @f$ W_1 @f$ and @f$ W_2 @f$ defined in DeMinco (99-368) and in the original
  * LFMF code following Berry via Wait.
  *
  * The two solutions differ by a constant. As Hufford notes concerning
- * @f$ Wi^{(1)} @f$ and @f$ Wi^{(2)} @f$ in 87-219:
+ * @f$ \mathrm{Wi}^{(1)} @f$ and @f$ \mathrm{Wi}^{(2)} @f$ in 87-219:
  *
  * > "Except for multiplicative constants they correspond to what Fock (1965)
  * > calls W1 and W2 and to what Wait (1962) calls W2 and W1.
  *
  * The following are the multiplicative constants that allow for the translation
- * between Hufford @f$ Wi^{(1)} @f$ and @f$ Wi^{(2)} @f$ with Wait @f$ w_1 @f$
- * and @f$ w_2 @f$, respectively. These are given here as a reference if this
- * function is used for programs other than LFMF.
+ * between Hufford @f$ \mathrm{Wi}^{(1)} @f$ and @f$ \mathrm{Wi}^{(2)} @f$ with
+ * Wait @f$ w_1 @f$ and @f$ w_2 @f$, respectively. These are given here as a
+ * reference if this function is used for programs other than LFMF.
  *
  * ```cpp
  * // Wait
@@ -110,6 +111,9 @@ namespace LFMF {
  * Ai(z) - j*Bi(z) = -3.526603e-001 + 1.265639e-001 i
  * Ai(z) + j*Bi(z) = -8.611221e-002 + 2.242080e-001 i
  * ```
+ * @see ITS::Propagation::LFMF::AiryFunctionKind
+ * @see ITS::Propagation::LFMF::AiryFunctionScaling
+ * @see ITS::Propagation::LFMF::WiRoot
  ******************************************************************************/
 std::complex<double> Airy(
     const std::complex<double> Z,

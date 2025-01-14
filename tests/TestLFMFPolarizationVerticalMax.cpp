@@ -29,7 +29,7 @@ TEST_F(
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     for (const auto &data : testData) {
-        if (data.method == METHOD__FLAT_EARTH_CURVE) {
+        if (data.method == SolutionMethod::FLAT_EARTH_CURVE) {
             Result result;
             int rtn = LFMF(
                 data.h_tx__meter,
@@ -58,7 +58,7 @@ TEST_F(TestLFMFPolarizationVerticalMax, ResidueSeriesMethodEquivalentToMatLAB) {
     // Ensure test data was loaded
     EXPECT_NE(static_cast<int>(testData.size()), 0);
     for (const auto &data : testData) {
-        if (data.method == METHOD__RESIDUE_SERIES) {
+        if (data.method == SolutionMethod::RESIDUE_SERIES) {
             Result result;
             int rtn = LFMF(
                 data.h_tx__meter,

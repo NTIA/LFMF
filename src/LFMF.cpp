@@ -70,6 +70,9 @@ ReturnCode LFMF(
  * @param[in]  pol          Polarization: 0 = Horizontal, 1 = Vertical
  * @param[out] result       Result structure
  * @return                  Error code
+ * 
+ * @see ITS::Propagation::LFMF::Polarization
+ * @see ITS::Propagation::LFMF::Result
  ******************************************************************************/
 ReturnCode LFMF_CPP(
     const double h_tx__meter,
@@ -115,7 +118,7 @@ ReturnCode LFMF_CPP(
 
     // Find the surface impedance, DeMinco 99-368 Eqn (15)
     std::complex<double> delta = std::sqrt(eta - 1.0);
-    if (pol == POLARIZATION__VERTICAL)
+    if (pol == Polarization::VERTICAL)
         delta /= eta;
 
     const std::complex<double> q = -nu * j * delta;  // intermediate value q
@@ -128,10 +131,10 @@ ReturnCode LFMF_CPP(
         E_gw = FlatEarthCurveCorrection(
             delta, q, h_1__km, h_2__km, d__km, k, a_e__km
         );
-        result->method = METHOD__FLAT_EARTH_CURVE;
+        result->method = SolutionMethod::FLAT_EARTH_CURVE;
     } else {
         E_gw = ResidueSeries(k, h_1__km, h_2__km, nu, theta__rad, q);
-        result->method = METHOD__RESIDUE_SERIES;
+        result->method = SolutionMethod::RESIDUE_SERIES;
     }
 
     // Antenna gains
