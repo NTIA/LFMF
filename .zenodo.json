@@ -1,0 +1,57 @@
+{
+    "upload_type": "software",
+    "publication_date": "2020-09-07",
+    "title": "Low Frequency / Medium Frequency Propagation Model",
+    "creators": [
+        {
+            "name": "Kozma Jr, William",
+            "affiliation": "U.S. Department of Commerce, National Telecommunications and Information Administration, Institute for Telecommunication Sciences",
+            "orcid": "0000-0002-7417-4009"
+        },
+        {
+            "name": "Romaniello, Anthony W.",
+            "affiliation": "U.S. Department of Commerce, National Telecommunications and Information Administration, Institute for Telecommunication Sciences",
+            "orcid": "0000-0001-8437-6504"
+        }
+    ],
+    "description": "This repository contains the NTIA/ITS C++ implementation of Low Frequency / Medium Frequency (LF/MF) Propagation Model. The LF/MF model predicts basic transmission loss in the frequency range 0.01 - 30 MHz for propagation paths over a smooth Earth and antenna heights less than 50 meters.",
+    "keywords": [
+        "LFMF",
+        "propagation",
+        "ITS",
+        "NTIA"
+    ],
+    "related_identifiers": [
+        {
+            "identifier": "https://github.com/NTIA/LFMF-dotnet",
+            "relation": "isSupplementedBy",
+            "resource_type": "software"
+        },
+        {
+            "identifier": "https://github.com/NTIA/LFMF-matlab",
+            "relation": "isSupplementedBy",
+            "resource_type": "software"
+        },
+        {
+            "identifier": "https://github.com/NTIA/LFMF-python",
+            "relation": "isSupplementedBy",
+            "resource_type": "software"
+        },
+        {
+            "identifier": "https://github.com/NTIA/LFMF-test-data",
+            "relation": "isSupplementedBy",
+            "resource_type": "dataset"
+        },
+        {
+            "identifier": "https://ntia.github.io/LFMF/",
+            "relation": "isDocumentedBy",
+            "resource_type": "softwaredocumentation"
+        },
+        {
+            "identifier": "https://ntia.github.io/propagation-library-wiki/models/LFMF/",
+            "relation": "isDocumentedBy",
+            "resource_type": "softwaredocumentation"
+        }
+    ],
+    "version": "1.1"
+}

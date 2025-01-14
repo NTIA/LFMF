@@ -1,29 +1,36 @@
-#include "..\include\LFMF.h"
+/** @file ValidateInputs.cpp
+ * Implements functions to validate LFMF model inputs are in range.
+ */
 
-/*=============================================================================
- |
- |  Description:  Perform input parameter validation
- |
- |        Input:  h_tx__meter   - Height of the transmitter, in meter
- |                h_rx__meter   - Height of the receiver, in meter
- |                f__mhz        - Frequency, in MHz
- |                P_tx__watt    - Transmitter power, in Watts
- |                N_s           - Surface refractivity, in N-Units
- |                d__km         - Path distance, in km
- |                epsilon       - Relative permittivity
- |                sigma         - Conductivity
- |                pol           - Polarization
- |                                  + 0 : POLARIZATION__HORIZONTAL
- |                                  + 1 : POLARIZATION__VERTICAL
- |
- |      Outputs:  [None]
- |
- |      Returns:  error         - Error code
- |
- *===========================================================================*/
-int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s, double d__km, double epsilon, double sigma, int pol)
-{
+#include "LFMF.h"
+
+namespace ITS {
+namespace Propagation {
+namespace LFMF {
+
+/*******************************************************************************
+ * Validate that model input values are within valid ranges.
+ *
+ * @param[in] h_tx__meter  Height of the transmitter, in meters
+ * @param[in] h_rx__meter  Height of the receiver, in meters
+ * @param[in] f__mhz       Frequency, in MHz
+ * @param[in] P_tx__watt   Transmitter power, in watts
+ * @param[in] N_s          Surface refractivity, in N-Units
+ * @param[in] d__km        Path distance, in km
+ * @param[in] epsilon      Relative permittivity
+ * @param[in] sigma        Conductivity, in siemens per meter
+ * @return                 Return code
+ ******************************************************************************/
+ReturnCode ValidateInput(
+    const double h_tx__meter,
+    const double h_rx__meter,
+    const double f__mhz,
+    const double P_tx__watt,
+    const double N_s,
+    const double d__km,
+    const double epsilon,
+    const double sigma
+) {
     if (h_tx__meter < 0 || h_tx__meter > 50)
         return ERROR__TX_TERMINAL_HEIGHT;
 
@@ -48,9 +55,22 @@ int ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double 
     if (sigma <= 0)
         return ERROR__SIGMA;
 
-    if (pol != POLARIZATION__HORIZONTAL &&
-        pol != POLARIZATION__VERTICAL)
-        return ERROR__POLARIZATION;
-
     return SUCCESS;
 }
+
+
+/******************************************************************************
+ * Perform input Polarization validation
+ *
+ * @param[in] pol  Polarization
+ * @return         Return code
+ ******************************************************************************/
+ReturnCode ValidatePolarization(const int pol) {
+    if (pol != Polarization::HORIZONTAL && pol != Polarization::VERTICAL)
+        return ERROR__POLARIZATION;
+    return SUCCESS;
+}
+
+}  // namespace LFMF
+}  // namespace Propagation
+}  // namespace ITS
