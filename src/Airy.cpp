@@ -8,7 +8,7 @@
 #include <complex>    // for std::arg, std::complex
 #include <ostream>    // for std::endl
 #include <sstream>    // for std::ostringstream
-#include <stdexcept>  // for std::invalid_argument
+#include <stdexcept>  // for std::invalid_argument, std::range_error
 
 namespace ITS {
 namespace Propagation {
@@ -23,7 +23,7 @@ namespace LFMF {
  * location of the input argument.
  *
  * This routine determines the so-called "Airy Functions of the third kind"
- * @f$ Wi(1) @f$ and @f$ Wi(2) @f$  that are found in equation 38 of NTIA Report
+ * @f$ Wi(1) @f$ and @f$ Wi(2) @f$ that are found in equation 38 of NTIA Report
  * 87-219 "A General Theory of Radio Propagation through a Stratified
  * Atmosphere", George Hufford, July 1987.
  *
@@ -34,12 +34,14 @@ namespace LFMF {
  * Program for an Anisotropic Ionosphere" L. A. Berry and J. E. Herman, April 1971.
  *
  * @param[in] Z        Complex input argument
- * @param[in] kind     Switch indicating the type of Airy function to solve
+ * @param[in] kind     The type of Airy function to solve
  * @param[in] scaling  Type of scaling to use (any valid enum value)
  * @return             The desired Airy function calculated at Z
  * 
  * @throws std::invalid_argument If the values provided for `kind` or `scaling`
  *                               are not valid for this function.
+ * @throws std::range_error      If the calculation requires expansion data
+ *                               outside the range of what is known by this program.
  *
  * @note The following is a note on scaling the output from this program.
  *
@@ -602,14 +604,15 @@ std::complex<double> Airy(
             std::sin(PI / 3.0) * (ZU.imag() + 0.5)
         );  // sin(60)*(Z.imag()+0.5)
 
-        N = NQTT[CoERealidx + 6]
-          + CoEImagidx;  // N is index of center of expansion
+        // N is index of center of expansion
+        N = NQTT[CoERealidx + 6] + CoEImagidx;
 
-        // Check to see if N is out of bounds
-        if (N
-            >= 70) {  // Stop if the index N reaches the limit of array AV[] which is 70
-            //printf("Airy() Error: Z is too large\n");
-            return std::complex<double>(0, 0);
+        // Stop if the index N reaches the limit of array AV[] which is 70
+        if (N >= 70) {
+            std::ostringstream oss;
+            oss << "Airy(): Center of expansion index " << N << " is out "
+                << "of range for internal Airy data array. Unable to proceed.";
+            throw std::range_error(oss.str());
         };
 
         // The next real center of expansion, known here as the area of the Taylor series
