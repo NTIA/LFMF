@@ -14,7 +14,7 @@ namespace LFMF {
 /*******************************************************************************
  * Finds the roots to the equation @f$ Wi'(ti) - q*Wi(ti) = 0 @f$
  *
- * The parameter i selects the ith root of the equation. The function
+ * The parameter `i` selects the @f$i@f$-th root of the equation. The function
  * @f$ Wi(ti) @f$ is the "Airy function of the third kind" as defined by Hufford[1]
  * and Wait. The root is found by iteration starting from a real root.
  *
@@ -24,13 +24,13 @@ namespace LFMF {
  * will not be the same. The input parameters for kind and scale are used here as
  * they are in `Airy()` for consistency.
  *
- * @param[in]  i        The ith complex root of Wi'(2)(ti) - q*Wi(2)(ti) starting with 1
- * @param[in]  q        Intermediate value -j*nu*delta
+ * @param[in]  i        The ith complex root of @f$ Wi'^{(2)}(ti) - q*Wi^{(2)}(ti) @f$ starting with 1
+ * @param[in]  q        Intermediate value: @f$ -j \nu \delta @f$
  * @param[in]  kind     Kind of Airy function to use
  * @param[in]  scaling  Type of scaling to use
- * @param[out] DWi      Derivative of "Airy function of the third kind" Wi'(2)(ti)
- * @param[out] Wi       "Airy function of the third kind" Wi(2)(ti)
- * @return              The ith complex root of the "Airy function of the third kind"
+ * @param[out] DWi      Derivative of "Airy function of the third kind" @f$ Wi'^{(2)}(ti) @f$
+ * @param[out] Wi       "Airy function of the third kind" @f$ Wi^{(2)}(ti) @f$
+ * @return              The @f$i@f$-th complex root of the "Airy function of the third kind"
  * 
  * **References**
  *     - "Airy Functions of the third kind" are found in equation 38 of [NTIA
