@@ -38,8 +38,8 @@ namespace LFMF {
  * @return              The @f$ i @f$-th complex root of the "Airy function of
  *                      the third kind"
  * 
- * @throws std::invalid_argument If the values provided for `i`, `kind`, or `scaling`
- *                               are not valid for this function.
+ * @throws std::invalid_argument  If the values provided for `i`, `kind`, or
+ *                                `scaling` are not valid for this function.
  * 
  * **References**
  *     - "Airy Functions of the third kind" are found in equation 38 of [NTIA
