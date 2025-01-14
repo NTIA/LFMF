@@ -4,7 +4,7 @@
 
 #include "LFMF.h"
 
-#include <cmath>    // for exp, fabs, log10, pow, sqrt
+#include <cmath>    // for cbrt, exp, fabs, log10, pow, sqrt
 #include <complex>  // for std::complex
 
 namespace ITS {
@@ -106,11 +106,8 @@ ReturnCode LFMF_CPP(
 
     const double theta__rad = d__km / a_e__km;
 
-    const double k
-        = 2.0 * PI / (lambda__meter / 1000);  // wave number, in rad/km
-
-    const double nu
-        = std::pow(a_e__km * k / 2.0, THIRD);  // Intermediate value nu
+    const double k = 2.0 * PI * 1000 / lambda__meter;  // wavenumber, in rad/km
+    const double nu = std::cbrt(a_e__km * k / 2.0);    // Intermediate value nu
 
     // dielectric ground constant. See Eq (17) DeMinco 99-368
     const std::complex<double> eta
@@ -124,7 +121,7 @@ ReturnCode LFMF_CPP(
     const std::complex<double> q = -nu * j * delta;  // intermediate value q
 
     // Determine which smooth earth method is used; SG3 Groundwave Handbook, Eq 15
-    const double d_test__km = 80 * std::pow(f__mhz, -THIRD);
+    const double d_test__km = 80 / std::cbrt(f__mhz);
 
     double E_gw;
     if (d__km < d_test__km) {
