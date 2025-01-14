@@ -61,7 +61,7 @@ std::complex<double> WiRoot(
     double t, tt;            // Temp
     double eps;              // Temp
     int cnt;                 // Temp
-    AiryKind dkind;  // Temp
+    AiryKind dkind;          // Temp
 
     // From the NIST DLMF (Digital Library of Mathematical Functions)
     // http://dlmf.nist.gov/
@@ -106,13 +106,13 @@ std::complex<double> WiRoot(
         return tw;
     };
 
-    if ((scaling != HUFFORD) && (scaling != WAIT)) {
+    if ((scaling != AiryScaling::HUFFORD) && (scaling != AiryScaling::WAIT)) {
         // There is an input parameter error; printf("WiRoot(): The scaling must be HUFFORD (%d) or WAIT (%d)\n", HUFFORD, WAIT);
         tw = std::complex<double>(-997.7, -997.7);
         return tw;
     };
 
-    if ((kind != WTWO) && (kind != WONE)) {
+    if ((kind != AiryKind::WTWO) && (kind != AiryKind::WONE)) {
         // There is an input parameter error; printf("WiRoot(): The kind must be W1 (%d) or W2 (%d)\n", WONE, WTWO);
         tw = std::complex<double>(-996.6, -996.6);
         return tw;
@@ -133,31 +133,31 @@ std::complex<double> WiRoot(
     // This is the similar to the initial scaling that is done in Airy()
     // Note that W1 Wait = Wi(2) Hufford and W2 Wait = Wi(1) Hufford
     // So the following inequalities keep this all straight
-    if ((kind == WONE && scaling == HUFFORD)
-        || (kind == WTWO && scaling == WAIT)) {
+    if ((kind == AiryKind::WONE && scaling == AiryScaling::HUFFORD)
+        || (kind == AiryKind::WTWO && scaling == AiryScaling::WAIT)) {
         // Wi(1)(Z) in Eqn 38 Hufford NTIA Report 87-219 or Wait W2
         ph = std::complex<double>(
             std::cos(-2.0 * PI / 3.0), std::sin(-2.0 * PI / 3.0)
         );
         // Set the dkind flag
-        if (scaling == WAIT) {
-            dkind = DWTWO;
+        if (scaling == AiryScaling::WAIT) {
+            dkind = AiryKind::DWTWO;
         } else {
-            dkind = DWONE;
+            dkind = AiryKind::DWONE;
         };
-    } else if ((kind == WTWO && scaling == HUFFORD)
-               || (kind == WONE && scaling == WAIT)) {
+    } else if ((kind == AiryKind::WTWO && scaling == AiryScaling::HUFFORD)
+               || (kind == AiryKind::WONE && scaling == AiryScaling::WAIT)) {
         // Wi(2)(Z) in Eqn 38 Hufford NTIA Report 87-219 or Wait W1
         ph = std::complex<double>(
             std::cos(2.0 * PI / 3.0), std::sin(2.0 * PI / 3.0)
         );
-        if (scaling == WAIT) {
-            dkind = DWONE;
+        if (scaling == AiryScaling::WAIT) {
+            dkind = AiryKind::DWONE;
         } else {
-            dkind = DWTWO;
+            dkind = AiryKind::DWTWO;
         };
     } else {
-        dkind = DWONE;  // Not used, initialization for compile warning
+        dkind = AiryKind::DWONE;  // Not used, initialized for compile warning
     }
 
     // Note: The zeros of the Airy functions i[ak'] and Ak'[ak], ak' and ak, are on the negative real axis.

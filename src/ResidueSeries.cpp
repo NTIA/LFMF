@@ -51,19 +51,22 @@ double ResidueSeries(
 
     for (int i = 0; i < 200; i++) {
         // find the (i+1)th root of Airy function for given q
-        T[i] = WiRoot(i + 1, DW2[i], q, W2[i], WONE, WAIT);
-        W1[i] = Airy(T[i], WONE, WAIT);  // Airy function of (i)th root
+        T[i] = WiRoot(
+            i + 1, DW2[i], q, W2[i], AiryKind::WONE, AiryScaling::WAIT
+        );
+        // Airy function of (i)th root
+        W1[i] = Airy(T[i], AiryKind::WONE, AiryScaling::WAIT);
 
         if (h_1__km > 0) {
-            W[i]
-                = Airy(T[i] - yLow, WONE, WAIT)
-                / W1[i];  //height gain function H_1(h_1) eqn.(22) from NTIA report 99-368
+            // Height gain function H_1(h_1) eqn.(22) from NTIA report 99-368
+            W[i] = Airy(T[i] - yLow, AiryKind::WONE, AiryScaling::WAIT) / W1[i];
 
             if (h_2__km > 0)
-                W[i] *= Airy(T[i] - yHigh, WONE, WAIT)
-                      / W1[i];  //H_1(h_1)*H_1(h_2)
+                W[i] *= Airy(T[i] - yHigh, AiryKind::WONE, AiryScaling::WAIT)
+                      / W1[i];  // H_1(h_1)*H_1(h_2)
         } else if (h_2__km > 0) {
-            W[i] = Airy(T[i] - yHigh, WONE, WAIT) / W1[i];
+            W[i]
+                = Airy(T[i] - yHigh, AiryKind::WONE, AiryScaling::WAIT) / W1[i];
         } else {
             W[i] = std::complex<double>(1, 0);
         }

@@ -25,13 +25,13 @@ namespace LFMF {
 // Enums
 
 /** Valid RF polarizations for use of this model */
-enum Polarization {
+enum class Polarization {
     HORIZONTAL = 0, /**< Horizontal polarization */
     VERTICAL = 1,   /**< Vertical polarization */
 };
 
 /** Solution method used to generate model result */
-enum SolutionMethod {
+enum class SolutionMethod {
     FLAT_EARTH_CURVE, /**< Flat earth curve method */
     RESIDUE_SERIES,   /**< Residue series method */
 };
@@ -52,7 +52,7 @@ enum SolutionMethod {
  * @see ITS::Propagation::LFMF::AiryScaling
  ******************************************************************************/
 // clang-format off
-enum AiryKind {
+enum class AiryKind {
     AIRY = 1, /**< Airy function of the first kind, @f$ \mathrm{Ai}(x) @f$ */
     AIRYD,    /**< Derivative of `AIRY`, @f$ \mathrm{Ai}'(x) @f$ */
     BAIRY,    /**< Airy function of the second kind, @f$ \mathrm{Bi}(x) @f$ */
@@ -74,7 +74,7 @@ enum AiryKind {
  * @see ITS::Propagation::LFMF::WiRoot
  * @see ITS::Propagation::LFMF::AiryKind
  ******************************************************************************/
-enum AiryScaling {
+enum class AiryScaling {
     HUFFORD, /**< Use Hufford scaling */
     WAIT,    /**< Use Wait scaling */
     NONE,    /**< No Scaling */

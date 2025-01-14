@@ -116,9 +116,7 @@ namespace LFMF {
  * @see ITS::Propagation::LFMF::WiRoot
  ******************************************************************************/
 std::complex<double> Airy(
-    const std::complex<double> Z,
-    const AiryKind kind,
-    const AiryScaling scaling
+    const std::complex<double> Z, const AiryKind kind, const AiryScaling scaling
 ) {
     // NQTT, ASLT data
     int NQTT[15] = {
@@ -491,12 +489,14 @@ std::complex<double> Airy(
     ////////////////////////////////////////
     // Validate input - kind & derivative //
     ////////////////////////////////////////
-    if ((kind != AIRY) && (kind != BAIRY) && (kind != WONE) && (kind != DWONE)
-        && (kind != WTWO) && (kind != DWTWO)) {
+    if ((kind != AiryKind::AIRY) && (kind != AiryKind::BAIRY)
+        && (kind != AiryKind::WONE) && (kind != AiryKind::DWONE)
+        && (kind != AiryKind::WTWO) && (kind != AiryKind::DWTWO)) {
         return std::complex<double>(0, 0);  // Airy Error: Invalid kind value
     };
 
-    if ((scaling != NONE) && (scaling != HUFFORD) && (scaling != WAIT)) {
+    if ((scaling != AiryScaling::NONE) && (scaling != AiryScaling::HUFFORD)
+        && (scaling != AiryScaling::WAIT)) {
         return std::complex<double>(0, 0);  // Airy Error: Invalid scaling value
     };
 
@@ -506,7 +506,8 @@ std::complex<double> Airy(
     // `derivative_flag` is generally used as a condition.
     bool derivative_flag;  // True if finding a derivative (e.g., Ai', Bi')
     int derivative_idx;    // Index used to get correct values from arrays
-    if (kind == DWTWO || kind == DWONE || kind == AIRYD || kind == BAIRYD) {
+    if (kind == AiryKind::DWTWO || kind == AiryKind::DWONE
+        || kind == AiryKind::AIRYD || kind == AiryKind::BAIRYD) {
         derivative_flag = true;
         derivative_idx = 1;
     } else {
@@ -524,21 +525,26 @@ std::complex<double> Airy(
 
     // The following scales the input parameter Z depending on what the user is trying to do.
     // If the user is trying to find just the Ai(Z), Ai'(Z), Bi(Z) or Bi'(Z) there is no scaling.
-    if (kind == AIRY || kind == BAIRY || kind == AIRYD || kind == BAIRYD) {
+    if (kind == AiryKind::AIRY || kind == AiryKind::BAIRY
+        || kind == AiryKind::AIRYD || kind == AiryKind::BAIRYD) {
         // For Ai(Z) and  Bi(Z) No translation in the complex plane
         U = std::complex<double>(1.0, 0.0);
     }
     // Note that W1 Wait = Wi(2) Hufford and W2 Wait = Wi(1) Hufford
     // So the following inequalities keep this all straight
-    else if (((kind == DWONE || kind == WONE) && scaling == HUFFORD)
-             || ((kind == DWTWO || kind == WTWO) && scaling == WAIT)) {
+    else if (((kind == AiryKind::DWONE || kind == AiryKind::WONE)
+              && scaling == AiryScaling::HUFFORD)
+             || ((kind == AiryKind::DWTWO || kind == AiryKind::WTWO)
+                 && scaling == AiryScaling::WAIT)) {
         // This corresponds to Wi(1)(Z) in Eqn 38 Hufford NTIA Report 87-219
         // or Wait W2
         U = std::complex<double>(
             std::cos(2.0 * PI / 3.0), std::sin(2.0 * PI / 3.0)
         );
-    } else if (((kind == DWTWO || kind == WTWO) && scaling == HUFFORD)
-               || ((kind == DWONE || kind == WONE) && scaling == WAIT)) {
+    } else if (((kind == AiryKind::DWTWO || kind == AiryKind::WTWO)
+                && scaling == AiryScaling::HUFFORD)
+               || ((kind == AiryKind::DWONE || kind == AiryKind::WONE)
+                   && scaling == AiryScaling::WAIT)) {
         // This corresponds to Wi(2)(Z) in Eqn 38 Hufford NTIA Report 87-219
         // or Wait W1
         U = std::complex<double>(
@@ -624,7 +630,7 @@ std::complex<double> Airy(
             // Calculate the first term of the Taylor Series
             // To do this we need to find the Airy or Bairy function at the center of
             // expansion, CoE, that has been precalculated in the arrays above.
-            if (kind == BAIRY || kind == BAIRYD) {
+            if (kind == AiryKind::BAIRY || kind == AiryKind::BAIRYD) {
                 Ai = BV[N - 1];    // Bi(CoE)
                 Aip = BPV[N - 1];  // Bi'(CoE)
             } else {               // All other cases use the Coe for Ai(z)
@@ -697,7 +703,7 @@ std::complex<double> Airy(
         ZA = std::sqrt(ZU);          // zeta^(1/2)
         ZT = (2.0 / 3.0) * ZU * ZA;  // NIST DLMF 9.7.1 => -(2/3)zeta^(3/2)
 
-        if (kind == BAIRY || kind == BAIRYD) {
+        if (kind == AiryKind::BAIRY || kind == AiryKind::BAIRYD) {
             one = 1.0;  // Terms for the Bairy sum do not alternate sign
         } else {
             one = -1.0;  // All other functions use the Airy whose sum alternates sign
@@ -750,7 +756,7 @@ std::complex<double> Airy(
         // Now do the final function that leads the sum depending on what the user wants.
         // The leading function has to be taken apart so that it can be assembled as necessary for
         // the possible two parts of the sum
-        if (kind == BAIRY || kind == BAIRYD) {
+        if (kind == AiryKind::BAIRY || kind == AiryKind::BAIRYD) {
             if (derivative_flag) {
                 ZB = std::sqrt(ZA);  // NIST DLMF 9.7.7
             } else {
@@ -800,13 +806,14 @@ std::complex<double> Airy(
     };
 
     // The final scaling factor is a function of the kind, derivative and scaling flags
-    if (scaling == NONE) {
+    if (scaling == AiryScaling::NONE) {
         // The number from the Taylor series or asymptotic calculation
         // does not need to multiplied by anything
         U = std::complex<double>(1.0, 0.0);
     }
     // Hufford Wi(1) and Wi'(1)
-    else if ((kind == WONE || kind == DWONE) && (scaling == HUFFORD)) {
+    else if ((kind == AiryKind::WONE || kind == AiryKind::DWONE)
+             && (scaling == AiryScaling::HUFFORD)) {
         if (derivative_flag) {
             U = 2.0
               * std::complex<double>(std::cos(PI / 3.0), std::sin(PI / 3.0));
@@ -816,7 +823,8 @@ std::complex<double> Airy(
         };
     }
     // Hufford Wi(2) and Wi'(2)
-    else if ((kind == WTWO || kind == DWTWO) && (scaling == HUFFORD)) {
+    else if ((kind == AiryKind::WTWO || kind == AiryKind::DWTWO)
+             && (scaling == AiryScaling::HUFFORD)) {
         if (derivative_flag) {
             U = 2.0
               * std::complex<double>(std::cos(-PI / 3.0), std::sin(-PI / 3.0));
@@ -826,7 +834,8 @@ std::complex<double> Airy(
         };
     }
     // Wait W1 and W1'
-    else if ((kind == WONE || kind == DWONE) && (scaling == WAIT)) {
+    else if ((kind == AiryKind::WONE || kind == AiryKind::DWONE)
+             && (scaling == AiryScaling::WAIT)) {
         if (derivative_flag) {
             U = std::complex<double>(
                 -1.0 * std::sqrt(3.0 * PI), -1.0 * std::sqrt(PI)
@@ -836,7 +845,8 @@ std::complex<double> Airy(
         };
     }
     // Wait W2 and W2'
-    else if ((kind == WTWO || kind == DWTWO) && (scaling == WAIT)) {
+    else if ((kind == AiryKind::WTWO || kind == AiryKind::DWTWO)
+             && (scaling == AiryScaling::WAIT)) {
         if (derivative_flag) {
             U = std::complex<double>(-1.0 * std::sqrt(3.0 * PI), std::sqrt(PI));
         } else {
