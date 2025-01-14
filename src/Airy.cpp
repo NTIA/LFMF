@@ -130,7 +130,6 @@ std::complex<double> Airy(
     int CoERealidx;  // Center of Expansion of the Taylor Series real index
     int CoEImagidx;  // Center of Expansion of the Taylor Series imaginary index
     int cnt;         // loop counter for the Taylor series calculation
-    int derivative;  // index for derivative
 
     bool
         reflection;  // Flag to indicate that the answer needs to be flipped over since this routine only finds solutions in quadrant 1 and 2
@@ -501,11 +500,18 @@ std::complex<double> Airy(
         return std::complex<double>(0, 0);  // Airy Error: Invalid scaling value
     };
 
-    // Set the derivative flag
+    // Set a flag and index value to control function flow based on whether or not
+    // we are finding a derivative (e.g., Ai', Bi') or not (e.g., Ai, Bi). The
+    // `derivative_idx` ensures that arrays are accessed correctly in each case, while
+    // `derivative_flag` is generally used as a condition.
+    bool derivative_flag;  // True if finding a derivative (e.g., Ai', Bi')
+    int derivative_idx;    // Index used to get correct values from arrays
     if (kind == DWTWO || kind == DWONE || kind == AIRYD || kind == BAIRYD) {
-        derivative = YES;
+        derivative_flag = true;
+        derivative_idx = 1;
     } else {
-        derivative = NO;
+        derivative_flag = false;
+        derivative_idx = 0;
     };
 
     // Now do something productive with numbers...
@@ -703,9 +709,9 @@ std::complex<double> Airy(
         // Note the coefficients are backward so the for loop will be forward
         sum1 = std::complex<double>(0.0, 0.0);  // Initialize the sum
         for (int i = 0; i < 14; i++) {
-            sum1 = (std::pow(one, i) * ASV[i][derivative] + sum1) / ZT;
+            sum1 = (std::pow(one, i) * ASV[i][derivative_idx] + sum1) / ZT;
         };
-        sum1 = ASV[SIZE_OF_ASV - 1][derivative]
+        sum1 = ASV[SIZE_OF_ASV - 1][derivative_idx]
              + sum1;  // Add the first element that is a function of zeta^0
 
         // Now determine if a second series is necessary
@@ -733,9 +739,9 @@ std::complex<double> Airy(
         if (std::abs(std::arg(ZU)) > PI / 3.0) {
             sum2 = std::complex<double>(0.0, 0.0);  // Initialize the second sum
             for (int i = 0; i < 14; i++) {
-                sum2 = (ASV[i][derivative] + sum2) / ZT;
+                sum2 = (ASV[i][derivative_idx] + sum2) / ZT;
             };
-            sum2 = ASV[SIZE_OF_ASV - 1][derivative]
+            sum2 = ASV[SIZE_OF_ASV - 1][derivative_idx]
                  + sum2;  // Add the first element that is a function of zeta^0
         } else {          // Only one series is necessary for accuracy
             sum2 = std::complex<double>(0.0, 0.0);
@@ -745,20 +751,20 @@ std::complex<double> Airy(
         // The leading function has to be taken apart so that it can be assembled as necessary for
         // the possible two parts of the sum
         if (kind == BAIRY || kind == BAIRYD) {
-            if (derivative == NO) {
-                ZB = 1.0 / (std::sqrt(ZA));  // NIST DLMF 9.7.8
-            } else if (derivative == YES) {
+            if (derivative_flag) {
                 ZB = std::sqrt(ZA);  // NIST DLMF 9.7.7
+            } else {
+                ZB = 1.0 / (std::sqrt(ZA));  // NIST DLMF 9.7.8
             };
             ZB1 = ZB * std::exp(ZT)
                 / std::sqrt(PI);  // For Bairy multiply by e^(zeta)/sqrt(PI)
             ZB2 = ZB * 1.0 / (std::exp(ZT) * std::sqrt(PI));
 
         } else {  // All other kind use Airy
-            if (derivative == NO) {
-                ZB = 1.0 / std::sqrt(ZA);  // NIST DLMF 9.7.6
-            } else if (derivative == YES) {
+            if (derivative_flag) {
                 ZB = -1.0 * std::sqrt(ZA);  // NIST DLMF 9.7.5
+            } else {
+                ZB = 1.0 / std::sqrt(ZA);  // NIST DLMF 9.7.6
             };
             ZB1 = ZB * 1.0
                 / (2.0 * std::exp(ZT) * std::sqrt(PI)
@@ -768,11 +774,11 @@ std::complex<double> Airy(
 
 
         // Multiply by the leading coefficient to get the results for NIST DLMF 9.7.5 - 9.7.8
-        if (derivative == YES) {
-            A[derivative]
+        if (derivative_flag) {
+            A[derivative_idx]
                 = ZB1 * sum1 - std::complex<double>(0.0, 1.0) * ZB2 * sum2;
-        } else if (derivative == NO) {
-            A[derivative]
+        } else {
+            A[derivative_idx]
                 = ZB1 * sum1 + std::complex<double>(0.0, 1.0) * ZB2 * sum2;
         };
 
@@ -784,7 +790,7 @@ std::complex<double> Airy(
     //////////////////////////////////////////////
 
     // Store the desired quantity
-    Ai = A[derivative];
+    Ai = A[derivative_idx];
 
     // Final Transform to get the desired function
     // Was the input parameter in quadrant 3 or 4?
@@ -801,40 +807,40 @@ std::complex<double> Airy(
     }
     // Hufford Wi(1) and Wi'(1)
     else if ((kind == WONE || kind == DWONE) && (scaling == HUFFORD)) {
-        if (derivative == NO) {
-            U = 2.0
-              * std::complex<double>(std::cos(-PI / 3.0), std::sin(-PI / 3.0));
-        } else if (derivative == YES) {
+        if (derivative_flag) {
             U = 2.0
               * std::complex<double>(std::cos(PI / 3.0), std::sin(PI / 3.0));
+        } else {
+            U = 2.0
+              * std::complex<double>(std::cos(-PI / 3.0), std::sin(-PI / 3.0));
         };
     }
     // Hufford Wi(2) and Wi'(2)
     else if ((kind == WTWO || kind == DWTWO) && (scaling == HUFFORD)) {
-        if (derivative == NO) {
-            U = 2.0
-              * std::complex<double>(std::cos(PI / 3.0), std::sin(PI / 3.0));
-        } else if (derivative == YES) {
+        if (derivative_flag) {
             U = 2.0
               * std::complex<double>(std::cos(-PI / 3.0), std::sin(-PI / 3.0));
+        } else {
+            U = 2.0
+              * std::complex<double>(std::cos(PI / 3.0), std::sin(PI / 3.0));
         };
     }
     // Wait W1 and W1'
     else if ((kind == WONE || kind == DWONE) && (scaling == WAIT)) {
-        if (derivative == NO) {
-            U = std::complex<double>(std::sqrt(3.0 * PI), -1.0 * std::sqrt(PI));
-        } else if (derivative == YES) {
+        if (derivative_flag) {
             U = std::complex<double>(
                 -1.0 * std::sqrt(3.0 * PI), -1.0 * std::sqrt(PI)
             );
+        } else {
+            U = std::complex<double>(std::sqrt(3.0 * PI), -1.0 * std::sqrt(PI));
         };
     }
     // Wait W2 and W2'
     else if ((kind == WTWO || kind == DWTWO) && (scaling == WAIT)) {
-        if (derivative == NO) {
-            U = std::complex<double>(std::sqrt(3.0 * PI), std::sqrt(PI));
-        } else if (derivative == YES) {
+        if (derivative_flag) {
             U = std::complex<double>(-1.0 * std::sqrt(3.0 * PI), std::sqrt(PI));
+        } else {
+            U = std::complex<double>(std::sqrt(3.0 * PI), std::sqrt(PI));
         };
     };
 
