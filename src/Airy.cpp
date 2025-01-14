@@ -111,14 +111,14 @@ namespace LFMF {
  * Ai(z) - j*Bi(z) = -3.526603e-001 + 1.265639e-001 i
  * Ai(z) + j*Bi(z) = -8.611221e-002 + 2.242080e-001 i
  * ```
- * @see ITS::Propagation::LFMF::AiryFunctionKind
- * @see ITS::Propagation::LFMF::AiryFunctionScaling
+ * @see ITS::Propagation::LFMF::AiryKind
+ * @see ITS::Propagation::LFMF::AiryScaling
  * @see ITS::Propagation::LFMF::WiRoot
  ******************************************************************************/
 std::complex<double> Airy(
     const std::complex<double> Z,
-    const AiryFunctionKind kind,
-    const AiryFunctionScaling scaling
+    const AiryKind kind,
+    const AiryScaling scaling
 ) {
     // NQTT, ASLT data
     int NQTT[15] = {

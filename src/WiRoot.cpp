@@ -41,8 +41,8 @@ namespace LFMF {
  *       "A General Theory of Radio Propagation through a Stratified Atmosphere",
  *       George Hufford, July 1987.
  * 
- * @see ITS::Propagation::LFMF::AiryFunctionKind
- * @see ITS::Propagation::LFMF::AiryFunctionScaling
+ * @see ITS::Propagation::LFMF::AiryKind
+ * @see ITS::Propagation::LFMF::AiryScaling
  * @see ITS::Propagation::LFMF::Airy
  ******************************************************************************/
 std::complex<double> WiRoot(
@@ -50,8 +50,8 @@ std::complex<double> WiRoot(
     std::complex<double> &DWi,
     const std::complex<double> q,
     std::complex<double> &Wi,
-    const AiryFunctionKind kind,
-    const AiryFunctionScaling scaling
+    const AiryKind kind,
+    const AiryScaling scaling
 ) {
     std::complex<double> ph;  // Airy root phase
     std::complex<double> ti;  // ith cplx root of Wi'(2)(ti) - q*Wi(2)(ti) = 0
@@ -61,7 +61,7 @@ std::complex<double> WiRoot(
     double t, tt;            // Temp
     double eps;              // Temp
     int cnt;                 // Temp
-    AiryFunctionKind dkind;  // Temp
+    AiryKind dkind;  // Temp
 
     // From the NIST DLMF (Digital Library of Mathematical Functions)
     // http://dlmf.nist.gov/
