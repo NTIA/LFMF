@@ -1,5 +1,5 @@
 /** @file ValidateInputs.cpp
- * Implements the model from ITS.Propagation.LFMF.
+ * Implements functions to validate LFMF model inputs are in range.
  */
 
 #include "LFMF.h"

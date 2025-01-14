@@ -1,5 +1,5 @@
 /** @file FlatEarthCurveCorrection.cpp
- * Implements the model from ITS.Propagation.LFMF.
+ * Calculates the groundwave using the flat Earth approximation with curvature correction.
  */
 
 #include "LFMF.h"

@@ -1,5 +1,5 @@
 /** @file WiRoot.cpp
- * Implements the model from ITS.Propagation.LFMF.
+ * Implements a function to find roots of equations involving Airy functions.
  */
 
 #include "LFMF.h"
