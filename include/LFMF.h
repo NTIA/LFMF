@@ -1,14 +1,10 @@
 /** @file LFMF.h
  * Interface header for this library
  */
-#ifndef __ITS_PROPAGATION_LFMF_LFMF_H__
-#define __ITS_PROPAGATION_LFMF_LFMF_H__
+#pragma once
 
-#include <complex>
-#include <cfloat>           ///< for DBL_EPSILON
-
-using std::complex;
-using std::abs;
+#include <complex> // for std::complex
+#include <cfloat>           // for DBL_EPSILON
 
 namespace ITS {
 namespace Propagation {
@@ -125,8 +121,8 @@ struct Result
 //////////////////////////////////////
 // Public Functions
 
-DLLEXPORT ReturnCode LFMF(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt, double N_s,
-    double d__km, double epsilon, double sigma, int pol, Result *result);
+DLLEXPORT ReturnCode LFMF(const double h_tx__meter, const double h_rx__meter, const double f__mhz, const double P_tx__watt, const double N_s,
+    const double d__km, const double epsilon, const double sigma, const int pol, Result *result);
 
 DLLEXPORT char *GetReturnStatusCharArray(const int code);
 DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
@@ -134,22 +130,20 @@ DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
 //////////////////////////////////////
 // Private Functions
 
-ReturnCode LFMF_CPP(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt, double N_s,
-    double d__km, double epsilon, double sigma, Polarization pol, Result *result);
+ReturnCode LFMF_CPP(const double h_tx__meter, const double h_rx__meter, const double f__mhz, const double P_tx__watt, const double N_s,
+    const double d__km, const double epsilon, const double sigma, const Polarization pol, Result *result);
 std::string GetReturnStatus(const int code);
-double FlatEarthCurveCorrection(complex<double> delta, complex<double> q, double h_1__km, double h_2__km, double d, double k, double a_e__km);
-double ResidueSeries(double k, double h_1__km, double h_2__km, double nu, double theta, complex<double> q);
-complex<double> wofz(complex<double> qi);
-complex<double> Airy(complex<double> Z, AiryFunctionKind kind, AiryFunctionScaling scaling);
-complex<double> WiRoot(int i, complex<double> *DWi, complex<double> q, complex<double> *Wi,
-    AiryFunctionKind kind, AiryFunctionScaling scaling);
-ReturnCode ValidateInput(double h_tx__meter, double h_rx__meter, double f__mhz, double P_tx__watt,
-    double N_s, double d__km, double epsilon, double sigma);
-ReturnCode ValidatePolarization(int pol);
-bool AlmostEqualRelative(double A, double B, double maxRelDiff = DBL_EPSILON);
+double FlatEarthCurveCorrection(const std::complex<double> delta, const std::complex<double> q, const double h_1__km, const double h_2__km, const double d, const double k, const double a_e__km);
+double ResidueSeries(const double k, const double h_1__km, const double h_2__km, const double nu, const double theta, const std::complex<double> q);
+std::complex<double> wofz(const std::complex<double> z);
+std::complex<double> Airy(const std::complex<double> Z, const AiryFunctionKind kind, const AiryFunctionScaling scaling);
+std::complex<double> WiRoot(const int i, std::complex<double> &DWi, const std::complex<double> q, std::complex<double> &Wi,
+    const AiryFunctionKind kind, const AiryFunctionScaling scaling);
+ReturnCode ValidateInput(const double h_tx__meter, const double h_rx__meter, const double f__mhz, const double P_tx__watt,
+    const double N_s, const double d__km, const double epsilon, const double sigma);
+ReturnCode ValidatePolarization(const int pol);
+bool AlmostEqualRelative(const double A, const double B, const double maxRelDiff = DBL_EPSILON);
 
 }  // namespace LFMF
 }  // namespace Propagation
 }  // namespace ITS
-
-#endif
