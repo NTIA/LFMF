@@ -20,6 +20,10 @@ class TestLFMFReturnCode: public ::testing::Test {
         std::vector<LFMFTestData> testData;
 
         std::string fileName = "LFMF_Examples.csv";
+
+        // Initialize common output variables
+        ReturnCode rtn;
+        Result result;
 };
 
 /** Test case to verify LFMF results are correct */
@@ -31,9 +35,7 @@ TEST_F(TestLFMFReturnCode, ReturnSuccess) {
 
     for (const auto &data : testData) {
         if (data.rtn == SUCCESS) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -45,7 +47,6 @@ TEST_F(TestLFMFReturnCode, ReturnSuccess) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, data.rtn);
             EXPECT_NEAR(result.A_btl__db, data.A_btl__db, ABSTOL__DB);
             EXPECT_NEAR(result.E_dBuVm, data.E_dBuVm, ABSTOL__DB);
@@ -59,9 +60,7 @@ TEST_F(TestLFMFReturnCode, ReturnSuccess) {
 TEST_F(TestLFMFReturnCode, InvalidTXTerminalHeight) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__TX_TERMINAL_HEIGHT) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -73,7 +72,6 @@ TEST_F(TestLFMFReturnCode, InvalidTXTerminalHeight) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__TX_TERMINAL_HEIGHT);
         }
     }
@@ -83,9 +81,7 @@ TEST_F(TestLFMFReturnCode, InvalidTXTerminalHeight) {
 TEST_F(TestLFMFReturnCode, InvalidRXTerminalHeight) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__RX_TERMINAL_HEIGHT) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -97,7 +93,6 @@ TEST_F(TestLFMFReturnCode, InvalidRXTerminalHeight) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__RX_TERMINAL_HEIGHT);
         }
     }
@@ -107,9 +102,7 @@ TEST_F(TestLFMFReturnCode, InvalidRXTerminalHeight) {
 TEST_F(TestLFMFReturnCode, InvalidFrequency) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__FREQUENCY) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -121,7 +114,6 @@ TEST_F(TestLFMFReturnCode, InvalidFrequency) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__FREQUENCY);
         }
     }
@@ -131,9 +123,7 @@ TEST_F(TestLFMFReturnCode, InvalidFrequency) {
 TEST_F(TestLFMFReturnCode, InvalidTransmitPower) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__TX_POWER) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -145,7 +135,6 @@ TEST_F(TestLFMFReturnCode, InvalidTransmitPower) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__TX_POWER);
         }
     }
@@ -155,9 +144,7 @@ TEST_F(TestLFMFReturnCode, InvalidTransmitPower) {
 TEST_F(TestLFMFReturnCode, InvalidSurfaceRefractivity) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__SURFACE_REFRACTIVITY) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -169,7 +156,6 @@ TEST_F(TestLFMFReturnCode, InvalidSurfaceRefractivity) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__SURFACE_REFRACTIVITY);
         }
     }
@@ -179,9 +165,7 @@ TEST_F(TestLFMFReturnCode, InvalidSurfaceRefractivity) {
 TEST_F(TestLFMFReturnCode, InvalidPathDistance) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__PATH_DISTANCE) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -193,7 +177,6 @@ TEST_F(TestLFMFReturnCode, InvalidPathDistance) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__PATH_DISTANCE);
         }
     }
@@ -203,9 +186,7 @@ TEST_F(TestLFMFReturnCode, InvalidPathDistance) {
 TEST_F(TestLFMFReturnCode, InvalidEpsilon) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__EPSILON) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -217,7 +198,6 @@ TEST_F(TestLFMFReturnCode, InvalidEpsilon) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__EPSILON);
         }
     }
@@ -227,9 +207,7 @@ TEST_F(TestLFMFReturnCode, InvalidEpsilon) {
 TEST_F(TestLFMFReturnCode, InvalidSigma) {
     for (const auto &data : testData) {
         if (data.rtn == ERROR__SIGMA) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -241,7 +219,6 @@ TEST_F(TestLFMFReturnCode, InvalidSigma) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__SIGMA);
         }
     }
@@ -249,42 +226,12 @@ TEST_F(TestLFMFReturnCode, InvalidSigma) {
 
 /** Test case to verify LFMF input polarization is invalid */
 TEST_F(TestLFMFReturnCode, InvalidPolarization) {
+    bool polarization_checked = false;
     for (const auto &data : testData) {
-        Result result;
-
-        int rtn = LFMF(
-            data.h_tx__meter,
-            data.h_rx__meter,
-            data.f__mhz,
-            data.P_tx__watt,
-            data.N_s,
-            data.d__km,
-            data.epsilon,
-            data.sigma,
-            -1,
-            result
-        );
-
-        EXPECT_EQ(rtn, ERROR__POLARIZATION);
-
-        rtn = LFMF(
-            data.h_tx__meter,
-            data.h_rx__meter,
-            data.f__mhz,
-            data.P_tx__watt,
-            data.N_s,
-            data.d__km,
-            data.epsilon,
-            data.sigma,
-            3,
-            result
-        );
-
-        EXPECT_EQ(rtn, ERROR__POLARIZATION);
+        // Run any tests cases which should cause polarization error
         if (data.rtn == ERROR__POLARIZATION) {
-            Result result;
-
-            int rtn = LFMF_CPP(
+            polarization_checked = true;
+            rtn = LFMF_CPP(
                 data.h_tx__meter,
                 data.h_rx__meter,
                 data.f__mhz,
@@ -296,8 +243,9 @@ TEST_F(TestLFMFReturnCode, InvalidPolarization) {
                 data.pol,
                 result
             );
-
             EXPECT_EQ(rtn, ERROR__POLARIZATION);
         }
     }
+    // Ensure this test was exercised by at least one test case
+    EXPECT_EQ(polarization_checked, true);
 }
