@@ -52,6 +52,53 @@ TEST_F(TestWiRoot, AiryKindWTWO) {
     EXPECT_DOUBLE_EQ(root.imag(), 1.2843356310540215);
 }
 
+/** Test a set of conditions that run for small q and small i */
+TEST_F(TestWiRoot, SmallQSmallI) {
+    // In this case, the root is taken from a const array
+    q = {1.0, 1.0};
+    i = 1;
+    root = WiRoot(i, DWi, q, Wi, kind, scaling);
+    EXPECT_DOUBLE_EQ(root.real(), 1.4829223351194638);
+    EXPECT_DOUBLE_EQ(root.imag(), 1.2843356310540217);
+}
+
+/** Test a set of conditions that run for small q and large i */
+TEST_F(TestWiRoot, SmallQLargeI) {
+    // In this case, the root is approximated
+    q = {1.0, 1.0};
+    i = 11;
+    root = WiRoot(i, DWi, q, Wi, kind, scaling);
+    EXPECT_DOUBLE_EQ(root.real(), 6.7395876387056539);
+    EXPECT_DOUBLE_EQ(root.imag(), 11.460104740476151);
+}
+
+/** Test a set of conditions that run for large q and small i */
+TEST_F(TestWiRoot, LargeQSmallI) {
+    // In this case, the root is taken from a const array
+    q = {5.0, 5.0};
+    i = 1;
+    root = WiRoot(i, DWi, q, Wi, kind, scaling);
+    EXPECT_DOUBLE_EQ(root.real(), 1.2695003468987784);
+    EXPECT_DOUBLE_EQ(root.imag(), 1.9226740699637952);
+}
+/** Test a set of conditions that run for large q and large i */
+TEST_F(TestWiRoot, LargeQLargeI) {
+    // In this case, the root is approximated
+    q = {5.0, 5.0};
+    i = 11;
+    root = WiRoot(i, DWi, q, Wi, kind, scaling);
+    EXPECT_DOUBLE_EQ(root.real(), 6.9479928400612074);
+    EXPECT_DOUBLE_EQ(root.imag(), 11.742393555292688);
+}
+
+/** WiRoot should throw an exception when `i` is <= 0 */
+TEST_F(TestWiRoot, InvalidRootSelected) {
+    i = -1;
+    EXPECT_THROW(WiRoot(i, DWi, q, Wi, kind, scaling), std::invalid_argument);
+    i = 0;
+    EXPECT_THROW(WiRoot(i, DWi, q, Wi, kind, scaling), std::invalid_argument);
+}
+
 /** AiryKind::AIRY should throw an exception */
 TEST_F(TestWiRoot, AiryKindAIRY) {
     EXPECT_THROW(
