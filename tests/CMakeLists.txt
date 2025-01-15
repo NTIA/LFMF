@@ -9,6 +9,7 @@ proplib_message("Configuring library tests ${TEST_NAME}")
 add_executable(
     ${TEST_NAME}    
     "TestLFMFReturnCode.cpp"
+    "TestWiRoot.cpp"
     "TestUtils.cpp"
     "TestUtils.h"
 )
