@@ -1,4 +1,4 @@
-/** @file test_TestWiRoot.cpp
+/** @file TestWiRoot.cpp
  * Unit tests for WiRoot function.
  */
 
