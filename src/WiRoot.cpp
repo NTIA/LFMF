@@ -7,7 +7,7 @@
 #include <cmath>      // for abs, cos, pow, sin
 #include <complex>    // for std::complex
 #include <sstream>    // for std::ostringstream
-#include <stdexcept>  // for std::invalid_argument
+#include <stdexcept>  // for std::invalid_argument, std::runtime_error
 
 namespace ITS {
 namespace Propagation {
@@ -39,6 +39,7 @@ namespace LFMF {
  * 
  * @throws std::invalid_argument  If the values provided for `i`, `kind`, or
  *                                `scaling` are not valid for this function.
+ * @throws std::runtime_error     If the root finding algorithm fails to converge.
  * 
  * **References**
  *     - "Airy Functions of the third kind" are found in equation 38 of [NTIA
@@ -242,8 +243,10 @@ std::complex<double> WiRoot(
     // Check to see if there if the loop converged on an answer
     // The cnt that fails is an arbitrary number; most converge in ~5 tries
     if (cnt == 26) {
-        // No Convergence return 0 + j*0 as the root as TW() did
-        tw = std::complex<double>(0.0, 0.0);
+        std::ostringstream oss;
+        oss << "WiRoot(): Root finding algorithm did not converge after 25 "
+               "iterations using Newton's method. Exiting.";
+        throw std::runtime_error(oss.str());
     } else {
         // Converged!
         tw = ti;
