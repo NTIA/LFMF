@@ -1,11 +1,11 @@
 /** @file TestWiRoot.cpp
- * Unit tests for WiRoot function.
+ * Unit tests for the WiRoot function.
  */
 
 #include "TestUtils.h"
 
-#include <complex>
-#include <stdexcept>
+#include <complex>    // for std::complex
+#include <stdexcept>  // for std::invalid_argument
 
 /** Test fixture provides valid inputs for WiRoot */
 class TestWiRoot: public ::testing::Test {
