@@ -7,7 +7,8 @@ proplib_message("Configuring library tests ${TEST_NAME}")
 ## Include all source AND header files for tests here.
 ## Do not include the source and header files of the library under test.
 add_executable(
-    ${TEST_NAME}    
+    ${TEST_NAME}
+    "TestAiry.cpp"
     "TestLFMFReturnCode.cpp"
     "TestWiRoot.cpp"
     "TestUtils.cpp"
