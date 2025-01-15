@@ -480,13 +480,16 @@ std::complex<double> Airy(
     ////////////////////////////////////////
     // Validate inputs - kind & scaling   //
     ////////////////////////////////////////
-    if ((kind != AiryKind::AIRY) && (kind != AiryKind::BAIRY)
+    if ((kind != AiryKind::AIRY) && (kind != AiryKind::AIRYD)
+        && (kind != AiryKind::BAIRY) && (kind != AiryKind::BAIRYD)
         && (kind != AiryKind::WONE) && (kind != AiryKind::DWONE)
         && (kind != AiryKind::WTWO) && (kind != AiryKind::DWTWO)) {
         std::ostringstream oss;
         oss << "Airy(): `kind` must be one of `AIRY` ("
-            << static_cast<int>(AiryKind::AIRY) << "), `BAIRY` ("
-            << static_cast<int>(AiryKind::BAIRY) << "), `WONE` ("
+            << static_cast<int>(AiryKind::AIRY) << "), `AIRYD` ("
+            << static_cast<int>(AiryKind::AIRYD) << "), `BAIRY` ("
+            << static_cast<int>(AiryKind::BAIRY) << "), `BAIRYD` ("
+            << static_cast<int>(AiryKind::BAIRYD) << "), `WONE` ("
             << static_cast<int>(AiryKind::WONE) << "), `DWONE` ("
             << static_cast<int>(AiryKind::DWONE) << "), `WTWO` ("
             << static_cast<int>(AiryKind::WTWO) << "), `DWTWO` ("
