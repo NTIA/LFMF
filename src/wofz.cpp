@@ -106,7 +106,7 @@ std::complex<double> wofz(const std::complex<double> z) {
             H = 0.0;
             KAPN = 0;
             QRHO = std::sqrt(QRHO);
-            NU = (int)(3 + (1442 / (26 * QRHO + 77)));
+            NU = static_cast<int>(3 + (1442 / (26 * QRHO + 77)));
         } else {
             // If ((QRHO > 0.085264) AND (QRHO < 1.0)) then W(Z) is evaluated by a
             // truncated Taylor expansion, where the Laplace continued fraction is
