@@ -175,9 +175,7 @@ double ResidueSeries(
 );
 std::complex<double> wofz(const std::complex<double> z);
 std::complex<double> Airy(
-    const std::complex<double> Z,
-    const AiryKind kind,
-    const AiryScaling scaling
+    const std::complex<double> Z, const AiryKind kind, const AiryScaling scaling
 );
 std::complex<double> WiRoot(
     const int i,
@@ -197,7 +195,7 @@ ReturnCode ValidateInput(
     const double epsilon,
     const double sigma
 );
-ReturnCode ValidatePolarization(const int pol);
+ReturnCode ValidatePolarization(const Polarization pol);
 bool AlmostEqualRelative(
     const double A, const double B, const double maxRelDiff = DBL_EPSILON
 );
