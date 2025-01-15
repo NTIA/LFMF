@@ -24,7 +24,10 @@ namespace LFMF {
  * @param[in]  sigma        Conductivity
  * @param[in]  pol          Polarization: 0 = Horizontal, 1 = Vertical
  * @param[out] result       Result structure
- * @return                  Error code
+ * @return                  Return code
+ * 
+ * @see ITS::Propagation::LFMF::Result
+ * @see ITS::Propagation::LFMF::ReturnCode
  ******************************************************************************/
 ReturnCode LFMF(
     const double h_tx__meter,
@@ -38,11 +41,7 @@ ReturnCode LFMF(
     const int pol,
     Result &result
 ) {
-    ReturnCode rtn = ValidatePolarization(pol);
-    if (rtn != SUCCESS)
-        return rtn;
-
-    return LFMF_CPP(
+    ReturnCode rtn = LFMF_CPP(
         h_tx__meter,
         h_rx__meter,
         f__mhz,
@@ -54,6 +53,7 @@ ReturnCode LFMF(
         static_cast<Polarization>(pol),
         result
     );
+    return rtn;
 }
 
 /*******************************************************************************
@@ -69,10 +69,11 @@ ReturnCode LFMF(
  * @param[in]  sigma        Conductivity
  * @param[in]  pol          Polarization: 0 = Horizontal, 1 = Vertical
  * @param[out] result       Result structure
- * @return                  Error code
+ * @return                  Return code
  * 
  * @see ITS::Propagation::LFMF::Polarization
  * @see ITS::Propagation::LFMF::Result
+ * @see ITS::Propagation::LFMF::ReturnCode
  ******************************************************************************/
 ReturnCode LFMF_CPP(
     const double h_tx__meter,
@@ -89,6 +90,9 @@ ReturnCode LFMF_CPP(
     ReturnCode rtn = ValidateInput(
         h_tx__meter, h_rx__meter, f__mhz, P_tx__watt, N_s, d__km, epsilon, sigma
     );
+    if (rtn != SUCCESS)
+        return rtn;
+    rtn = ValidatePolarization(pol);
     if (rtn != SUCCESS)
         return rtn;
 

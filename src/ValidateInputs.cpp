@@ -65,12 +65,12 @@ ReturnCode ValidateInput(
  * @param[in] pol  Polarization
  * @return         Return code
  ******************************************************************************/
-ReturnCode ValidatePolarization(const int pol) {
-    Polarization pol_cast = static_cast<Polarization>(pol);
-    if (pol_cast != Polarization::HORIZONTAL
-        && pol_cast != Polarization::VERTICAL)
+ReturnCode ValidatePolarization(const Polarization pol) {
+    if (pol != Polarization::HORIZONTAL && pol != Polarization::VERTICAL) {
         return ERROR__POLARIZATION;
-    return SUCCESS;
+    } else {
+        return SUCCESS;
+    }
 }
 
 }  // namespace LFMF
