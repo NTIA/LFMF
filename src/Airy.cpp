@@ -34,11 +34,15 @@ namespace LFMF {
  *
  * @param[in] Z        Complex input argument
  * @param[in] kind     The type of Airy function to solve
- * @param[in] scaling  Type of scaling to use (any valid enum value)
+ * @param[in] scaling  Type of scaling to use (`HUFFORD` or `WAIT`) when solving
+ *                     Airy functions of the third kind. This parameter is ignored
+ *                     for `AIRY`, `AIRYD`, `BAIRY`, and `BAIRYD` values of `kind`.
  * @return             The desired Airy function calculated at Z
  * 
  * @throws std::invalid_argument If the values provided for `kind` or `scaling`
- *                               are not valid for this function.
+ *                               are not valid for this function. This includes
+ *                               when `scaling` `NONE` is provided for Airy
+ *                               functions of the third kind.
  * @throws std::range_error      If the calculation requires expansion data
  *                               outside the range of what is known by this program.
  *
@@ -498,8 +502,21 @@ std::complex<double> Airy(
         throw std::invalid_argument(oss.str());
     };
 
-    if ((scaling != AiryScaling::NONE) && (scaling != AiryScaling::HUFFORD)
-        && (scaling != AiryScaling::WAIT)) {
+    if (((kind == AiryKind::WONE) || (kind == AiryKind::WTWO)
+         || (kind == AiryKind::DWONE) || (kind == AiryKind::DWTWO))
+        && ((scaling != AiryScaling::HUFFORD) && (scaling != AiryScaling::WAIT)
+        )) {
+        // Airy functions of the third kind must have either HUFFORD or WAIT scaling
+        std::ostringstream oss;
+        oss << "Airy(): When solving an Airy function of the third kind, "
+               "`scaling` must be one of `HUFFORD` ("
+            << static_cast<int>(AiryScaling::HUFFORD) << ") or `WAIT` ("
+            << static_cast<int>(AiryScaling::WAIT) << "), not "
+            << static_cast<int>(scaling);
+        throw std::invalid_argument(oss.str());
+    } else if ((scaling != AiryScaling::NONE)
+               && (scaling != AiryScaling::HUFFORD)
+               && (scaling != AiryScaling::WAIT)) {
         std::ostringstream oss;
         oss << "Airy(): `scaling` must be one of `NONE` ("
             << static_cast<int>(AiryScaling::NONE) << "), `HUFFORD` ("
@@ -816,14 +833,9 @@ std::complex<double> Airy(
     };
 
     // The final scaling factor is a function of the kind, derivative and scaling flags
-    if (scaling == AiryScaling::NONE) {
-        // The number from the Taylor series or asymptotic calculation
-        // does not need to multiplied by anything
-        U = std::complex<double>(1.0, 0.0);
-    }
     // Hufford Wi(1) and Wi'(1)
-    else if ((kind == AiryKind::WONE || kind == AiryKind::DWONE)
-             && (scaling == AiryScaling::HUFFORD)) {
+    if ((kind == AiryKind::WONE || kind == AiryKind::DWONE)
+        && (scaling == AiryScaling::HUFFORD)) {
         if (derivative_flag) {
             U = 2.0
               * std::complex<double>(std::cos(PI / 3.0), std::sin(PI / 3.0));
