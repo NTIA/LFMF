@@ -9,6 +9,7 @@
 
 /** Test fixture provides valid inputs for WiRoot */
 class TestWiRoot: public ::testing::Test {
+    protected:
         void SetUp() override {
             // Initialize valid inputs
             i = 1;
@@ -16,7 +17,7 @@ class TestWiRoot: public ::testing::Test {
             kind = AiryKind::WONE;
             scaling = AiryScaling::HUFFORD;
         }
-    protected:
+        // Initialize input and output variables
         std::complex<double> DWi, Wi;
         int i;
         std::complex<double> q;
