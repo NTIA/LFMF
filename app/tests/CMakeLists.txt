@@ -5,6 +5,7 @@ add_executable(
     ${DRIVER_TEST_NAME}
     "TempTextFile.cpp"
     "TestDriver.cpp"
+    "TestDriverLFMF.cpp"
     "TempTextFile.h"
     "TestDriver.h"
     "${DRIVER_HEADERS}/Driver.h"
