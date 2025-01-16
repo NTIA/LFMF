@@ -31,7 +31,7 @@ const std::string LFMFInputKeys::pol = "pol";
  ******************************************************************************/
 ReturnCode CallLFMFModel(LFMFParams &lfmf_params, Result &result) {
     ReturnCode rtn;
-    rtn = LFMF(
+    rtn = LFMF_CPP(
         lfmf_params.h_tx__meter,
         lfmf_params.h_rx__meter,
         lfmf_params.f__mhz,
@@ -94,9 +94,13 @@ DrvrReturnCode
             if (rtn == DRVRERR__PARSE)
                 rtn = DRVRERR__PARSE_SIGMA;
         } else if (key.compare(LFMFInputKeys::pol) == 0) {
-            rtn = ParseInteger(value, lfmf_params.pol);
-            if (rtn == DRVRERR__PARSE)
+            int pol_int;
+            rtn = ParseInteger(value, pol_int);
+            if (rtn == DRVRERR__PARSE) {
                 rtn = DRVRERR__PARSE_POLARIZATION;
+            } else {
+                lfmf_params.pol = static_cast<Polarization>(pol_int);
+            }
         } else {
             std::cerr << "Unknown parameter: " << key << std::endl;
             rtn = DRVRERR__PARSE;
@@ -143,7 +147,7 @@ void WriteLFMFInputs(std::ofstream &fp, const LFMFParams &params) {
     fp PRINT LFMFInputKeys::d__km SETW13 params.d__km << "[km]";
     fp PRINT LFMFInputKeys::epsilon SETW13 params.epsilon;
     fp PRINT LFMFInputKeys::sigma SETW13 params.sigma;
-    fp PRINT LFMFInputKeys::pol SETW13 params.pol
+    fp PRINT LFMFInputKeys::pol SETW13 static_cast<int>(params.pol)
         << "[0 = Horizontal, 1 = Vertical]";
 }
 
@@ -161,6 +165,6 @@ void WriteLFMFOutputs(std::ofstream &fp, const Result &result) {
     fp PRINT "Received power" SETW13 std::fixed << std::setprecision(2)
                                                 << result.P_rx__dbm << "[dB]";
     fp PRINT "Solution method" SETW13 std::fixed
-        << std::setprecision(0) << result.method
+        << std::setprecision(0) << static_cast<int>(result.method)
         << "[0 = Flat earth with curve correction, 1 = Residue series]";
 }

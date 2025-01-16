@@ -25,13 +25,13 @@ namespace LFMF {
 // Enums
 
 /** Valid RF polarizations for use of this model */
-enum Polarization {
+enum class Polarization {
     HORIZONTAL = 0, /**< Horizontal polarization */
     VERTICAL = 1,   /**< Vertical polarization */
 };
 
 /** Solution method used to generate model result */
-enum SolutionMethod {
+enum class SolutionMethod {
     FLAT_EARTH_CURVE, /**< Flat earth curve method */
     RESIDUE_SERIES,   /**< Residue series method */
 };
@@ -49,10 +49,10 @@ enum SolutionMethod {
  * the same as Wait's @f$ w_2 @f$ and @f$ w_1 @f$.
  * @see ITS::Propagation::LFMF::Airy
  * @see ITS::Propagation::LFMF::WiRoot
- * @see ITS::Propagation::LFMF::AiryFunctionScaling
+ * @see ITS::Propagation::LFMF::AiryScaling
  ******************************************************************************/
 // clang-format off
-enum AiryFunctionKind {
+enum class AiryKind {
     AIRY = 1, /**< Airy function of the first kind, @f$ \mathrm{Ai}(x) @f$ */
     AIRYD,    /**< Derivative of `AIRY`, @f$ \mathrm{Ai}'(x) @f$ */
     BAIRY,    /**< Airy function of the second kind, @f$ \mathrm{Bi}(x) @f$ */
@@ -72,9 +72,9 @@ enum AiryFunctionKind {
  * 
  * @see ITS::Propagation::LFMF::Airy
  * @see ITS::Propagation::LFMF::WiRoot
- * @see ITS::Propagation::LFMF::AiryFunctionKind
+ * @see ITS::Propagation::LFMF::AiryKind
  ******************************************************************************/
-enum AiryFunctionScaling {
+enum class AiryScaling {
     HUFFORD, /**< Use Hufford scaling */
     WAIT,    /**< Use Wait scaling */
     NONE,    /**< No Scaling */
@@ -175,17 +175,15 @@ double ResidueSeries(
 );
 std::complex<double> wofz(const std::complex<double> z);
 std::complex<double> Airy(
-    const std::complex<double> Z,
-    const AiryFunctionKind kind,
-    const AiryFunctionScaling scaling
+    const std::complex<double> Z, const AiryKind kind, const AiryScaling scaling
 );
 std::complex<double> WiRoot(
     const int i,
     std::complex<double> &DWi,
     const std::complex<double> q,
     std::complex<double> &Wi,
-    const AiryFunctionKind kind,
-    const AiryFunctionScaling scaling
+    const AiryKind kind,
+    const AiryScaling scaling
 );
 ReturnCode ValidateInput(
     const double h_tx__meter,
@@ -197,7 +195,7 @@ ReturnCode ValidateInput(
     const double epsilon,
     const double sigma
 );
-ReturnCode ValidatePolarization(const int pol);
+ReturnCode ValidatePolarization(const Polarization pol);
 bool AlmostEqualRelative(
     const double A, const double B, const double maxRelDiff = DBL_EPSILON
 );

@@ -4,8 +4,10 @@
 
 #include "LFMF.h"
 
-#include <cmath>    // for abs, cos, exp, pow, sin, sqrt
-#include <complex>  // for std::arg, std::complex
+#include <cmath>      // for abs, copysign, cos, exp, pow, sin, sqrt
+#include <complex>    // for std::arg, std::complex
+#include <sstream>    // for std::ostringstream
+#include <stdexcept>  // for std::invalid_argument, std::range_error
 
 namespace ITS {
 namespace Propagation {
@@ -20,7 +22,7 @@ namespace LFMF {
  * location of the input argument.
  *
  * This routine determines the so-called "Airy Functions of the third kind"
- * @f$ Wi(1) @f$ and @f$ Wi(2) @f$  that are found in equation 38 of NTIA Report
+ * @f$ Wi(1) @f$ and @f$ Wi(2) @f$ that are found in equation 38 of NTIA Report
  * 87-219 "A General Theory of Radio Propagation through a Stratified
  * Atmosphere", George Hufford, July 1987.
  *
@@ -31,9 +33,18 @@ namespace LFMF {
  * Program for an Anisotropic Ionosphere" L. A. Berry and J. E. Herman, April 1971.
  *
  * @param[in] Z        Complex input argument
- * @param[in] kind     Switch indicating the type of Airy function to solve
- * @param[in] scaling  Type of scaling to use
+ * @param[in] kind     The type of Airy function to solve
+ * @param[in] scaling  Type of scaling to use (`HUFFORD` or `WAIT`) when solving
+ *                     Airy functions of the third kind. This parameter is ignored
+ *                     for `AIRY`, `AIRYD`, `BAIRY`, and `BAIRYD` values of `kind`.
  * @return             The desired Airy function calculated at Z
+ * 
+ * @throws std::invalid_argument If the values provided for `kind` or `scaling`
+ *                               are not valid for this function. This includes
+ *                               when `scaling` `NONE` is provided for Airy
+ *                               functions of the third kind.
+ * @throws std::range_error      If the calculation requires expansion data
+ *                               outside the range of what is known by this program.
  *
  * @note The following is a note on scaling the output from this program.
  *
@@ -111,42 +122,24 @@ namespace LFMF {
  * Ai(z) - j*Bi(z) = -3.526603e-001 + 1.265639e-001 i
  * Ai(z) + j*Bi(z) = -8.611221e-002 + 2.242080e-001 i
  * ```
- * @see ITS::Propagation::LFMF::AiryFunctionKind
- * @see ITS::Propagation::LFMF::AiryFunctionScaling
+ * @see ITS::Propagation::LFMF::AiryKind
+ * @see ITS::Propagation::LFMF::AiryScaling
  * @see ITS::Propagation::LFMF::WiRoot
  ******************************************************************************/
 std::complex<double> Airy(
-    const std::complex<double> Z,
-    const AiryFunctionKind kind,
-    const AiryFunctionScaling scaling
+    const std::complex<double> Z, const AiryKind kind, const AiryScaling scaling
 ) {
-    // NQTT, ASLT data
-    int NQTT[15] = {
-        1, 3, 7, 12, 17, 23, 29, 35, 41, 47, 53, 59, 64, 68, 71
-    };  // Centers of Expansion of Taylor series on real axis indices into the
-    // AV, APV, BV and BPV arrays
-    int N;  // Index into NQTT[] array
-    int NQ8;  // Index that indicates the radius of convergence of the Taylor series solution
-    int CoERealidx;  // Center of Expansion of the Taylor Series real index
-    int CoEImagidx;  // Center of Expansion of the Taylor Series imaginary index
-    int cnt;         // loop counter for the Taylor series calculation
-
-    bool
-        reflection;  // Flag to indicate that the answer needs to be flipped over since this routine only finds solutions in quadrant 1 and 2
+    // Centers of Expansion of Taylor series on real axis indices into the AV,
+    // APV, BV, and BPV arrays
+    constexpr int NQTT[15]
+        = {1, 3, 7, 12, 17, 23, 29, 35, 41, 47, 53, 59, 64, 68, 71};
 
     std::complex<double> A[2], ZT, B0, B1, B2, B3, AN, U, ZA, ZB, ZU;  // Temps
-    std::complex<double> CoE;  // Center of Expansion of the Taylor series
-    std::complex<double>
-        Ai;  // Ai is either Ai(at the center of expansion of the Taylor series) or Bi( at the center of expansion of the Taylor series )
-    std::complex<double> Aip;   // Aip is the derivative of the above
-    std::complex<double> sum1;  // Temp Sum for the asymptotic solution
-    std::complex<double> sum2;  // Temp Sum for the asymptotic solution
-    std::complex<double> ZB2, ZB1;
 
-    double
-        one;  // Used in the calculation of the asymptotic solution is either -1 or 1
+    // Ai is either Ai() or Bi() at the center of expansion of the Taylor series
+    std::complex<double> Ai;
 
-    // terms for asymptotic series.  second column is for derivative
+    // terms for asymptotic series. second column is for derivative
     constexpr int SIZE_OF_ASV = 15;
     constexpr double ASV[SIZE_OF_ASV][2]
         = {{0.5989251E+5, -0.6133571E+5},
@@ -489,15 +482,48 @@ std::complex<double> Airy(
     };
 
     ////////////////////////////////////////
-    // Validate input - kind & derivative //
+    // Validate inputs - kind & scaling   //
     ////////////////////////////////////////
-    if ((kind != AIRY) && (kind != BAIRY) && (kind != WONE) && (kind != DWONE)
-        && (kind != WTWO) && (kind != DWTWO)) {
-        return std::complex<double>(0, 0);  // Airy Error: Invalid kind value
+    if ((kind != AiryKind::AIRY) && (kind != AiryKind::AIRYD)
+        && (kind != AiryKind::BAIRY) && (kind != AiryKind::BAIRYD)
+        && (kind != AiryKind::WONE) && (kind != AiryKind::DWONE)
+        && (kind != AiryKind::WTWO) && (kind != AiryKind::DWTWO)) {
+        std::ostringstream oss;
+        oss << "Airy(): `kind` must be one of `AIRY` ("
+            << static_cast<int>(AiryKind::AIRY) << "), `AIRYD` ("
+            << static_cast<int>(AiryKind::AIRYD) << "), `BAIRY` ("
+            << static_cast<int>(AiryKind::BAIRY) << "), `BAIRYD` ("
+            << static_cast<int>(AiryKind::BAIRYD) << "), `WONE` ("
+            << static_cast<int>(AiryKind::WONE) << "), `DWONE` ("
+            << static_cast<int>(AiryKind::DWONE) << "), `WTWO` ("
+            << static_cast<int>(AiryKind::WTWO) << "), `DWTWO` ("
+            << static_cast<int>(AiryKind::DWTWO) << "), not "
+            << static_cast<int>(kind);
+        throw std::invalid_argument(oss.str());
     };
 
-    if ((scaling != NONE) && (scaling != HUFFORD) && (scaling != WAIT)) {
-        return std::complex<double>(0, 0);  // Airy Error: Invalid scaling value
+    if (((kind == AiryKind::WONE) || (kind == AiryKind::WTWO)
+         || (kind == AiryKind::DWONE) || (kind == AiryKind::DWTWO))
+        && ((scaling != AiryScaling::HUFFORD) && (scaling != AiryScaling::WAIT)
+        )) {
+        // Airy functions of the third kind must have either HUFFORD or WAIT scaling
+        std::ostringstream oss;
+        oss << "Airy(): When solving an Airy function of the third kind, "
+               "`scaling` must be one of `HUFFORD` ("
+            << static_cast<int>(AiryScaling::HUFFORD) << ") or `WAIT` ("
+            << static_cast<int>(AiryScaling::WAIT) << "), not "
+            << static_cast<int>(scaling);
+        throw std::invalid_argument(oss.str());
+    } else if ((scaling != AiryScaling::NONE)
+               && (scaling != AiryScaling::HUFFORD)
+               && (scaling != AiryScaling::WAIT)) {
+        std::ostringstream oss;
+        oss << "Airy(): `scaling` must be one of `NONE` ("
+            << static_cast<int>(AiryScaling::NONE) << "), `HUFFORD` ("
+            << static_cast<int>(AiryScaling::HUFFORD) << "), `WAIT` ("
+            << static_cast<int>(AiryScaling::WAIT) << "), not "
+            << static_cast<int>(scaling);
+        throw std::invalid_argument(oss.str());
     };
 
     // Set a flag and index value to control function flow based on whether or not
@@ -506,7 +532,8 @@ std::complex<double> Airy(
     // `derivative_flag` is generally used as a condition.
     bool derivative_flag;  // True if finding a derivative (e.g., Ai', Bi')
     int derivative_idx;    // Index used to get correct values from arrays
-    if (kind == DWTWO || kind == DWONE || kind == AIRYD || kind == BAIRYD) {
+    if (kind == AiryKind::DWTWO || kind == AiryKind::DWONE
+        || kind == AiryKind::AIRYD || kind == AiryKind::BAIRYD) {
         derivative_flag = true;
         derivative_idx = 1;
     } else {
@@ -524,21 +551,26 @@ std::complex<double> Airy(
 
     // The following scales the input parameter Z depending on what the user is trying to do.
     // If the user is trying to find just the Ai(Z), Ai'(Z), Bi(Z) or Bi'(Z) there is no scaling.
-    if (kind == AIRY || kind == BAIRY || kind == AIRYD || kind == BAIRYD) {
+    if (kind == AiryKind::AIRY || kind == AiryKind::BAIRY
+        || kind == AiryKind::AIRYD || kind == AiryKind::BAIRYD) {
         // For Ai(Z) and  Bi(Z) No translation in the complex plane
         U = std::complex<double>(1.0, 0.0);
     }
     // Note that W1 Wait = Wi(2) Hufford and W2 Wait = Wi(1) Hufford
     // So the following inequalities keep this all straight
-    else if (((kind == DWONE || kind == WONE) && scaling == HUFFORD)
-             || ((kind == DWTWO || kind == WTWO) && scaling == WAIT)) {
+    else if (((kind == AiryKind::DWONE || kind == AiryKind::WONE)
+              && scaling == AiryScaling::HUFFORD)
+             || ((kind == AiryKind::DWTWO || kind == AiryKind::WTWO)
+                 && scaling == AiryScaling::WAIT)) {
         // This corresponds to Wi(1)(Z) in Eqn 38 Hufford NTIA Report 87-219
         // or Wait W2
         U = std::complex<double>(
             std::cos(2.0 * PI / 3.0), std::sin(2.0 * PI / 3.0)
         );
-    } else if (((kind == DWTWO || kind == WTWO) && scaling == HUFFORD)
-               || ((kind == DWONE || kind == WONE) && scaling == WAIT)) {
+    } else if (((kind == AiryKind::DWTWO || kind == AiryKind::WTWO)
+                && scaling == AiryScaling::HUFFORD)
+               || ((kind == AiryKind::DWONE || kind == AiryKind::WONE)
+                   && scaling == AiryScaling::WAIT)) {
         // This corresponds to Wi(2)(Z) in Eqn 38 Hufford NTIA Report 87-219
         // or Wait W1
         U = std::complex<double>(
@@ -551,10 +583,10 @@ std::complex<double> Airy(
 
     // We will be only calculating for quadrant 1 and 2. If the desired value is in 3 or 4 we
     // will have to flip it over after the calculation
-    reflection = false;
+    bool reflection = false;
     if (ZU.imag() <= 0) {
-        reflection
-            = true;  // reflection = true means Z.imag() <= 0, use reflection formula to get result
+        // reflection = true means Z.imag() <= 0, use reflection formula to get result
+        reflection = true;
         ZU = std::complex<double>(ZU.real(), -ZU.imag());
     };
 
@@ -571,10 +603,10 @@ std::complex<double> Airy(
 
     // Initialize the indexes for the center of expansion
     // Note these are used in the if statements below as flags
-    N = 0;
-    NQ8 = 0;
+    int N = 0;    // Index into NQTT[] array
+    int NQ8 = 0;  // Index for radius of convergence of the Taylor series soln.
 
-    // If Z is small, use Taylor's series at various centers of expansion chosen by George Hufford
+    // If Z is small, use Taylor series at various centers of expansion chosen by George Hufford
     // If Z is large, use Asymptotic series NIST DLMF 9.4.5 - 9.4.8
 
     // The following inequality is formed from the implicit arguments for the AV[], BV[], BPV[] and APV[]
@@ -584,37 +616,38 @@ std::complex<double> Airy(
     //      (ZU.real() <= 7.5)   7.5 is 0.5 is the real value of the center of expansion in the array
     //      (ZU.imag() <= 6.35) 6.35 is 5.5/sin(PI/3) which is 0.5 past 5/sin(PI/3)
     if ((ZU.real() >= -6.5) && (ZU.real() <= 7.5) && (ZU.imag() <= 6.35)) {
-        // choose center of expansion of the Taylor series
-        CoERealidx
+        // choose center of expansion of the Taylor Series (COE) real and imaginary indices
+        const int CoERealidx
             = static_cast<int>(ZU.real() + std::copysign(0.5, ZU.real()));
-        CoEImagidx = static_cast<int>(
+        const int CoEImagidx = static_cast<int>(
             std::sin(PI / 3.0) * (ZU.imag() + 0.5)
         );  // sin(60)*(Z.imag()+0.5)
 
-        N = NQTT[CoERealidx + 6]
-          + CoEImagidx;  // N is index of center of expansion
+        // N is index of center of expansion
+        N = NQTT[CoERealidx + 6] + CoEImagidx;
 
-        // Check to see if N is out of bounds
-        if (N
-            >= 70) {  // Stop if the index N reaches the limit of array AV[] which is 70
-            //printf("Airy() Error: Z is too large\n");
-            return std::complex<double>(0, 0);
+        // Stop if the index N reaches the limit of array AV[] which is 70
+        if (N >= 70) {
+            std::ostringstream oss;
+            oss << "Airy(): Center of expansion index " << N << " is out "
+                << "of range for internal Airy data array. Unable to proceed.";
+            throw std::range_error(oss.str());
         };
 
-        NQ8 = NQTT
-            [CoERealidx
-             + 7];  // The next real center of expansion or what is know here ...
-                    // as the area of the Taylor's series
+        // The next real center of expansion, known here as the area of the Taylor series
+        NQ8 = NQTT[CoERealidx + 7];
 
-        // if Z is inside Taylor's series area, continue. Otherwise, go to asymptotic series
+        // if Z is inside the Taylor series area, continue. Otherwise, go to asymptotic series
         if (N < NQ8) {
             ///////////////////////////////////////////
             // Compute the function by Taylor Series //
             ///////////////////////////////////////////
 
-            // sum Taylor's series around nearest expansion point
+            // sum Taylor series around nearest expansion point
             // The arrays AV[] and APV[] are incremented in the complex domain by 1/sin(PI/3)
-            CoE = std::complex<double>(
+
+            // Center of Expansion of the Taylor series:
+            std::complex<double> CoE(
                 static_cast<double>(CoERealidx),
                 static_cast<double>(CoEImagidx) / std::sin(PI / 3.0)
             );
@@ -625,7 +658,8 @@ std::complex<double> Airy(
             // Calculate the first term of the Taylor Series
             // To do this we need to find the Airy or Bairy function at the center of
             // expansion, CoE, that has been precalculated in the arrays above.
-            if (kind == BAIRY || kind == BAIRYD) {
+            std::complex<double> Aip;  // Aip is the derivative of Ai
+            if (kind == AiryKind::BAIRY || kind == AiryKind::BAIRYD) {
                 Ai = BV[N - 1];    // Bi(CoE)
                 Aip = BPV[N - 1];  // Bi'(CoE)
             } else {               // All other cases use the Coe for Ai(z)
@@ -633,24 +667,20 @@ std::complex<double> Airy(
                 Aip = APV[N - 1];  // Ai'(CoE)
             };
 
+            // clang-format off
             // Find the first elements of the Taylor series
-            //                                                       Translation
-            B1 = Ai;  // B1 is first term for function        Ai(a)
-            B3 = B1 * CoE
-               * ZU;     // B3 is second term for derivative     Ai(a)*a*(z-a)
-            A[1] = Aip;  // A is first term for derivation       Ai'(a)
-            B2 = A[1] * ZU;  // B2 is second term for function       Ai'(a)(z-a)
-            A[0]
-                = B2
-                + B1;  // A[0] is the sum of Ai() or Bi()      Ai'(a)(z-a) + Ai(a)
-            A[1]
-                = A[1]
-                + B3;  // A[1] is the sum of Ai'() or Bi'()    Ai'(a) + Ai(a)*a*(z-a)
-
+            //                                                        Translation
+            B1 = Ai;             // B1 is first term for function        Ai(a)
+            B3 = B1 * CoE * ZU;  // B3 is second term for derivative     Ai(a)*a*(z-a)
+            A[1] = Aip;          // A is first term for derivation       Ai'(a)
+            B2 = A[1] * ZU;      // B2 is second term for function       Ai'(a)(z-a)
+            A[0] = B2 + B1;      // A[0] is the sum of Ai() or Bi()      Ai'(a)(z-a) + Ai(a)
+            A[1] = A[1] + B3;    // A[1] is the sum of Ai'() or Bi'()    Ai'(a) + Ai(a)*a*(z-a)
             AN = 1.0;
+            // clang-format on
 
-            // Initialize the counter
-            cnt = 0;
+            // Initialize counter for the Taylor series calculation
+            int cnt = 0;
 
             // compute terms of series and sum until convergence
             do {
@@ -698,7 +728,9 @@ std::complex<double> Airy(
         ZA = std::sqrt(ZU);          // zeta^(1/2)
         ZT = (2.0 / 3.0) * ZU * ZA;  // NIST DLMF 9.7.1 => -(2/3)zeta^(3/2)
 
-        if (kind == BAIRY || kind == BAIRYD) {
+        // Used in the calculation of the asymptotic solution is either -1 or 1
+        double one;
+        if (kind == AiryKind::BAIRY || kind == AiryKind::BAIRYD) {
             one = 1.0;  // Terms for the Bairy sum do not alternate sign
         } else {
             one = -1.0;  // All other functions use the Airy whose sum alternates sign
@@ -708,12 +740,12 @@ std::complex<double> Airy(
         // Which is used depends on M => M = 0 use u_k M = 1 use v_k
         // By doing this backward you don't have to do multiple powers zeta^-1
         // Note the coefficients are backward so the for loop will be forward
-        sum1 = std::complex<double>(0.0, 0.0);  // Initialize the sum
+        std::complex<double> sum1(0.0, 0.0);  // Initialize the temporary sum
         for (int i = 0; i < 14; i++) {
             sum1 = (std::pow(one, i) * ASV[i][derivative_idx] + sum1) / ZT;
         };
-        sum1 = ASV[SIZE_OF_ASV - 1][derivative_idx]
-             + sum1;  // Add the first element that is a function of zeta^0
+        // Add the first element that is a function of zeta^0
+        sum1 = ASV[SIZE_OF_ASV - 1][derivative_idx] + sum1;
 
         // Now determine if a second series is necessary
         // If it is not set the second sum to zero
@@ -737,21 +769,21 @@ std::complex<double> Airy(
 
         // From Copson the F(z) solution is only valid for phase(z) <= PI/3.0
         // While the F(z) + i*G(z) solution is necessary for phase(z) > PI/3.0
+        std::complex<double> sum2(0.0, 0.0);  // Initialize the second sum
         if (std::abs(std::arg(ZU)) > PI / 3.0) {
-            sum2 = std::complex<double>(0.0, 0.0);  // Initialize the second sum
             for (int i = 0; i < 14; i++) {
                 sum2 = (ASV[i][derivative_idx] + sum2) / ZT;
             };
-            sum2 = ASV[SIZE_OF_ASV - 1][derivative_idx]
-                 + sum2;  // Add the first element that is a function of zeta^0
-        } else {          // Only one series is necessary for accuracy
-            sum2 = std::complex<double>(0.0, 0.0);
-        };
+            // Add the first element that is a function of zeta^0
+            sum2 = ASV[SIZE_OF_ASV - 1][derivative_idx] + sum2;
+        }
+        // If the above condition is not true, only one series is necessary for accuracy
 
         // Now do the final function that leads the sum depending on what the user wants.
         // The leading function has to be taken apart so that it can be assembled as necessary for
         // the possible two parts of the sum
-        if (kind == BAIRY || kind == BAIRYD) {
+        std::complex<double> ZB2, ZB1;
+        if (kind == AiryKind::BAIRY || kind == AiryKind::BAIRYD) {
             if (derivative_flag) {
                 ZB = std::sqrt(ZA);  // NIST DLMF 9.7.7
             } else {
@@ -801,13 +833,9 @@ std::complex<double> Airy(
     };
 
     // The final scaling factor is a function of the kind, derivative and scaling flags
-    if (scaling == NONE) {
-        // The number from the Taylor series or asymptotic calculation
-        // does not need to multiplied by anything
-        U = std::complex<double>(1.0, 0.0);
-    }
     // Hufford Wi(1) and Wi'(1)
-    else if ((kind == WONE || kind == DWONE) && (scaling == HUFFORD)) {
+    if ((kind == AiryKind::WONE || kind == AiryKind::DWONE)
+        && (scaling == AiryScaling::HUFFORD)) {
         if (derivative_flag) {
             U = 2.0
               * std::complex<double>(std::cos(PI / 3.0), std::sin(PI / 3.0));
@@ -817,7 +845,8 @@ std::complex<double> Airy(
         };
     }
     // Hufford Wi(2) and Wi'(2)
-    else if ((kind == WTWO || kind == DWTWO) && (scaling == HUFFORD)) {
+    else if ((kind == AiryKind::WTWO || kind == AiryKind::DWTWO)
+             && (scaling == AiryScaling::HUFFORD)) {
         if (derivative_flag) {
             U = 2.0
               * std::complex<double>(std::cos(-PI / 3.0), std::sin(-PI / 3.0));
@@ -827,7 +856,8 @@ std::complex<double> Airy(
         };
     }
     // Wait W1 and W1'
-    else if ((kind == WONE || kind == DWONE) && (scaling == WAIT)) {
+    else if ((kind == AiryKind::WONE || kind == AiryKind::DWONE)
+             && (scaling == AiryScaling::WAIT)) {
         if (derivative_flag) {
             U = std::complex<double>(
                 -1.0 * std::sqrt(3.0 * PI), -1.0 * std::sqrt(PI)
@@ -837,7 +867,8 @@ std::complex<double> Airy(
         };
     }
     // Wait W2 and W2'
-    else if ((kind == WTWO || kind == DWTWO) && (scaling == WAIT)) {
+    else if ((kind == AiryKind::WTWO || kind == AiryKind::DWTWO)
+             && (scaling == AiryScaling::WAIT)) {
         if (derivative_flag) {
             U = std::complex<double>(-1.0 * std::sqrt(3.0 * PI), std::sqrt(PI));
         } else {

@@ -4,8 +4,10 @@
 
 #include "LFMF.h"
 
-#include <cmath>    // for abs, cos, pow, sin
-#include <complex>  // for std::complex
+#include <cmath>      // for abs, cos, pow, sin
+#include <complex>    // for std::complex
+#include <sstream>    // for std::ostringstream
+#include <stdexcept>  // for std::invalid_argument, std::runtime_error
 
 namespace ITS {
 namespace Propagation {
@@ -25,15 +27,19 @@ namespace LFMF {
  * kind and scale are used here as they are in `Airy()` for consistency.
  *
  * @param[in]  i        The @f$ i @f$-th complex root of
- *                      @f$ Wi'^{(2)}(ti) - q*Wi^{(2)}(ti) @f$, starting with 1
+ *                      @f$ Wi'^{(2)}(ti) - q*Wi^{(2)}(ti) @f$, starting with 1.
  * @param[in]  q        Intermediate value: @f$ -j \nu \delta @f$
- * @param[in]  kind     Kind of Airy function to use
- * @param[in]  scaling  Type of scaling to use
+ * @param[in]  kind     Kind of Airy function to use, either `WONE` or `WTWO`
+ * @param[in]  scaling  Type of scaling to use, either `HUFFORD` or `WAIT`
  * @param[out] DWi      Derivative of "Airy function of the third kind"
  *                      @f$ Wi'^{(2)}(ti) @f$
  * @param[out] Wi       "Airy function of the third kind" @f$ Wi^{(2)}(ti) @f$
  * @return              The @f$ i @f$-th complex root of the "Airy function of
  *                      the third kind"
+ * 
+ * @throws std::invalid_argument  If the values provided for `i`, `kind`, or
+ *                                `scaling` are not valid for this function.
+ * @throws std::runtime_error     If the root finding algorithm fails to converge.
  * 
  * **References**
  *     - "Airy Functions of the third kind" are found in equation 38 of [NTIA
@@ -41,8 +47,8 @@ namespace LFMF {
  *       "A General Theory of Radio Propagation through a Stratified Atmosphere",
  *       George Hufford, July 1987.
  * 
- * @see ITS::Propagation::LFMF::AiryFunctionKind
- * @see ITS::Propagation::LFMF::AiryFunctionScaling
+ * @see ITS::Propagation::LFMF::AiryKind
+ * @see ITS::Propagation::LFMF::AiryScaling
  * @see ITS::Propagation::LFMF::Airy
  ******************************************************************************/
 std::complex<double> WiRoot(
@@ -50,8 +56,8 @@ std::complex<double> WiRoot(
     std::complex<double> &DWi,
     const std::complex<double> q,
     std::complex<double> &Wi,
-    const AiryFunctionKind kind,
-    const AiryFunctionScaling scaling
+    const AiryKind kind,
+    const AiryScaling scaling
 ) {
     std::complex<double> ph;  // Airy root phase
     std::complex<double> ti;  // ith cplx root of Wi'(2)(ti) - q*Wi(2)(ti) = 0
@@ -61,7 +67,7 @@ std::complex<double> WiRoot(
     double t, tt;            // Temp
     double eps;              // Temp
     int cnt;                 // Temp
-    AiryFunctionKind dkind;  // Temp
+    AiryKind dkind;          // Temp
 
     // From the NIST DLMF (Digital Library of Mathematical Functions)
     // http://dlmf.nist.gov/
@@ -101,21 +107,30 @@ std::complex<double> WiRoot(
     // Verify that the input data is correct
     // Make sure that the desired root is greater than or equal to one
     if (i <= 0) {
-        // There is an input parameter error; printf("WiRoot(): The root must be >= 0 (%d)\n", i);
-        tw = std::complex<double>(-998.8, -998.8);
-        return tw;
+        // Input `i` must be > 0; throw an exception
+        std::ostringstream oss;
+        oss << "WiRoot(): The root `i` must be > 0, not " << i;
+        throw std::invalid_argument(oss.str());
     };
 
-    if ((scaling != HUFFORD) && (scaling != WAIT)) {
-        // There is an input parameter error; printf("WiRoot(): The scaling must be HUFFORD (%d) or WAIT (%d)\n", HUFFORD, WAIT);
-        tw = std::complex<double>(-997.7, -997.7);
-        return tw;
+    if ((scaling != AiryScaling::HUFFORD) && (scaling != AiryScaling::WAIT)) {
+        // Input `scaling` is invalid; throw an exception
+        std::ostringstream oss;
+        oss << "WiRoot(): `scaling` must be one of `HUFFORD` ("
+            << static_cast<int>(AiryScaling::HUFFORD) << ") or `WAIT` ("
+            << static_cast<int>(AiryScaling::WAIT) << "), not "
+            << static_cast<int>(scaling);
+        throw std::invalid_argument(oss.str());
     };
 
-    if ((kind != WTWO) && (kind != WONE)) {
-        // There is an input parameter error; printf("WiRoot(): The kind must be W1 (%d) or W2 (%d)\n", WONE, WTWO);
-        tw = std::complex<double>(-996.6, -996.6);
-        return tw;
+    if ((kind != AiryKind::WTWO) && (kind != AiryKind::WONE)) {
+        // Input `kind` is invalid; throw an exception
+        std::ostringstream oss;
+        oss << "WiRoot(): `kind` must be one of `WTWO` ("
+            << static_cast<int>(AiryKind::WTWO) << ") or `WONE` ("
+            << static_cast<int>(AiryKind::WONE) << "), not "
+            << static_cast<int>(kind);
+        throw std::invalid_argument(oss.str());
     };
     // Input parameters verified
 
@@ -133,31 +148,31 @@ std::complex<double> WiRoot(
     // This is the similar to the initial scaling that is done in Airy()
     // Note that W1 Wait = Wi(2) Hufford and W2 Wait = Wi(1) Hufford
     // So the following inequalities keep this all straight
-    if ((kind == WONE && scaling == HUFFORD)
-        || (kind == WTWO && scaling == WAIT)) {
+    if ((kind == AiryKind::WONE && scaling == AiryScaling::HUFFORD)
+        || (kind == AiryKind::WTWO && scaling == AiryScaling::WAIT)) {
         // Wi(1)(Z) in Eqn 38 Hufford NTIA Report 87-219 or Wait W2
         ph = std::complex<double>(
             std::cos(-2.0 * PI / 3.0), std::sin(-2.0 * PI / 3.0)
         );
         // Set the dkind flag
-        if (scaling == WAIT) {
-            dkind = DWTWO;
+        if (scaling == AiryScaling::WAIT) {
+            dkind = AiryKind::DWTWO;
         } else {
-            dkind = DWONE;
+            dkind = AiryKind::DWONE;
         };
-    } else if ((kind == WTWO && scaling == HUFFORD)
-               || (kind == WONE && scaling == WAIT)) {
+    } else if ((kind == AiryKind::WTWO && scaling == AiryScaling::HUFFORD)
+               || (kind == AiryKind::WONE && scaling == AiryScaling::WAIT)) {
         // Wi(2)(Z) in Eqn 38 Hufford NTIA Report 87-219 or Wait W1
         ph = std::complex<double>(
             std::cos(2.0 * PI / 3.0), std::sin(2.0 * PI / 3.0)
         );
-        if (scaling == WAIT) {
-            dkind = DWONE;
+        if (scaling == AiryScaling::WAIT) {
+            dkind = AiryKind::DWONE;
         } else {
-            dkind = DWTWO;
+            dkind = AiryKind::DWTWO;
         };
     } else {
-        dkind = DWONE;  // Not used, initialization for compile warning
+        dkind = AiryKind::DWONE;  // Not used, initialized for compile warning
     }
 
     // Note: The zeros of the Airy functions i[ak'] and Ak'[ak], ak' and ak, are on the negative real axis.
@@ -228,8 +243,10 @@ std::complex<double> WiRoot(
     // Check to see if there if the loop converged on an answer
     // The cnt that fails is an arbitrary number; most converge in ~5 tries
     if (cnt == 26) {
-        // No Convergence return 0 + j*0 as the root as TW() did
-        tw = std::complex<double>(0.0, 0.0);
+        std::ostringstream oss;
+        oss << "WiRoot(): Root finding algorithm did not converge after 25 "
+               "iterations using Newton's method. Exiting.";
+        throw std::runtime_error(oss.str());
     } else {
         // Converged!
         tw = ti;
