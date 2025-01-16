@@ -4,7 +4,7 @@
 
 #include "LFMF.h"
 
-#include <cmath>    // for abs, cos, exp, pow, sin, sqrt
+#include <cmath>    // for abs, cos, exp, pow, round, sin, sqrt
 #include <complex>  // for std::complex
 
 namespace ITS {
@@ -81,7 +81,7 @@ std::complex<double> wofz(const std::complex<double> z) {
         // power-series (Abramowitz/Stegun, Eqn 7.1.5, p.297).
         // N is the minimum number of terms needed to obtain the required accuracy.
         QRHO = (1 - 0.85 * Y) * std::sqrt(QRHO);
-        const int N = (int)(6 + 72 * QRHO);
+        const int N = static_cast<int>(std::round(6 + 72 * QRHO));
         int J = 2 * N + 1;
         XSUM = 1.0 / J;
         YSUM = 0.0;
@@ -106,7 +106,7 @@ std::complex<double> wofz(const std::complex<double> z) {
             H = 0.0;
             KAPN = 0;
             QRHO = std::sqrt(QRHO);
-            NU = (int)(3 + (1442 / (26 * QRHO + 77)));
+            NU = static_cast<int>(3 + (1442 / (26 * QRHO + 77)));
         } else {
             // If ((QRHO > 0.085264) AND (QRHO < 1.0)) then W(Z) is evaluated by a
             // truncated Taylor expansion, where the Laplace continued fraction is
@@ -118,8 +118,8 @@ std::complex<double> wofz(const std::complex<double> z) {
             QRHO = (1 - Y) * std::sqrt(1 - QRHO);
             H = 1.88 * QRHO;
             H2 = 2 * H;
-            KAPN = (int)(7 + 34 * QRHO);
-            NU = (int)(16 + 26 * QRHO);
+            KAPN = std::round(7 + 34 * QRHO);
+            NU = static_cast<int>(std::round(16 + 26 * QRHO));
         }
 
         const bool B = (H > 0.0);

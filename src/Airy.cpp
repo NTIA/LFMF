@@ -615,7 +615,8 @@ std::complex<double> Airy(
             // sum Taylor's series around nearest expansion point
             // The arrays AV[] and APV[] are incremented in the complex domain by 1/sin(PI/3)
             CoE = std::complex<double>(
-                (double)CoERealidx, (double)CoEImagidx / std::sin(PI / 3.0)
+                static_cast<double>(CoERealidx),
+                static_cast<double>(CoEImagidx) / std::sin(PI / 3.0)
             );
 
             // Translate the input parameter to the new location
