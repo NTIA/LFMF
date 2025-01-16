@@ -5,6 +5,7 @@ add_executable(
     ${DRIVER_TEST_NAME}
     "TempTextFile.cpp"
     "TestDriver.cpp"
+    "TestDriverLFMF.cpp"
     "TempTextFile.h"
     "TestDriver.h"
     "${DRIVER_HEADERS}/Driver.h"
@@ -19,6 +20,9 @@ target_include_directories(
 
 # Link the library to the executable
 target_link_libraries(${DRIVER_TEST_NAME} ${LIB_NAME})
+
+# Set PropLib compiler option defaults
+configure_proplib_target(${DRIVER_TEST_NAME})
 
 # Make driver executable location available to source
 add_compile_definitions(DRIVER_LOCATION="$<TARGET_FILE:${DRIVER_NAME}>")
