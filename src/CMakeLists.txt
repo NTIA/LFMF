@@ -22,7 +22,7 @@ endif ()
 # Add the include directory
 target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")
 
-# Configure compiler options
+# Set PropLib compiler option defaults
 configure_proplib_target(${LIB_NAME})
 
 # Add definition to get the library name and version inside the library

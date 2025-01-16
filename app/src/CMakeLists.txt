@@ -21,6 +21,7 @@ target_include_directories(${DRIVER_NAME} PUBLIC "${DRIVER_HEADERS}")
 # Link the library to the executable
 target_link_libraries(${DRIVER_NAME} ${LIB_NAME})
 
+# Set PropLib compiler option defaults
 configure_proplib_target(${DRIVER_NAME})
 
 # Add definitions to enable version identification inside the driver
