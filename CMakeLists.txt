@@ -110,9 +110,9 @@ function(configure_proplib_target proplib_target)
         # For MSVC compiler in any configuration
         "$<${msvc_cxx}:$<BUILD_INTERFACE:/Gd>>"
         # For MSVC compiler in Release configurations
-        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/W3;/O2;/DNDEBUG;/MT>>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Release>:/W3;/O2;/DNDEBUG>>>"
         # For MSVC compiler in Debug configurations
-        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:/W4;/Od;/Zi;/MTd>>>"
+        "$<${msvc_cxx}:$<BUILD_INTERFACE:$<$<CONFIG:Debug>:/W4;/Od;/Zi>>>"
     )
 endfunction()
 
