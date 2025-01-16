@@ -43,8 +43,8 @@
                 "CMAKE_BUILD_RPATH_USE_ORIGIN": "ON",
                 "BUILD_SHARED_LIBS": "ON",
                 "BUILD_DOCS": "OFF",
-                "BUILD_DRIVER": "OFF",
-                "RUN_DRIVER_TESTS": "OFF"
+                "BUILD_DRIVER": "ON",
+                "RUN_DRIVER_TESTS": "ON"
             },
             "environment": {
                 "CMAKE_BUILD_TYPE": "Debug",
@@ -54,7 +54,7 @@
         {
             "name": "debug64",
             "displayName": "Debug, 64-Bit",
-            "description": "Build library and tests with debug options. Skip building driver, driver tests, and docs.",
+            "description": "Build library, driver and tests with debug options. Skip building docs.",
             "inherits": "proplib-config-debug-base"
         },
         {
@@ -66,7 +66,7 @@
         {
             "name": "debug32",
             "displayName": "Debug, 32-bit",
-            "description": "Build 32-bit library and tests with debug options. Skip building driver, driver tests, and docs.",
+            "description": "Build 32-bit library, driver and tests with debug options. Skip building docs.",
             "inherits": "proplib-config-debug-base",
             "cacheVariables": {
                 "BUILD_32BIT": "ON"
@@ -121,28 +121,28 @@
             "name": "debug64",
             "inherits": "proplib-build-debug-base",
             "displayName": "Build Debug, 64-Bit",
-            "description": "Build library and tests with debug options, skip building docs",
+            "description": "Build library, driver and tests with debug options, skip building docs",
             "configurePreset": "debug64"
         },
         {
             "name": "release64",
             "inherits": "proplib-build-release-base",
             "displayName": "Build Release, 64-Bit",
-            "description": "Build library and tests with release options, and build docs",
+            "description": "Build library, driver, docs and tests with release options",
             "configurePreset": "release64"
         },
         {
             "name": "debug32",
             "inherits": "proplib-build-debug-base",
             "displayName": "Build Debug, 32-Bit",
-            "description": "Build library and tests with debug options, skip building docs",
+            "description": "Build library, driver and tests with debug options, skip building docs",
             "configurePreset": "debug32"
         },
         {
             "name": "release32",
             "inherits": "proplib-build-release-base",
             "displayName": "Build Release, 32-Bit",
-            "description": "Build library and tests with release options, and build docs",
+            "description": "Build library, driver, docs and tests with release options",
             "configurePreset": "release32"
         },
         {
@@ -179,28 +179,28 @@
             "name": "debug64",
             "inherits": "proplib-test-debug-base",
             "displayName": "Test Debug, 64-bit",
-            "description": "Build library and tests with debug options, skip building docs",
+            "description": "Build library, driver  and tests with debug options, skip building docs",
             "configurePreset": "debug64"
         },
         {
             "name": "release64",
             "inherits": "proplib-test-release-base",
             "displayName": "Test Release, 64-Bit",
-            "description": "Build library and tests with release options, and build docs",
+            "description": "Build library, driver and tests with release options, and build docs",
             "configurePreset": "release64"
         },
         {
             "name": "debug32",
             "inherits": "proplib-test-debug-base",
             "displayName": "Test Debug, 32-Bit",
-            "description": "Build library and tests with debug options, skip building docs",
+            "description": "Build library, driver and tests with debug options, skip building docs",
             "configurePreset": "debug32"
         },
         {
             "name": "release32",
             "inherits": "proplib-test-release-base",
             "displayName": "Test Release, 32-Bit",
-            "description": "Build library and tests with release options, and build docs",
+            "description": "Build library, driver and tests with release options, and build docs",
             "configurePreset": "release32"
         }
     ]
