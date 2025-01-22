@@ -38,12 +38,12 @@
         {
             "identifier": "https://ntia.github.io/TODO-TEMPLATE/",
             "relation": "isDocumentedBy",
-            "resource_type": "softwaredocumentation"
+            "resource_type": "publication-softwaredocumentation"
         },
         {
             "identifier": "https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/",
             "relation": "isDocumentedBy",
-            "resource_type": "softwaredocumentation"
+            "resource_type": "publication-softwaredocumentation"
         }
     ],
     "version": "TODO-TEMPLATE"
