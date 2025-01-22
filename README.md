@@ -1,77 +1,120 @@
-# Low Frequency / Medium Frequency (LF/MF) Propagation Model
+# Low Frequency / Medium Frequency (LF/MF) Propagation Model #
 
-This code repository contains an the NTIA/ITS implementation of the Low Frequency / Medium Frequency (LF/MF) Propagation Model. LF/MF predicts basic transmission loss in the frequency range 0.01 - 30 MHz for propagation paths over a smooth Earth and antenna heights less than 50 meters.
+[![NTIA/ITS PropLib][proplib-badge]][proplib-link]
+[![GitHub Release][gh-releases-badge]][gh-releases-link]
+[![GitHub Actions Unit Test Status][gh-actions-test-badge]][gh-actions-test-link]
+[![C++ API Reference][gh-actions-docs-badge]][gh-pages-docs-link]
+[![GitHub Issues][gh-issues-badge]][gh-issues-link]
+[![DOI][doi-badge]][doi-link]
 
-## Inputs ##
+[proplib-badge]: https://img.shields.io/badge/PropLib-badge?label=%F0%9F%87%BA%F0%9F%87%B8%20NTIA%2FITS&labelColor=162E51&color=D63E04
+[proplib-link]: https://ntia.github.io/propagation-library-wiki
+[gh-actions-test-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/LFMF/ctest.yml?branch=main&logo=cmake&label=Build%2FTests&labelColor=162E51
+[gh-actions-test-link]: https://github.com/NTIA/LFMF/actions/workflows/ctest.yml
+[gh-actions-docs-badge]: https://img.shields.io/github/actions/workflow/status/NTIA/LFMF/doxygen.yml?branch=main&logo=c%2B%2B&label=Docs&labelColor=162E51
+[gh-pages-docs-link]: https://ntia.github.io/LFMF
+[gh-releases-badge]: https://img.shields.io/github/v/release/NTIA/LFMF?logo=github&label=Release&labelColor=162E51&color=D63E04
+[gh-releases-link]: https://github.com/NTIA/LFMF/releases
+[gh-issues-badge]: https://img.shields.io/github/issues/NTIA/LFMF?logo=github&label=Issues&labelColor=162E51
+[gh-issues-link]: https://github.com/NTIA/LFMF/issues
+[doi-badge]: https://zenodo.org/badge/288586266.svg
+[doi-link]: https://zenodo.org/badge/latestdoi/288586266
 
-| Variable          | Type   | Units | Limits       | Description  |
-|-------------------|--------|-------|--------------|--------------|
-| `h_tx__meter`     | double | meter | 0 <= `h_tx__meter` <= 50 | Height of the transmitter |
-| `h_rx__meter`     | double | meter | 0 <= `h_rx__meter` <= 50 | Height of the receiver |
-| `f__mhz`          | double | MHz   | 0.01 <= `f__mhz` <= 30 | Frequency |
-| `P_tx__watt`      | double | Watt  | 0 < `P_tx__watt` | Transmitter power |
-| `N_s`             | double | N-Units | 250 <= `N_s` <= 400 | Surface refractivity |
-| `d__km`           | double | km    | 0 < `d__km`  | Path distance |
-| `epsilon`         | double |       | 1 <= `epsilon` | Relative permittivity |
-| `sigma`           | double | S/m   | 0 < `sigma` | Conductivity |
-| `pol`             | int    |       |              | Polarization <ul><li>0 = Horizontal</li><li>1 = Vertical</li></ul> |
+This repository contains the NTIA/ITS C++ implementation of
+Low Frequency / Medium Frequency (LF/MF) Propagation Model. The LF/MF model
+predicts basic transmission loss in the frequency range 0.01 - 30 MHz for propagation
+paths over a smooth Earth and antenna heights less than 50 meters.
 
-## Outputs ##
+Additional bindings to the shared library built from this repository are provided
+for .NET, MATLAB®, and Python® in the following repositories:
 
-Outputs to LFMF are contained within a defined `Result` structure.
+- [NTIA/LFMF-dotnet](https://github.com/NTIA/LFMF-dotnet)
+- [NTIA/LFMF-matlab](https://github.com/NTIA/LFMF-matlab)
+- [NTIA/LFMF-python](https://github.com/NTIA/LFMF-python)
 
-| Variable      | Type   | Units | Description |
-|---------------|--------|-------|-------------|
-| `A_btl__db`   | double | dB    | Basic transmission loss |
-| `E_dBuVm`     | double | dB(uV/m) | Electrice field strength |
-| `P_rx__dbm`   | double | dBm   | Received power |
-| `method`      | int    |       | Solution method <ul><li>0 = Flat earth with curve correction</li><li>1 = Residue series</li></ul> |
+## Getting Started ##
 
-## Return Codes ##
+To get started using this library, refer to
+[its page on the **NTIA/ITS Propagation Library Wiki**](https://ntia.github.io/propagation-library-wiki/models/LFMF/).
+There, you will find installation instructions, usage information, and code
+examples for all supported languages.
 
-Possible return codes, including the corresponding defined constant name as defined in `LFMF.h`:
+An executable is also provided which can be used to run the functions provided
+by this library using plain text input and output files. Installation and usage
+details for the command-line driver are also provided on
+[the wiki](https://ntia.github.io/propagation-library-wiki/models/LFMF/driver).
 
-| Value | Const Name                       | Description  |
-| ------|----------------------------------|--------------|
-|     0 | `SUCCESS`                        | Successful execution |
-|  1000 | `ERROR__TX_TERMINAL_HEIGHT`      | TX terminal height is out of range |
-|  1001 | `ERROR__RX_TERMINAL_HEIGHT`      | RX terminal height is out of range |
-|  1002 | `ERROR__FREQUENCY`               | Frequency is out of range |
-|  1003 | `ERROR__TX_POWER`                | Transmit power is out of range |
-|  1004 | `ERROR__SURFACE_REFRACTIVITY`    | Surface refractivity is out of range |
-|  1005 | `ERROR__PATH_DISTANCE`           | Path distance is out of range |
-|  1006 | `ERROR__EPSILON`                 | Epsilon is out of range |
-|  1007 | `ERROR__SIGMA`                   | Sigma is out of range |
-|  1008 | `ERROR__POLARIZATION`            | Invalid value for polarization |
-
-## Example Values ##
-
-A set of example inputs and outputs are provided for testing purposes.  This is not a comprehensive validation test set.  The test set can be found in [LFMF_Examples.csv](LFMF_Examples.csv).
-
-## Notes on Code Style ##
-
-* In general, variables follow the naming convention in which a single underscore denotes a subscript (pseudo-LaTeX format), where a double underscore is followed by the units, i.e. h_tx__meter.
-* Variables are named to match their corresponding mathematical variables from their publication text.
-* Wherever possible, equation numbers are provided.
+If you're a developer and would like to contribute to or extend this repository,
+you will find comprehensive documentation of this C++ code
+[here](https://ntia.github.io/LFMF), and a guide for contributors
+[here](CONTRIBUTING.md).
 
 ## Configure and Build ##
 
-### C++ Software
+The software is designed to be built into a DLL (or corresponding `.so` or `.dylib`
+library for non-Windows systems). A CMake build configuration and presets are
+provided for cross-platform builds. Presets provide default sets of compiler flags,
+and additional set default CMake options to control which parts of the project are
+build. Below are a few examples of how this project can be built using provided presets.
 
-The software is designed to be built into a DLL (or corresponding library for non-Windows systems). The source code can be built for any OS that supports the standard C++ libraries. A Visual Studio 2022 project file is provided for Windows users to support the build process and configuration.
+```cmd
+# From this repository's root directory, try one of the following command pairs:
 
-### C#/.NET Wrapper Software
+# "Release" configurations compile the library and driver, build docs, and configure tests:
+cmake --preset release64
+cmake --build --preset release64
 
-The .NET support of LFMF consists of a simple pass-through wrapper around the native DLL.  It is compiled to target .NET Framework 4.8.1.  Distribution and updates are provided through the published NuGet package.
+# "Debug" configurations skip building the docs, driver, and driver tests:
+cmake --preset debug64
+cmake --build --preset debug64
+
+# Additional options can override presets:
+cmake --preset debug64 -DBUILD_DRIVER=ON
+
+# "DocsOnly" configurations only build the docs:
+cmake --preset docsOnly
+cmake --build --preset docsOnly
+```
+
+Note that this repository makes use of several
+[Git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+to reference dependencies used for running unit tests and building documentation.
+In order to do either, ensure the required submodules are cloned by running:
+
+```cmd
+# From this repository's root directory
+git submodule init
+git submodule update
+```
+
+## Running Tests ##
+
+If you've configured tests when building the project, for example by using one of
+the "Release" or "Debug" CMake presets, you can run the included unit tests as follows:
+
+```cmd
+ctest --preset release64
+```
 
 ## References ##
 
-* Bremmer, H. "Terrestrial Radio Waves" _Elsevier_, 1949. 
-* DeMinco, N. "Medium Frequency Propagation Prediction Techniques and Antenna Modeling for Intelligent Transportation Systems (ITS) Broadcast Applications", [_NTIA Report 99-368_](https://www.its.bldrdoc.gov/publications/2399.aspx), August 1999
-* DeMinco, N. "Ground-wave Analysis Model For MF Broadcast System", [_NTIA Report 86-203_](https://www.its.bldrdoc.gov/publications/2226.aspx), September 1986
-* Sommerfeld, A. "The propagation of waves in wireless telegraphy", _Ann. Phys._, 1909, 28, p.665
-* Wait, J. "Radiation From a Vertical Antenna Over a Curved Stratified Ground", _Journal of Research of the National Bureau of Standards_.  Vol 56, No. 4, April 1956. Research Paper 2671
+- [ITS Propagation Library Wiki](https://ntia.github.io/propagation-library-wiki)
+- [LFMF Wiki Page](https://ntia.github.io/propagation-library-wiki/models/LFMF)
+- [`ITS.Propagation.LFMF` C++ API Reference](https://ntia.github.io/LFMF)
+
+## License ##
+
+See [`LICENSE.md`](./LICENSE.md).
+
+MATLAB is a registered trademark of The MathWorks, Inc. See
+[mathworks.com/trademarks](https://mathworks.com/trademarks) for a list of additional trademarks.
+
+"Python" and the Python logos are trademarks or registered trademarks of the Python Software Foundation, used by the National Telecommunications and Information Administration with permission from the Foundation.
 
 ## Contact ##
 
-For questions, contact Nick DeMinco, NDeminco@ntia.gov
+For technical questions, contact <code@ntia.gov>.
+
+## Disclaimer ##
+
+Certain commercial equipment, instruments, or materials are identified in this project were used for the convenience of the developers. In no case does such identification imply recommendation or endorsement by the National Telecommunications and Information Administration, nor does it imply that the material or equipment identified is necessarily the best available for the purpose.
