@@ -29,7 +29,7 @@ namespace LFMF {
  * digits outside a circular region with radius 0.126 around a zero of the function.
  * 
  * @param[in] z  Input argument
- * @return       The desired @f$ W(z)_ @f$ function calculated at `z`
+ * @return       The desired @f$ W(z) @f$ function calculated at `z`
  * 
  * **Lineage**
  *   - The original FORTRAN implementation was translated to C/C++ by
