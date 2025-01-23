@@ -29,4 +29,5 @@ url: 'https://ntia.github.io/propagation-library-wiki/models/TODO-TEMPLATE/'
 keywords:
   - propagation
   - TODO-TEMPLATE
-version: 1.0.0
+  - TODO-TEMPLATE-UPDATE-VERSION-BELOW
+version: 1.1
