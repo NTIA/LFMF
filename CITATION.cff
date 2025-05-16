@@ -7,12 +7,12 @@ authors:
   - family-names: Kozma
     given-names: William
     name-suffix: Jr.
-    email: wkozma@ntia.gov
     affiliation: >-
       U.S. Department of Commerce, National
       Telecommunications and Information Administration,
       Institute for Telecommunication Sciences
-    orcid: 'https://orcid.org/0000-0002-7417-4009'    
+    orcid: 'https://orcid.org/0000-0002-7417-4009'
+    email: wkozma@ntia.gov
   - name: >-
       U.S. Department of Commerce, National
       Telecommunications and Information Administration,
@@ -31,4 +31,5 @@ keywords:
   - its
   - propagation
   - frequency
+  - lfmf
 version: 1.1
