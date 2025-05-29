@@ -262,9 +262,9 @@ the Doxygen site to GitHub Pages.
 
 ### MATLAB Wrappers
 
-MATLAB® wrappers are implemented as toolboxes which interface with the shared library
+MATLAB&reg; wrappers are implemented as toolboxes which interface with the shared library
 compiled from C++ source code. The project structure is informed by the best practices
-provided by MathWorks® in their [`toolboxdesign` repository](https://github.com/mathworks/toolboxdesign).
+provided by MathWorks&reg; in their [`toolboxdesign` repository](https://github.com/mathworks/toolboxdesign).
 Here is an example of how a function may be documented in a MATLAB wrapper. Note the
 documentation with code, where input and output arguments are provided for autocompletion.
 
