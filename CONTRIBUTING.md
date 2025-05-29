@@ -232,7 +232,7 @@ example showing the expected documentation formats. Except for inline documentat
 use the JavaDoc banner style [described by Doxygen](https://www.doxygen.nl/manual/docblocks.html)
 
 ```cpp
-constexpr double = PI 3.1415; /**< Inline format, e.g. for constants */
+constexpr double = PI 3.1415;   ///< Inline format, e.g. for constants
 
 /*******************************************************************************
  * This is a brief description of the function.

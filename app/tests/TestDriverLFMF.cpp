@@ -17,8 +17,8 @@ class LFMFDriverTest: public DriverTest {
             EXPECT_EQ(lfmf_rtn, expected_rtn);
         }
 
-        std::string LFMFInputs; /**< String to hold input file contents */
-        DrvrParams lfmf_params; /**< Default command line arguments */
+        std::string LFMFInputs;     ///< String to hold input file contents
+        DrvrParams lfmf_params;     ///< Default command line arguments
 };
 
 TEST_F(LFMFDriverTest, TestSuccess) {

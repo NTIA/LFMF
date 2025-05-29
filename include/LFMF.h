@@ -26,14 +26,14 @@ namespace LFMF {
 
 /** Valid RF polarizations for use of this model */
 enum class Polarization {
-    HORIZONTAL = 0, /**< Horizontal polarization */
-    VERTICAL = 1,   /**< Vertical polarization */
+    HORIZONTAL = 0,     ///< Horizontal polarization
+    VERTICAL = 1,       ///< Vertical polarization
 };
 
 /** Solution method used to generate model result */
 enum class SolutionMethod {
-    FLAT_EARTH_CURVE, /**< Flat earth curve method */
-    RESIDUE_SERIES,   /**< Residue series method */
+    FLAT_EARTH_CURVE,   ///< Flat earth curve method
+    RESIDUE_SERIES,     ///< Residue series method
 };
 
 /*******************************************************************************
@@ -53,14 +53,14 @@ enum class SolutionMethod {
  ******************************************************************************/
 // clang-format off
 enum class AiryKind {
-    AIRY = 1, /**< Airy function of the first kind, @f$ \mathrm{Ai}(x) @f$ */
-    AIRYD,    /**< Derivative of `AIRY`, @f$ \mathrm{Ai}'(x) @f$ */
-    BAIRY,    /**< Airy function of the second kind, @f$ \mathrm{Bi}(x) @f$ */
-    BAIRYD,   /**< Derivative of `BAIRY`, @f$ \mathrm{Bi}'(x) @f$ */
-    WTWO,     /**< Hufford's Airy function of a third kind, @f$ \mathrm{Wi}^{(2)} @f$ (Wait's @f$ w_1 @f$) */
-    DWTWO,    /**< Derivative of `WTWO`, @f$ \mathrm{Wi}'^{(2)} @f$ (Wait's @f$ w_1' @f$) */
-    WONE,     /**< Hufford's Airy function of a third kind, @f$ \mathrm{Wi}'^{(1)} @f$ (Wait's @f$ w_2 @f$)*/
-    DWONE,    /**< Derivative of `WONE`, @f$ \mathrm{Wi}'^{(1)} @f$ (Wait's @f$ w_2' @f$) */
+    AIRY = 1,   ///< Airy function of the first kind, @f$ \mathrm{Ai}(x) @f$ 
+    AIRYD,      ///< Derivative of `AIRY`, @f$ \mathrm{Ai}'(x) @f$ 
+    BAIRY,      ///< Airy function of the second kind, @f$ \mathrm{Bi}(x) @f$ 
+    BAIRYD,     ///< Derivative of `BAIRY`, @f$ \mathrm{Bi}'(x) @f$ 
+    WTWO,       ///< Hufford's Airy function of a third kind, @f$ \mathrm{Wi}^{(2)} @f$ (Wait's @f$ w_1 @f$) 
+    DWTWO,      ///< Derivative of `WTWO`, @f$ \mathrm{Wi}'^{(2)} @f$ (Wait's @f$ w_1' @f$) 
+    WONE,       ///< Hufford's Airy function of a third kind, @f$ \mathrm{Wi}'^{(1)} @f$ (Wait's @f$ w_2 @f$)
+    DWONE,      ///< Derivative of `WONE`, @f$ \mathrm{Wi}'^{(1)} @f$ (Wait's @f$ w_2' @f$) 
 };
 // clang-format on
 
@@ -75,9 +75,9 @@ enum class AiryKind {
  * @see ITS::Propagation::LFMF::AiryKind
  ******************************************************************************/
 enum class AiryScaling {
-    HUFFORD, /**< Use Hufford scaling */
-    WAIT,    /**< Use Wait scaling */
-    NONE,    /**< No Scaling */
+    HUFFORD, ///< Use Hufford scaling */
+    WAIT,    ///< Use Wait scaling */
+    NONE,    ///< No Scaling */
 };
 
 /*******************************************************************************
@@ -85,29 +85,29 @@ enum class AiryScaling {
  ******************************************************************************/
 // clang-format off
 enum ReturnCode {
-    SUCCESS = 0,                        /**< Return Success */
+    SUCCESS = 0,                        ///< Return Success
 
     // Invalid Inputs
-    ERROR__TX_TERMINAL_HEIGHT = 32,     /**< TX terminal height is out of range */
-    ERROR__RX_TERMINAL_HEIGHT,          /**< RX terminal height is out of range */
-    ERROR__FREQUENCY,                   /**< Frequency is out of range */
-    ERROR__TX_POWER,                    /**< Transmit power is out of range */
-    ERROR__SURFACE_REFRACTIVITY,        /**< Surface refractivity is out of range */
-    ERROR__PATH_DISTANCE,               /**< Path distance is out of range */
-    ERROR__EPSILON,                     /**< Epsilon is out of range */
-    ERROR__SIGMA,                       /**< Sigma is out of range */
-    ERROR__POLARIZATION,                /**< Invalid value for polarization */
+    ERROR__TX_TERMINAL_HEIGHT = 32,     ///< TX terminal height is out of range 
+    ERROR__RX_TERMINAL_HEIGHT,          ///< RX terminal height is out of range 
+    ERROR__FREQUENCY,                   ///< Frequency is out of range
+    ERROR__TX_POWER,                    ///< Transmit power is out of range 
+    ERROR__SURFACE_REFRACTIVITY,        ///< Surface refractivity is out of range 
+    ERROR__PATH_DISTANCE,               ///< Path distance is out of range 
+    ERROR__EPSILON,                     ///< Epsilon is out of range 
+    ERROR__SIGMA,                       ///< Sigma is out of range 
+    ERROR__POLARIZATION,                ///< Invalid value for polarization 
 };
 // clang-format on
 
 ////////////////////////////////////////////////////////////////////////////////
 // Constants
 // clang-format off
-constexpr double PI = 3.1415926535897932384;   /**< Approximate value of @f$ \pi @f$ */
-constexpr double epsilon_0 = 8.854187817e-12;  /**< Vacuum permittivity (F/m) */
-constexpr double a_0__km = 6370;               /**< Earth radius, in km */
-constexpr double C = 299792458.0;              /**< Speed of light (m/s) */
-constexpr double ETA = 119.9169832 * PI;       /**< Intrinsic impedance of free space (ohms) */
+constexpr double PI = 3.1415926535897932384;    ///< Approximate value of @f$ \pi @f$
+constexpr double epsilon_0 = 8.854187817e-12;   ///< Vacuum permittivity (F/m)
+constexpr double a_0__km = 6370;                ///< Earth radius, in km
+constexpr double C = 299792458.0;               ///< Speed of light (m/s)
+constexpr double ETA = 119.9169832 * PI;        ///< Intrinsic impedance of free space (ohms)
 // clang-format on
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -115,10 +115,10 @@ constexpr double ETA = 119.9169832 * PI;       /**< Intrinsic impedance of free 
 
 /** Structure to hold LF/MF model outputs. */
 struct Result {
-        double A_btl__db;      /**< Basic transmission loss, in dB */
-        double E_dBuVm;        /**< Electric field strength, in dB(uV/m) */
-        double P_rx__dbm;      /**< Received power, in dBm */
-        SolutionMethod method; /**< Method used to obtain results */
+        double A_btl__db;       ///< Basic transmission loss, in dB
+        double E_dBuVm;         ///< Electric field strength, in dB(uV/m) 
+        double P_rx__dbm;       ///< Received power, in dBm 
+        SolutionMethod method;  ///< Method used to obtain results 
 };
 
 ////////////////////////////////////////////////////////////////////////////////
