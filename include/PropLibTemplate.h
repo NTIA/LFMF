@@ -32,7 +32,7 @@ namespace ITS {
  ******************************************************************************/
 // clang-format off
 enum ReturnCode {
-    SUCCESS = 0,               /**< Successful execution */
+    SUCCESS = 0,                ///< Successful execution
 
     // TODO-TEMPLATE add return codes for this software
     // TODO-TEMPLATE: Add corresponding status messages in src/ReturnCodes.cpp
