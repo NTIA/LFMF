@@ -52,12 +52,12 @@ class DriverTest: public ::testing::Test {
          * @param[in, out] cmd  The command string to modify
          **********************************************************************/
         void SuppressOutputs(std::string &cmd) {
-#ifdef _WIN32
-            cmd += " > nul";
-#else
-            cmd += " > /dev/null";
-#endif
-            cmd += " 2>&1";
+            #ifdef _WIN32
+                cmd += " > nul";
+            #else
+                cmd += " > /dev/null";
+            #endif
+                cmd += " 2>&1";
         }
 
         /***********************************************************************
@@ -107,10 +107,10 @@ class DriverTest: public ::testing::Test {
         int RunCommand(const std::string &cmd) {
             std::cout << std::flush;
             int rtn = std::system(cmd.c_str());
-#ifndef _WIN32
-            rtn = WEXITSTATUS(rtn);  // Get child process exit code on POSIX
-#endif
-            return rtn;
+            #ifndef _WIN32
+                rtn = WEXITSTATUS(rtn);  // Get child process exit code on POSIX
+            #endif
+                return rtn;
         }
 
         /***********************************************************************
@@ -160,11 +160,11 @@ class DriverTest: public ::testing::Test {
          **********************************************************************/
         void DeleteOutputFile(const std::string &fileName) {
             bool fileExists = false;
-#ifdef _WIN32
-            fileExists = _access(fileName.c_str(), 0) == 0;
-#else
-            fileExists = access(fileName.c_str(), F_OK) == 0;
-#endif
+            #ifdef _WIN32
+                fileExists = _access(fileName.c_str(), 0) == 0;
+            #else
+                fileExists = access(fileName.c_str(), F_OK) == 0;
+            #endif
             if (fileExists) {
                 if (std::remove(fileName.c_str()) != 0) {
                     std::perror("Error deleting output file");
