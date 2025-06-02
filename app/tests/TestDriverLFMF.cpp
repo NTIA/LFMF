@@ -1,3 +1,6 @@
+/** @file TestDriverLFMF.cpp
+ * LFMF model tests for the driver executable
+ */
 #include "TestDriver.h"
 
 #include <string>  // for std::string
@@ -14,7 +17,7 @@ class LFMFDriverTest: public DriverTest {
         void TestLFMF(const std::string &inputs, const int expected_rtn) {
             int lfmf_rtn;
             lfmf_rtn = RunDriverWithInputFile(inputs, lfmf_params);
-            EXPECT_EQ(lfmf_rtn, expected_rtn);
+            EXPECT_EQ(expected_rtn, lfmf_rtn);
         }
 
         std::string LFMFInputs;     ///< String to hold input file contents
