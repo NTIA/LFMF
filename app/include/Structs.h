@@ -10,8 +10,8 @@
 
 /** Parameters provided to the command line driver */
 struct DrvrParams {
-        std::string in_file = "";   ///< Input file
-        std::string out_file = "";  ///< Output file
+    std::string in_file = "";   ///< Input file
+    std::string out_file = "";  ///< Output file
 };
 
 /** Input parameters for the LFMF Model */
