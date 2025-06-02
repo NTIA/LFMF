@@ -3,7 +3,6 @@
  */
 #pragma once
 
-
 #include "CommaSeparatedIterator.h"
 #include "LFMF.h"
 #include "ReturnCodes.h"
