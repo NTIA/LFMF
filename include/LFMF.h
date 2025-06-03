@@ -1,5 +1,5 @@
 /** @file LFMF.h
- * Interface header for this library
+ * Interface header for ITS.Propagation.LFMF
  */
 #pragma once
 
