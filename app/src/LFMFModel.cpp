@@ -1,5 +1,5 @@
 /** @file LFMFModel.cpp
- * Implements top-level functions for running the LF/MF Propagation Model.
+ * Implements driver functions for running the LF/MF Propagation Model.
  */
 #include "Driver.h"
 

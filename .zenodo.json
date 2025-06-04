@@ -45,12 +45,12 @@
         {
             "identifier": "https://ntia.github.io/LFMF/",
             "relation": "isDocumentedBy",
-            "resource_type": "softwaredocumentation"
+            "resource_type": "publication-softwaredocumentation"
         },
         {
             "identifier": "https://ntia.github.io/propagation-library-wiki/models/LFMF/",
             "relation": "isDocumentedBy",
-            "resource_type": "softwaredocumentation"
+            "resource_type": "publication-softwaredocumentation"
         }
     ],
     "version": "1.1"

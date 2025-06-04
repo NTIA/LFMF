@@ -30,6 +30,6 @@ url: 'https://ntia.github.io/propagation-library-wiki/models/LFMF'
 keywords:
   - its
   - propagation
+  - frequency
   - lfmf
 version: 1.1
-date-released: '2025-01-21'
