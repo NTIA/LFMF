@@ -31,7 +31,7 @@ jobs:
             relName: Linux x64
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
   
       - name: Install CMake # (latest stable version)
         uses: lukka/get-cmake@latest
@@ -54,7 +54,7 @@ jobs:
     
       - name: Upload release artifacts (binaries)
         if: runner.os != 'Windows'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@latest
         with:
           name: "${{ github.event.repository.name }}-release-${{ runner.os }}"
           path: |
@@ -67,7 +67,7 @@ jobs:
 
       - name: Upload release artifact (Windows)
         if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@latest
         with:
           name: "${{ github.event.repository.name }}-release-${{ runner.os }}-${{ matrix.architecture }}"
           path: |
@@ -78,7 +78,7 @@ jobs:
       
       - name: Upload release artifact (C++ Header)  # TODO-TEMPLATE: Specify the correct header below
         if: runner.os == 'Linux'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@latest
         with:
           name: "${{ github.event.repository.name }}-release-cpp-header"
           path: ${{ github.workspace }}/include/PropLibTemplate.h
