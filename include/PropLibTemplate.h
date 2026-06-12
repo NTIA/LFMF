@@ -47,11 +47,15 @@ enum ReturnCode {
 // Public Functions
 // TODO-TEMPLATE: Add functions which should be exported in the DLL
 PROPLIB_API char *GetReturnStatusCharArray(const int code);
-PROPLIB_API void FreeReturnStatusCharArray(char *c_msg);
+PROPLIB_API void FreeCharArray(char *c_msg);
+PROPLIB_API char *GetLibraryNameCharArray();
+PROPLIB_API char *GetLibraryVersionCharArray();
 
 ////////////////////////////////////////////////////////////////////////////////
 // Private Functions
 // TODO-TEMPLATE: Add other/internal functions here (no need for "PROPLIB_API")
 std::string GetReturnStatus(const int code);
+std::string GetLibraryName();
+std::string GetLibraryVersion();
 
 }  // namespace ITS

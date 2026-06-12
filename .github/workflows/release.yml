@@ -31,7 +31,7 @@ jobs:
             relName: Linux x64
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
   
       - name: Install CMake # (latest stable version)
         uses: lukka/get-cmake@latest
