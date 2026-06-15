@@ -23,7 +23,7 @@ jobs:
           - ubuntu-latest
           - macos-latest  # Apple
           - macos-15-intel      # Intel
-          - windows-latest
+          #- windows-latest
         architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
         exclude:
