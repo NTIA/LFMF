@@ -11,6 +11,7 @@
             "hidden": true,
             "description": "Base configuration preset for ITS PropLib libraries",
             "binaryDir": "${sourceDir}/build/${presetName}",
+            "generator": "Ninja",
             "cacheVariables": {
                 "DOCS_ONLY": "OFF",
                 "RUN_TESTS": "ON",
