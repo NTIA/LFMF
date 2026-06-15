@@ -52,7 +52,7 @@ jobs:
         git submodule update
 
     - name: Install CMake
-      if: matrix.os == 'windows-latest'
+      if: matrix.os == 'windows-latest0'
       uses: lukka/get-cmake@latest
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
