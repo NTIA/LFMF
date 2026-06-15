@@ -68,6 +68,10 @@ jobs:
       if: matrix.os == 'windows-latest' && matrix.cmakeVersion == '3.21'
       uses: lukka/run-vcpkg@v11 # or current version
       id: runvcpkg
+      with:
+          # This one is not needed, as it is the default value anyway.
+          # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgJsonGlob: '**/vcpkg.json'
 
     - name: "CMake: Build and Test (64-bit)"
       if: matrix.architecture != 'x86'
