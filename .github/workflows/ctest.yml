@@ -23,7 +23,7 @@ jobs:
           - ubuntu-latest
           - macos-latest  # Apple
           - macos-15-intel      # Intel
-          #- windows-latest
+          - windows-latest
         architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
         exclude:
@@ -51,12 +51,21 @@ jobs:
         git submodule update
 
     - name: Install CMake
+      if: matrix.os == 'windows-latest'
+      uses: lukka/get-cmake@latest
+      with:
+        cmakeVersion: ${{ matrix.cmakeVersion }}
+        # Use Ninja instead of NMake
+        generator: Ninja
+
+    - name: Install CMake
+      if: matrix.os != 'windows-latest'
       uses: lukka/get-cmake@latest
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 
     - name: Setup MSVC
-      if: matrix.os == 'windows-latest'
+      if: matrix.os == 'windows-latest' && matrix.architecture != 'x86'
       uses: lukka/run-vcpkg@v11 # or current version
 
     - name: "CMake: Build and Test (64-bit)"
