@@ -45,6 +45,12 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v6
 
+    # This step sets up the Developer Command Prompt
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+      with:
+        arch: x64 # or x86
+
     - name: Clone required submodules # TODO-TEMPLATE: Add test-data submodule here, if needed
       run: |
         git submodule init extern/googletest
