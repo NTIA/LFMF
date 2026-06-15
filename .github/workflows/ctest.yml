@@ -60,7 +60,6 @@ jobs:
         generator: Ninja
 
     - name: Install CMake
-      if: matrix.os != 'windows-latest'
       uses: lukka/get-cmake@latest
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
