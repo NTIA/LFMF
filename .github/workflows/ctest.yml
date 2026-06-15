@@ -55,6 +55,11 @@ jobs:
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 
+    - name: Setup MSVC
+      uses: lukka/run-vcpkg@v11 # or current version
+      with:
+        setupOnly: true
+
     - name: "CMake: Build and Test (64-bit)"
       if: matrix.architecture != 'x86'
       uses: lukka/run-cmake@v10
