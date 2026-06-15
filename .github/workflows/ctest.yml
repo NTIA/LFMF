@@ -63,7 +63,6 @@ jobs:
         configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
         buildPreset: release64
         testPreset: release64
-        cmakeGenerator: Ninja
 
     - name: "CMake: Build and Test (32-bit)"
       if: matrix.architecture == 'x86'
@@ -73,4 +72,3 @@ jobs:
         configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
         buildPreset: release32
         testPreset: release32
-        cmakeGenerator: Ninja
