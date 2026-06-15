@@ -26,9 +26,7 @@ configure_proplib_target(${DRIVER_NAME})
 
 # Add definitions to enable version identification inside the driver
 add_compile_definitions(
-    LIBRARY_VERSION="${PROJECT_VERSION}"
     DRIVER_VERSION="${DRIVER_VERSION}"
-    LIBRARY_NAME="${LIB_NAME}"
     DRIVER_NAME="${DRIVER_NAME}"
 )
 
