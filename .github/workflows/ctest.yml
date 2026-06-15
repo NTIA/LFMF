@@ -18,6 +18,7 @@ jobs:
     name: ${{ matrix.os }} / ${{ matrix.architecture }} / CMake ${{ matrix.cmakeVersion }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os:
           - ubuntu-latest
