@@ -66,7 +66,7 @@ jobs:
       uses: lukka/run-cmake@v10
       with:
         configurePreset: release64
-        configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF']"
+        configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-G Ninja']"
         buildPreset: release64
         testPreset: release64
 
