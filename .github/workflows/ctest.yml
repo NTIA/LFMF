@@ -83,12 +83,15 @@ jobs:
 
     # 2. Run vcpkg to set it up (required for the run-cmake action to work)
     - name: Run vcpkg
-      if: matrix.os == 'windows-latest' && matrix.cmakeVersion == '3.21'
+      if: matrix.os == 'windows-latest0' && matrix.cmakeVersion == '3.21'
       uses: lukka/run-vcpkg@v11 # or v10
       with:
         vcpkgDirectory: ${{ env.VCPKG_ROOT }}
         runVcpkgInstall: true
 
+    - name: Setup Developer Command Prompt
+      if: matrix.os == 'windows-latest' && matrix.cmakeVersion == '3.21'
+      uses: ilammy/msvc-dev-cmd@v1
 
     - name: "CMake: Build and Test (64-bit)"
       if: matrix.architecture != 'x86'
