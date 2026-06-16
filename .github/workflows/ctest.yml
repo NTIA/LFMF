@@ -24,6 +24,7 @@ jobs:
           - ubuntu-latest
           - macos-latest  # Apple
           - macos-15-intel      # Intel
+          - windows-2022
           - windows-latest
         architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21", "4.2", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
@@ -42,6 +43,8 @@ jobs:
             architecture: arm64
           - os: ubuntu-latest
             architecture: x86
+          - os: windows-latest
+            cmakeVersion: "3.21"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v6
@@ -52,46 +55,9 @@ jobs:
         git submodule update
 
     - name: Install CMake
-      if: matrix.os == 'windows-latest0'
       uses: lukka/get-cmake@latest
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
-        # Use Ninja instead of NMake
-        generator: Ninja
-
-    - name: Install CMake
-      uses: lukka/get-cmake@latest
-      with:
-        cmakeVersion: ${{ matrix.cmakeVersion }}
-
-    - name: Setup MSVC
-      if: matrix.os == 'windows-latest0' && matrix.cmakeVersion == '3.21'
-      uses: lukka/run-vcpkg@v11 # or current version
-      id: runvcpkg
-      with:
-          # This one is not needed, as it is the default value anyway.
-          # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
-          vcpkgJsonGlob: '**/vcpkg.json'
-
-    - name: Configure and Build
-      if: matrix.os == 'windows-latest0' && matrix.cmakeVersion == '3.21'
-      shell: cmd
-      run: |
-        call "C:\Program Files\Microsoft Visual Studio\2026\Enterprise\Common7\Tools\VsDevCmd.bat"
-        nmake /?
-        # Continue with your CMake/nmake build commands here
-
-    # 2. Run vcpkg to set it up (required for the run-cmake action to work)
-    - name: Run vcpkg
-      if: matrix.os == 'windows-latest0' && matrix.cmakeVersion == '3.21'
-      uses: lukka/run-vcpkg@v11 # or v10
-      with:
-        vcpkgDirectory: ${{ env.VCPKG_ROOT }}
-        runVcpkgInstall: true
-
-    - name: Setup Developer Command Prompt
-      if: matrix.os == 'windows-latest' && matrix.cmakeVersion == '3.21'
-      uses: ilammy/msvc-dev-cmd@v1
 
     - name: "CMake: Build and Test (64-bit)"
       if: matrix.architecture != 'x86'
