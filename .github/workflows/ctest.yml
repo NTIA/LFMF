@@ -22,10 +22,10 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-          - macos-latest  # Apple
+          - macos-latest        # Apple
           - macos-15-intel      # Intel
-          - windows-2022
-          - windows-latest
+          - windows-2022        # Visual Studio 2022
+          - windows-latest      # Visual Studio 2026, CMake >= 4.2 is required
         architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
         exclude:
