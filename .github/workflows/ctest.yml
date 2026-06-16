@@ -74,12 +74,20 @@ jobs:
           vcpkgJsonGlob: '**/vcpkg.json'
 
     - name: Configure and Build
-      if: matrix.os == 'windows-latest' && matrix.cmakeVersion == '3.21'
+      if: matrix.os == 'windows-latest0' && matrix.cmakeVersion == '3.21'
       shell: cmd
       run: |
         call "C:\Program Files\Microsoft Visual Studio\2026\Enterprise\Common7\Tools\VsDevCmd.bat"
         nmake /?
         # Continue with your CMake/nmake build commands here
+
+    # 2. Run vcpkg to set it up (required for the run-cmake action to work)
+    - name: Run vcpkg
+      if: matrix.os == 'windows-latest' && matrix.cmakeVersion == '3.21'
+      uses: lukka/run-vcpkg@v11 # or v10
+      with:
+        vcpkgDirectory: ${{ env.VCPKG_ROOT }}
+        runVcpkgInstall: true
 
 
     - name: "CMake: Build and Test (64-bit)"
