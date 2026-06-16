@@ -73,6 +73,15 @@ jobs:
           # vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgJsonGlob: '**/vcpkg.json'
 
+    - name: Configure and Build
+      if: matrix.os == 'windows-latest' && matrix.cmakeVersion == '3.21'
+      shell: cmd
+      run: |
+        call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat"
+        nmake /?
+        # Continue with your CMake/nmake build commands here
+
+
     - name: "CMake: Build and Test (64-bit)"
       if: matrix.architecture != 'x86'
       uses: lukka/run-cmake@v10
