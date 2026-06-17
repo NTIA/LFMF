@@ -24,4 +24,4 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Validate CITATION.cff
-        uses: dieghernan/cff-validator@v4
+        uses: dieghernan/cff-validator@v5

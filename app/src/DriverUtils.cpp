@@ -145,7 +145,7 @@ void Version(std::ostream &os) {
     os << std::setfill('*') << std::setw(55) << "" << std::endl;
     os << "Institute for Telecommunication Sciences - Boulder, CO" << std::endl;
     os << "\tDriver Version: " << DRIVER_VERSION << std::endl;
-    os << "\t" << LIBRARY_NAME << " Version: " << LIBRARY_VERSION << std::endl;
+    os << "\t" << GetLibraryName() << " Version: " << GetLibraryVersion() << std::endl;
     os << "Time: " << GetDatetimeString() << std::endl;
     os << std::setfill('*') << std::setw(55) << "" << std::endl;
 }

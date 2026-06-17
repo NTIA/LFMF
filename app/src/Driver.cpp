@@ -63,8 +63,8 @@ int main(int argc, char **argv) {
     }
 
     // Print generator information to file
-    fp << std::left << std::setw(30) << "Model" << LIBRARY_NAME;
-    fp PRINT "Library Version" << "v" << LIBRARY_VERSION;
+    fp << std::left << std::setw(30) << "Model" << GetLibraryName();
+    fp PRINT "Library Version" << "v" << GetLibraryVersion();
     fp PRINT "Driver Version" << "v" << DRIVER_VERSION;
     fp PRINT "Date Generated" << GetDatetimeString();
     fp PRINT "Input Arguments";
