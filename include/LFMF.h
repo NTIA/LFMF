@@ -138,7 +138,9 @@ DLLEXPORT ReturnCode LFMF(
 );
 
 DLLEXPORT char *GetReturnStatusCharArray(const int code);
-DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
+DLLEXPORT void FreeCharArray(char *c_msg);
+DLLEXPORT char *GetLibraryNameCharArray();
+DLLEXPORT char *GetLibraryVersionCharArray();
 
 ////////////////////////////////////////////////////////////////////////////////
 // Private Functions
@@ -156,6 +158,8 @@ ReturnCode LFMF_CPP(
     Result &result
 );
 std::string GetReturnStatus(const int code);
+std::string GetLibraryName();
+std::string GetLibraryVersion();
 double FlatEarthCurveCorrection(
     const std::complex<double> delta,
     const std::complex<double> q,
