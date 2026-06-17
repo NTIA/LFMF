@@ -43,7 +43,7 @@ jobs:
             architecture: x86
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
 
     - name: Clone required submodules
       run: |
