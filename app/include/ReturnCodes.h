@@ -26,6 +26,7 @@ enum DrvrReturnCode {
     // Validation Errors
     DRVRERR__VALIDATION_IN_FILE = 192,  ///< Input file not specified
     DRVRERR__VALIDATION_OUT_FILE,       ///< Output file not specified
+    DRVRERR__VALIDATION_MODEL,          ///< Model not specified
 };
 // clang-format on
 

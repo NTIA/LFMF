@@ -62,6 +62,14 @@ TEST_F(DriverTest, ValidationOutFileError) {
     EXPECT_EQ(DRVRERR__VALIDATION_OUT_FILE, rtn);
 }
 
+TEST_F(DriverTest, ValidationModelError) {
+    // Input file does not need to exist here, just has to be specified
+    std::string cmd = executable + " -i in.txt -o out.txt";
+    SuppressOutputs(cmd);
+    int rtn = RunCommand(cmd);
+    EXPECT_EQ(rtn, DRVRERR__VALIDATION_MODEL);
+}
+
 // TODO-TEMPLATE: Add tests for any additional validation errors
 
 // TODO-TEMPLATE: Add other general tests for the driver
