@@ -40,6 +40,10 @@ int main(int argc, char **argv) {
     }
 
     // TODO-TEMPLATE: Add driver logic, e.g. validating inputs and calling the model
+    switch (params.model) {
+        default:
+            rtn = DRVRERR__VALIDATION_MODEL;
+    }
 
     // TODO-TEMPLATE this code block exists for a unit test to pass. Similar logic
     // should be added to functions which parse input files.
@@ -130,6 +134,14 @@ DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
             i++;
         } else if (arg == "-o") {
             params.out_file = argv[i + 1];
+            i++;
+        } else if (arg == "-model") {
+            std::string argval(argv[i + 1]);
+            StringToLower(argval);
+            /* TODO-TEMPLATE: If PropLib has multiple models, sign params.model
+            if (argval == "xxx") {
+                params.model = PropLibModel::XXX;
+            }*/
             i++;
         }
     }
