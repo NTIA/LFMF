@@ -88,7 +88,7 @@ int main(int argc, char **argv) {
 DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
     // TODO-TEMPLATE: Populate vector with all valid arguments
     const std::vector<std::string> validArgs
-        = {"-i", "-o", "-dbg", "-h", "--help", "-v", "--version"};
+        = {"-i", "-o", "-dbg", "-model", "-h", "--help", "-v", "--version"};
 
     for (int i = 1; i < argc; i++) {
         // Parse arg to lowercase string
@@ -131,7 +131,17 @@ DrvrReturnCode ParseArguments(int argc, char **argv, DrvrParams &params) {
         } else if (arg == "-o") {
             params.out_file = argv[i + 1];
             i++;
+        } 
+        /* TODO-TEMPLATE: If PropLib has multiple models, using this block to sign params.model
+        else if (arg == "-model") {
+            std::string argval(argv[i + 1]);
+            StringToLower(argval);
+            if (argval == "xxx") {
+                params.model = PropLibModel::XXX;
+            }
+            i++;
         }
+        */
     }
 
     return DRVR__SUCCESS;
