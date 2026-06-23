@@ -23,6 +23,24 @@ namespace Propagation {
 namespace LFMF {
 
 /*******************************************************************************
+ * Get library name
+ * 
+  * @return         Library name.
+  ******************************************************************************/
+std::string GetLibraryName() {
+    return LIBRARY_NAME;
+}
+
+/*******************************************************************************
+ * Get library version
+ * 
+  * @return         Library version.
+  ******************************************************************************/
+std::string GetLibraryVersion() {
+    return LIBRARY_VERSION;
+}
+
+/*******************************************************************************
  * Get an error message string from a return code.
  * 
  * @param[in] code  Integer return code.
@@ -84,6 +102,38 @@ char *GetReturnStatusCharArray(const int code) {
  ******************************************************************************/
 void FreeReturnStatusCharArray(char *c_msg) {
     delete[] c_msg;
+}
+
+/*******************************************************************************
+ * Get library name string (as C-style string).
+ * 
+ * @return          Library name string.
+ ******************************************************************************/
+char *GetLibraryNameCharArray() {
+    const std::string msg = LIBRARY_NAME;
+    char *c_msg = new char[msg.size() + 1];
+#ifdef _WIN32
+    strcpy_s(c_msg, msg.size() + 1, msg.c_str());
+#else
+    strcpy(c_msg, msg.c_str());
+#endif
+    return c_msg;
+}
+
+/*******************************************************************************
+ * Get library version string (as C-style string).
+ * 
+ * @return          Library version string.
+ ******************************************************************************/
+char *GetLibraryVersionCharArray() {
+    const std::string msg = LIBRARY_VERSION;
+    char *c_msg = new char[msg.size() + 1];
+#ifdef _WIN32
+    strcpy_s(c_msg, msg.size() + 1, msg.c_str());
+#else
+    strcpy(c_msg, msg.c_str());
+#endif
+    return c_msg;
 }
 
 }  // namespace LFMF
