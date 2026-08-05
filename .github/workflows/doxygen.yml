@@ -4,34 +4,35 @@
 name: C++ Docs
 
 on:
-  release:
-    types: ["published"]
-  push:
-    branches: ["main"]
-    paths:
-      - 'CMakeLists.txt'
-      - 'CMakePresets.json'
-      - '.gitmodules'
-      - '.github/workflows/doxygen.yml'
-      - 'docs/**'
-      - 'include/**'
-      - 'src/**'
-      - 'app/include/**'
-      - 'app/src/**'
-      - 'extern/doxygen-awesome-css/**'
-  pull_request:
-    branches: ["main"]
-    paths:
-      - 'CMakeLists.txt'
-      - 'CMakePresets.json'
-      - '.gitmodules'
-      - '.github/workflows/doxygen.yml'
-      - 'docs/**'
-      - 'include/**'
-      - 'src/**'
-      - 'app/include/**'
-      - 'app/src/**'
-      - 'extern/doxygen-awesome-css/**'
+  ## Currently disabled, use workflow_dispatch for manual triggering
+  #release:
+  #  types: ["published"]
+  #push:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/doxygen.yml'
+  #    - 'docs/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'app/include/**'
+  #    - 'app/src/**'
+  #    - 'extern/doxygen-awesome-css/**'
+  #pull_request:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/doxygen.yml'
+  #    - 'docs/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'app/include/**'
+  #    - 'app/src/**'
+  #    - 'extern/doxygen-awesome-css/**'
   workflow_dispatch:
 
 permissions:
@@ -39,6 +40,7 @@ permissions:
 
 jobs:
   build:
+    # Use current(Aug 2026) stable Ubuntu version
     runs-on: ubuntu-24.04
     concurrency:
       group: ${{ github.workflow }}-${{ github.event_name == 'release' && 'release' || github.ref }}-docs-build
@@ -62,7 +64,7 @@ jobs:
           uses: actions/configure-pages@v6
 
         - name: Install CMake
-          uses: lukka/get-cmake@v4
+          uses: lukka/get-cmake@v4.4.2
           with:
             cmakeVersion: "4.4.2"
 
@@ -88,8 +90,8 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    # Use current(Aug 2026) stable Ubuntu version
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
     concurrency:
       group: pages
       cancel-in-progress: false

@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Install CMake # (latest stable version)
-        uses: lukka/get-cmake@v4
+        uses: lukka/get-cmake@v4.4.2
         with:
           cmakeVersion: "4.4.2"
 

@@ -1,16 +1,17 @@
 name: Validate CITATION.cff
 
 on:
-  push:
-    branches: ["main"]
-    paths:
-      - 'CITATION.cff'
-      - '.github/workflows/cff-validator.yml'
-  pull_request:
-    branches: ["main"]
-    paths:
-      - 'CITATION.cff'
-      - '.github/workflows/cff-validator.yml'
+  ## Currently disabled, use workflow_dispatch for manual triggering
+  #push:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CITATION.cff'
+  #    - '.github/workflows/cff-validator.yml'
+  #pull_request:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CITATION.cff'
+  #    - '.github/workflows/cff-validator.yml'
   workflow_dispatch:
 
 permissions:
@@ -18,6 +19,7 @@ permissions:
 
 jobs:
   Validate-CITATION-cff:
+    # Use current(Aug 2026) stable Ubuntu version
     runs-on: ubuntu-24.04
     name: Validate CITATION.cff
     concurrency:
