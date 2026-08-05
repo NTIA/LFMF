@@ -62,7 +62,8 @@ endfunction()
 ###########################################
 ## PROJECT METADATA
 ###########################################
-# TODO-TEMPLATE: Add project metadata here. See CREATING-REPOSITORIES.md for an example.
+# TODO-TEMPLATE: Replace this metadata when creating a real repository.
+# See CREATING-REPOSITORIES.md for the required template cleanup steps.
 set(LIB_NAME "PropLibTemplate")        # Name of library/target
 set(LIB_NAMESPACE "ITS")               # Namespace for the named library
 project(

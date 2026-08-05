@@ -41,6 +41,6 @@ std::string GetDataDirectory() {
 
 // TODO-TEMPLATE: Remove this test and write your own in other files.
 // This is included to verify test discovery is functional in the template.
-TEST(TemplateTest, TestTemplate) {
+TEST(TestTemplate, TestTemplateSuccess) {
     EXPECT_EQ(1, 1);
 }

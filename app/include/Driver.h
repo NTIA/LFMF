@@ -7,7 +7,7 @@
 #include "ReturnCodes.h"
 #include "Structs.h"
 
-// TODO-TEMPLATE: Include your library's main interface header
+// TODO-TEMPLATE: Include your library's main interface header here
 #include "PropLibTemplate.h"
 
 #include <iomanip>   // for std::left, std::setw
