@@ -68,7 +68,7 @@ set(LIB_NAME "PropLibTemplate")        # Name of library/target
 set(LIB_NAMESPACE "ITS")               # Namespace for the named library
 project(
     "${LIB_NAMESPACE}.${LIB_NAME}"
-    VERSION 1.1
+    VERSION 1.2
     DESCRIPTION "TODO-TEMPLATE: BRIEF DESCRIPTION OF YOUR SOFTWARE"
     HOMEPAGE_URL "TODO-TEMPLATE: HOMEPAGE LINK, E.G. TO RELEVANT PAGE ON PROPLIB WIKI"
     LANGUAGES "CXX"
