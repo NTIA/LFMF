@@ -100,7 +100,7 @@ char *GetReturnStatusCharArray(const int code) {
  * 
  * @param[in] c_msg  The status message C-style string to delete
  ******************************************************************************/
-void FreeReturnStatusCharArray(char *c_msg) {
+void FreeCharArray(char *c_msg) {
     delete[] c_msg;
 }
 

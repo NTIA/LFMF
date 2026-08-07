@@ -138,7 +138,7 @@ DLLEXPORT ReturnCode LFMF(
 );
 
 DLLEXPORT char *GetReturnStatusCharArray(const int code);
-DLLEXPORT void FreeReturnStatusCharArray(char *c_msg);
+DLLEXPORT void FreeCharArray(char *c_msg);
 DLLEXPORT char *GetLibraryNameCharArray();
 DLLEXPORT char *GetLibraryVersionCharArray();
 
