@@ -8,7 +8,7 @@ find_package(Doxygen ${MINIMUM_DOXYGEN_VERSION} REQUIRED doxygen)
 
 # Ensure doxygen-awesome-css submodule has been initialized
 set(EXTRA_STYLESHEET "${PROJECT_SOURCE_DIR}/extern/doxygen-awesome-css/doxygen-awesome.css")
-if (NOT EXISTS ${EXTRA_STYLESHEET})
+if (NOT EXISTS "${EXTRA_STYLESHEET}")
     message(FATAL_ERROR
         "External Doxygen stylesheet is missing! "
         "Run `git submodule init extern/doxygen-awesome-css`, then "
