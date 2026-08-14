@@ -22,23 +22,20 @@ on:
 permissions:
   contents: read
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event_name == 'release' && 'release' || github.ref }}-docs-build
+      cancel-in-progress: ${{ github.event_name != 'release' }}
     steps:
         - name: Checkout repository
           uses: actions/checkout@v6
 
         - name: Clone doxygen-awesome-css submodule
           run: |
-            git submodule init extern/doxygen-awesome-css
-            git submodule update
+            git -c protocol.version=2 submodule update --init --depth 1 extern/doxygen-awesome-css
 
         - name: Install Doxygen
           uses: ssciwr/doxygen-install@v2
@@ -76,6 +73,10 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

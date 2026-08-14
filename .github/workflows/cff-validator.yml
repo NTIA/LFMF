@@ -15,6 +15,10 @@ jobs:
   Validate-CITATION-cff:
     runs-on: ubuntu-latest
     name: Validate CITATION.cff
+    timeout-minutes: 5
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-citation
+      cancel-in-progress: true
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
 
