@@ -68,7 +68,7 @@ jobs:
             cmakeVersion: "3.21"
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Clone required submodules # TODO-TEMPLATE: Add test-data submodule here, if needed
       run: |
@@ -76,7 +76,7 @@ jobs:
         git submodule update
 
     - name: Install CMake
-      uses: lukka/get-cmake@latest
+      uses: lukka/get-cmake@v4
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 

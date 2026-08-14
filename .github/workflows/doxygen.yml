@@ -41,7 +41,7 @@ jobs:
       cancel-in-progress: ${{ github.event_name != 'release' }}
     steps:
         - name: Checkout repository
-          uses: actions/checkout@v6
+          uses: actions/checkout@v7
 
         - name: Clone doxygen-awesome-css submodule
           run: |
@@ -58,7 +58,7 @@ jobs:
           uses: actions/configure-pages@v6
 
         - name: Install CMake
-          uses: lukka/get-cmake@latest
+          uses: lukka/get-cmake@v4
 
         - name: Build documentation with Doxygen
           uses: lukka/run-cmake@v10
