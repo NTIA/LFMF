@@ -64,9 +64,13 @@ endfunction()
 # See CREATING-REPOSITORIES.md for the required template cleanup steps.
 set(LIB_NAME "PropLibTemplate")        # Name of library/target
 set(LIB_NAMESPACE "ITS")               # Namespace for the named library
+set(PROPLIB_VERSION_MAJOR 1)
+set(PROPLIB_VERSION_MINOR 2)
+set(PROPLIB_VERSION "${PROPLIB_VERSION_MAJOR}.${PROPLIB_VERSION_MINOR}")
+set(PROPLIB_SOVERSION "${PROPLIB_VERSION_MAJOR}")
 project(
     "${LIB_NAMESPACE}.${LIB_NAME}"
-    VERSION 1.2
+    VERSION ${PROPLIB_VERSION}
     DESCRIPTION "TODO-TEMPLATE: BRIEF DESCRIPTION OF YOUR SOFTWARE"
     HOMEPAGE_URL "TODO-TEMPLATE: HOMEPAGE LINK, E.G. TO RELEVANT PAGE ON PROPLIB WIKI"
     LANGUAGES "CXX"
@@ -132,6 +136,8 @@ proplib_message(
     "Generator platform (for multi-config generators only): $ENV{CMAKE_GENERATOR_PLATFORM}"
     "C++ Compiler: ${CMAKE_CXX_COMPILER}"
     "Target architecture: ${ARCH_SUFFIX}"
+    "Version: ${PROJECT_VERSION}"
+    "ABI version: ${PROPLIB_SOVERSION}"
     "CMake Options:"
     "  BUILD_32BIT = ${BUILD_32BIT}"
     "  BUILD_DOCS = ${BUILD_DOCS}"
