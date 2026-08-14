@@ -1,11 +1,22 @@
 # This action builds **AND DEPLOYS** Doxygen documentation to GitHub Pages
 # Doxygen site is DEPLOYED if this action is triggered by publishing a release.
-# Doxygen site is NOT DEPLOYED (only built) when triggered by pull request or manual dispatch.
+# Doxygen site is NOT DEPLOYED (only built) when triggered by push, pull request, or manual dispatch.
 name: C++ Docs
 
 on:
   release:
     types: ["published"]
+  push:
+    branches: ["main"]
+    paths:
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+      - '.gitmodules'
+      - '.github/workflows/doxygen.yml'
+      - 'docs/**'
+      - 'include/**'
+      - 'src/**'
+      - 'extern/doxygen-awesome-css/**'
   pull_request:
     branches: ["main"]
     paths:
