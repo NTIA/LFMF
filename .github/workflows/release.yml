@@ -14,7 +14,6 @@ jobs:
   create_release_artifacts:
     name: 'Create Release: ${{ matrix.relName}}'
     runs-on: ${{ matrix.os }}
-    timeout-minutes: 45
     concurrency:
       group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.relName }}
       cancel-in-progress: true
@@ -49,10 +48,10 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-  
+
       - name: Install CMake # (latest stable version)
         uses: lukka/get-cmake@latest
-  
+
       - name: "CMake: Build (64-bit)"
         if: matrix.architecture != 'x86'
         uses: lukka/run-cmake@v10
@@ -68,7 +67,7 @@ jobs:
           configurePreset: release32
           configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF', '-A', 'Win32']"
           buildPreset: release32
-    
+
       - name: Upload release artifacts (binaries)
         if: runner.os != 'Windows'
         uses: actions/upload-artifact@v7
@@ -88,7 +87,7 @@ jobs:
             ${{ github.workspace }}\bin\Release\*Driver-*.exe
           if-no-files-found: error
           overwrite: true
-      
+
       - name: Upload release artifact (C++ Header)  # TODO-TEMPLATE: Specify the correct header below
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v7
