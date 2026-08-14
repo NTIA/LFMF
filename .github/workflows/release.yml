@@ -51,6 +51,8 @@ jobs:
 
       - name: Install CMake # (latest stable version)
         uses: lukka/get-cmake@v4
+        with:
+          cmakeVersion: "4.4.2"
 
       - name: "CMake: Build (64-bit)"
         if: matrix.architecture != 'x86'

@@ -48,7 +48,7 @@ jobs:
           - macos-15-intel      # Intel
           - windows-2025
         architecture: [arm64, x64, x86]
-        cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
+        cmakeVersion: ["3.21.0", "4.4.2"] # Test the minimum supported version and the current stable release.
         exclude:
           - os: macos-15
             architecture: x86
@@ -65,7 +65,7 @@ jobs:
           - os: ubuntu-24.04
             architecture: x86
           - os: windows-2025
-            cmakeVersion: "3.21"
+            cmakeVersion: "3.21.0"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
