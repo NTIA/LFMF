@@ -21,13 +21,13 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: windows-latest
+          - os: windows-2025
             architecture: x64
             relName: Windows x64
-          - os: windows-latest
+          - os: windows-2025
             architecture: x86
             relName: Windows x86
-          - os: macos-latest
+          - os: macos-15
             architecture: arm64
             relName: macOS Apple
             artifactPath: |
@@ -39,7 +39,7 @@ jobs:
             artifactPath: |
               ${{ github.workspace }}/bin/*-x86_64.dylib
               ${{ github.workspace }}/bin/*Driver*-*-Darwin-x86_64
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             architecture: x64
             relName: Linux x64
             artifactPath: |

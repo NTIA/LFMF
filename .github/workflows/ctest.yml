@@ -43,31 +43,28 @@ jobs:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
-          - macos-latest        # Apple
+          - ubuntu-24.04
+          - macos-15            # Apple
           - macos-15-intel      # Intel
-          - windows-2022        # Visual Studio 2022
-          - windows-latest      # Visual Studio 2026, CMake >= 4.2 is required
+          - windows-2025
         architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
         exclude:
-          - os: macos-latest
+          - os: macos-15
             architecture: x86
-          - os: macos-latest
+          - os: macos-15
             architecture: x64
           - os: macos-15-intel
             architecture: x86
           - os: macos-15-intel
             architecture: arm64
-          - os: windows-latest
+          - os: windows-2025
             architecture: arm64
-          - os: windows-2022
+          - os: ubuntu-24.04
             architecture: arm64
-          - os: ubuntu-latest
-            architecture: arm64
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             architecture: x86
-          - os: windows-latest
+          - os: windows-2025
             cmakeVersion: "3.21"
     steps:
     - name: Checkout repository
