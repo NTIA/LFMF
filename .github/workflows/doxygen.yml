@@ -1,16 +1,26 @@
 # This action builds **AND DEPLOYS** Doxygen documentation to GitHub Pages
 # Doxygen site is DEPLOYED if this action is triggered by publishing a release.
-# Doxygen site is NOT DEPLOYED (only built) when triggered by pull request or dispatched. 
+# Doxygen site is NOT DEPLOYED (only built) when triggered by pull request or manual dispatch.
 name: C++ Docs
 
 on:
   release:
     types: ["published"]
   pull_request:
-    branches: ["main", "dev"]
-  push:
     branches: ["main"]
+    paths:
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+      - '.gitmodules'
+      - '.github/workflows/doxygen.yml'
+      - 'docs/**'
+      - 'include/**'
+      - 'src/**'
+      - 'extern/doxygen-awesome-css/**'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 # However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.

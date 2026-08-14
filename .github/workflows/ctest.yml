@@ -2,11 +2,22 @@
 name: Unit Tests
 
 on:
-  push:
-    branches: ["main"]
   pull_request:
-    branches: ["main", "dev"]
+    branches: ["main"]
+    paths:
+      - 'CMakeLists.txt'
+      - 'CMakePresets.json'
+      - '.gitmodules'
+      - '.github/workflows/ctest.yml'
+      - 'app/**'
+      - 'extern/googletest/**'
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
