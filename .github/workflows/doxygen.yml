@@ -16,6 +16,8 @@ on:
       - 'docs/**'
       - 'include/**'
       - 'src/**'
+      - 'app/include/**'
+      - 'app/src/**'
       - 'extern/doxygen-awesome-css/**'
   pull_request:
     branches: ["main"]
@@ -27,6 +29,8 @@ on:
       - 'docs/**'
       - 'include/**'
       - 'src/**'
+      - 'app/include/**'
+      - 'app/src/**'
       - 'extern/doxygen-awesome-css/**'
   workflow_dispatch:
 

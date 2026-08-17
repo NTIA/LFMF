@@ -76,7 +76,7 @@ jobs:
         git submodule update
 
     - name: Install CMake
-      uses: lukka/get-cmake@v4
+      uses: lukka/get-cmake@v4.4.2
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 
