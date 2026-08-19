@@ -72,10 +72,10 @@ jobs:
       matrix:
         os:
           - ubuntu-24.04
-          - macos-15            # Apple
-          - macos-15-intel      # Intel
-          #- windows-2022
-          - windows-2025
+          - macos-15            # Apple, the current stable release
+          - macos-15-intel      # Intel, the current stable release
+          #- windows-2022        # Visual Studio 2022
+          - windows-2025        # Visual Studio 2026, the current stable release, CMake >= 4.2 is required
         architecture: [arm64, x64, x86]
         cmakeVersion: ["3.21.0", "4.4.2"] # Test the minimum supported version and the current stable release.
         exclude:

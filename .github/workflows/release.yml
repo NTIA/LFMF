@@ -33,12 +33,6 @@ jobs:
             artifactPath: |
               ${{ github.workspace }}/bin/*-universal.dylib
               ${{ github.workspace }}/bin/*Driver*-*-Darwin-universal
-          - os: macos-15-intel
-            architecture: x64
-            relName: macOS Intel
-            artifactPath: |
-              ${{ github.workspace }}/bin/*-x86_64.dylib
-              ${{ github.workspace }}/bin/*Driver*-*-Darwin-x86_64
           - os: ubuntu-24.04
             architecture: x64
             relName: Linux x64

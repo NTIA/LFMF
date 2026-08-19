@@ -28,9 +28,9 @@ if (APPLE)
         OUTPUT_VARIABLE MACOS_NATIVE_ARCHITECTURE
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    # If running on Apple silicon, try a universal build. Otherwise, a native build.
+    # If running on Apple silicon, try a universal build for both Intel (x86_64) and Apple Silicon (arm64). Otherwise, a native build.
     if ("${MACOS_NATIVE_ARCHITECTURE}" STREQUAL "arm64")
-        set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
+        set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "Build architectures for macOS")
         set(ARCH_SUFFIX "universal")
     else ()
         set(ARCH_SUFFIX "${MACOS_NATIVE_ARCHITECTURE}")
@@ -46,11 +46,11 @@ elseif (UNIX) # Only non-Apple Linux evaluates as True here
 endif ()
 
 # Convenience function for printing visible status messages.
-# Accepts arbitrary number of string inputs, each printed as a 
+# Accepts arbitrary number of string inputs, each printed as a
 # new line in the status message.
 function(proplib_message)
     string(REPLACE ";" "\n--   " all_args "${ARGN}")
-    message(STATUS 
+    message(STATUS
     "==========[PROPLIB STATUS MESSAGE]==========\n"
     "--   ${all_args}\n-- "
     "============================================\n"
