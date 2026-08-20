@@ -2,54 +2,102 @@
 name: Unit Tests
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main", "dev"]
+  ## Currently disabled, use workflow_dispatch for manual triggering
+  #push:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/ctest.yml'
+  #    - 'app/**'
+  #    - 'extern/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'tests/**'
+  #pull_request:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/ctest.yml'
+  #    - 'app/**'
+  #    - 'extern/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'tests/**'
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
-  cancel-in-progress: true
+permissions:
+  contents: read
+  pull-requests: read
 
 # Define the matrix for different operating systems
 jobs:
+  should-run:
+    runs-on: ubuntu-24.04
+    outputs:
+      should_run: ${{ steps.decide.outputs.should_run }}
+    steps:
+      - name: Skip duplicate runs for merged PRs
+        id: decide
+        uses: actions/github-script@v8
+        with:
+          script: |
+            if (context.eventName !== 'push') {
+              core.setOutput('should_run', 'true');
+              return;
+            }
+
+            const { data: pullRequests } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha
+            });
+
+            const hasMainPullRequest = pullRequests.some((pullRequest) => pullRequest.base.ref === 'main');
+            core.setOutput('should_run', hasMainPullRequest ? 'false' : 'true');
+
   build-and-test:
+    if: ${{ needs.should-run.outputs.should_run == 'true' }}
+    needs: should-run
     name: ${{ matrix.os }} / ${{ matrix.architecture }} / CMake ${{ matrix.cmakeVersion }}
     runs-on: ${{ matrix.os }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.os }}-${{ matrix.architecture }}-${{ matrix.cmakeVersion }}
+      cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
         os:
-          - ubuntu-latest
-          - macos-latest        # Apple
-          - macos-15-intel      # Intel
-          - windows-2022        # Visual Studio 2022
-          - windows-latest      # Visual Studio 2026, CMake >= 4.2 is required
+          - ubuntu-24.04
+          - macos-15            # Apple, the current stable release
+          - macos-15-intel      # Intel, the current stable release
+          #- windows-2022        # Visual Studio 2022
+          - windows-2025        # Visual Studio 2026, the current stable release, CMake >= 4.2 is required
         architecture: [arm64, x64, x86]
-        cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
+        cmakeVersion: ["3.21.0", "4.4.2"] # Test the minimum supported version and the current stable release.
         exclude:
-          - os: macos-latest
+          - os: macos-15
             architecture: x86
-          - os: macos-latest
+          - os: macos-15
             architecture: x64
           - os: macos-15-intel
             architecture: x86
           - os: macos-15-intel
             architecture: arm64
-          - os: windows-latest
+          - os: windows-2025
             architecture: arm64
-          - os: windows-2022
+          - os: ubuntu-24.04
             architecture: arm64
-          - os: ubuntu-latest
-            architecture: arm64
-          - os: ubuntu-latest
+          - os: ubuntu-24.04
             architecture: x86
-          - os: windows-latest
-            cmakeVersion: "3.21"
+          - os: windows-2025
+            cmakeVersion: "3.21.0"
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v6
+      uses: actions/checkout@v7
 
     - name: Clone required submodules
       run: |
@@ -58,7 +106,7 @@ jobs:
         git submodule update
 
     - name: Install CMake
-      uses: lukka/get-cmake@latest
+      uses: lukka/get-cmake@v4.4.2
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 

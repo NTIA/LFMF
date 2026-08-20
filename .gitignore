@@ -71,3 +71,4 @@ docs/html
 ## VS Code
 ###########
 .vscode
+.secrets

@@ -8,34 +8,46 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   create_release_artifacts:
     name: 'Create Release: ${{ matrix.relName}}'
     runs-on: ${{ matrix.os }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}-${{ matrix.relName }}
+      cancel-in-progress: true
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - os: windows-latest
+          - os: windows-2025
             architecture: x64
             relName: Windows x64
-          - os: windows-latest
+          - os: windows-2025
             architecture: x86
             relName: Windows x86
-          - os: macos-latest
+          - os: macos-15
             architecture: arm64
-            relName: macOS Universal
-          - os: ubuntu-latest
+            relName: macOS Apple
+            artifactPath: |
+              ${{ github.workspace }}/bin/*-universal.dylib
+              ${{ github.workspace }}/bin/*Driver*-*-Darwin-universal
+          - os: ubuntu-24.04
             architecture: x64
             relName: Linux x64
+            artifactPath: |
+              ${{ github.workspace }}/bin/*-x86_64.so
+              ${{ github.workspace }}/bin/*Driver*-*-Linux-x86_64
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v6
-  
+        uses: actions/checkout@v7
+
       - name: Install CMake # (latest stable version)
-        uses: lukka/get-cmake@latest
-  
+        uses: lukka/get-cmake@v4.4.2
+        with:
+          cmakeVersion: "4.4.2"
+
       - name: "CMake: Build (64-bit)"
         if: matrix.architecture != 'x86'
         uses: lukka/run-cmake@v10
@@ -51,17 +63,13 @@ jobs:
           configurePreset: release32
           configurePresetAdditionalArgs: "['-DBUILD_DOCS=OFF', '-DRUN_TESTS=OFF', '-DRUN_DRIVER_TESTS=OFF', '-A', 'Win32']"
           buildPreset: release32
-    
+
       - name: Upload release artifacts (binaries)
         if: runner.os != 'Windows'
         uses: actions/upload-artifact@v7
         with:
-          name: "${{ github.event.repository.name }}-release-${{ runner.os }}"
-          path: |
-            ${{ github.workspace }}/bin/*-universal.dylib
-            ${{ github.workspace }}/bin/*-x86_64.so
-            ${{ github.workspace }}/bin/*Driver*-*-Darwin-universal
-            ${{ github.workspace }}/bin/*Driver*-*-Linux-x86_64
+          name: "${{ github.event.repository.name }}-release-${{ matrix.relName }}"
+          path: ${{ matrix.artifactPath }}
           if-no-files-found: error
           overwrite: true
 
@@ -75,7 +83,7 @@ jobs:
             ${{ github.workspace }}\bin\Release\*Driver-*.exe
           if-no-files-found: error
           overwrite: true
-      
+
       - name: Upload release artifact (C++ Header)
         if: runner.os == 'Linux'
         uses: actions/upload-artifact@v7
