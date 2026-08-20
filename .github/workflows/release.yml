@@ -29,16 +29,10 @@ jobs:
             relName: Windows x86
           - os: macos-15
             architecture: arm64
-            relName: macOS Apple
-            artifactPath: |
-              ${{ github.workspace }}/bin/*-universal.dylib
-              ${{ github.workspace }}/bin/*Driver*-*-Darwin-universal
+            relName: macOS Universal
           - os: ubuntu-24.04
             architecture: x64
             relName: Linux x64
-            artifactPath: |
-              ${{ github.workspace }}/bin/*-x86_64.so
-              ${{ github.workspace }}/bin/*Driver*-*-Linux-x86_64
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -69,7 +63,11 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: "${{ github.event.repository.name }}-release-${{ matrix.relName }}"
-          path: ${{ matrix.artifactPath }}
+          path: |
+            ${{ github.workspace }}/bin/*-universal.dylib
+            ${{ github.workspace }}/bin/*-x86_64.so
+            ${{ github.workspace }}/bin/*Driver*-*-Darwin-universal
+            ${{ github.workspace }}/bin/*Driver*-*-Linux-x86_64
           if-no-files-found: error
           overwrite: true
 
