@@ -4,7 +4,11 @@
 name: C++ Docs
 
 on:
-  ## Currently disabled, use workflow_dispatch for manual triggering
+  ## Auto-triggers are disabled by default for this template. Uncomment the
+  ## release/push/pull_request blocks below to enable building (and, on release,
+  ## deploying) the docs. Until then, the workflow runs only via manual dispatch
+  ## (Actions tab → Run workflow). Note: docs are only DEPLOYED to GitHub Pages on
+  ## a published release; push/PR/dispatch only BUILD the docs.
   #release:
   #  types: ["published"]
   #push:

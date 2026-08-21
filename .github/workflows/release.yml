@@ -1,5 +1,6 @@
 # This action compiles multi-platform binaries for a release.
-# It is triggered when a new tag is made with a version number starting with "v"
+# It is triggered when a new tag is pushed with a version number starting with "v",
+# and can also be run manually via workflow_dispatch.
 name: Create Release Artifacts
 
 on:

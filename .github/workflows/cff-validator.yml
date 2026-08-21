@@ -1,7 +1,9 @@
 name: Validate CITATION.cff
 
 on:
-  ## Currently disabled, use workflow_dispatch for manual triggering
+  ## Auto-triggers are disabled by default for this template. Uncomment the
+  ## push/pull_request blocks below to enable validation on branches/PRs. Until
+  ## then, the workflow runs only via manual dispatch (Actions tab → Run workflow).
   #push:
   #  branches: ["main"]
   #  paths:
