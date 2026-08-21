@@ -42,7 +42,7 @@ jobs:
     steps:
       - name: Skip duplicate runs for merged PRs
         id: decide
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         with:
           script: |
             if (context.eventName !== 'push') {
@@ -62,38 +62,31 @@ jobs:
   build-and-test:
     if: ${{ needs.should-run.outputs.should_run == 'true' }}
     needs: should-run
-    name: ${{ matrix.os }} / ${{ matrix.architecture }} / CMake ${{ matrix.cmakeVersion }}
-    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.platform.os }} / ${{ matrix.platform.architecture }} / CMake ${{ matrix.cmakeVersion }}
+    runs-on: ${{ matrix.platform.os }}
     concurrency:
-      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.os }}-${{ matrix.architecture }}-${{ matrix.cmakeVersion }}
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.platform.os }}-${{ matrix.platform.architecture }}-${{ matrix.cmakeVersion }}
       cancel-in-progress: true
     strategy:
       fail-fast: false
       matrix:
-        os:
-          - ubuntu-24.04
-          - macos-15            # Apple, the current stable release
-          - macos-15-intel      # Intel, the current stable release
-          #- windows-2022        # Visual Studio 2022
-          - windows-2025        # Visual Studio 2026, the current stable release, CMake >= 4.2 is required
-        architecture: [arm64, x64, x86]
-        cmakeVersion: ["3.21.0", "4.4.2"] # Test the minimum supported version and the current stable release.
+        # `platform` bundles os + architecture as one dimension so it can be crossed
+        # with cmakeVersion and pruned with a single `exclude`.
+        #   - CMake versions test the minimum supported ("3.21.0") and current stable ("4.4.2").
+        #   - windows-2025 (Visual Studio 2026) requires CMake >= 4.2, so 3.21.0 is excluded.
+        # TODO-TEMPLATE: add a "windows-2022" (Visual Studio 2022) platform here if needed.
+        platform:
+          - { os: ubuntu-24.04,   architecture: x64 }    # Linux x64
+          - { os: macos-15,       architecture: arm64 }  # Apple silicon, current stable release
+          - { os: macos-15-intel, architecture: x64 }    # Intel, current stable release
+          - { os: windows-2025,   architecture: x64 }    # Visual Studio 2026, current stable (CMake >= 4.2)
+          - { os: windows-2025,   architecture: x86 }
+        cmakeVersion: ["3.21.0", "4.4.2"]
         exclude:
-          - os: macos-15
-            architecture: x86
-          - os: macos-15
-            architecture: x64
-          - os: macos-15-intel
-            architecture: x86
-          - os: macos-15-intel
-            architecture: arm64
-          - os: windows-2025
-            architecture: arm64
-          - os: ubuntu-24.04
-            architecture: arm64
-          - os: ubuntu-24.04
-            architecture: x86
-          - os: windows-2025
+          # windows-2025 (Visual Studio 2026) requires CMake >= 4.2
+          - platform: { os: windows-2025, architecture: x64 }
+            cmakeVersion: "3.21.0"
+          - platform: { os: windows-2025, architecture: x86 }
             cmakeVersion: "3.21.0"
     steps:
     - name: Checkout repository
@@ -111,7 +104,7 @@ jobs:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 
     - name: "CMake: Build and Test (64-bit)"
-      if: matrix.architecture != 'x86'
+      if: matrix.platform.architecture != 'x86'
       uses: lukka/run-cmake@v10
       with:
         configurePreset: release64
@@ -120,7 +113,7 @@ jobs:
         testPreset: release64
 
     - name: "CMake: Build and Test (32-bit)"
-      if: matrix.architecture == 'x86'
+      if: matrix.platform.architecture == 'x86'
       uses: lukka/run-cmake@v10
       with:
         configurePreset: release32
