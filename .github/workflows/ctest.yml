@@ -95,6 +95,10 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v7
+      # Use this section to provide a token to checkout non-public submodules
+      #with:
+        #token: ${{ secrets.TESTDATA_TOKEN }}    # Used to checkout non-public repo
+        #submodules: true
 
     - name: Clone required submodules
       run: |
