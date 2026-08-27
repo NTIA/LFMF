@@ -21,9 +21,7 @@ configure_proplib_target(${TEST_NAME})
 ###########################################
 ## SET UP AND DISCOVER TESTS
 ###########################################
-include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
-target_link_libraries(${TEST_NAME} ${LIB_NAME} GTest::gtest_main)
-include(GoogleTest)
+target_link_libraries(${TEST_NAME} PRIVATE ${LIB_NAME} GTest::gtest_main)
 gtest_discover_tests(${TEST_NAME})
 
 proplib_message("Done configuring library tests ${TEST_NAME}")

@@ -33,5 +33,5 @@ class TempTextFile {
          **********************************************************************/
         std::string getFileName() const;
     private:
-        std::string filename; /**< Name of the temporary file */
+        std::string filename;   ///< Name of the temporary file
 };

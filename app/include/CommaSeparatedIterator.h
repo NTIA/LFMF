@@ -35,8 +35,8 @@ class CommaSeparatedIterator {
         /** Conversion to boolean to check if the iterator is valid */
         explicit operator bool() const;
     private:
-        std::istream &stream_; /**< Reference to the input stream */
-        std::string line_;     /**< Current line read from the stream */
-        std::string first_;    /**< First string from the current line */
-        std::string second_;   /**< Second string from the current line */
+        std::istream &stream_;  ///< Reference to the input stream
+        std::string line_;      ///< Current line read from the stream
+        std::string first_;     ///< First string from the current line
+        std::string second_;    ///< Second string from the current line
 };

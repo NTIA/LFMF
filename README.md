@@ -26,7 +26,7 @@ predicts basic transmission loss in the frequency range 0.01 - 30 MHz for propag
 paths over a smooth Earth and antenna heights less than 50 meters.
 
 Additional bindings to the shared library built from this repository are provided
-for .NET, MATLAB®, and Python® in the following repositories:
+for .NET, MATLAB&reg;, and Python&reg; in the following repositories:
 
 - [NTIA/LFMF-dotnet](https://github.com/NTIA/LFMF-dotnet)
 - [NTIA/LFMF-matlab](https://github.com/NTIA/LFMF-matlab)

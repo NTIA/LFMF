@@ -2,7 +2,7 @@
 ## CONFIGURE THE COMMAND LINE DRIVER
 ###########################################
 set(DRIVER_NAME "${LIB_NAME}Driver")
-set(DRIVER_VERSION ${PROJECT_VERSION}.0)
+set(DRIVER_VERSION "${PROJECT_VERSION}.0")
 set(DRIVER_HEADERS "${PROJECT_SOURCE_DIR}/app/include")
 set(DRIVER_TEST_NAME "${DRIVER_NAME}Test")
 

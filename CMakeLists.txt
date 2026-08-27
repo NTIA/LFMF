@@ -12,11 +12,9 @@ cmake_minimum_required(VERSION 3.15 FATAL_ERROR)
 
 # Warn if '-A Win32' is provided but BUILD_32BIT has not been set. This may
 # indicate accidental use of a 64-bit CMake preset while intending to build for 32-bit.
-if (DEFINED ENV{CMAKE_GENERATOR_PLATFORM})
-    if ($ENV{CMAKE_GENERATOR_PLATFORM} STREQUAL "Win32")
-        if (NOT BUILD_32BIT)
-            message(WARNING "Generator platform is Win32 but 32-bit preset is not being used.")
-        endif ()
+if (DEFINED ENV{CMAKE_GENERATOR_PLATFORM} AND "$ENV{CMAKE_GENERATOR_PLATFORM}" STREQUAL "Win32")
+    if (NOT BUILD_32BIT)
+        message(WARNING "Generator platform is Win32 but 32-bit preset is not being used.")
     endif ()
 endif ()
 
@@ -30,12 +28,12 @@ if (APPLE)
         OUTPUT_VARIABLE MACOS_NATIVE_ARCHITECTURE
         OUTPUT_STRIP_TRAILING_WHITESPACE
     )
-    # If running on Apple silicon, try a universal build. Otherwise, a native build.
-    if (${MACOS_NATIVE_ARCHITECTURE} STREQUAL "arm64")
-        set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64" CACHE STRING "" FORCE)
+    # If running on Apple silicon, try a universal build for both Intel (x86_64) and Apple Silicon (arm64). Otherwise, a native build.
+    if ("${MACOS_NATIVE_ARCHITECTURE}" STREQUAL "arm64")
+        set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "Build architectures for macOS")
         set(ARCH_SUFFIX "universal")
     else ()
-        set(ARCH_SUFFIX ${MACOS_NATIVE_ARCHITECTURE})
+        set(ARCH_SUFFIX "${MACOS_NATIVE_ARCHITECTURE}")
     endif ()
 elseif (WIN32)
     if (BUILD_32BIT)
@@ -48,11 +46,11 @@ elseif (UNIX) # Only non-Apple Linux evaluates as True here
 endif ()
 
 # Convenience function for printing visible status messages.
-# Accepts arbitrary number of string inputs, each printed as a 
+# Accepts arbitrary number of string inputs, each printed as a
 # new line in the status message.
 function(proplib_message)
     string(REPLACE ";" "\n--   " all_args "${ARGN}")
-    message(STATUS 
+    message(STATUS
     "==========[PROPLIB STATUS MESSAGE]==========\n"
     "--   ${all_args}\n-- "
     "============================================\n"
@@ -64,9 +62,13 @@ endfunction()
 ###########################################
 set(LIB_NAME "LFMF")                        # Name of library/target
 set(LIB_NAMESPACE "ITS.Propagation")        # Namespace for the named library
+set(PROPLIB_VERSION_MAJOR 1)
+set(PROPLIB_VERSION_MINOR 2)
+set(PROPLIB_VERSION "${PROPLIB_VERSION_MAJOR}.${PROPLIB_VERSION_MINOR}")
+set(PROPLIB_SOVERSION "${PROPLIB_VERSION_MAJOR}")
 project(
     "${LIB_NAMESPACE}.${LIB_NAME}"
-    VERSION 1.1
+    VERSION ${PROPLIB_VERSION}
     DESCRIPTION "Low Frequency / Medium Frequency (LF/MF) Propagation Model"
     HOMEPAGE_URL "https://ntia.github.io/propagation-library-wiki/models/LFMF"
     LANGUAGES "CXX"
@@ -132,6 +134,8 @@ proplib_message(
     "Generator platform (for multi-config generators only): $ENV{CMAKE_GENERATOR_PLATFORM}"
     "C++ Compiler: ${CMAKE_CXX_COMPILER}"
     "Target architecture: ${ARCH_SUFFIX}"
+    "Version: ${PROJECT_VERSION}"
+    "ABI version: ${PROPLIB_SOVERSION}"
     "CMake Options:"
     "  BUILD_32BIT = ${BUILD_32BIT}"
     "  BUILD_DOCS = ${BUILD_DOCS}"
@@ -153,15 +157,17 @@ if (NOT DOCS_ONLY)
         if (EXISTS "${PROJECT_SOURCE_DIR}/extern/googletest/CMakeLists.txt")
             set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
             # Ensure GoogleTest is built as a static library
+            set(PROPLIB_BUILD_SHARED_LIBS_WAS_DEFINED OFF)
             if (DEFINED BUILD_SHARED_LIBS AND BUILD_SHARED_LIBS)
-                set(BUILD_SHARED_LIBS_${LIB_NAME} ${BUILD_SHARED_LIBS})
+                set(PROPLIB_BUILD_SHARED_LIBS_WAS_DEFINED ON)
+                set(PROPLIB_BUILD_SHARED_LIBS_ORIGINAL "${BUILD_SHARED_LIBS}")
                 set(BUILD_SHARED_LIBS OFF)
             endif ()
             add_subdirectory("${PROJECT_SOURCE_DIR}/extern/googletest" "extern/googletest" EXCLUDE_FROM_ALL)
             include(GoogleTest)
             # Restore initial value of BUILD_SHARED_LIBS
-            if (DEFINED BUILD_SHARED_LIBS_${LIB_NAME})
-                set(BUILD_SHARED_LIBS ${BUILD_SHARED_LIBS_${LIB_NAME}})
+            if (PROPLIB_BUILD_SHARED_LIBS_WAS_DEFINED)
+                set(BUILD_SHARED_LIBS "${PROPLIB_BUILD_SHARED_LIBS_ORIGINAL}")
             endif ()
         else ()
             message(SEND_ERROR

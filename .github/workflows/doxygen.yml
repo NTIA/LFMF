@@ -1,56 +1,85 @@
 # This action builds **AND DEPLOYS** Doxygen documentation to GitHub Pages
 # Doxygen site is DEPLOYED if this action is triggered by publishing a release.
-# Doxygen site is NOT DEPLOYED (only built) when triggered by pull request or dispatched. 
+# Doxygen site is NOT DEPLOYED (only built) when triggered by push, pull request, or manual dispatch.
 name: C++ Docs
 
 on:
-  release:
-    types: ["published"]
-  pull_request:
-    branches: ["main", "dev"]
-  push:
-    branches: ["main"]
+  ## Auto-triggers are disabled by default. Uncomment the release/push/pull_request
+  ## blocks below to enable building (and, on release, deploying) the docs.
+  ## Until then, the workflow runs only via manual dispatch
+  ## (Actions tab → Run workflow). Note: docs are only DEPLOYED to GitHub Pages on
+  ## a published release; push/PR/dispatch only BUILD the docs.
+  #release:
+  #  types: ["published"]
+  #push:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/doxygen.yml'
+  #    - 'docs/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'app/include/**'
+  #    - 'app/src/**'
+  #    - 'extern/doxygen-awesome-css/**'
+  #pull_request:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/doxygen.yml'
+  #    - 'docs/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'app/include/**'
+  #    - 'app/src/**'
+  #    - 'extern/doxygen-awesome-css/**'
   workflow_dispatch:
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+permissions:
+  contents: read
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Use current(Aug 2026) stable Ubuntu version
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event_name == 'release' && 'release' || github.ref }}-docs-build
+      cancel-in-progress: ${{ github.event_name != 'release' }}
     steps:
         - name: Checkout repository
-          uses: actions/checkout@v4
+          uses: actions/checkout@v7
 
         - name: Clone doxygen-awesome-css submodule
           run: |
-            git submodule init extern/doxygen-awesome-css
-            git submodule update
+            git -c protocol.version=2 submodule update --init --depth 1 extern/doxygen-awesome-css
 
         - name: Install Doxygen
-          uses: ssciwr/doxygen-install@v1
+          uses: ssciwr/doxygen-install@v2
           with:
-            version: "1.12.0"
+            version: "1.17.0"
 
         - name: Setup GitHub Pages
           if: ${{ github.event_name == 'release' }}
           id: pages
-          uses: actions/configure-pages@v5
+          uses: actions/configure-pages@v6
 
         - name: Install CMake
-          uses: lukka/get-cmake@latest
+          uses: lukka/get-cmake@v4.4.2
+          with:
+            cmakeVersion: "4.4.2"
 
         - name: Build documentation with Doxygen
           uses: lukka/run-cmake@v10
           with:
             configurePreset: docsOnly
             buildPreset: docsOnly
-          
+
         - name: Upload GitHub Pages artifact
-          uses: actions/upload-pages-artifact@v3
+          uses: actions/upload-pages-artifact@v5
           if: ${{ github.event_name == 'release' }}
           with:
             path: ./docs/html/
@@ -65,8 +94,12 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
+    # Use current(Aug 2026) stable Ubuntu version
+    runs-on: ubuntu-24.04
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

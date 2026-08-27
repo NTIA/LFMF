@@ -2,48 +2,99 @@
 name: Unit Tests
 
 on:
-  push:
-    branches: ["main"]
-  pull_request:
-    branches: ["main", "dev"]
+  ## Auto-triggers are disabled by default. Uncomment the push/pull_request
+  ## blocks below to enable validation on branches/PRs. Until then,
+  ## the workflow runs only via manual dispatch (Actions tab → Run workflow).
+  #push:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/ctest.yml'
+  #    - 'app/**'
+  #    - 'extern/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'tests/**'
+  #pull_request:
+  #  branches: ["main"]
+  #  paths:
+  #    - 'CMakeLists.txt'
+  #    - 'CMakePresets.json'
+  #    - '.gitmodules'
+  #    - '.github/workflows/ctest.yml'
+  #    - 'app/**'
+  #    - 'extern/**'
+  #    - 'include/**'
+  #    - 'src/**'
+  #    - 'tests/**'
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
-  cancel-in-progress: true
+permissions:
+  contents: read
+  pull-requests: read
 
 # Define the matrix for different operating systems
 jobs:
+  should-run:
+    runs-on: ubuntu-24.04
+    outputs:
+      should_run: ${{ steps.decide.outputs.should_run }}
+    steps:
+      - name: Skip duplicate runs for merged PRs
+        id: decide
+        uses: actions/github-script@v9
+        with:
+          script: |
+            if (context.eventName !== 'push') {
+              core.setOutput('should_run', 'true');
+              return;
+            }
+
+            const { data: pullRequests } = await github.rest.repos.listPullRequestsAssociatedWithCommit({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              commit_sha: context.sha
+            });
+
+            const hasMainPullRequest = pullRequests.some((pullRequest) => pullRequest.base.ref === 'main');
+            core.setOutput('should_run', hasMainPullRequest ? 'false' : 'true');
+
   build-and-test:
-    name: ${{ matrix.os }} / ${{ matrix.architecture }} / CMake ${{ matrix.cmakeVersion }}
-    runs-on: ${{ matrix.os }}
+    if: ${{ needs.should-run.outputs.should_run == 'true' }}
+    needs: should-run
+    name: ${{ matrix.platform.os }} / ${{ matrix.platform.architecture }} / CMake ${{ matrix.cmakeVersion }}
+    runs-on: ${{ matrix.platform.os }}
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}-${{ matrix.platform.os }}-${{ matrix.platform.architecture }}-${{ matrix.cmakeVersion }}
+      cancel-in-progress: true
     strategy:
+      fail-fast: false
       matrix:
-        os:
-          - ubuntu-latest
-          - macos-latest  # Apple
-          - macos-13      # Intel
-          - windows-latest
-        architecture: [arm64, x64, x86]
-        cmakeVersion: ["3.21", latest] # CMake >= 3.21 is required to use "--preset <presetName>" and discover generators
+        # `platform` bundles os + architecture as one dimension so it can be crossed
+        # with cmakeVersion and pruned with a single `exclude`.
+        # As of Aug 2026, current stable runner images are windows-2025 (VS 2026),
+        # ubuntu-24.04, and macos-15 (arm64) / macos-15-intel.
+        #   - CMake versions test the minimum supported ("3.21.0") and current stable ("4.4.2").
+        #   - windows-2025 (Visual Studio 2026) requires CMake >= 4.2, so 3.21.0 is excluded.
+        # TODO-TEMPLATE: add a "windows-2022" (Visual Studio 2022) platform here if needed.
+        platform:
+          - { os: ubuntu-24.04,   architecture: x64 }    # Linux x64 (current stable, Aug 2026)
+          - { os: macos-15,       architecture: arm64 }  # Apple silicon, current stable release (Aug 2026)
+          - { os: macos-15-intel, architecture: x64 }    # Intel, current stable release (Aug 2026)
+          - { os: windows-2025,   architecture: x64 }    # Visual Studio 2026, current stable (Aug 2026, CMake >= 4.2)
+          - { os: windows-2025,   architecture: x86 }
+        cmakeVersion: ["3.21.0", "4.4.2"]
         exclude:
-          - os: macos-latest
-            architecture: x86
-          - os: macos-latest
-            architecture: x64
-          - os: macos-13
-            architecture: x86
-          - os: macos-13
-            architecture: arm64
-          - os: windows-latest
-            architecture: arm64
-          - os: ubuntu-latest
-            architecture: arm64
-          - os: ubuntu-latest
-            architecture: x86
+          # windows-2025 (Visual Studio 2026) requires CMake >= 4.2
+          - platform: { os: windows-2025, architecture: x64 }
+            cmakeVersion: "3.21.0"
+          - platform: { os: windows-2025, architecture: x86 }
+            cmakeVersion: "3.21.0"
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
 
     - name: Clone required submodules
       run: |
@@ -52,12 +103,12 @@ jobs:
         git submodule update
 
     - name: Install CMake
-      uses: lukka/get-cmake@latest
+      uses: lukka/get-cmake@v4.4.2
       with:
         cmakeVersion: ${{ matrix.cmakeVersion }}
 
     - name: "CMake: Build and Test (64-bit)"
-      if: matrix.architecture != 'x86'
+      if: matrix.platform.architecture != 'x86'
       uses: lukka/run-cmake@v10
       with:
         configurePreset: release64
@@ -66,7 +117,7 @@ jobs:
         testPreset: release64
 
     - name: "CMake: Build and Test (32-bit)"
-      if: matrix.architecture == 'x86'
+      if: matrix.platform.architecture == 'x86'
       uses: lukka/run-cmake@v10
       with:
         configurePreset: release32

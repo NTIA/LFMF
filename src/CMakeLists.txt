@@ -36,7 +36,7 @@ target_include_directories(${LIB_NAME} PUBLIC "${LIB_HEADERS}")
 configure_proplib_target(${LIB_NAME})
 
 # Add definition to get the library name and version inside the library
-add_compile_definitions(
+target_compile_definitions(${LIB_NAME} PRIVATE
     LIBRARY_NAME="${LIB_NAME}"
     LIBRARY_VERSION="${PROJECT_VERSION}"
 )
@@ -47,13 +47,14 @@ if (WIN32)
 endif ()
 if (UNIX)
     # avoid prefixing "lib" to the output file, for cross-platform consistency
-    set(CMAKE_SHARED_LIBRARY_PREFIX "")
+    set_target_properties(${LIB_NAME} PROPERTIES PREFIX "")
 endif ()
 
 # Set some target metadata
 set_target_properties(
     ${LIB_NAME} PROPERTIES
     OUTPUT_NAME ${LIB_NAME}-${PROJECT_VERSION}-
+    SOVERSION ${PROPLIB_SOVERSION}
     VERSION ${PROJECT_VERSION}
     DEBUG_POSTFIX ${ARCH_SUFFIX}
     RELEASE_POSTFIX ${ARCH_SUFFIX}
