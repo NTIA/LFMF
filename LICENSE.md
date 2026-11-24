@@ -2,7 +2,7 @@
 
 This software was developed by employees of the National Telecommunications and Information
 Administration (NTIA), an agency of the Federal Government and is provided to you
-as a public service.  Pursuant to Title 15 United States Code Section 105, works
+as a public service.  Pursuant to Title 17 United States Code Section 105, works
 of NTIA employees are not subject to copyright protection within the United States.
 
 The software is provided by NTIA “AS IS.”  NTIA MAKES NO WARRANTY OF ANY KIND, EXPRESS,
